@@ -5,19 +5,19 @@ var cb_map = {
   data_url: '/wp-admin/admin-ajax.php',
 
   init_map: function() {
+    var osm_url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+  	var osm_attrib='Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors';
     var map_options = {
       minZoom: this.settings.zoom_min,
       maxZoom: this.settings.zoom_max,
-      attribution: osmAttrib
+      attribution: osm_attrib
     }
 
   	// set up the map
   	map = new L.Map('cb-map');
 
   	// create the tile layer with correct attribution
-  	var osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-  	var osmAttrib='Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors';
-  	var osm = new L.TileLayer(osmUrl, map_options);
+  	var osm = new L.TileLayer(osm_url, map_options);
 
   	map.setView(new L.LatLng(this.settings.lat_start, this.settings.lon_start), this.settings.zoom_start);
   	map.addLayer(osm);
