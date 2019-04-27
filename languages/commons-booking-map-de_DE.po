@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: cb-admin-booking\n"
-"POT-Creation-Date: 2019-04-20 15:02+0200\n"
-"PO-Revision-Date: 2019-04-20 21:46+0200\n"
+"POT-Creation-Date: 2019-04-27 20:51+0200\n"
+"PO-Revision-Date: 2019-04-27 20:51+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -38,9 +38,17 @@ msgstr "Einstellungen für Commons Booking - Karte"
 msgid "SETTINGS_MENU"
 msgstr "Commons Booking - Karte"
 
-#: ../classes/class-cb-map-settings.php:157
+#: ../classes/class-cb-map-settings.php:163
 msgid "Settings"
 msgstr ""
+
+#: ../classes/class-cb-map-shortcode.php:69
+msgid "OPENING_HOURS"
+msgstr "Öffnungszeiten"
+
+#: ../classes/class-cb-map-shortcode.php:70
+msgid "CONTACT"
+msgstr "Kontakt"
 
 #: ../templates/settings-page-template.php:3
 msgid "SETTINGS_PAGE_HEADER"

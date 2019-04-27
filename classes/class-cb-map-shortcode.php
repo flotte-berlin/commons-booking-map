@@ -25,6 +25,7 @@ class CB_Map_Shortcode {
     //cb map shortcode js
     wp_register_script( 'cb_map_shortcode_js', CB_MAP_ASSETS_URL . 'js/cb-map-shortcode.js');
     wp_add_inline_script( 'cb_map_shortcode_js', 'cb_map.settings=' . json_encode(self::get_settings()) .';' );
+    wp_add_inline_script( 'cb_map_shortcode_js', 'cb_map.translation=' . json_encode(self::get_translation()) .';' );
     wp_enqueue_script( 'cb_map_shortcode_js' );
 
     return '<div id="cb-map" style="width: 100%; height: 500px;"></div>';
@@ -62,6 +63,15 @@ class CB_Map_Shortcode {
     }
 
     return $settings;
+  }
+
+  public static function get_translation() {
+    $translation = [
+      'OPENING_HOURS' => cb_map\__('OPENING_HOURS', 'commons-booking-map', 'opening hours'),
+      'CONTACT' => cb_map\__('CONTACT', 'commons-booking-map', 'contact')
+    ];
+
+    return $translation;
   }
 
   /**

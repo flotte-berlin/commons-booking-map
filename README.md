@@ -15,7 +15,7 @@ The shortcode to include the map into a page is '[cb_map]'.
 
 ## Beschreibung
 
-**Commons Booking Safe User Deletion** ist ein Wordpress Plugin, welches das [Commons Booking](https://github.com/wielebenwir/commons-booking) Plugin um eine Kartendarstellung der Standorte mit den dazugehörigen Artikeln erweitert ...
+**Commons Booking Map** ist ein Wordpress Plugin, welches das [Commons Booking](https://github.com/wielebenwir/commons-booking) Plugin um eine Kartendarstellung der Standorte mit den dazugehörigen Artikeln erweitert ...
 Der Shortcode zum Einbinden in eine Seite ist '[cb_map]'.
 
 ## Credits

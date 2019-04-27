@@ -1,6 +1,7 @@
 
 var cb_map = {
   settings: null,
+  translation: null,
   map: null,
   data_url: '/wp-admin/admin-ajax.php',
 
@@ -67,16 +68,16 @@ var cb_map = {
 
       //item names
       var item_names = [];
-      popup_timeframes = '';
-      location.timeframes.forEach(function(timeframe) {
-        item_names.push(timeframe.name);
+      popup_items = '';
+      location.items.forEach(function(item) {
+        item_names.push(item.name);
 
-        popup_timeframes += '<div>'
+        popup_items += '<div>'
           + '<div style="display: inline-block; width: 25%; margin-right: 5%;">'
-          + '<img src="' + timeframe.thumbnail + '">'
+          + '<img src="' + item.thumbnail + '">'
           + '</div>'
-          + '<div style="display: inline-block; width: 70%;"><b><a href="' + timeframe.link + '">' + timeframe.name + '</a></b> - '
-          + timeframe.short_desc
+          + '<div style="display: inline-block; width: 70%;"><b><a href="' + item.link + '">' + item.name + '</a></b> - '
+          + item.short_desc
           + '</div>'
           + '</div>'
       })
@@ -94,10 +95,10 @@ var cb_map = {
       var popup_content = '<b>' + location.location_name + '</b><br>'
               + location.address.street + '<br>'
               + location.address.zip + ' ' + location.address.city
-              + '<p>' + location.opening_hours + '</p>'
-              + '<p>' + location.contact + '</p>';
+              + '<p><b>' + that.translation['OPENING_HOURS'] + ':</b><br>' + location.opening_hours + '</p>'
+              + '<p><b>' + that.translation['CONTACT'] + ':</b><br>' + location.contact + '</p>';
 
-      popup_content += popup_timeframes;
+      popup_content += popup_items;
       marker.bindPopup(popup_content);
 
       markers.addLayer(marker);

@@ -21,6 +21,7 @@ class CB_Map {
       $result[] = [
         'location_id' => $timeframe['location_id'],
         'item' => [
+          'id' => $item->ID,
           'name' => $item->post_title,
           'short_desc' => $item_desc,
           'link' => get_permalink($item),
@@ -59,19 +60,23 @@ class CB_Map {
 
     foreach($query->posts as $post) {
       $location_meta = get_post_meta($post->ID, null, true);
+
+      //set serialized empty array if not set
+      $closed_days = isset($location_meta['commons-booking_location_closeddays']) ? $location_meta['commons-booking_location_closeddays'][0] : 'a:0:{}';
+
       $locations[$post->ID] = [
         'lat' => (float) $location_meta['cb-map_latitude'][0],
         'lon' => (float) $location_meta['cb-map_longitude'][0],
         'location_name' => $post->post_title,
         'opening_hours' => $location_meta['commons-booking_location_openinghours'][0],
         'contact' => $location_meta['commons-booking_location_contactinfo_text'][0],
-        'closed_days' => unserialize($location_meta['commons-booking_location_closeddays'][0]),
+        'closed_days' => unserialize($closed_days),
         'address' => [
           'street' => $location_meta['commons-booking_location_adress_street'][0],
           'city' => $location_meta['commons-booking_location_adress_city'][0],
           'zip' => $location_meta['commons-booking_location_adress_zip'][0]
         ],
-        'timeframes' => []
+        'items' => []
       ];
     }
 
@@ -95,8 +100,28 @@ class CB_Map {
           $result[$location_id] = $locations[$location_id];
         }
         //add item to location
-        $result[$location_id]['timeframes'][] = $timeframe['item'];
+        if(!isset($result[$location_id]['items'][$timeframe['item']['id']])) {
+          $item = $timeframe['item'];
+          $item['timeframes'] = [
+            [
+              'date_start' => $timeframe['date_start'],
+              'date_end' => $timeframe['date_end']
+            ]
+          ];
+          $result[$location_id]['items'][$timeframe['item']['id']] = $item;
+        }
+        else {
+          $result[$location_id]['items'][$timeframe['item']['id']]['timeframes'][] = [
+            'date_start' => $timeframe['date_start'],
+            'date_end' => $timeframe['date_end']
+          ];
+        }
       }
+    }
+
+    //convert items to nummeric array
+    foreach ($result as &$location) {
+      $location['items'] = array_values($location['items']);
     }
 
     return $result;
