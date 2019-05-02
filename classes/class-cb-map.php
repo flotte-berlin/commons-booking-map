@@ -42,6 +42,8 @@ class CB_Map {
     global $wpdb;
     $locations = [];
 
+    $show_location_contact = CB_Map_Settings::get_option('show_location_contact');
+
     $args = [
       'post_type'	=> 'cb_locations',
       'meta_query' => [
@@ -69,7 +71,6 @@ class CB_Map {
         'lon' => (float) $location_meta['cb-map_longitude'][0],
         'location_name' => $post->post_title,
         'opening_hours' => $location_meta['commons-booking_location_openinghours'][0],
-        'contact' => $location_meta['commons-booking_location_contactinfo_text'][0],
         'closed_days' => unserialize($closed_days),
         'address' => [
           'street' => $location_meta['commons-booking_location_adress_street'][0],
@@ -78,6 +79,10 @@ class CB_Map {
         ],
         'items' => []
       ];
+
+      if($show_location_contact) {
+        $locations[$post->ID]['contact'] = $location_meta['commons-booking_location_contactinfo_text'][0];
+      }
     }
 
     return $locations;

@@ -29,20 +29,29 @@ th {
       do_settings_sections( 'cb-map-settings' );
     ?>
 
+    <h2><?= cb_map\__('MAP_PRESENTATION', 'commons-booking-map', 'Map Presentation') ?></h2>
+
+    <table style="text-align: left;">
+      <tr>
+          <th><?= cb_map\__('MAP_HEIGHT', 'commons-booking-map', 'map height') ?>:</th>
+          <td><input type="number" min="<?= CB_Map_Settings::MAP_HEIGHT_VALUE_MIN ?>" max="<?= CB_Map_Settings::MAP_HEIGHT_VALUE_MAX ?>" name="cb_map_options[map_height]" value="<?= esc_attr( CB_Map_Settings::get_option('map_height') ); ?>" size="4"> px</td>
+      </tr>
+    </table>
+
     <h2><?= cb_map\__('ZOOM', 'commons-booking-map', 'Zoom') ?></h2>
 
     <table style="text-align: left;">
       <tr>
           <th><?= cb_map\__('MIN_ZOOM_LEVEL', 'commons-booking-map', 'min. zoom level') ?>:</th>
-          <td><input type="number" min="1" max="19" name="cb_map_options[zoom_min]" value="<?= esc_attr( CB_Map_Settings::get_option('zoom_min') ); ?>" size="3"></td>
+          <td><input type="number" min="<?= CB_Map_Settings::ZOOM_VALUE_MIN ?>" max="<?= CB_Map_Settings::ZOOM_VALUE_MAX ?>" name="cb_map_options[zoom_min]" value="<?= esc_attr( CB_Map_Settings::get_option('zoom_min') ); ?>" size="3"></td>
       </tr>
       <tr>
           <th><?= cb_map\__('MAX_ZOOM_LEVEL', 'commons-booking-map', 'max. zoom level') ?>:</th>
-          <td><input type="number" min="1" max="19" name="cb_map_options[zoom_max]" value="<?= esc_attr( CB_Map_Settings::get_option('zoom_max') ); ?>" size="3"></td>
+          <td><input type="number" min="<?= CB_Map_Settings::ZOOM_VALUE_MIN ?>" max="<?= CB_Map_Settings::ZOOM_VALUE_MAX ?>" name="cb_map_options[zoom_max]" value="<?= esc_attr( CB_Map_Settings::get_option('zoom_max') ); ?>" size="3"></td>
       </tr>
       <tr>
           <th><?= cb_map\__('START_ZOOM_LEVEL', 'commons-booking-map', 'start zoom level') ?>:</th>
-          <td><input type="number" min="1" max="19" name="cb_map_options[zoom_start]" value="<?= esc_attr( CB_Map_Settings::get_option('zoom_start') ); ?>" size="3"></td>
+          <td><input type="number" min="<?= CB_Map_Settings::ZOOM_VALUE_MIN ?>" max="<?= CB_Map_Settings::ZOOM_VALUE_MAX ?>" name="cb_map_options[zoom_start]" value="<?= esc_attr( CB_Map_Settings::get_option('zoom_start') ); ?>" size="3"></td>
       </tr>
     </table>
 
@@ -94,6 +103,14 @@ th {
           <input type="text" name="cb_map_options[marker_icon_anchor_y]" value="<?= esc_attr( CB_Map_Settings::get_option('marker_icon_anchor_y') ); ?>" size="3">
           (<?= cb_map\__('ANCHOR_POINT_DESC', 'commons-booking-map', 'seen from the left top corner of the image') ?>)
         </td>
+      </tr>
+    </table>
+
+    <h2><?= cb_map\__('POPUP', 'commons-booking-map', 'Marker Popup') ?></h2>
+    <table style="text-align: left;">
+      <tr>
+          <th><?= cb_map\__('SHOW_LOCATION_CONTACT', 'commons-booking-map', 'show location contact') ?>:</th>
+          <td><input type="checkbox" name="cb_map_options[show_location_contact]" <?= CB_Map_Settings::get_option('show_location_contact') ? 'checked="checked"' : '' ?>" value="on"></td>
       </tr>
     </table>
 

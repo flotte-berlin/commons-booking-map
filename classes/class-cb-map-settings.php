@@ -5,8 +5,10 @@
 **/
 class CB_Map_Settings {
 
-  const OPTION_KEYS = ['zoom_min', 'zoom_max', 'zoom_start', 'lat_start', 'lon_start', 'custom_marker_media_id', 'marker_icon_width', 'marker_icon_height', 'marker_icon_anchor_x', 'marker_icon_anchor_y', 'cb_items_available_categories', 'cb_items_preset_categories'];
+  const OPTION_KEYS = ['map_height', 'zoom_min', 'zoom_max', 'zoom_start', 'lat_start', 'lon_start', 'custom_marker_media_id', 'marker_icon_width', 'marker_icon_height', 'marker_icon_anchor_x', 'marker_icon_anchor_y', 'show_location_contact', 'cb_items_available_categories', 'cb_items_preset_categories'];
 
+  const MAP_HEIGHT_VALUE_MIN = 100;
+  const MAP_HEIGHT_VALUE_MAX = 5000;
   const ZOOM_VALUE_MIN = 1;
   const ZOOM_VALUE_MAX = 19;
   const LAT_VALUE_MIN = -90;
@@ -14,6 +16,7 @@ class CB_Map_Settings {
   const LON_VALUE_MIN = -180;
   const LON_VALUE_MAX = 180;
 
+  const MAP_HEIGHT_DEFAULT = 400;
   const ZOOM_MIN_DEFAULT = 8;
   const ZOOM_MAX_DEFAULT = 19;
   const ZOOM_START_DEFAULT = 8;
@@ -24,6 +27,7 @@ class CB_Map_Settings {
   const MARKER_ICON_HEIGHT_DEFAULT = 0;
   const MARKER_ICON_ANCHOR_X_DEFAULT = 0;
   const MARKER_ICON_ANCHOR_Y_DEFAULT = 0;
+  const SHOW_LOCATION_CONTACT_DEFAULT = true;
   const CB_ITEMS_AVAILABLE_CATEGORIES_DEFAULT = [];
   const CB_ITEMS_PRESET_CATEGORIES_DEFAULT = [];
 
@@ -100,6 +104,11 @@ class CB_Map_Settings {
 
     $validated_input = self::populate_option_defaults([]);
 
+    //map_height
+    if(isset($input['map_height']) && (int) $input['map_height'] >= self::MAP_HEIGHT_VALUE_MIN && $input['map_height'] <= self::MAP_HEIGHT_VALUE_MAX) {
+      $validated_input['map_height'] = (int) $input['map_height'];
+    }
+
     //zoom_min
     if(isset($input['zoom_min']) && (int) $input['zoom_min'] >= self::ZOOM_VALUE_MIN && $input['zoom_min'] <= self::ZOOM_VALUE_MAX) {
       $validated_input['zoom_min'] = (int) $input['zoom_min'];
@@ -158,6 +167,14 @@ class CB_Map_Settings {
     //marker_icon_anchor_y
     if(isset($input['marker_icon_anchor_y'])) {
       $validated_input['marker_icon_anchor_y'] = (float) $input['marker_icon_anchor_y'];
+    }
+
+    //show_location_contact
+    if(isset($input['show_location_contact'])) {
+      $validated_input['show_location_contact'] = true;
+    }
+    else {
+      $validated_input['show_location_contact'] = false;
     }
 
     //cb_items_available_categories

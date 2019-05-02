@@ -33,7 +33,8 @@ class CB_Map_Shortcode {
     wp_add_inline_script( 'cb_map_shortcode_js', 'cb_map.translation=' . json_encode(self::get_translation()) .';' );
     wp_enqueue_script( 'cb_map_shortcode_js' );
 
-    return '<div id="cb-map" style="width: 100%; height: 500px;"></div>';
+    $map_height = CB_Map_Settings::get_option('map_height');
+    return '<div id="cb-map" style="width: 100%; height: ' . $map_height . 'px;"></div>';
   }
 
   public static function get_settings() {
@@ -44,7 +45,7 @@ class CB_Map_Shortcode {
     ];
     $options = CB_Map_Settings::get_options();
 
-    $pass_through = ['zoom_min', 'zoom_max', 'zoom_start', 'lat_start', 'lon_start'];
+    $pass_through = ['zoom_min', 'zoom_max', 'zoom_start', 'lat_start', 'lon_start', 'show_location_contact'];
 
     $icon_size = [$options['marker_icon_width'], $options['marker_icon_height']];
     $icon_anchor = [$options['marker_icon_anchor_x'], $options['marker_icon_anchor_y']];

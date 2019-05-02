@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: cb-admin-booking\n"
-"POT-Creation-Date: 2019-05-02 15:37+0200\n"
-"PO-Revision-Date: 2019-05-02 15:38+0200\n"
+"POT-Creation-Date: 2019-05-02 17:22+0200\n"
+"PO-Revision-Date: 2019-05-02 17:36+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -30,23 +30,23 @@ msgstr "Längengrad"
 msgid "POSITION"
 msgstr "Position"
 
-#: ../classes/class-cb-map-settings.php:36
+#: ../classes/class-cb-map-settings.php:41
 msgid "SETTINGS_TITLE"
 msgstr "Einstellungen für Commons Booking - Karte"
 
-#: ../classes/class-cb-map-settings.php:36
+#: ../classes/class-cb-map-settings.php:41
 msgid "SETTINGS_MENU"
 msgstr "Commons Booking - Karte"
 
-#: ../classes/class-cb-map-settings.php:185
+#: ../classes/class-cb-map-settings.php:210
 msgid "Settings"
 msgstr ""
 
-#: ../classes/class-cb-map-shortcode.php:90
+#: ../classes/class-cb-map-shortcode.php:91
 msgid "OPENING_HOURS"
 msgstr "Öffnungszeiten"
 
-#: ../classes/class-cb-map-shortcode.php:91
+#: ../classes/class-cb-map-shortcode.php:92
 msgid "CONTACT"
 msgstr "Kontakt"
 
@@ -56,85 +56,103 @@ msgstr "Einstellungen für Kartendarstellung von Commons Booking "
 
 #: ../templates/settings-page-template.php:24
 msgid "SETTINGS_DESCRIPTION"
-msgstr "Die Einstellungen ermöglichen die Anpassung der Kartendarstellung."
+msgstr ""
+"Die Einstellungen ermöglichen die Anpassung der Karteninformationen und -"
+"darstellung."
 
 #: ../templates/settings-page-template.php:32
+msgid "MAP_PRESENTATION"
+msgstr "Kartendarstellung"
+
+#: ../templates/settings-page-template.php:36
+msgid "MAP_HEIGHT"
+msgstr "Höhe"
+
+#: ../templates/settings-page-template.php:41
 msgid "ZOOM"
 msgstr "Zoom"
 
-#: ../templates/settings-page-template.php:36
+#: ../templates/settings-page-template.php:45
 msgid "MIN_ZOOM_LEVEL"
 msgstr "min. Zoom-Level"
 
-#: ../templates/settings-page-template.php:40
+#: ../templates/settings-page-template.php:49
 msgid "MAX_ZOOM_LEVEL"
 msgstr "max. Zoom-Level"
 
-#: ../templates/settings-page-template.php:44
+#: ../templates/settings-page-template.php:53
 msgid "START_ZOOM_LEVEL"
 msgstr "initiales Zoom-Level"
 
-#: ../templates/settings-page-template.php:49
+#: ../templates/settings-page-template.php:58
 msgid "POSITIONING_START"
 msgstr "initiale Kartenpositionierung (Mittelpunkt)"
 
-#: ../templates/settings-page-template.php:53
+#: ../templates/settings-page-template.php:62
 msgid "LATITUDE_START"
 msgstr "Breitengrad"
 
-#: ../templates/settings-page-template.php:58
+#: ../templates/settings-page-template.php:67
 msgid "LONGITUDE_START"
 msgstr "Längengrad"
 
-#: ../templates/settings-page-template.php:63
+#: ../templates/settings-page-template.php:72
 msgid "CUSTOM_MARKER"
 msgstr "angepasster Marker"
 
-#: ../templates/settings-page-template.php:67
+#: ../templates/settings-page-template.php:76
 msgid "IMAGE_FILE"
 msgstr "Bilddatei"
 
-#: ../templates/settings-page-template.php:69
+#: ../templates/settings-page-template.php:78
 msgid "SELECT"
 msgstr "auswählen"
 
-#: ../templates/settings-page-template.php:70
+#: ../templates/settings-page-template.php:79
 msgid "REMOVE"
 msgstr "entfernen"
 
-#: ../templates/settings-page-template.php:82
+#: ../templates/settings-page-template.php:91
 msgid "ICON_SIZE"
 msgstr "Icon Größe"
 
-#: ../templates/settings-page-template.php:86
+#: ../templates/settings-page-template.php:95
 msgid "ICON_SIZE_DESC"
 msgstr "Anzeige auf der Karte"
 
-#: ../templates/settings-page-template.php:91
+#: ../templates/settings-page-template.php:100
 msgid "ANCHOR_POINT"
 msgstr "Anker-Punkt"
 
-#: ../templates/settings-page-template.php:95
+#: ../templates/settings-page-template.php:104
 msgid "ANCHOR_POINT_DESC"
-msgstr "von der linken oberen Ecke des Bildes ausgehend"
+msgstr "von der linken oberen Ecke des Icons ausgehend"
 
-#: ../templates/settings-page-template.php:100
+#: ../templates/settings-page-template.php:109
+msgid "POPUP"
+msgstr "Marker Popup"
+
+#: ../templates/settings-page-template.php:112
+msgid "SHOW_LOCATION_CONTACT"
+msgstr "Zeige Standort-Kontakt"
+
+#: ../templates/settings-page-template.php:117
 msgid "FILTER_CONFIGURATION"
 msgstr "Filter-Einstellungen"
 
-#: ../templates/settings-page-template.php:103
+#: ../templates/settings-page-template.php:120
 msgid "AVAILABLE_CATEGORIES"
 msgstr "verfügbare Kategorien für NutzerInnen"
 
-#: ../templates/settings-page-template.php:116
+#: ../templates/settings-page-template.php:133
 msgid "PRESET_CATEGORIES"
 msgstr "vorab gesetzte Kategorien"
 
-#: ../templates/settings-page-template.php:167
+#: ../templates/settings-page-template.php:184
 msgid "SELECT_IMAGE"
 msgstr "Bild auswählen"
 
-#: ../templates/settings-page-template.php:169
+#: ../templates/settings-page-template.php:186
 msgid "SAVE"
 msgstr "speichern"
 

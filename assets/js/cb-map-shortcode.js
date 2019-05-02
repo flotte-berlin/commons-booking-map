@@ -143,8 +143,11 @@ var cb_map = {
       var popup_content = '<b>' + location.location_name + '</b><br>'
               + location.address.street + '<br>'
               + location.address.zip + ' ' + location.address.city
-              + '<p><b>' + that.translation['OPENING_HOURS'] + ':</b><br>' + location.opening_hours + '</p>'
-              + '<p><b>' + that.translation['CONTACT'] + ':</b><br>' + location.contact + '</p>';
+              + '<p><b>' + that.translation['OPENING_HOURS'] + ':</b><br>' + location.opening_hours + '</p>';
+
+      if(that.settings.show_location_contact) {
+        popup_content += '<p><b>' + that.translation['CONTACT'] + ':</b><br>' + location.contact + '</p>'
+      }
 
       popup_content += popup_items;
       marker.bindPopup(popup_content);
