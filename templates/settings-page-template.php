@@ -79,15 +79,18 @@ th {
           <input id="remove_image_button" type="button" class="button" value="<?= cb_map\__('REMOVE', 'commons-booking-map', 'remove') ?>" />
         </td>
       </tr>
-      <tr>
-        <td colspan="2">
-          <div class="image-preview-wrapper">
-              <img id="image-preview" src="<?= wp_get_attachment_url(CB_Map_Settings::get_option('custom_marker_media_id')); ?>" height="100">
+      <tr id="image-preview-settings" style="display: none;">
+        <td>
+          <div>
+              <img id="image-preview" src="<?= wp_get_attachment_url(CB_Map_Settings::get_option('custom_marker_media_id')); ?>">
           </div>
           <input type="hidden" name="cb_map_options[custom_marker_media_id]" id="custom_marker_media_id" value="<?= CB_Map_Settings::get_option('custom_marker_media_id') ?>">
         </td>
+        <td>
+          <div id="image-preview-measurements"></div>
+        </td>
       </tr>
-      <tr>
+      <tr id="marker-icon-size" style="display: none;">
           <th><?= cb_map\__('ICON_SIZE', 'commons-booking-map', 'icon size') ?>:</th>
           <td>
             <input type="text" name="cb_map_options[marker_icon_width]" value="<?= esc_attr( CB_Map_Settings::get_option('marker_icon_width') ); ?>" size="3"> x
@@ -96,7 +99,7 @@ th {
           </td>
 
       </tr>
-      <tr>
+      <tr id="marker-icon-anchor" style="display: none;">
         <th><?= cb_map\__('ANCHOR_POINT', 'commons-booking-map', 'anchor point') ?>:</th>
         <td>
           <input type="text" name="cb_map_options[marker_icon_anchor_x]" value="<?= esc_attr( CB_Map_Settings::get_option('marker_icon_anchor_x') ); ?>" size="3"> x
@@ -161,6 +164,17 @@ jQuery( document ).ready( function( $ ) {
 
         $( '#custom_marker_media_id' ).val( '' );
         $( '#image-preview' ).attr( 'src', '' );
+
+        $('input[name="cb_map_options[marker_icon_width]"').val(0);
+        $('input[name="cb_map_options[marker_icon_height]"').val(0);
+        $('input[name="cb_map_options[marker_icon_anchor_x]"').val(0);
+        $('input[name="cb_map_options[marker_icon_anchor_y]"').val(0);
+
+        $('#image-preview-settings').hide();
+        $('#image-preview-measurements').text('');
+        $('#marker-icon-size').hide();
+        $('#marker-icon-anchor').hide();
+
       });
 
 			$('#select_image_button').on('click', function(event) {
@@ -206,6 +220,30 @@ jQuery( document ).ready( function( $ ) {
 			$( 'a.add_media' ).on( 'click', function() {
 				wp.media.model.settings.post.id = wp_media_post_id;
 			});
+
+      $('#image-preview').load(function() {
+        $('#image-preview-settings').show();
+        $('#image-preview-measurements').text('<?= cb_map\__('MARKER_IMAGE_MEASUREMENTS', 'commons-booking-map', 'measurements') ?>: ' + $('#image-preview').width() + ' x ' + $('#image-preview').height() + ' px');
+        $('#marker-icon-size').show();
+        $('#marker-icon-anchor').show();
+
+        if($('input[name="cb_map_options[marker_icon_width]"').val() == 0) {
+          $('input[name="cb_map_options[marker_icon_width]"').val($('#image-preview').width());
+        }
+
+        if($('input[name="cb_map_options[marker_icon_height]"').val() == 0) {
+          $('input[name="cb_map_options[marker_icon_height]"').val($('#image-preview').height());
+        }
+
+        if($('input[name="cb_map_options[marker_icon_anchor_x]"').val() == 0) {
+          $('input[name="cb_map_options[marker_icon_anchor_x]"').val($('#image-preview').width() / 2);
+        }
+
+        if($('input[name="cb_map_options[marker_icon_anchor_y]"').val() == 0) {
+          $('input[name="cb_map_options[marker_icon_anchor_y]"').val($('#image-preview').height());
+        }
+
+      });
 		});
 
 </script>
