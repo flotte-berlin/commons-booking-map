@@ -5,6 +5,8 @@
 **/
 class CB_Map_Settings {
 
+  const OPTION_KEYS = ['zoom_min', 'zoom_max', 'zoom_start', 'lat_start', 'lon_start', 'custom_marker_media_id', 'marker_icon_width', 'marker_icon_height', 'marker_icon_anchor_x', 'marker_icon_anchor_y', 'cb_items_available_categories', 'cb_items_preset_categories'];
+
   const ZOOM_VALUE_MIN = 1;
   const ZOOM_VALUE_MAX = 19;
   const LAT_VALUE_MIN = -90;
@@ -22,6 +24,8 @@ class CB_Map_Settings {
   const MARKER_ICON_HEIGHT_DEFAULT = 0;
   const MARKER_ICON_ANCHOR_X_DEFAULT = 0;
   const MARKER_ICON_ANCHOR_Y_DEFAULT = 0;
+  const CB_ITEMS_AVAILABLE_CATEGORIES_DEFAULT = [];
+  const CB_ITEMS_PRESET_CATEGORIES_DEFAULT = [];
 
   //const MARKER_POPUP_CONTENT_DEFAULT = "'<b>' + location.location_name + '</b><br>' + location.address.street + '<br>' + location.address.zip + ' ' + location.address.city + '<p>' + location.opening_hours + '</p>'";
 
@@ -47,9 +51,9 @@ class CB_Map_Settings {
   }
 
   public static function populate_option_defaults($options) {
-    $option_keys = ['zoom_min', 'zoom_max', 'zoom_start', 'lat_start', 'lon_start', 'custom_marker_media_id', 'marker_icon_width', 'marker_icon_height', 'marker_icon_anchor_x', 'marker_icon_anchor_y'];
+    //var_dump($options);
 
-    foreach ($option_keys as $key) {
+    foreach (self::OPTION_KEYS as $key) {
       if(!isset($options[$key])) {
         $options[$key] = self::get_option_default($key);
       }
@@ -94,7 +98,7 @@ class CB_Map_Settings {
     //var_dump($input);
     self::load_options();
 
-    $validated_input = self::populate_option_defaults(self::$options);
+    $validated_input = self::populate_option_defaults([]);
 
     //zoom_min
     if(isset($input['zoom_min']) && (int) $input['zoom_min'] >= self::ZOOM_VALUE_MIN && $input['zoom_min'] <= self::ZOOM_VALUE_MAX) {
@@ -156,6 +160,32 @@ class CB_Map_Settings {
       $validated_input['marker_icon_anchor_y'] = (float) $input['marker_icon_anchor_y'];
     }
 
+    //cb_items_available_categories
+    $category_terms = get_terms([
+      'taxonomy' => 'cb_items_category',
+      'hide_empty' => false
+    ]);
+    $valid_term_ids = [];
+    foreach($category_terms as $category_term) {
+      $valid_term_ids[] = $category_term->term_id;
+    }
+
+    if(isset($input['cb_items_available_categories'])) {
+      foreach($input['cb_items_available_categories'] as $cb_items_category_id) {
+        if(in_array((int) $cb_items_category_id, $valid_term_ids)) {
+          $validated_input['cb_items_available_categories'][] = $cb_items_category_id;
+        }
+      }
+    }
+
+    if(isset($input['cb_items_preset_categories'])) {
+      foreach($input['cb_items_preset_categories'] as $cb_items_category_id) {
+        if(in_array((int) $cb_items_category_id, $valid_term_ids)) {
+          $validated_input['cb_items_preset_categories'][] = $cb_items_category_id;
+        }
+      }
+    }
+
     return $validated_input;
   }
 
@@ -169,6 +199,24 @@ class CB_Map_Settings {
     wp_enqueue_media();
 
     //TODO: enqueue image upload script (don't insert script in DOM)
+
+    $available_categories_args = [
+      'taxonomy' => 'cb_items_category',
+      'echo' => false,
+      'checked_ontop' => false,
+      'selected_cats' => self::get_option('cb_items_available_categories')
+    ];
+    $available_categories_checklist_markup = wp_terms_checklist( 0, $available_categories_args);
+    $available_categories_checklist_markup = str_replace('name="tax_input[cb_items_category]', 'name="cb_map_options[cb_items_available_categories]', $available_categories_checklist_markup);
+
+    $preset_categories_args = [
+      'taxonomy' => 'cb_items_category',
+      'echo' => false,
+      'checked_ontop' => false,
+      'selected_cats' => self::get_option('cb_items_preset_categories')
+    ];
+    $preset_categories_checklist_markup = wp_terms_checklist( 0, $preset_categories_args);
+    $preset_categories_checklist_markup = str_replace('name="tax_input[cb_items_category]', 'name="cb_map_options[cb_items_preset_categories]', $preset_categories_checklist_markup);
 
     include_once( CB_MAP_PATH . 'templates/settings-page-template.php');
   }

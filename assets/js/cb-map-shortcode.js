@@ -3,7 +3,43 @@ var cb_map = {
   settings: null,
   translation: null,
   map: null,
-  data_url: '/wp-admin/admin-ajax.php',
+  markers: null,
+
+  init_filters: function($) {
+    var that = this;
+
+    if(this.settings.filter_cb_item_categories.length > 0) {
+      var $filter_container = $('<div style="width:100%; height: 50px;"></div>');
+
+      var $form = $('<form></form');
+      this.settings.filter_cb_item_categories.forEach(function(category) {
+        $input = $('<label style="margin-right: 20px;"><input type="checkbox" name="cb_item_categories[]" value="' + category.term_id + '">' + category.name + '</label>');
+        $form.append($input);
+      })
+
+      var $button = $('<button>filter</button>');
+
+      $button.click(function(event) {
+        event.preventDefault();
+
+        var filters = [];
+        var data = $form.serializeArray();
+        data.forEach(function(obj) {
+          filters.push(obj.value);
+        })
+
+        that.get_location_data(filters);
+      });
+
+      $button_wrapper = $('<div></div>');
+      $button_wrapper.append($button);
+      $form.append($button_wrapper);
+
+      $filter_container.append($form);
+
+      $filter_container.insertAfter($('#cb-map'));
+    }
+  },
 
   init_map: function() {
     var osm_url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
@@ -30,20 +66,26 @@ var cb_map = {
 
   },
 
-  get_location_data: function() {
-    var that = this;
+  get_location_data: function(filters) {
+    filters = filters || [];
 
+    var that = this;
     var data = {
-			'action': 'cb_map_locations'
+			'action': 'cb_map_locations',
+      'filters': filters
 		};
 
-    console.log('fetch location data from: ', this.data_url);
+    console.log('fetch location data from: ', this.settings.data_url);
 
-    jQuery.post(this.data_url, data, function(response) {
+    this.map.spin(true);
+
+    jQuery.post(this.settings.data_url, data, function(response) {
       var location_data = JSON.parse(response);
       console.log('location data: ', location_data);
 
       that.render_locations(location_data);
+
+      that.map.spin(false);
 		});
 
   },
@@ -51,9 +93,13 @@ var cb_map = {
   render_locations: function(data) {
     var that = this;
 
+    if(this.markers) {
+      this.markers.clearLayers();
+    }
+
     var markers = L.markerClusterGroup();
 
-    console.log('settings: ', this.settings);
+    //console.log('settings: ', this.settings);
 
     var custom_marker_icon;
     if(this.settings.marker_icon) {
@@ -72,9 +118,11 @@ var cb_map = {
       location.items.forEach(function(item) {
         item_names.push(item.name);
 
+        var item_thumb_image = item.thumbnail ? '<img src="' + item.thumbnail + '">' : '';
+
         popup_items += '<div>'
           + '<div style="display: inline-block; width: 25%; margin-right: 5%;">'
-          + '<img src="' + item.thumbnail + '">'
+          + item_thumb_image
           + '</div>'
           + '<div style="display: inline-block; width: 70%;"><b><a href="' + item.link + '">' + item.name + '</a></b> - '
           + item.short_desc
@@ -102,6 +150,8 @@ var cb_map = {
       marker.bindPopup(popup_content);
 
       markers.addLayer(marker);
+
+      that.markers = markers;
     });
 
     map.addLayer(markers);
@@ -111,6 +161,7 @@ var cb_map = {
 jQuery(document).ready(function ($) {
   console.log('cb_map.settings: ', cb_map.settings);
 
+  cb_map.init_filters($);
   cb_map.init_map();
 
 });

@@ -83,7 +83,8 @@ class CB_Map {
     return $locations;
   }
 
-  public static function get_locations_by_timeframes() {
+  public static function get_locations_by_timeframes($filter_categories = []) {
+    //var_dump($filter_categories);
 
     $result = [];
     $timeframes = self::get_timeframes();
@@ -91,30 +92,55 @@ class CB_Map {
 
     foreach ($timeframes as $timeframe) {
       $location_id = $timeframe['location_id'];
+      $item = $timeframe['item'];
 
-      //if a location exists, that is allowed to be shown on map
-      if(isset($locations[$location_id])) {
+      //check if item categories (terms) match the filters
+      if(count($filter_categories) > 0) {
+        $is_valid_item = false;
+        $terms = wp_get_post_terms( $item['id'], 'cb_items_category');
 
-        //if location is not present in result yet, add it
-        if(!isset($result[$location_id])) {
-          $result[$location_id] = $locations[$location_id];
+        //var_dump($terms);
+        $matched_terms = 0;
+        foreach ($terms as $term) {
+          if(in_array($term->term_id, $filter_categories)) {
+            $matched_terms++;
+          }
         }
-        //add item to location
-        if(!isset($result[$location_id]['items'][$timeframe['item']['id']])) {
-          $item = $timeframe['item'];
-          $item['timeframes'] = [
-            [
+
+        if($matched_terms == count($filter_categories)) {
+          $is_valid_item = true;
+        }
+
+      }
+      else {
+        $is_valid_item = true;
+      }
+
+      if($is_valid_item) {
+
+        //if a location exists, that is allowed to be shown on map
+        if(isset($locations[$location_id])) {
+
+          //if location is not present in result yet, add it
+          if(!isset($result[$location_id])) {
+            $result[$location_id] = $locations[$location_id];
+          }
+          //add item to location
+          if(!isset($result[$location_id]['items'][$timeframe['item']['id']])) {
+            $item['timeframes'] = [
+              [
+                'date_start' => $timeframe['date_start'],
+                'date_end' => $timeframe['date_end']
+              ]
+            ];
+            $result[$location_id]['items'][$timeframe['item']['id']] = $item;
+          }
+          else {
+            $result[$location_id]['items'][$timeframe['item']['id']]['timeframes'][] = [
               'date_start' => $timeframe['date_start'],
               'date_end' => $timeframe['date_end']
-            ]
-          ];
-          $result[$location_id]['items'][$timeframe['item']['id']] = $item;
-        }
-        else {
-          $result[$location_id]['items'][$timeframe['item']['id']]['timeframes'][] = [
-            'date_start' => $timeframe['date_start'],
-            'date_end' => $timeframe['date_end']
-          ];
+            ];
+          }
         }
       }
     }

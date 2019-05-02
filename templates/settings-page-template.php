@@ -1,3 +1,22 @@
+<style>
+
+.cb-map-settings-cat-filter-list .children {
+  margin-left: 1.5em;
+}
+
+th {
+  width: 200px;
+}
+
+.category-wrapper {
+  height: 150px;
+  padding: 10px;
+  background-color: #fff;
+  overflow-y: scroll;
+}
+
+</style>
+
 <div class="wrap">
 
   <h1><?= cb_map\__('SETTINGS_PAGE_HEADER', 'commons-booking-map', 'Settings for Commons Booking Map') ?></h1>
@@ -74,6 +93,33 @@
           <input type="text" name="cb_map_options[marker_icon_anchor_x]" value="<?= esc_attr( CB_Map_Settings::get_option('marker_icon_anchor_x') ); ?>" size="3"> x
           <input type="text" name="cb_map_options[marker_icon_anchor_y]" value="<?= esc_attr( CB_Map_Settings::get_option('marker_icon_anchor_y') ); ?>" size="3">
           (<?= cb_map\__('ANCHOR_POINT_DESC', 'commons-booking-map', 'seen from the left top corner of the image') ?>)
+        </td>
+      </tr>
+    </table>
+
+    <h2><?= cb_map\__('FILTER_CONFIGURATION', 'commons-booking-map', 'Filter Configuration') ?></h2>
+    <table style="text-align: left;">
+      <tr>
+        <th><?= cb_map\__('AVAILABLE_CATEGORIES', 'commons-booking-map', 'available categories')?>:</th>
+        <td>
+          <ul class="cb-map-settings-cat-filter-list">
+            <div class="category-wrapper">
+              <?= $available_categories_checklist_markup ?>
+            </div>
+          </ul>
+        </td>
+      </tr>
+    </table>
+
+    <table style="text-align: left;">
+      <tr>
+        <th><?= cb_map\__('PRESET_CATEGORIES', 'commons-booking-map', 'preset categories')?>:</th>
+        <td>
+          <ul class="cb-map-settings-cat-filter-list">
+            <div class="category-wrapper">
+              <?= $preset_categories_checklist_markup ?>
+            </div>
+          </ul>
         </td>
       </tr>
     </table>
