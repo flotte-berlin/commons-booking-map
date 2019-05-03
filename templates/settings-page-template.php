@@ -69,6 +69,16 @@ th {
       </tr>
     </table>
 
+    <h2><?= cb_map\__('CLUSTER', 'commons-booking-map', 'Cluster') ?></h2>
+    <table style="text-align: left;">
+      <tr>
+          <th><?= cb_map\__('MAX_CLUSTER_RADIUS', 'commons-booking-map', 'max. cluster radius') ?>:</th>
+          <td>
+            <input type="number" size="3" step="10" min="<?= CB_Map_Settings::MAX_CLUSTER_RADIUS_VALUE_MIN ?>" max="<?= CB_Map_Settings::MAX_CLUSTER_RADIUS_VALUE_MAX ?>" name="cb_map_options[max_cluster_radius]" value="<?= esc_attr( CB_Map_Settings::get_option('max_cluster_radius') ); ?>"> px (<?= cb_map\__('MAX_CLUSTER_RADIUS_DESC', 'commons-booking-map', '0 for deactivation') ?>)
+          </td>
+      </tr>
+    </table>
+
     <h2><?= cb_map\__('CUSTOM_MARKER', 'commons-booking-map', 'Custom Marker') ?></h2>
 
     <table style="text-align: left;">
@@ -104,7 +114,7 @@ th {
         <td>
           <input type="text" name="cb_map_options[marker_icon_anchor_x]" value="<?= esc_attr( CB_Map_Settings::get_option('marker_icon_anchor_x') ); ?>" size="3"> x
           <input type="text" name="cb_map_options[marker_icon_anchor_y]" value="<?= esc_attr( CB_Map_Settings::get_option('marker_icon_anchor_y') ); ?>" size="3">
-          (<?= cb_map\__('ANCHOR_POINT_DESC', 'commons-booking-map', 'seen from the left top corner of the image') ?>)
+          (<?= cb_map\__('ANCHOR_POINT_DESC', 'commons-booking-map', 'seen from the left top corner of the icon') ?>)
         </td>
       </tr>
     </table>

@@ -97,9 +97,16 @@ var cb_map = {
       this.markers.clearLayers();
     }
 
-    var markers = L.markerClusterGroup();
-
-    //console.log('settings: ', this.settings);
+    var markers;
+    if(this.settings.max_cluster_radius > 0) {
+      markers = L.markerClusterGroup({
+        showCoverageOnHover: false,
+        maxClusterRadius: this.settings.max_cluster_radius
+      });
+    }
+    else {
+      markers = L.layerGroup();
+    }
 
     var custom_marker_icon;
     if(this.settings.marker_icon) {
