@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: cb-admin-booking\n"
-"POT-Creation-Date: 2019-05-03 15:02+0200\n"
-"PO-Revision-Date: 2019-05-03 15:04+0200\n"
+"POT-Creation-Date: 2019-05-11 19:35+0200\n"
+"PO-Revision-Date: 2019-05-11 19:38+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -97,78 +97,90 @@ msgid "LONGITUDE_START"
 msgstr "Längengrad"
 
 #: ../templates/settings-page-template.php:72
+msgid "ADAPTIVE_MAP_SECTION"
+msgstr "Adaptiver Kartenausschnitt"
+
+#: ../templates/settings-page-template.php:76
+msgid "ADJUST_MAP_SECTION_TO_MARKERS_INITIALLY"
+msgstr "initiale Anpassung an Marker-Umgrenzung"
+
+#: ../templates/settings-page-template.php:82
+msgid "ADJUST_MAP_SECTION_TO_MARKERs_FILTER"
+msgstr "Anpassung an Marker-Umgrenzung nach Filterung"
+
+#: ../templates/settings-page-template.php:89
 msgid "CLUSTER"
 msgstr "Cluster"
 
-#: ../templates/settings-page-template.php:75
+#: ../templates/settings-page-template.php:92
 msgid "MAX_CLUSTER_RADIUS"
 msgstr "max. Cluster-Radius"
 
-#: ../templates/settings-page-template.php:77
+#: ../templates/settings-page-template.php:94
 msgid "MAX_CLUSTER_RADIUS_DESC"
 msgstr "0 für Deaktivierung"
 
-#: ../templates/settings-page-template.php:81
+#: ../templates/settings-page-template.php:99
 msgid "CUSTOM_MARKER"
 msgstr "angepasster Marker"
 
-#: ../templates/settings-page-template.php:85
+#: ../templates/settings-page-template.php:103
 msgid "IMAGE_FILE"
 msgstr "Bilddatei"
 
-#: ../templates/settings-page-template.php:87
+#: ../templates/settings-page-template.php:105
 msgid "SELECT"
 msgstr "auswählen"
 
-#: ../templates/settings-page-template.php:88
+#: ../templates/settings-page-template.php:106
 msgid "REMOVE"
 msgstr "entfernen"
 
-#: ../templates/settings-page-template.php:103
+#: ../templates/settings-page-template.php:121
 msgid "ICON_SIZE"
 msgstr "Icon Größe"
 
-#: ../templates/settings-page-template.php:107
+#: ../templates/settings-page-template.php:125
 msgid "ICON_SIZE_DESC"
 msgstr "Anzeige auf der Karte"
 
-#: ../templates/settings-page-template.php:112
+#: ../templates/settings-page-template.php:130
 msgid "ANCHOR_POINT"
 msgstr "Anker-Punkt"
 
-#: ../templates/settings-page-template.php:116
+#: ../templates/settings-page-template.php:134
 msgid "ANCHOR_POINT_DESC"
 msgstr "von der linken oberen Ecke des Icons ausgehend"
 
-#: ../templates/settings-page-template.php:121
+#: ../templates/settings-page-template.php:139
 msgid "POPUP"
 msgstr "Marker Popup"
 
-#: ../templates/settings-page-template.php:124
+#: ../templates/settings-page-template.php:142
 msgid "SHOW_LOCATION_CONTACT"
 msgstr "Zeige Standort-Kontakt"
 
-#: ../templates/settings-page-template.php:129
+#: ../templates/settings-page-template.php:147
 msgid "FILTER_CONFIGURATION"
 msgstr "Filter-Einstellungen"
 
-#: ../templates/settings-page-template.php:132
+#: ../templates/settings-page-template.php:150
 msgid "AVAILABLE_CATEGORIES"
 msgstr "verfügbare Kategorien für NutzerInnen"
 
-#: ../templates/settings-page-template.php:145
+#: ../templates/settings-page-template.php:163
 msgid "PRESET_CATEGORIES"
 msgstr "vorab gesetzte Kategorien"
 
-#: ../templates/settings-page-template.php:207
+#: ../templates/settings-page-template.php:225
 msgid "SELECT_IMAGE"
 msgstr "Bild auswählen"
 
-#: ../templates/settings-page-template.php:209
+#: ../templates/settings-page-template.php:227
 msgid "SAVE"
 msgstr "speichern"
 
-#: ../templates/settings-page-template.php:235
+#: ../templates/settings-page-template.php:253
 msgid "MARKER_IMAGE_MEASUREMENTS"
 msgstr "Bildmaße"
 

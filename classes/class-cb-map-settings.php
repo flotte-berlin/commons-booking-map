@@ -5,7 +5,7 @@
 **/
 class CB_Map_Settings {
 
-  const OPTION_KEYS = ['map_height', 'zoom_min', 'zoom_max', 'zoom_start', 'lat_start', 'lon_start', 'max_cluster_radius', 'custom_marker_media_id', 'marker_icon_width', 'marker_icon_height', 'marker_icon_anchor_x', 'marker_icon_anchor_y', 'show_location_contact', 'cb_items_available_categories', 'cb_items_preset_categories'];
+  const OPTION_KEYS = ['map_height', 'zoom_min', 'zoom_max', 'zoom_start', 'lat_start', 'lon_start', 'marker_map_bounds_initial', 'marker_map_bounds_filter', 'max_cluster_radius', 'custom_marker_media_id', 'marker_icon_width', 'marker_icon_height', 'marker_icon_anchor_x', 'marker_icon_anchor_y', 'show_location_contact', 'cb_items_available_categories', 'cb_items_preset_categories'];
 
   const MAP_HEIGHT_VALUE_MIN = 100;
   const MAP_HEIGHT_VALUE_MAX = 5000;
@@ -24,6 +24,8 @@ class CB_Map_Settings {
   const ZOOM_START_DEFAULT = 8;
   const LAT_START_DEFAULT = 52.49333;
   const LON_START_DEFAULT = 13.37933;
+  const MARKER_MAP_BOUNDS_INITIAL_DEFAULT = false;
+  const MARKER_MAP_BOUNDS_FILTER_DEFAULT = true;
   const MAX_CLUSTER_RADIUS_DEFAULT = 80;
   const CUSTOM_MARKER_MEDIA_ID_DEFAULT = null;
   const MARKER_ICON_WIDTH_DEFAULT = 0;
@@ -146,6 +148,12 @@ class CB_Map_Settings {
     if(isset($input['lon_start']) && (float) $input['lon_start'] >= self::LON_VALUE_MIN && (float) $input['lon_start'] <= self::LON_VALUE_MAX) {
       $validated_input['lon_start'] = (float) $input['lon_start'];
     }
+
+    //marker_map_bounds_initial
+    $validated_input['marker_map_bounds_initial'] = isset($input['marker_map_bounds_initial']) ? true : false;
+
+    //marker_map_bounds_filter
+    $validated_input['marker_map_bounds_filter'] = isset($input['marker_map_bounds_filter']) ? true : false;
 
     //max_cluster_radius
     if(isset($input['max_cluster_radius']) && (int) $input['max_cluster_radius'] >= self::MAX_CLUSTER_RADIUS_VALUE_MIN && $input['max_cluster_radius'] <= self::MAX_CLUSTER_RADIUS_VALUE_MAX) {

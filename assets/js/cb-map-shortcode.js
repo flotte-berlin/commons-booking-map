@@ -51,7 +51,7 @@ var cb_map = {
     }
 
   	// set up the map
-  	map = new L.Map('cb-map');
+  	var map = new L.Map('cb-map');
 
   	// create the tile layer with correct attribution
   	var osm = new L.TileLayer(osm_url, map_options);
@@ -83,14 +83,14 @@ var cb_map = {
       var location_data = JSON.parse(response);
       console.log('location data: ', location_data);
 
-      that.render_locations(location_data);
+      that.render_locations(location_data, filters);
 
       that.map.spin(false);
 		});
 
   },
 
-  render_locations: function(data) {
+  render_locations: function(data, filters) {
     var that = this;
 
     if(this.markers) {
@@ -164,7 +164,18 @@ var cb_map = {
       that.markers = markers;
     });
 
-    map.addLayer(markers);
+    this.map.addLayer(markers);
+
+    //adjust map section to marker bounds based on settings
+    if((filters.length > 0 && this.settings.marker_map_bounds_filter) || (filters.length == 0 && this.settings.marker_map_bounds_initial)) {
+      if(Object.keys(data).length > 0) {
+        that.map.fitBounds(markers.getBounds());
+      }
+      else {
+        this.map.setView(new L.LatLng(this.settings.lat_start, this.settings.lon_start), this.settings.zoom_start);
+      }
+    }
+
   }
 }
 

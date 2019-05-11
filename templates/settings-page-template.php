@@ -69,6 +69,23 @@ th {
       </tr>
     </table>
 
+    <h2><?= cb_map\__('ADAPTIVE_MAP_SECTION', 'commons-booking-map', 'Adaptive Map Section') ?></h2>
+
+    <table style="text-align: left;">
+      <tr>
+          <th><?= cb_map\__('ADJUST_MAP_SECTION_TO_MARKERS_INITIALLY', 'commons-booking-map', 'initial adjustment to marker bounds') ?>:</th>
+          <td>
+            <input type="checkbox" name="cb_map_options[marker_map_bounds_initial]" <?= CB_Map_Settings::get_option('marker_map_bounds_initial') ? 'checked="checked"' : '' ?> value="on">
+          </td>
+      </tr>
+      <tr>
+          <th><?= cb_map\__('ADJUST_MAP_SECTION_TO_MARKERs_FILTER', 'commons-booking-map', 'adjustment to marker bounds on filter') ?>:</th>
+          <td>
+            <input type="checkbox" name="cb_map_options[marker_map_bounds_filter]" <?= CB_Map_Settings::get_option('marker_map_bounds_filter') ? 'checked="checked"' : '' ?> value="on">
+          </td>
+      </tr>
+    </table>
+
     <h2><?= cb_map\__('CLUSTER', 'commons-booking-map', 'Cluster') ?></h2>
     <table style="text-align: left;">
       <tr>
@@ -123,7 +140,7 @@ th {
     <table style="text-align: left;">
       <tr>
           <th><?= cb_map\__('SHOW_LOCATION_CONTACT', 'commons-booking-map', 'show location contact') ?>:</th>
-          <td><input type="checkbox" name="cb_map_options[show_location_contact]" <?= CB_Map_Settings::get_option('show_location_contact') ? 'checked="checked"' : '' ?>" value="on"></td>
+          <td><input type="checkbox" name="cb_map_options[show_location_contact]" <?= CB_Map_Settings::get_option('show_location_contact') ? 'checked="checked"' : '' ?> value="on"></td>
       </tr>
     </table>
 
