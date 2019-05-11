@@ -36,8 +36,8 @@ if(cb_map\is_plugin_active('commons-booking.php')) {
   $cb_map_settings->prepare_settings();
   add_filter( "plugin_action_links_" . plugin_basename( __FILE__ ), array($cb_map_settings, 'add_settings_link') );
 
-  //location admininstration
-  require_once( CB_MAP_PATH . 'classes/class-cb-map-admin.php' );
-  $cb_map_admin = new CB_Map_Admin();
-  add_action( 'plugins_loaded', array($cb_map_admin, 'load_special_days_admin'));
+  //location map administration
+  require_once( CB_MAP_PATH . 'classes/class-cb-location-map-admin.php' );
+  $cb_map_admin = new CB_Location_Map_Admin();
+  add_action( 'plugins_loaded', array($cb_map_admin, 'load_location_map_admin'));
 }

@@ -1,11 +1,11 @@
 <?php
 
-class CB_Map_Admin {
+class CB_Location_Map_Admin {
 
   /**
   * loads special days admin functionality
   */
-  public function load_special_days_admin() {
+  public function load_location_map_admin() {
 
     require_once( CB_MAP_PATH . '../commons-booking/admin/includes/CMB2/init.php' );
 
