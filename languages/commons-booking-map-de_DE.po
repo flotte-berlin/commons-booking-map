@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: cb-admin-booking\n"
-"POT-Creation-Date: 2019-05-11 19:35+0200\n"
-"PO-Revision-Date: 2019-05-11 19:38+0200\n"
+"POT-Creation-Date: 2019-05-12 14:43+0200\n"
+"PO-Revision-Date: 2019-05-12 15:02+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -14,31 +14,31 @@ msgstr ""
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../classes/class-cb-map-admin.php:50
+#: ../classes/class-cb-location-map-admin.php:50
 msgid "MAP_POSITIONING"
 msgstr "Kartenpositionierung"
 
-#: ../classes/class-cb-map-admin.php:58
+#: ../classes/class-cb-location-map-admin.php:58
 msgid "LATITUDE"
 msgstr "Breitengrad"
 
-#: ../classes/class-cb-map-admin.php:64
+#: ../classes/class-cb-location-map-admin.php:64
 msgid "LONGITUDE"
 msgstr "Längengrad"
 
-#: ../classes/class-cb-map-admin.php:70
+#: ../classes/class-cb-location-map-admin.php:70
 msgid "POSITION"
 msgstr "Position"
 
-#: ../classes/class-cb-map-settings.php:44
+#: ../classes/class-cb-map-settings.php:46
 msgid "SETTINGS_TITLE"
 msgstr "Einstellungen für Commons Booking - Karte"
 
-#: ../classes/class-cb-map-settings.php:44
+#: ../classes/class-cb-map-settings.php:46
 msgid "SETTINGS_MENU"
 msgstr "Commons Booking - Karte"
 
-#: ../classes/class-cb-map-settings.php:218
+#: ../classes/class-cb-map-settings.php:226
 msgid "Settings"
 msgstr ""
 
@@ -64,123 +64,193 @@ msgstr ""
 msgid "MAP_PRESENTATION"
 msgstr "Kartendarstellung"
 
-#: ../templates/settings-page-template.php:36
+#: ../templates/settings-page-template.php:37
 msgid "MAP_HEIGHT"
 msgstr "Höhe"
 
-#: ../templates/settings-page-template.php:41
+#: ../templates/settings-page-template.php:38
+msgid "MAP_HEIGHT_DESC"
+msgstr ""
+"die Höhe, mit der die Karte angezeigt wird - die Breite entspricht der des "
+"Elternelements"
+
+#: ../templates/settings-page-template.php:44
 msgid "ZOOM"
 msgstr "Zoom"
 
-#: ../templates/settings-page-template.php:45
+#: ../templates/settings-page-template.php:49
 msgid "MIN_ZOOM_LEVEL"
 msgstr "min. Zoom-Level"
 
-#: ../templates/settings-page-template.php:49
+#: ../templates/settings-page-template.php:50
+msgid "MIN_ZOOM_LEVEL_DESC"
+msgstr "das minimale Zoom-Level, das von NuzerInnen gewählt werden kann"
+
+#: ../templates/settings-page-template.php:56
 msgid "MAX_ZOOM_LEVEL"
 msgstr "max. Zoom-Level"
 
-#: ../templates/settings-page-template.php:53
+#: ../templates/settings-page-template.php:57
+msgid "MAX_ZOOM_LEVEL_DESC"
+msgstr "das maximale Zoom-Level, das von NuzerInnen gewählt werden kann"
+
+#: ../templates/settings-page-template.php:63
 msgid "START_ZOOM_LEVEL"
 msgstr "initiales Zoom-Level"
 
-#: ../templates/settings-page-template.php:58
+#: ../templates/settings-page-template.php:64
+msgid "START_ZOOM_LEVEL_DESC"
+msgstr "dieses Zoom-Level wird gesetzt, wenn die Karte geladen wird"
+
+#: ../templates/settings-page-template.php:70
 msgid "POSITIONING_START"
 msgstr "initiale Kartenpositionierung (Mittelpunkt)"
 
-#: ../templates/settings-page-template.php:62
+#: ../templates/settings-page-template.php:75
 msgid "LATITUDE_START"
 msgstr "Breitengrad"
 
-#: ../templates/settings-page-template.php:67
+#: ../templates/settings-page-template.php:76
+msgid "LATITUDE_START_DESC"
+msgstr ""
+"der geografische Breitengrad des Kartenmittelpunkts, wenn die Karte geladen "
+"wird"
+
+#: ../templates/settings-page-template.php:83
 msgid "LONGITUDE_START"
 msgstr "Längengrad"
 
-#: ../templates/settings-page-template.php:72
+#: ../templates/settings-page-template.php:84
+msgid "LONGITUDE_START_DESC"
+msgstr ""
+"der geografische Längengrad des Kartenmittelpunkts, wenn die Karte geladen "
+"wird"
+
+#: ../templates/settings-page-template.php:90
 msgid "ADAPTIVE_MAP_SECTION"
 msgstr "Adaptiver Kartenausschnitt"
 
-#: ../templates/settings-page-template.php:76
+#: ../templates/settings-page-template.php:95
 msgid "ADJUST_MAP_SECTION_TO_MARKERS_INITIALLY"
 msgstr "initiale Anpassung an Marker-Umgrenzung"
 
-#: ../templates/settings-page-template.php:82
-msgid "ADJUST_MAP_SECTION_TO_MARKERs_FILTER"
+#: ../templates/settings-page-template.php:96
+msgid "ADJUST_MAP_SECTION_TO_MARKERS_INITIALLY_DESC"
+msgstr ""
+"automatische Anpassung des Kartenausschnitts an den von Markern abgedeckten "
+"Bereich, wenn die Karte geladen wird"
+
+#: ../templates/settings-page-template.php:104
+msgid "ADJUST_MAP_SECTION_TO_MARKERS_FILTER"
 msgstr "Anpassung an Marker-Umgrenzung nach Filterung"
 
-#: ../templates/settings-page-template.php:89
+#: ../templates/settings-page-template.php:105
+msgid "ADJUST_MAP_SECTION_TO_MARKERS_FILTER_DESC"
+msgstr ""
+"automatische Anpassung des Kartenausschnitts an den von Markern abgedeckten "
+"Bereich, wenn diese von NutzerInnen gefiltert werden"
+
+#: ../templates/settings-page-template.php:113
 msgid "CLUSTER"
 msgstr "Cluster"
 
-#: ../templates/settings-page-template.php:92
+#: ../templates/settings-page-template.php:117
 msgid "MAX_CLUSTER_RADIUS"
 msgstr "max. Cluster-Radius"
 
-#: ../templates/settings-page-template.php:94
+#: ../templates/settings-page-template.php:118
 msgid "MAX_CLUSTER_RADIUS_DESC"
-msgstr "0 für Deaktivierung"
+msgstr ""
+"Radius innerhalb dessen mehrere Marker zu einem Cluster zusammengefasst "
+"werden - 0 für Deaktivierung"
 
-#: ../templates/settings-page-template.php:99
+#: ../templates/settings-page-template.php:126
 msgid "CUSTOM_MARKER"
 msgstr "angepasster Marker"
 
-#: ../templates/settings-page-template.php:103
+#: ../templates/settings-page-template.php:131
 msgid "IMAGE_FILE"
 msgstr "Bilddatei"
 
-#: ../templates/settings-page-template.php:105
+#: ../templates/settings-page-template.php:132
+msgid "IMAGE_FILE_DESC"
+msgstr "der Standard Marker kann durch ein eigenes Bild ersetzt werden"
+
+#: ../templates/settings-page-template.php:135
 msgid "SELECT"
 msgstr "auswählen"
 
-#: ../templates/settings-page-template.php:106
+#: ../templates/settings-page-template.php:136
 msgid "REMOVE"
 msgstr "entfernen"
 
-#: ../templates/settings-page-template.php:121
+#: ../templates/settings-page-template.php:152
 msgid "ICON_SIZE"
 msgstr "Icon Größe"
 
-#: ../templates/settings-page-template.php:125
+#: ../templates/settings-page-template.php:153
 msgid "ICON_SIZE_DESC"
-msgstr "Anzeige auf der Karte"
+msgstr ""
+"die Größe des angepassten Marker-Bildes, mit der es auf der Karte angezeigt "
+"wird"
 
-#: ../templates/settings-page-template.php:130
+#: ../templates/settings-page-template.php:163
 msgid "ANCHOR_POINT"
 msgstr "Anker-Punkt"
 
-#: ../templates/settings-page-template.php:134
+#: ../templates/settings-page-template.php:164
 msgid "ANCHOR_POINT_DESC"
-msgstr "von der linken oberen Ecke des Icons ausgehend"
+msgstr ""
+"die Position des Ankerpunkts des Marker-Bildes von der linken oberen Ecke "
+"des Icons ausgehend, oftmals entspricht sie der halben Breite und der vollen "
+"Höhe der Icon-Größe - mit diesem Punkt wird der Marker auf den "
+"Geokoordinaten platziert"
 
-#: ../templates/settings-page-template.php:139
+#: ../templates/settings-page-template.php:173
 msgid "POPUP"
 msgstr "Marker Popup"
 
-#: ../templates/settings-page-template.php:142
+#: ../templates/settings-page-template.php:177
 msgid "SHOW_LOCATION_CONTACT"
-msgstr "Zeige Standort-Kontakt"
+msgstr "zeige Standort-Kontakt"
 
-#: ../templates/settings-page-template.php:147
+#: ../templates/settings-page-template.php:178
+msgid "SHOW_LOCATION_CONTACT_DESC"
+msgstr "aktivieren, um die Standort-Kontaktdaten im Marker-Popup anzuzeigen"
+
+#: ../templates/settings-page-template.php:184
 msgid "FILTER_CONFIGURATION"
 msgstr "Filter-Einstellungen"
 
-#: ../templates/settings-page-template.php:150
+#: ../templates/settings-page-template.php:188
 msgid "AVAILABLE_CATEGORIES"
 msgstr "verfügbare Kategorien für NutzerInnen"
 
-#: ../templates/settings-page-template.php:163
+#: ../templates/settings-page-template.php:189
+msgid "AVAILABLE_CATEGORIES_DESC"
+msgstr ""
+"Auswahl der Kategorien, die NutzerInnen angezeigt werden, um Artikel zu "
+"filtern - keine für Deaktivierung von Filtern"
+
+#: ../templates/settings-page-template.php:204
 msgid "PRESET_CATEGORIES"
 msgstr "vorab gesetzte Kategorien"
 
-#: ../templates/settings-page-template.php:225
+#: ../templates/settings-page-template.php:205
+msgid "PRESET_CATEGORIES_DESC"
+msgstr ""
+"Auswahl der Kategorien, die genutzt werden, um Artikel vorzufiltern, die auf "
+"der Karte angezeigt werden - keine für alle Artikel"
+
+#: ../templates/settings-page-template.php:268
 msgid "SELECT_IMAGE"
 msgstr "Bild auswählen"
 
-#: ../templates/settings-page-template.php:227
+#: ../templates/settings-page-template.php:270
 msgid "SAVE"
 msgstr "speichern"
 
-#: ../templates/settings-page-template.php:253
+#: ../templates/settings-page-template.php:296
 msgid "MARKER_IMAGE_MEASUREMENTS"
 msgstr "Bildmaße"
 
