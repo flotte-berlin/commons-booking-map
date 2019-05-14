@@ -84,11 +84,10 @@ var cb_map_positioning = {
 
 jQuery(document).ready(function ($) {
 
-  //TODO: check if lat/lon is given, otherwise search nominatim
   var $latitude = jQuery('#cb-map_latitude');
   var $longitude = jQuery('#cb-map_longitude');
 
-  //set initial marker
+  //set initial marker: check if lat/lon is given, otherwise search nominatim
   if(!cb_map_positioning.is_lat_lon($latitude.val(), $longitude.val())) {
     cb_map_positioning.search();
   }
@@ -96,7 +95,7 @@ jQuery(document).ready(function ($) {
     cb_map_positioning.init_map(parseFloat($latitude.val()), parseFloat($longitude.val()), true);
   }
 
-  //event listeners on lat/lon $input - repostion marker
+  //event listeners on lat/lon $input - reposition marker
   $latitude.change(function() {
     if(cb_map_positioning.is_lat_lon($latitude.val(), $longitude.val())) {
       cb_map_positioning.set_marker_position(parseFloat($latitude.val()), parseFloat($longitude.val()));

@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: cb-admin-booking\n"
-"POT-Creation-Date: 2019-05-12 14:43+0200\n"
-"PO-Revision-Date: 2019-05-12 15:02+0200\n"
+"POT-Creation-Date: 2019-05-12 17:06+0200\n"
+"PO-Revision-Date: 2019-05-12 17:06+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -38,9 +38,21 @@ msgstr "Einstellungen für Commons Booking - Karte"
 msgid "SETTINGS_MENU"
 msgstr "Commons Booking - Karte"
 
-#: ../classes/class-cb-map-settings.php:226
+#: ../classes/class-cb-map-settings.php:227
 msgid "Settings"
 msgstr ""
+
+#: ../classes/class-cb-map-settings.php:241
+msgid "SELECT_IMAGE"
+msgstr "Bild auswählen"
+
+#: ../classes/class-cb-map-settings.php:242
+msgid "SAVE"
+msgstr "speichern"
+
+#: ../classes/class-cb-map-settings.php:243
+msgid "MARKER_IMAGE_MEASUREMENTS"
+msgstr "Bildmaße"
 
 #: ../classes/class-cb-map-shortcode.php:91
 msgid "OPENING_HOURS"
@@ -151,54 +163,60 @@ msgstr ""
 "Bereich, wenn diese von NutzerInnen gefiltert werden"
 
 #: ../templates/settings-page-template.php:113
-msgid "CLUSTER"
-msgstr "Cluster"
+msgid "POPUP"
+msgstr "Marker Popup"
 
 #: ../templates/settings-page-template.php:117
-msgid "MAX_CLUSTER_RADIUS"
-msgstr "max. Cluster-Radius"
+msgid "SHOW_LOCATION_CONTACT"
+msgstr "zeige Standort-Kontakt"
 
 #: ../templates/settings-page-template.php:118
-msgid "MAX_CLUSTER_RADIUS_DESC"
-msgstr ""
-"Radius innerhalb dessen mehrere Marker zu einem Cluster zusammengefasst "
-"werden - 0 für Deaktivierung"
+msgid "SHOW_LOCATION_CONTACT_DESC"
+msgstr "aktivieren, um die Standort-Kontaktdaten im Marker-Popup anzuzeigen"
 
-#: ../templates/settings-page-template.php:126
+#: ../templates/settings-page-template.php:124
 msgid "CUSTOM_MARKER"
 msgstr "angepasster Marker"
 
-#: ../templates/settings-page-template.php:131
+#: ../templates/settings-page-template.php:129
+#: ../templates/settings-page-template.php:189
 msgid "IMAGE_FILE"
 msgstr "Bilddatei"
 
-#: ../templates/settings-page-template.php:132
+#: ../templates/settings-page-template.php:130
+#: ../templates/settings-page-template.php:190
 msgid "IMAGE_FILE_DESC"
 msgstr "der Standard Marker kann durch ein eigenes Bild ersetzt werden"
 
-#: ../templates/settings-page-template.php:135
+#: ../templates/settings-page-template.php:133
+#: ../templates/settings-page-template.php:193
 msgid "SELECT"
 msgstr "auswählen"
 
-#: ../templates/settings-page-template.php:136
+#: ../templates/settings-page-template.php:134
+#: ../templates/settings-page-template.php:194
 msgid "REMOVE"
 msgstr "entfernen"
 
-#: ../templates/settings-page-template.php:152
+#: ../templates/settings-page-template.php:150
+#: ../templates/settings-page-template.php:210
 msgid "ICON_SIZE"
 msgstr "Icon Größe"
 
-#: ../templates/settings-page-template.php:153
+#: ../templates/settings-page-template.php:151
+#: ../templates/settings-page-template.php:211
 msgid "ICON_SIZE_DESC"
 msgstr ""
 "die Größe des angepassten Marker-Bildes, mit der es auf der Karte angezeigt "
 "wird"
 
-#: ../templates/settings-page-template.php:163
+#: ../templates/settings-page-template.php:161
+#: ../templates/settings-page-template.php:221
 msgid "ANCHOR_POINT"
 msgstr "Anker-Punkt"
 
-#: ../templates/settings-page-template.php:164
+#: ../templates/settings-page-template.php:162
+#: ../templates/settings-page-template.php:222
 msgid "ANCHOR_POINT_DESC"
 msgstr ""
 "die Position des Ankerpunkts des Marker-Bildes von der linken oberen Ecke "
@@ -206,53 +224,47 @@ msgstr ""
 "Höhe der Icon-Größe - mit diesem Punkt wird der Marker auf den "
 "Geokoordinaten platziert"
 
-#: ../templates/settings-page-template.php:173
-msgid "POPUP"
-msgstr "Marker Popup"
+#: ../templates/settings-page-template.php:171
+msgid "CLUSTER"
+msgstr "Cluster"
 
-#: ../templates/settings-page-template.php:177
-msgid "SHOW_LOCATION_CONTACT"
-msgstr "zeige Standort-Kontakt"
+#: ../templates/settings-page-template.php:175
+msgid "MAX_CLUSTER_RADIUS"
+msgstr "max. Cluster-Radius"
 
-#: ../templates/settings-page-template.php:178
-msgid "SHOW_LOCATION_CONTACT_DESC"
-msgstr "aktivieren, um die Standort-Kontaktdaten im Marker-Popup anzuzeigen"
+#: ../templates/settings-page-template.php:176
+msgid "MAX_CLUSTER_RADIUS_DESC"
+msgstr ""
+"Radius innerhalb dessen mehrere Marker zu einem Cluster zusammengefasst "
+"werden - 0 für Deaktivierung"
 
 #: ../templates/settings-page-template.php:184
+msgid "CUSTOM_CLUSTER_MARKER"
+msgstr "angepasster Cluster-Marker"
+
+#: ../templates/settings-page-template.php:231
 msgid "FILTER_CONFIGURATION"
 msgstr "Filter-Einstellungen"
 
-#: ../templates/settings-page-template.php:188
+#: ../templates/settings-page-template.php:235
 msgid "AVAILABLE_CATEGORIES"
 msgstr "verfügbare Kategorien für NutzerInnen"
 
-#: ../templates/settings-page-template.php:189
+#: ../templates/settings-page-template.php:236
 msgid "AVAILABLE_CATEGORIES_DESC"
 msgstr ""
 "Auswahl der Kategorien, die NutzerInnen angezeigt werden, um Artikel zu "
 "filtern - keine für Deaktivierung von Filtern"
 
-#: ../templates/settings-page-template.php:204
+#: ../templates/settings-page-template.php:251
 msgid "PRESET_CATEGORIES"
 msgstr "vorab gesetzte Kategorien"
 
-#: ../templates/settings-page-template.php:205
+#: ../templates/settings-page-template.php:252
 msgid "PRESET_CATEGORIES_DESC"
 msgstr ""
 "Auswahl der Kategorien, die genutzt werden, um Artikel vorzufiltern, die auf "
 "der Karte angezeigt werden - keine für alle Artikel"
-
-#: ../templates/settings-page-template.php:268
-msgid "SELECT_IMAGE"
-msgstr "Bild auswählen"
-
-#: ../templates/settings-page-template.php:270
-msgid "SAVE"
-msgstr "speichern"
-
-#: ../templates/settings-page-template.php:296
-msgid "MARKER_IMAGE_MEASUREMENTS"
-msgstr "Bildmaße"
 
 #~ msgid "UPLOAD_IMAGE"
 #~ msgstr "hochladen"

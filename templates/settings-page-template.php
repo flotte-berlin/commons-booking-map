@@ -110,16 +110,14 @@ th {
       </tr>
     </table>
 
-    <h2><?= cb_map\__('CLUSTER', 'commons-booking-map', 'Cluster') ?></h2>
+    <h2><?= cb_map\__('POPUP', 'commons-booking-map', 'Marker Popup') ?></h2>
     <table style="text-align: left;">
       <tr>
           <th>
-            <?= cb_map\__('MAX_CLUSTER_RADIUS', 'commons-booking-map', 'max. cluster radius') ?>:
-            <span style="cursor: help;" class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'MAX_CLUSTER_RADIUS_DESC', 'commons-booking-map', 'combine markers to a cluster within given radius - 0 for deactivation') ?>"></span>
+            <?= cb_map\__('SHOW_LOCATION_CONTACT', 'commons-booking-map', 'show location contact') ?>:
+            <span style="cursor: help;" class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'SHOW_LOCATION_CONTACT_DESC', 'commons-booking-map', 'activate to show  the location contact details in the marker popup') ?>"></span>
           </th>
-          <td>
-            <input type="number" size="3" step="10" min="<?= CB_Map_Settings::MAX_CLUSTER_RADIUS_VALUE_MIN ?>" max="<?= CB_Map_Settings::MAX_CLUSTER_RADIUS_VALUE_MAX ?>" name="cb_map_options[max_cluster_radius]" value="<?= esc_attr( CB_Map_Settings::get_option('max_cluster_radius') ); ?>"> px
-          </td>
+          <td><input type="checkbox" name="cb_map_options[show_location_contact]" <?= CB_Map_Settings::get_option('show_location_contact') ? 'checked="checked"' : '' ?> value="on"></td>
       </tr>
     </table>
 
@@ -132,19 +130,19 @@ th {
           <span style="cursor: help;" class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'IMAGE_FILE_DESC', 'commons-booking-map', 'the default marker icon can be replaced by a custom image') ?>"></span>
         </th>
         <td>
-          <input id="select_image_button" type="button" class="button" value="<?= cb_map\__('SELECT', 'commons-booking-map', 'select') ?>" />
-          <input id="remove_image_button" type="button" class="button" value="<?= cb_map\__('REMOVE', 'commons-booking-map', 'remove') ?>" />
+          <input id="select-marker-image-button" type="button" class="button" value="<?= cb_map\__('SELECT', 'commons-booking-map', 'select') ?>" />
+          <input id="remove-marker-image-button" type="button" class="button" value="<?= cb_map\__('REMOVE', 'commons-booking-map', 'remove') ?>" />
         </td>
       </tr>
-      <tr id="image-preview-settings" style="display: none;">
+      <tr id="marker-image-preview-settings" style="display: none;">
         <td>
           <div>
-              <img id="image-preview" src="<?= wp_get_attachment_url(CB_Map_Settings::get_option('custom_marker_media_id')); ?>">
+              <img id="marker-image-preview" src="<?= wp_get_attachment_url(CB_Map_Settings::get_option('custom_marker_media_id')); ?>">
           </div>
-          <input type="hidden" name="cb_map_options[custom_marker_media_id]" id="custom_marker_media_id" value="<?= CB_Map_Settings::get_option('custom_marker_media_id') ?>">
+          <input type="hidden" name="cb_map_options[custom_marker_media_id]" value="<?= CB_Map_Settings::get_option('custom_marker_media_id') ?>">
         </td>
         <td>
-          <div id="image-preview-measurements"></div>
+          <div id="marker-image-preview-measurements"></div>
         </td>
       </tr>
       <tr id="marker-icon-size" style="display: none;">
@@ -170,14 +168,53 @@ th {
       </tr>
     </table>
 
-    <h2><?= cb_map\__('POPUP', 'commons-booking-map', 'Marker Popup') ?></h2>
+    <h2><?= cb_map\__('CLUSTER', 'commons-booking-map', 'Cluster') ?></h2>
     <table style="text-align: left;">
       <tr>
           <th>
-            <?= cb_map\__('SHOW_LOCATION_CONTACT', 'commons-booking-map', 'show location contact') ?>:
-            <span style="cursor: help;" class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'SHOW_LOCATION_CONTACT_DESC', 'commons-booking-map', 'activate to show  the location contact details in the marker popup') ?>"></span>
+            <?= cb_map\__('MAX_CLUSTER_RADIUS', 'commons-booking-map', 'max. cluster radius') ?>:
+            <span style="cursor: help;" class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'MAX_CLUSTER_RADIUS_DESC', 'commons-booking-map', 'combine markers to a cluster within given radius - 0 for deactivation') ?>"></span>
           </th>
-          <td><input type="checkbox" name="cb_map_options[show_location_contact]" <?= CB_Map_Settings::get_option('show_location_contact') ? 'checked="checked"' : '' ?> value="on"></td>
+          <td>
+            <input type="number" size="3" step="10" min="<?= CB_Map_Settings::MAX_CLUSTER_RADIUS_VALUE_MIN ?>" max="<?= CB_Map_Settings::MAX_CLUSTER_RADIUS_VALUE_MAX ?>" name="cb_map_options[max_cluster_radius]" value="<?= esc_attr( CB_Map_Settings::get_option('max_cluster_radius') ); ?>"> px
+          </td>
+      </tr>
+    </table>
+
+    <h2><?= cb_map\__('CUSTOM_CLUSTER_MARKER', 'commons-booking-map', 'Custom Cluster Marker') ?></h2>
+
+    <table style="text-align: left;">
+      <tr>
+        <th>
+          <?= cb_map\__('IMAGE_FILE', 'commons-booking-map', 'image file') ?>:
+          <span style="cursor: help;" class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'IMAGE_FILE_DESC', 'commons-booking-map', 'the default marker icon can be replaced by a custom image') ?>"></span>
+        </th>
+        <td>
+          <input id="select-marker-cluster-image-button" type="button" class="button" value="<?= cb_map\__('SELECT', 'commons-booking-map', 'select') ?>" />
+          <input id="remove-marker-cluster-image-button" type="button" class="button" value="<?= cb_map\__('REMOVE', 'commons-booking-map', 'remove') ?>" />
+        </td>
+      </tr>
+      <tr id="marker-cluster-image-preview-settings" style="display: none;">
+        <td>
+          <div>
+              <img id="marker-cluster-image-preview" src="<?= wp_get_attachment_url(CB_Map_Settings::get_option('custom_marker_cluster_media_id')); ?>">
+          </div>
+          <input type="hidden" name="cb_map_options[custom_marker_cluster_media_id]" value="<?= CB_Map_Settings::get_option('custom_marker_cluster_media_id') ?>">
+        </td>
+        <td>
+          <div id="marker-cluster-image-preview-measurements"></div>
+        </td>
+      </tr>
+      <tr id="marker-cluster-icon-size" style="display: none;">
+          <th>
+            <?= cb_map\__('ICON_SIZE', 'commons-booking-map', 'icon size') ?>:
+            <span style="cursor: help;" class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'ICON_SIZE_DESC', 'commons-booking-map', 'the size of the custom marker icon image as it is shown on the map') ?>"></span>
+          </th>
+          <td>
+            <input type="text" name="cb_map_options[marker_cluster_icon_width]" value="<?= esc_attr( CB_Map_Settings::get_option('marker_cluster_icon_width') ); ?>" size="3"> x
+            <input type="text" name="cb_map_options[marker_cluster_icon_height]" value="<?= esc_attr( CB_Map_Settings::get_option('marker_cluster_icon_height') ); ?>" size="3"> px
+          </td>
+
       </tr>
     </table>
 
@@ -218,102 +255,3 @@ th {
   </form>
 
 </div>
-
-<script>
-
-//based on: https://jeroensormani.com/how-to-include-the-wordpress-media-selector-in-your-plugin/
-jQuery( document ).ready( function( $ ) {
-
-			// uploading files
-			var file_frame;
-			var wp_media_post_id = wp.media.model.settings.post.id; // Store the old id
-			var set_to_post_id = $('#custom_marker_media_id').val();
-
-      $('#remove_image_button').on('click', function(event) {
-        event.preventDefault();
-
-        $( '#custom_marker_media_id' ).val( '' );
-        $( '#image-preview' ).attr( 'src', '' );
-
-        $('input[name="cb_map_options[marker_icon_width]"').val(0);
-        $('input[name="cb_map_options[marker_icon_height]"').val(0);
-        $('input[name="cb_map_options[marker_icon_anchor_x]"').val(0);
-        $('input[name="cb_map_options[marker_icon_anchor_y]"').val(0);
-
-        $('#image-preview-settings').hide();
-        $('#image-preview-measurements').text('');
-        $('#marker-icon-size').hide();
-        $('#marker-icon-anchor').hide();
-
-      });
-
-			$('#select_image_button').on('click', function(event) {
-
-				event.preventDefault();
-				// if the media frame already exists, reopen it.
-				if ( file_frame ) {
-					// Set the post ID to what we want
-					file_frame.uploader.uploader.param( 'post_id', set_to_post_id );
-					// Open frame
-					file_frame.open();
-					return;
-
-				} else {
-					// set the wp.media post id so the uploader grabs the ID we want when initialised
-					wp.media.model.settings.post.id = set_to_post_id;
-				}
-
-				// create the media frame
-				file_frame = wp.media.frames.file_frame = wp.media({
-					title: '<?= cb_map\__('SELECT_IMAGE', 'commons-booking-map', 'Select an image') ?>',
-					button: {
-						text: '<?= cb_map\__('SAVE', 'commons-booking-map', 'save') ?>',
-					},
-					multiple: false
-				});
-
-				// image select callback
-				file_frame.on( 'select', function() {
-					attachment = file_frame.state().get('selection').first().toJSON();
-					// Do something with attachment.id and/or attachment.url here
-					$( '#image-preview' ).attr( 'src', attachment.url ).css( 'width', 'auto' );
-					$( '#custom_marker_media_id' ).val( attachment.id );
-					// restore the main post ID
-					wp.media.model.settings.post.id = wp_media_post_id;
-				});
-
-				// finally, open the modal
-				file_frame.open();
-			});
-
-			// restore the main ID when the add media button is pressed
-			$( 'a.add_media' ).on( 'click', function() {
-				wp.media.model.settings.post.id = wp_media_post_id;
-			});
-
-      $('#image-preview').load(function() {
-        $('#image-preview-settings').show();
-        $('#image-preview-measurements').text('<?= cb_map\__('MARKER_IMAGE_MEASUREMENTS', 'commons-booking-map', 'measurements') ?>: ' + $('#image-preview').width() + ' x ' + $('#image-preview').height() + ' px');
-        $('#marker-icon-size').show();
-        $('#marker-icon-anchor').show();
-
-        if($('input[name="cb_map_options[marker_icon_width]"').val() == 0) {
-          $('input[name="cb_map_options[marker_icon_width]"').val($('#image-preview').width());
-        }
-
-        if($('input[name="cb_map_options[marker_icon_height]"').val() == 0) {
-          $('input[name="cb_map_options[marker_icon_height]"').val($('#image-preview').height());
-        }
-
-        if($('input[name="cb_map_options[marker_icon_anchor_x]"').val() == 0) {
-          $('input[name="cb_map_options[marker_icon_anchor_x]"').val($('#image-preview').width() / 2);
-        }
-
-        if($('input[name="cb_map_options[marker_icon_anchor_y]"').val() == 0) {
-          $('input[name="cb_map_options[marker_icon_anchor_y]"').val($('#image-preview').height());
-        }
-
-      });
-		});
-
-</script>

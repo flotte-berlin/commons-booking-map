@@ -68,6 +68,17 @@ class CB_Map_Shortcode {
           ];
         }
       }
+      else if($key == 'custom_marker_cluster_media_id') {
+        if($value != null) {
+          $settings['marker_cluster_icon'] = [
+            'url'       => wp_get_attachment_url($options['custom_marker_cluster_media_id']),
+            'size'      => [
+              'width' => $options['marker_cluster_icon_width'],
+              'height' => $options['marker_cluster_icon_height']
+            ]
+          ];
+        }
+      }
       else if ($key == 'cb_items_available_categories') {
         $terms = get_terms([
           'taxonomy' => 'cb_items_category',

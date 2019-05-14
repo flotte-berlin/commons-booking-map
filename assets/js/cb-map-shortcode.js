@@ -99,10 +99,30 @@ var cb_map = {
 
     var markers;
     if(this.settings.max_cluster_radius > 0) {
-      markers = L.markerClusterGroup({
+      var marker_cluster_options = {
         showCoverageOnHover: false,
         maxClusterRadius: this.settings.max_cluster_radius
-      });
+      };
+
+      if(this.settings.marker_cluster_icon) {
+        marker_cluster_options.iconCreateFunction = function (cluster) {
+        		var child_count = cluster.getChildCount();
+
+        		var c = ' marker-cluster-';
+        		if (child_count < 10) {
+        			c += 'small';
+        		} else if (childCount < 100) {
+        			c += 'medium';
+        		} else {
+        			c += 'large';
+        		}
+
+        		return new L.DivIcon({ html: '<div style="width: 100%; height: 100%; font-weight: bold; line-height: ' + that.settings.marker_cluster_icon.size.height + 'px; background-size: cover; background-image: url(' + that.settings.marker_cluster_icon.url + ')"><span>' + child_count + '</span></div>', className: 'marker-cluster', iconSize: new L.Point(that.settings.marker_cluster_icon.size.width, that.settings.marker_cluster_icon.size.height) });
+        }
+      }
+
+      markers = L.markerClusterGroup(marker_cluster_options);
+
     }
     else {
       markers = L.layerGroup();

@@ -5,7 +5,14 @@
 **/
 class CB_Map_Settings {
 
-  const OPTION_KEYS = ['map_height', 'zoom_min', 'zoom_max', 'zoom_start', 'lat_start', 'lon_start', 'marker_map_bounds_initial', 'marker_map_bounds_filter', 'max_cluster_radius', 'custom_marker_media_id', 'marker_icon_width', 'marker_icon_height', 'marker_icon_anchor_x', 'marker_icon_anchor_y', 'show_location_contact', 'cb_items_available_categories', 'cb_items_preset_categories'];
+  const OPTION_KEYS = [
+    'map_height', 'zoom_min', 'zoom_max', 'zoom_start', 'lat_start', 'lon_start',
+    'marker_map_bounds_initial', 'marker_map_bounds_filter',
+    'max_cluster_radius',
+    'custom_marker_media_id', 'marker_icon_width', 'marker_icon_height', 'marker_icon_anchor_x', 'marker_icon_anchor_y',
+    'show_location_contact',
+    'custom_marker_cluster_media_id', 'marker_cluster_icon_width', 'marker_cluster_icon_height',
+    'cb_items_available_categories', 'cb_items_preset_categories'];
 
   const MAP_HEIGHT_VALUE_MIN = 100;
   const MAP_HEIGHT_VALUE_MAX = 5000;
@@ -32,6 +39,9 @@ class CB_Map_Settings {
   const MARKER_ICON_HEIGHT_DEFAULT = 0;
   const MARKER_ICON_ANCHOR_X_DEFAULT = 0;
   const MARKER_ICON_ANCHOR_Y_DEFAULT = 0;
+  const CUSTOM_MARKER_CLUSTER_MEDIA_ID_DEFAULT = null;
+  const MARKER_CLUSTER_ICON_WIDTH_DEFAULT = 0;
+  const MARKER_CLUSTER_ICON_HEIGHT_DEFAULT = 0;
   const SHOW_LOCATION_CONTACT_DEFAULT = true;
   const CB_ITEMS_AVAILABLE_CATEGORIES_DEFAULT = [];
   const CB_ITEMS_PRESET_CATEGORIES_DEFAULT = [];
@@ -85,8 +95,6 @@ class CB_Map_Settings {
   **/
   public static function get_options($public = false) {
     self::load_options();
-
-    //TODO: filter public
 
     return self::$options;
   }
@@ -193,6 +201,21 @@ class CB_Map_Settings {
       $validated_input['show_location_contact'] = false;
     }
 
+    // custom_marker_cluster_media_id
+    if(isset($input['custom_marker_cluster_media_id'])) {
+      $validated_input['custom_marker_cluster_media_id'] = abs((int) $input['custom_marker_cluster_media_id']);
+    }
+
+    //marker_cluster_icon_width
+    if(isset($input['marker_cluster_icon_width'])) {
+      $validated_input['marker_cluster_icon_width'] = abs((float) $input['marker_cluster_icon_width']);
+    }
+
+    //marker_cluster_icon_height
+    if(isset($input['marker_cluster_icon_height'])) {
+      $validated_input['marker_cluster_icon_height'] = abs((float) $input['marker_cluster_icon_height']);
+    }
+
     //cb_items_available_categories
     $category_terms = get_terms([
       'taxonomy' => 'cb_items_category',
@@ -231,7 +254,17 @@ class CB_Map_Settings {
   public function render_options_page() {
     wp_enqueue_media();
 
-    //TODO: enqueue image upload script (don't insert script in DOM)
+    //load image upload script
+    $script_path = CB_MAP_ASSETS_URL . 'js/cb-map-marker-upload.js';
+    echo '<script src="' . $script_path . '"></script>';
+
+    //map translation
+    $translation = [
+      'SELECT_IMAGE' => cb_map\__('SELECT_IMAGE', 'commons-booking-map', 'Select an image'),
+      'SAVE' => cb_map\__('SAVE', 'commons-booking-map', 'save'),
+      'MARKER_IMAGE_MEASUREMENTS' => cb_map\__('MARKER_IMAGE_MEASUREMENTS', 'commons-booking-map', 'measurements')
+    ];
+    echo '<script>cb_map_marker_upload.translation = ' . json_encode($translation) . ';</script>';
 
     $available_categories_args = [
       'taxonomy' => 'cb_items_category',
