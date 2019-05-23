@@ -79,7 +79,7 @@ var cb_map_marker_upload = {
   		wp.media.model.settings.post.id = wp_media_post_id;
   	});
 
-    data.$image_preview.load(function() {
+    data.$image_preview.on('load', function() {
 
       data.$image_preview_settings.show();
       data.$image_preview_measurements.text(cb_map_marker_upload.translation.MARKER_IMAGE_MEASUREMENTS + ': ' + data.$image_preview.width() + ' x ' + data.$image_preview.height() + ' px');
@@ -103,6 +103,15 @@ var cb_map_marker_upload = {
       }
 
     });
+
+    //for cached images, trigger load
+    if(data.$image_preview[0].complete) {
+      var src = data.$image_preview.attr('src');
+
+      if(src.length > 0) {
+        data.$image_preview.load();
+      }
+    }
   }
 }
 
