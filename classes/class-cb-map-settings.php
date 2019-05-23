@@ -50,20 +50,6 @@ class CB_Map_Settings {
 
   public static $options;
 
-/*
-  public function prepare_settings() {
-
-    add_action('admin_menu', function() {
-        add_options_page( cb_map\__('SETTINGS_TITLE', 'commons-booking-map', 'Settings for Commons Booking Map'), cb_map\__('SETTINGS_MENU', 'commons-booking-map', 'Commons Booking Map' ), 'manage_options', 'commons-booking-map', array($this, 'render_options_page') );
-    });
-
-    add_action( 'admin_init', function() {
-      register_setting( 'cb-map-settings', 'cb_map_options', array($this, 'validate_options') );
-    });
-
-  }
-*/
-
   private static function load_options($cb_map_id = null) {
     if(!isset(self::$options)) {
       if($cb_map_id) {
