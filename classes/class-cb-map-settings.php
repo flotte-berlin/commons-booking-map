@@ -50,6 +50,7 @@ class CB_Map_Settings {
 
   public static $options;
 
+/*
   public function prepare_settings() {
 
     add_action('admin_menu', function() {
@@ -61,10 +62,21 @@ class CB_Map_Settings {
     });
 
   }
+*/
 
-  private static function load_options() {
+  private static function load_options($cb_map_id = null) {
     if(!isset(self::$options)) {
-      $options = get_option('cb_map_options', array());
+      if($cb_map_id) {
+        $options = get_post_meta( $cb_map_id, 'cb_map_options', true );
+
+        if(!is_array($options)) {
+          $options = [];
+        }
+      }
+      else {
+        $options = [];
+      }
+
       self::$options = self::populate_option_defaults($options);
     }
   }
@@ -84,8 +96,8 @@ class CB_Map_Settings {
   /**
   * option getter
   **/
-  public static function get_option($key) {
-    self::load_options();
+  public static function get_option($cb_map_id = null, $key) {
+    self::load_options($cb_map_id);
 
     return self::$options[$key];
   }
@@ -93,8 +105,8 @@ class CB_Map_Settings {
   /**
   *
   **/
-  public static function get_options($public = false) {
-    self::load_options();
+  public static function get_options($cb_map_id = null, $public = false) {
+    self::load_options($cb_map_id);
 
     return self::$options;
   }
@@ -111,11 +123,14 @@ class CB_Map_Settings {
   /**
   * sanitize and validate the options provided by input array
   **/
-  public function validate_options($input = array()) {
-    //var_dump($input);
-    self::load_options();
+  public static function validate_options($cb_map_id) {
+    self::load_options($cb_map_id);
 
     $validated_input = self::populate_option_defaults([]);
+
+    if(isset($_POST['cb_map_options'])) {
+      $input = $_POST['cb_map_options'];
+    }
 
     //map_height
     if(isset($input['map_height']) && (int) $input['map_height'] >= self::MAP_HEIGHT_VALUE_MIN && $input['map_height'] <= self::MAP_HEIGHT_VALUE_MAX) {
@@ -242,6 +257,8 @@ class CB_Map_Settings {
       }
     }
 
+    update_post_meta($cb_map_id, 'cb_map_options', $validated_input);
+
     return $validated_input;
   }
 
@@ -251,7 +268,11 @@ class CB_Map_Settings {
     return $links;
   }
 
-  public function render_options_page() {
+  public function render_options_page($post) {
+    //wp_nonce_field( basename( __FILE__ ), 'product_post_type_price_meta_box_nonce' );
+
+    $cb_map_id = $post->ID;
+
     wp_enqueue_media();
 
     //load image upload script
@@ -270,7 +291,7 @@ class CB_Map_Settings {
       'taxonomy' => 'cb_items_category',
       'echo' => false,
       'checked_ontop' => false,
-      'selected_cats' => self::get_option('cb_items_available_categories')
+      'selected_cats' => self::get_option($cb_map_id, 'cb_items_available_categories')
     ];
     $available_categories_checklist_markup = wp_terms_checklist( 0, $available_categories_args);
     $available_categories_checklist_markup = str_replace('name="tax_input[cb_items_category]', 'name="cb_map_options[cb_items_available_categories]', $available_categories_checklist_markup);
@@ -279,12 +300,13 @@ class CB_Map_Settings {
       'taxonomy' => 'cb_items_category',
       'echo' => false,
       'checked_ontop' => false,
-      'selected_cats' => self::get_option('cb_items_preset_categories')
+      'selected_cats' => self::get_option($cb_map_id, 'cb_items_preset_categories')
     ];
     $preset_categories_checklist_markup = wp_terms_checklist( 0, $preset_categories_args);
     $preset_categories_checklist_markup = str_replace('name="tax_input[cb_items_category]', 'name="cb_map_options[cb_items_preset_categories]', $preset_categories_checklist_markup);
 
     include_once( CB_MAP_PATH . 'templates/settings-page-template.php');
+
   }
 
 }

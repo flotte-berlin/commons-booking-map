@@ -6,44 +6,60 @@ class CB_Map_Shortcode {
   * the shortcode handler
   **/
   public static function handle($atts) {
-    /*
+
     $a = shortcode_atts( array(
-  		'foo' => 'something',
-  		'bar' => 'something else',
+  		'id' => 0
   	), $atts );
-    */
 
-    //leaflet
-    wp_enqueue_style('cb_map_leaflet_css', CB_MAP_ASSETS_URL . 'leaflet/leaflet.css');
-    wp_enqueue_script( 'cb_map_leaflet_js', CB_MAP_ASSETS_URL . 'leaflet/leaflet-src.js' ); //TODO: change to leaflet.js
+    //TODO: check if post exists and is of type 'cb_map'
+    if($a['id']) {
+      $post = get_post($a['id']);
 
-    //leaflet markercluster plugin
-    wp_enqueue_style('cb_map_leaflet_markercluster_css', CB_MAP_ASSETS_URL . 'leaflet-markercluster/MarkerCluster.css');
-    wp_enqueue_style('cb_map_leaflet_markercluster_default_css', CB_MAP_ASSETS_URL . 'leaflet-markercluster/MarkerCluster.Default.css');
-    wp_enqueue_script( 'cb_map_leaflet_markercluster_js', CB_MAP_ASSETS_URL . 'leaflet-markercluster/leaflet.markercluster.js' );
+      if($post && $post->post_type == 'cb_map') {
+        $cb_map_id = $post->ID;
 
-    //leaflet spin & dependencies
-    wp_enqueue_style( 'cb_map_spin_css', CB_MAP_ASSETS_URL . 'spin-js/spin.css' );
-    wp_enqueue_script( 'cb_map_spin_js', CB_MAP_ASSETS_URL . 'spin-js/spin.min.js' );
-    wp_enqueue_script( 'cb_map_leaflet_spin_js', CB_MAP_ASSETS_URL . 'leaflet-spin/leaflet.spin.min.js' );
+        //leaflet
+        wp_enqueue_style('cb_map_leaflet_css', CB_MAP_ASSETS_URL . 'leaflet/leaflet.css');
+        wp_enqueue_script( 'cb_map_leaflet_js', CB_MAP_ASSETS_URL . 'leaflet/leaflet-src.js' ); //TODO: change to leaflet.js
 
-    //cb map shortcode js
-    wp_register_script( 'cb_map_shortcode_js', CB_MAP_ASSETS_URL . 'js/cb-map-shortcode.js');
-    wp_add_inline_script( 'cb_map_shortcode_js', 'cb_map.settings=' . json_encode(self::get_settings()) .';' );
-    wp_add_inline_script( 'cb_map_shortcode_js', 'cb_map.translation=' . json_encode(self::get_translation()) .';' );
-    wp_enqueue_script( 'cb_map_shortcode_js' );
+        //leaflet markercluster plugin
+        wp_enqueue_style('cb_map_leaflet_markercluster_css', CB_MAP_ASSETS_URL . 'leaflet-markercluster/MarkerCluster.css');
+        wp_enqueue_style('cb_map_leaflet_markercluster_default_css', CB_MAP_ASSETS_URL . 'leaflet-markercluster/MarkerCluster.Default.css');
+        wp_enqueue_script( 'cb_map_leaflet_markercluster_js', CB_MAP_ASSETS_URL . 'leaflet-markercluster/leaflet.markercluster.js' );
 
-    $map_height = CB_Map_Settings::get_option('map_height');
-    return '<div id="cb-map" style="width: 100%; height: ' . $map_height . 'px;"></div>';
+        //leaflet spin & dependencies
+        wp_enqueue_style( 'cb_map_spin_css', CB_MAP_ASSETS_URL . 'spin-js/spin.css' );
+        wp_enqueue_script( 'cb_map_spin_js', CB_MAP_ASSETS_URL . 'spin-js/spin.min.js' );
+        wp_enqueue_script( 'cb_map_leaflet_spin_js', CB_MAP_ASSETS_URL . 'leaflet-spin/leaflet.spin.min.js' );
+
+        //cb map shortcode js
+        wp_register_script( 'cb_map_shortcode_js', CB_MAP_ASSETS_URL . 'js/cb-map-shortcode.js');
+        wp_add_inline_script( 'cb_map_shortcode_js', 'cb_map.settings=' . json_encode(self::get_settings($cb_map_id)) .';' );
+        wp_add_inline_script( 'cb_map_shortcode_js', 'cb_map.translation=' . json_encode(self::get_translation()) .';' );
+        wp_enqueue_script( 'cb_map_shortcode_js' );
+
+        $map_height = CB_Map_Settings::get_option($a['id'], 'map_height');
+        return '<div id="cb-map" style="width: 100%; height: ' . $map_height . 'px;"></div>';
+      }
+      else {
+        return '<div>' . cb_map\__( 'NO_VALID_MAP_ID', 'commons-booking-map', 'no valid map id provided') . '</div>';
+      }
+
+    }
+    else {
+      return '<div>' . cb_map\__( 'NO_VALID_MAP_ID', 'commons-booking-map', 'no valid map id provided') . '</div>';
+    }
+
   }
 
-  public static function get_settings() {
+  public static function get_settings($cb_map_id) {
     $settings = [
       'data_url' => get_site_url(null, '', null) . '/wp-admin/admin-ajax.php',
       'marker_icon' => null,
-      'filter_cb_item_categories' => []
+      'filter_cb_item_categories' => [],
+      'cb_map_id' => $cb_map_id
     ];
-    $options = CB_Map_Settings::get_options();
+    $options = CB_Map_Settings::get_options($cb_map_id);
 
     $pass_through = ['zoom_min', 'zoom_max', 'zoom_start', 'lat_start', 'lon_start', 'marker_map_bounds_initial', 'marker_map_bounds_filter', 'max_cluster_radius', 'show_location_contact'];
 
@@ -109,24 +125,38 @@ class CB_Map_Shortcode {
   /**
   * the ajax request callback for locations
   **/
-  public static function get_locations($data) {
+  public static function get_locations() {
 
     //pre-filter based on settings
-    $apply_filters = CB_Map_Settings::get_option('cb_items_preset_categories');
-    $available_filters = CB_Map_Settings::get_option('cb_items_available_categories');
+    if(isset($_POST['cb_map_id'])) {
+      $post = get_post((int) $_POST['cb_map_id']);
 
-    if(isset($_POST['filters'])) {
-      foreach($_POST['filters'] as $filter) {
-        if(in_array($filter, $available_filters)) {
-          $apply_filters[] = $filter;
+      if($post && $post->post_type == 'cb_map') {
+        $cb_map_id = $post->ID;
+
+        $apply_filters = CB_Map_Settings::get_option($cb_map_id, 'cb_items_preset_categories');
+        $available_filters = CB_Map_Settings::get_option($cb_map_id, 'cb_items_available_categories');
+
+        if(isset($_POST['filters']) && is_array($_POST['filters'])) {
+          foreach($_POST['filters'] as $filter) {
+            if(in_array($filter, $available_filters)) {
+              $apply_filters[] = $filter;
+            }
+          }
         }
+
+        require_once( CB_MAP_PATH . 'classes/class-cb-map.php' );
+        $locations = CB_Map::get_locations_by_timeframes($cb_map_id, $apply_filters);
+
+        echo json_encode($locations);
+      }
+      else {
+        echo '{}';
       }
     }
-
-    require_once( CB_MAP_PATH . 'classes/class-cb-map.php' );
-    $locations = CB_Map::get_locations_by_timeframes($apply_filters);
-
-    echo json_encode($locations);
+    else {
+      echo '{}';
+    }
 
     wp_die();
   }

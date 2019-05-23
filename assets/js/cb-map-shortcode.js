@@ -72,7 +72,8 @@ var cb_map = {
     var that = this;
     var data = {
 			'action': 'cb_map_locations',
-      'filters': filters
+      'filters': filters,
+      'cb_map_id': this.settings.cb_map_id
 		};
 
     console.log('fetch location data from: ', this.settings.data_url);
