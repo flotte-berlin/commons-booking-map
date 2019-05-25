@@ -247,6 +247,108 @@ class CB_Map {
 
     return $result;
   }
+
+  public static function handle_location_import() {
+
+    $import_result = self::fetch_locations((int) $_POST['cb_map_id'], $_POST['url'], $_POST['code']);
+
+    if(!$import_result) {
+      wp_send_json_error(null, 400);
+    }
+
+    wp_die();
+  }
+
+  public static function fetch_locations($cb_map_id, $url, $code) {
+
+    $post = get_post($cb_map_id);
+
+    if($post && $post->post_type == 'cb_map') {
+      $map_type = CB_Map_Settings::get_option($cb_map_id, 'map_type');
+
+      if($map_type == 2) {
+        $args = [
+          'body' => [
+            'action' => 'cb_map_locations',
+            'code' => $code
+          ]
+        ];
+
+        $data = wp_safe_remote_post($url, $args);
+
+        if($data['response']['code'] == 200) {
+          return $data['body'];
+        }
+        else {
+          return false;
+        }
+      }
+      else {
+        return false;
+      }
+    }
+    else {
+      return false;
+    }
+
+  }
+
+  public static function create_import_id($url, $code) {
+    $url_hash = hash('md5', $url);
+    return $url_hash . '_' . $code;
+  }
+
+  public static function import_all_locations() {
+
+    //find maps of type import
+    $args = [
+      'post_type' => 'cb_map'
+    ];
+    $cb_maps = get_posts($args);
+
+    foreach ($cb_maps as $cb_map) {
+      if($options['map_type'] == 2) {
+        self::import_all_locations_of_map($cb_map->ID);
+      }
+    }
+  }
+
+  /**
+  * import all locations from remote sources of the given map
+  * TODO: make it async
+  **/
+  public static function import_all_locations_of_map($cb_map_id) {
+
+    $map_imports = get_post_meta( $cb_map_id, 'cb_map_imports', true );
+
+    if(!is_array($map_imports)) {
+      $map_imports = [];
+    }
+
+    $new_map_imports = [];
+
+    $import_sources = CB_Map_Settings::get_option($cb_map_id, 'import_sources');
+
+    foreach ($import_sources['urls'] as $key => $url) {
+      $code = $import_sources['codes'][$key];
+      $import_id = self::create_import_id($url, $code);
+
+      $locations = self::fetch_locations($cb_map_id, $url, $code);
+
+      if($locations) {
+        $new_map_imports[$import_id] = $locations;
+      }
+      else {
+        if(isset($map_imports[$import_id])) {
+            $new_map_imports[$import_id] = $map_imports[$import_id];
+        }
+      }
+
+    }
+
+    update_post_meta($cb_map_id, 'cb_map_imports', $new_map_imports);
+  }
+
 }
 
 ?>

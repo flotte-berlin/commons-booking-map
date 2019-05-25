@@ -80,23 +80,24 @@ var cb_map = {
 
     this.map.spin(true);
 
+    if(this.markers) {
+      this.markers.clearLayers();
+    }
+
     jQuery.post(this.settings.data_url, data, function(response) {
       var location_data = JSON.parse(response);
       console.log('location data: ', location_data);
 
       that.render_locations(location_data, filters);
 
+		}).always(function() {
       that.map.spin(false);
-		});
+    });
 
   },
 
   render_locations: function(data, filters) {
     var that = this;
-
-    if(this.markers) {
-      this.markers.clearLayers();
-    }
 
     var markers;
     if(this.settings.max_cluster_radius > 0) {

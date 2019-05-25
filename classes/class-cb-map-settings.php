@@ -6,6 +6,9 @@
 class CB_Map_Settings {
 
   const OPTION_KEYS = [
+    'map_type',
+    'export_code',
+    'import_sources',
     'map_height', 'zoom_min', 'zoom_max', 'zoom_start', 'lat_start', 'lon_start',
     'marker_map_bounds_initial', 'marker_map_bounds_filter',
     'max_cluster_radius',
@@ -14,6 +17,7 @@ class CB_Map_Settings {
     'custom_marker_cluster_media_id', 'marker_cluster_icon_width', 'marker_cluster_icon_height',
     'cb_items_available_categories', 'cb_items_preset_categories'];
 
+  const EXPORT_CODE_VALUE_MIN_LENGTH = 10;
   const MAP_HEIGHT_VALUE_MIN = 100;
   const MAP_HEIGHT_VALUE_MAX = 5000;
   const ZOOM_VALUE_MIN = 1;
@@ -25,6 +29,9 @@ class CB_Map_Settings {
   const MAX_CLUSTER_RADIUS_VALUE_MIN = 0;
   const MAX_CLUSTER_RADIUS_VALUE_MAX = 1000;
 
+  const MAP_TYPE_DEFAULT = 1;
+  const EXPORT_CODE_DEFAULT = "";
+  const IMPORT_SOURCES_DEFAULT = [];
   const MAP_HEIGHT_DEFAULT = 400;
   const ZOOM_MIN_DEFAULT = 8;
   const ZOOM_MAX_DEFAULT = 19;
@@ -116,6 +123,27 @@ class CB_Map_Settings {
 
     if(isset($_POST['cb_map_options'])) {
       $input = $_POST['cb_map_options'];
+    }
+
+    //map_type
+    if(isset($input['map_type']) && (int) $input['map_type'] >= 1 && $input['map_type'] <= 3) {
+      $validated_input['map_type'] = (int) $input['map_type'];
+    }
+
+    //export_code
+    if(isset($input['export_code']) && ctype_alnum ($input['export_code']) && strlen($input['export_code']) >= self::EXPORT_CODE_VALUE_MIN_LENGTH) {
+      $validated_input['export_code'] = $input['export_code'];
+    }
+
+    if(isset($input['import_sources'])) {
+      if(is_array($input['import_sources']['urls']) && is_array($input['import_sources']['codes'])) {
+        $validated_input['import_sources']['urls'] = [];
+        $validated_input['import_sources']['codes'] = [];
+        foreach ($input['import_sources']['urls'] as $key => $url) {
+          $validated_input['import_sources']['urls'][] = sanitize_text_field($url);
+          $validated_input['import_sources']['codes'][] = ctype_alnum ($input['export_code']) && strlen($input['export_code']) >= self::EXPORT_CODE_VALUE_MIN_LENGTH ? $input['import_sources']['codes'][$key] : '';
+        }
+      }
     }
 
     //map_height
@@ -245,6 +273,10 @@ class CB_Map_Settings {
 
     update_post_meta($cb_map_id, 'cb_map_options', $validated_input);
 
+    if($validated_input['map_type'] == 2) {
+      CB_Map::import_all_locations_of_map($cb_map_id);
+    }
+
     return $validated_input;
   }
 
@@ -290,6 +322,8 @@ class CB_Map_Settings {
     ];
     $preset_categories_checklist_markup = wp_terms_checklist( 0, $preset_categories_args);
     $preset_categories_checklist_markup = str_replace('name="tax_input[cb_items_category]', 'name="cb_map_options[cb_items_preset_categories]', $preset_categories_checklist_markup);
+
+    $data_export_base_url = get_site_url(null, '', null) . '/wp-admin/admin-ajax.php';
 
     include_once( CB_MAP_PATH . 'templates/settings-page-template.php');
 
