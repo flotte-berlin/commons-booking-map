@@ -456,7 +456,7 @@ jQuery(document).ready(function($) {
       var url = $($import_source.find('input')[0]).val();
 
       var data = {
-        action: 'cb_map_location_import',
+        action: 'cb_map_import_spurce_test',
         cb_map_id: <?= $cb_map_id ?>,
         url: url,
         code: $($import_source.find('input')[1]).val()

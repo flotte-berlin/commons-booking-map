@@ -5,13 +5,12 @@ class CB_Map_Shortcode {
   /**
   * the shortcode handler
   **/
-  public static function handle($atts) {
+  public static function execute($atts) {
 
     $a = shortcode_atts( array(
   		'id' => 0
   	), $atts );
 
-    //TODO: check if post exists and is of type 'cb_map'
     if((int) $a['id']) {
       $post = get_post($a['id']);
 
@@ -20,32 +19,37 @@ class CB_Map_Shortcode {
 
         $map_type = CB_Map_Settings::get_option($cb_map_id, 'map_type');
 
-        if($map_type == 1 || $map_type == 2) {
-          //leaflet
-          wp_enqueue_style('cb_map_leaflet_css', CB_MAP_ASSETS_URL . 'leaflet/leaflet.css');
-          wp_enqueue_script( 'cb_map_leaflet_js', CB_MAP_ASSETS_URL . 'leaflet/leaflet-src.js' ); //TODO: change to leaflet.js
+        if($post->post_status == 'publish') {
+          if($map_type == 1 || $map_type == 2) {
+            //leaflet
+            wp_enqueue_style('cb_map_leaflet_css', CB_MAP_ASSETS_URL . 'leaflet/leaflet.css');
+            wp_enqueue_script( 'cb_map_leaflet_js', CB_MAP_ASSETS_URL . 'leaflet/leaflet-src.js' ); //TODO: change to leaflet.js
 
-          //leaflet markercluster plugin
-          wp_enqueue_style('cb_map_leaflet_markercluster_css', CB_MAP_ASSETS_URL . 'leaflet-markercluster/MarkerCluster.css');
-          wp_enqueue_style('cb_map_leaflet_markercluster_default_css', CB_MAP_ASSETS_URL . 'leaflet-markercluster/MarkerCluster.Default.css');
-          wp_enqueue_script( 'cb_map_leaflet_markercluster_js', CB_MAP_ASSETS_URL . 'leaflet-markercluster/leaflet.markercluster.js' );
+            //leaflet markercluster plugin
+            wp_enqueue_style('cb_map_leaflet_markercluster_css', CB_MAP_ASSETS_URL . 'leaflet-markercluster/MarkerCluster.css');
+            wp_enqueue_style('cb_map_leaflet_markercluster_default_css', CB_MAP_ASSETS_URL . 'leaflet-markercluster/MarkerCluster.Default.css');
+            wp_enqueue_script( 'cb_map_leaflet_markercluster_js', CB_MAP_ASSETS_URL . 'leaflet-markercluster/leaflet.markercluster.js' );
 
-          //leaflet spin & dependencies
-          wp_enqueue_style( 'cb_map_spin_css', CB_MAP_ASSETS_URL . 'spin-js/spin.css' );
-          wp_enqueue_script( 'cb_map_spin_js', CB_MAP_ASSETS_URL . 'spin-js/spin.min.js' );
-          wp_enqueue_script( 'cb_map_leaflet_spin_js', CB_MAP_ASSETS_URL . 'leaflet-spin/leaflet.spin.min.js' );
+            //leaflet spin & dependencies
+            wp_enqueue_style( 'cb_map_spin_css', CB_MAP_ASSETS_URL . 'spin-js/spin.css' );
+            wp_enqueue_script( 'cb_map_spin_js', CB_MAP_ASSETS_URL . 'spin-js/spin.min.js' );
+            wp_enqueue_script( 'cb_map_leaflet_spin_js', CB_MAP_ASSETS_URL . 'leaflet-spin/leaflet.spin.min.js' );
 
-          //cb map shortcode js
-          wp_register_script( 'cb_map_shortcode_js', CB_MAP_ASSETS_URL . 'js/cb-map-shortcode.js');
-          wp_add_inline_script( 'cb_map_shortcode_js', 'cb_map.settings=' . json_encode(self::get_settings($cb_map_id)) .';' );
-          wp_add_inline_script( 'cb_map_shortcode_js', 'cb_map.translation=' . json_encode(self::get_translation()) .';' );
-          wp_enqueue_script( 'cb_map_shortcode_js' );
+            //cb map shortcode js
+            wp_register_script( 'cb_map_shortcode_js', CB_MAP_ASSETS_URL . 'js/cb-map-shortcode.js');
+            wp_add_inline_script( 'cb_map_shortcode_js', 'cb_map.settings=' . json_encode(self::get_settings($cb_map_id)) .';' );
+            wp_add_inline_script( 'cb_map_shortcode_js', 'cb_map.translation=' . json_encode(self::get_translation()) .';' );
+            wp_enqueue_script( 'cb_map_shortcode_js' );
 
-          $map_height = CB_Map_Settings::get_option($cb_map_id, 'map_height');
-          return '<div id="cb-map" style="width: 100%; height: ' . $map_height . 'px;"></div>';
+            $map_height = CB_Map_Settings::get_option($cb_map_id, 'map_height');
+            return '<div id="cb-map" style="width: 100%; height: ' . $map_height . 'px;"></div>';
+          }
+          else {
+            return '<div>' . cb_map\__( 'NO_VALID_MAP_TYPE', 'commons-booking-map', 'no valid map type') . '</div>';
+          }
         }
         else {
-          return '<div>' . cb_map\__( 'NO_VALID_MAP_TYPE', 'commons-booking-map', 'no valid map type') . '</div>';
+          return '<div>' . cb_map\__( 'NO_VALID_POST_STATUS', 'commons-booking-map', 'map is not published') . '</div>';
         }
       }
       else {
@@ -150,6 +154,8 @@ class CB_Map_Shortcode {
         if($options['map_type'] == 3 && $options['export_code'] == $_POST['code']) {
           $cb_map_id = $cb_map->ID;
           $map_type = 3;
+          $post = $cb_map;
+          break;
         }
       }
 
@@ -158,7 +164,6 @@ class CB_Map_Shortcode {
         return wp_die();
       }
     }
-    //pre-filter based on settings
     else if(isset($_POST['cb_map_id'])) {
       $post = get_post((int) $_POST['cb_map_id']);
 
@@ -180,42 +185,49 @@ class CB_Map_Shortcode {
 
     $apply_filters = CB_Map_Settings::get_option($cb_map_id, 'cb_items_preset_categories');
 
-    //local
-    if($map_type == 1) {
-      $available_filters = CB_Map_Settings::get_option($cb_map_id, 'cb_items_available_categories');
+    if($post->post_status == 'publish') {
+      //local
+      if($map_type == 1) {
+        $available_filters = CB_Map_Settings::get_option($cb_map_id, 'cb_items_available_categories');
 
-      if(isset($_POST['filters']) && is_array($_POST['filters'])) {
-        foreach($_POST['filters'] as $filter) {
-          if(in_array($filter, $available_filters)) {
-            $apply_filters[] = $filter;
+        if(isset($_POST['filters']) && is_array($_POST['filters'])) {
+          foreach($_POST['filters'] as $filter) {
+            if(in_array($filter, $available_filters)) {
+              $apply_filters[] = $filter;
+            }
           }
         }
+
+        require_once( CB_MAP_PATH . 'classes/class-cb-map.php' );
+        $locations = array_values(CB_Map::get_locations_by_timeframes($cb_map_id, $apply_filters));
       }
 
-      require_once( CB_MAP_PATH . 'classes/class-cb-map.php' );
-      $locations = array_values(CB_Map::get_locations_by_timeframes($cb_map_id, $apply_filters));
-    }
+      //import
+      if($map_type == 2) {
+        $map_imports = get_post_meta( $cb_map_id, 'cb_map_imports', true );
 
-    //import
-    if($map_type == 2) {
-      $map_imports = get_post_meta( $cb_map_id, 'cb_map_imports', true );
+        $locations = [];
 
-      $locations = [];
+        foreach ($map_imports as $import_locations_string) {
+          $import_locations = json_decode($import_locations_string);
+          $locations = array_merge($locations, $import_locations);
+        }
 
-      foreach ($map_imports as $import_locations_string) {
-        $import_locations = json_decode($import_locations_string);
-        $locations = array_merge($locations, $import_locations);
       }
 
+      //export
+      if($map_type == 3) {
+        $available_filters = CB_Map_Settings::get_option($cb_map_id, 'cb_items_available_categories');
+        require_once( CB_MAP_PATH . 'classes/class-cb-map.php' );
+        $locations = array_values(CB_Map::get_locations_by_timeframes($cb_map_id, $apply_filters));
+      }
+
+      echo json_encode($locations);
+    }
+    else {
+      wp_send_json_error( [ 'error' => 4 ], 403);
     }
 
-    if($map_type == 3) {
-      $available_filters = CB_Map_Settings::get_option($cb_map_id, 'cb_items_available_categories');
-      require_once( CB_MAP_PATH . 'classes/class-cb-map.php' );
-      $locations = array_values(CB_Map::get_locations_by_timeframes($cb_map_id, $apply_filters));
-    }
-
-    echo json_encode($locations);
     return wp_die();
 
   }

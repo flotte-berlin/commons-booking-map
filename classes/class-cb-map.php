@@ -92,6 +92,16 @@ class CB_Map {
     );
   }
 
+  public static function activate() {
+    $date_time = new DateTime();
+    $date_time->setTime(23, 00);
+    wp_schedule_event( $date_time->getTimestamp(), 'daily', 'cb_map_import');
+  }
+
+  public static function deactivate() {
+    wp_clear_scheduled_hook('cb_map_import');
+  }
+
   public static function get_timeframes() {
     global $wpdb;
 
@@ -248,7 +258,7 @@ class CB_Map {
     return $result;
   }
 
-  public static function handle_location_import() {
+  public static function handle_location_import_test() {
 
     $import_result = self::fetch_locations((int) $_POST['cb_map_id'], $_POST['url'], $_POST['code']);
 
@@ -298,6 +308,21 @@ class CB_Map {
     return $url_hash . '_' . $code;
   }
 
+  public static function create_import_auth_code() {
+    $random_string_length = 24;
+    $characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
+    $string = '';
+    $max = strlen($characters) - 1;
+    for ($i = 0; $i < $random_string_length; $i++) {
+         $string .= $characters[mt_rand(0, $max)];
+    }
+
+    return $string;
+  }
+
+  /**
+  * for usage with cronjob
+  */
   public static function import_all_locations() {
 
     //find maps of type import
@@ -307,15 +332,28 @@ class CB_Map {
     $cb_maps = get_posts($args);
 
     foreach ($cb_maps as $cb_map) {
+      $options = get_post_meta( $cb_map->ID, 'cb_map_options', true );
+
       if($options['map_type'] == 2) {
         self::import_all_locations_of_map($cb_map->ID);
       }
     }
   }
 
+  public static function handle_location_import_of_map() {
+    $cb_map_id = (int) $_POST['cb_map_id'];
+    $import_auth_code = get_post_meta( $cb_map_id, 'cb_map_import_auth_code', true );
+
+    if($import_auth_code == $_POST['auth_code']) {
+      delete_post_meta($cb_map_id, 'cb_map_import_auth_code');
+      self::import_all_locations_of_map($cb_map_id);
+    }
+
+    wp_die();
+  }
+
   /**
   * import all locations from remote sources of the given map
-  * TODO: make it async
   **/
   public static function import_all_locations_of_map($cb_map_id) {
 

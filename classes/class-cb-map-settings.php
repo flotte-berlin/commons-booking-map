@@ -273,17 +273,25 @@ class CB_Map_Settings {
 
     update_post_meta($cb_map_id, 'cb_map_options', $validated_input);
 
+    //import locations from all import sources async
     if($validated_input['map_type'] == 2) {
-      CB_Map::import_all_locations_of_map($cb_map_id);
+      $auth_code = CB_Map::create_import_auth_code();
+
+      update_post_meta( $cb_map_id, 'cb_map_import_auth_code', $auth_code );
+
+      $args = [
+        'blocking' => false,
+        'body' => [
+          'action' => 'cb_map_location_import_of_map',
+          'cb_map_id' => $cb_map_id,
+          'auth_code' => $auth_code
+        ]
+      ];
+
+      wp_safe_remote_post($url, $args);
     }
 
     return $validated_input;
-  }
-
-  public function add_settings_link( $links ) {
-    $settings_link = '<a href="options-general.php?page=commons-booking-map">' . __( 'Settings') . '</a>';
-    array_unshift( $links, $settings_link );
-    return $links;
   }
 
   public function render_options_page($post) {

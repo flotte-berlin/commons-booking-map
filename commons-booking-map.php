@@ -4,7 +4,7 @@
 Plugin Name:  Commons Booking Map
 Plugin URI:   https://github.com/flotte-berlin/commons-booking-map
 Description:  Ein Plugin in Ergänzung zu Commons Booking, das die Einbindung einer Karte von verfügbaren Artikeln erlaubt
-Version:      0.4.0
+Version:      0.4.1
 Author:       poilu
 Author URI:   https://github.com/poilu
 License:      GPLv2 or later
@@ -32,13 +32,20 @@ if(cb_map\is_plugin_active('commons-booking.php')) {
   require_once( CB_MAP_PATH . 'classes/class-cb-map-shortcode.php' );
   add_action( 'wp_ajax_cb_map_locations', 'CB_Map_Shortcode::get_locations' );
   add_action( 'wp_ajax_nopriv_cb_map_locations', 'CB_Map_Shortcode::get_locations' );
-  add_shortcode( 'cb_map', 'CB_Map_Shortcode::handle' );
+  add_shortcode( 'cb_map', 'CB_Map_Shortcode::execute' );
 
-  add_action( 'wp_ajax_cb_map_location_import', 'CB_Map::handle_location_import' );
-  add_action( 'wp_ajax_nopriv_cb_map_location_import', 'CB_Map::handle_location_import' );
+  add_action( 'wp_ajax_cb_map_import_spurce_test', 'CB_Map::handle_location_import_test' );
+  add_action( 'wp_ajax_nopriv_cb_map_import_source_test', 'CB_Map::handle_location_import_test' );
+
+  add_action( 'wp_ajax_cb_map_location_import_of_map', 'CB_Map::handle_location_import_of_map' );
+  add_action( 'wp_ajax_nopriv_cb_map_location_import_of_map', 'CB_Map::handle_location_import_of_map' );
 
   //location map administration
   require_once( CB_MAP_PATH . 'classes/class-cb-location-map-admin.php' );
   $cb_map_admin = new CB_Location_Map_Admin();
   add_action( 'plugins_loaded', array($cb_map_admin, 'load_location_map_admin'));
+
+  add_action('cb_map_import', 'CB_Map::import_all_locations');
+  register_activation_hook( __FILE__, 'CB_Map::activate');
+  register_deactivation_hook( __FILE__, 'CB_Map::deactivate');
 }
