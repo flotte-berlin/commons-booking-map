@@ -275,6 +275,7 @@ class CB_Map_Settings {
 
     //import locations from all import sources async
     if($validated_input['map_type'] == 2) {
+      $url = get_site_url(null, '', null) . '/wp-admin/admin-ajax.php';
       $auth_code = CB_Map::create_import_auth_code();
 
       update_post_meta( $cb_map_id, 'cb_map_import_auth_code', $auth_code );

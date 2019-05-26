@@ -355,7 +355,7 @@ jQuery(document).ready(function($) {
   var map_type_option_groups = {
     1: ['usage', 'map-presentation', 'zoom', 'positioning-start', 'adaptive-map-section', 'popup', 'custom-marker', 'cluster', 'filter-configuration'],
     2: ['usage', 'data-import', 'map-presentation', 'zoom', 'positioning-start', 'adaptive-map-section', 'popup', 'custom-marker', 'cluster'],
-    3: ['usage', 'data-export', 'filter-configuration']
+    3: ['usage', 'data-export', 'popup', 'filter-configuration']
   };
 
   var map_type_exclude_options = {
@@ -424,7 +424,7 @@ jQuery(document).ready(function($) {
   }
 
   function add_import_source($target_element, url, code) {
-    $url_input = $('<input type="url" pattern="http?://.*" autocomplete="off" size="20" name="cb_map_options[import_sources][urls][]" placeholder="<?= cb_map\__( 'URL', 'commons-booking-map', 'URL') ?>" required>');
+    $url_input = $('<input type="url" pattern="https?://.*" autocomplete="off" size="20" name="cb_map_options[import_sources][urls][]" placeholder="<?= cb_map\__( 'URL', 'commons-booking-map', 'URL') ?>" required>');
     $code_input = $('<input type="text" autocomplete="off" size="10" name="cb_map_options[import_sources][codes][]" minlength="<?= CB_Map_Settings::EXPORT_CODE_VALUE_MIN_LENGTH ?>" placeholder="<?= cb_map\__( 'CODE', 'commons-booking-map', 'Code') ?>" required>');
 
     var $import_source = $('<div style="margin-top: 5px;"></div>');

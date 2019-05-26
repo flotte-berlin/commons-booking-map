@@ -133,6 +133,17 @@ class CB_Map_Shortcode {
     return $translation;
   }
 
+  public static function replace_location_linebreaks($locations, $replacement) {
+    foreach ($locations as &$location) {
+      foreach ($location as $key => &$value) {
+        if($key == 'contact' || $key == 'opening_hours') {
+          $value = preg_replace('/(\r\n)|\n|\r/', $replacement, $value);
+        }
+      }
+    }
+    return $locations;
+  }
+
   /**
   * the ajax request handler for locations
   **/
@@ -208,9 +219,11 @@ class CB_Map_Shortcode {
 
         $locations = [];
 
-        foreach ($map_imports as $import_locations_string) {
-          $import_locations = json_decode($import_locations_string);
-          $locations = array_merge($locations, $import_locations);
+        if(is_array($map_imports)) {
+          foreach ($map_imports as $import_locations_string) {
+            $import_locations = json_decode($import_locations_string);
+            $locations = array_merge($locations, $import_locations);
+          }
         }
 
       }
@@ -222,14 +235,14 @@ class CB_Map_Shortcode {
         $locations = array_values(CB_Map::get_locations_by_timeframes($cb_map_id, $apply_filters));
       }
 
-      echo json_encode($locations);
+      echo json_encode(self::replace_location_linebreaks($locations, '<br>'), JSON_UNESCAPED_UNICODE);
+      return wp_die();
+
     }
     else {
       wp_send_json_error( [ 'error' => 4 ], 403);
+      return wp_die();
     }
-
-    return wp_die();
-
   }
 }
 ?>

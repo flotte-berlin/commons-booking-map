@@ -326,14 +326,23 @@ class CB_Map {
 
         $data = wp_safe_remote_post($url, $args);
 
-        if($data['response']['code'] == 200) {
-          //validate against json schema
-          return self::validate_json($data['body']);
-
+        if(is_wp_error($data)) {
+            trigger_error($data->get_error_message());
+            return false;
         }
         else {
-          return false;
+          if($data['response']['code'] == 200) {
+            //validate against json schema
+            return self::validate_json($data['body']);
+
+          }
+          else {
+            return false;
+          }
         }
+
+
+
       }
       else {
         return false;
