@@ -118,6 +118,8 @@ class CB_Map {
       $item_desc = get_post_meta($timeframe['item_id'], 'commons-booking_item_descr', true);
       $item = get_post($timeframe['item_id']);
 
+      $thumbnail = get_the_post_thumbnail_url($item, 'thumbnail');
+
       $result[] = [
         'location_id' => $timeframe['location_id'],
         'item' => [
@@ -125,7 +127,7 @@ class CB_Map {
           'name' => $item->post_title,
           'short_desc' => $item_desc,
           'link' => get_permalink($item),
-          'thumbnail' => get_the_post_thumbnail_url($item, 'thumbnail')
+          'thumbnail' => $thumbnail ? $thumbnail : null
         ],
         'date_start' => $timeframe['date_start'],
         'date_end' => $timeframe['date_end']
@@ -269,6 +271,44 @@ class CB_Map {
     wp_die();
   }
 
+  public static function is_json($string) {
+   json_decode($string);
+   return (json_last_error() == JSON_ERROR_NONE);
+  }
+
+  public static function validate_json($string) {
+
+
+    if(self::is_json($string)) {
+      require_once CB_MAP_PATH . 'libs/vendor/autoload.php';
+
+      $data = json_decode($string);
+
+      $validator = new JsonSchema\Validator;
+      $schema_file_path = CB_MAP_PATH . 'schemas/locations-import.json';
+      $validator->validate($data, (object)['$ref' => 'file://' . $schema_file_path], JsonSchema\Constraints\Constraint::CHECK_MODE_COERCE_TYPES);
+
+      //trigger_error($string);
+
+      if ($validator->isValid()) {
+          return $string;
+      } else {
+          $errors = '';
+          foreach ($validator->getErrors() as $error) {
+              $errors .= sprintf("[%s] %s\n", $error['property'], $error['message']);
+          }
+
+          trigger_error("JSON does not validate. Violations: " . $errors);
+
+          return false;
+      }
+    }
+    else {
+      return false;
+    }
+
+  }
+
   public static function fetch_locations($cb_map_id, $url, $code) {
 
     $post = get_post($cb_map_id);
@@ -287,7 +327,9 @@ class CB_Map {
         $data = wp_safe_remote_post($url, $args);
 
         if($data['response']['code'] == 200) {
-          return $data['body'];
+          //validate against json schema
+          return self::validate_json($data['body']);
+
         }
         else {
           return false;

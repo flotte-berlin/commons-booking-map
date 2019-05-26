@@ -4,7 +4,7 @@
 Plugin Name:  Commons Booking Map
 Plugin URI:   https://github.com/flotte-berlin/commons-booking-map
 Description:  Ein Plugin in Ergänzung zu Commons Booking, das die Einbindung einer Karte von verfügbaren Artikeln erlaubt
-Version:      0.4.1
+Version:      0.4.2
 Author:       poilu
 Author URI:   https://github.com/poilu
 License:      GPLv2 or later
@@ -27,7 +27,6 @@ if(cb_map\is_plugin_active('commons-booking.php')) {
   add_action( 'init', 'CB_Map::register_cb_map_post_type' );
   add_action( 'save_post_cb_map', 'CB_Map_Settings::validate_options', 10, 3 );
   add_action( 'add_meta_boxes_cb_map', 'CB_Map::add_meta_boxes' );
-
 
   require_once( CB_MAP_PATH . 'classes/class-cb-map-shortcode.php' );
   add_action( 'wp_ajax_cb_map_locations', 'CB_Map_Shortcode::get_locations' );
