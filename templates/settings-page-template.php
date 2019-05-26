@@ -91,7 +91,7 @@ button>span.dashicons {
               <span style="cursor: help;" class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'ADD_IMPORT_SOURCE_DESC', 'commons-booking-map', 'add an import source (another website with installed Commons Booking Map plugin and prepared map export) by typing the url and the code you got from the website admin'); ?>"></span>
             </th>
             <td>
-              <button id="add-import-source-button" class="button"><span class="dashicons dashicons-plus"></span></button>
+              <button id="add-import-source-button" class="button" title="<?= cb_map\__('ADD_IMPORT_SOURCE_BUTTON_TITLE', 'commons-booking-map', 'add import source') ?>"><span class="dashicons dashicons-plus"></span></button>
             </td>
         </tr>
         <tr>
@@ -439,7 +439,7 @@ jQuery(document).ready(function($) {
       $code_input.val(code);
     }
 
-    var $remove_source_button = $('<button style="margin-left: 10px;" class="button remove-import-source-button"><span class="dashicons dashicons-minus"></span></button>');
+    var $remove_source_button = $('<button style="margin-left: 10px;" class="button remove-import-source-button" title="<?= cb_map\__('REMOVE_IMPORT_SOURCE_BUTTON_TITLE', 'commons-booking-map', 'remove import source') ?>"><span class="dashicons dashicons-minus"></span></button>');
     $import_source.append($remove_source_button);
 
     $remove_source_button.click(function(event) {
@@ -447,7 +447,7 @@ jQuery(document).ready(function($) {
       $remove_source_button.parent('div').remove();
     });
 
-    var $import_button = $('<button style="margin-left: 10px;" class="button test-import-source-button"><span class="dashicons dashicons-download"></span></button>');
+    var $import_button = $('<button style="margin-left: 10px;" class="button test-import-source-button" title="<?= cb_map\__('TEST_IMPORT_SOURCE_BUTTON_TITLE', 'commons-booking-map', 'test import source') ?>"><span class="dashicons dashicons-download"></span></button>');
     $import_source.append($import_button);
 
     $import_button.click(function(event) {

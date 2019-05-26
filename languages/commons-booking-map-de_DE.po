@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: cb-admin-booking\n"
-"POT-Creation-Date: 2019-05-25 22:21+0200\n"
-"PO-Revision-Date: 2019-05-25 22:22+0200\n"
+"POT-Creation-Date: 2019-05-26 14:50+0200\n"
+"PO-Revision-Date: 2019-05-26 14:50+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -30,19 +30,15 @@ msgstr "Längengrad"
 msgid "POSITION"
 msgstr "Position"
 
-#: ../classes/class-cb-map-settings.php:298
-msgid "Settings"
-msgstr ""
-
-#: ../classes/class-cb-map-settings.php:316
+#: ../classes/class-cb-map-settings.php:310
 msgid "SELECT_IMAGE"
 msgstr "Bild auswählen"
 
-#: ../classes/class-cb-map-settings.php:317
+#: ../classes/class-cb-map-settings.php:311
 msgid "SAVE"
 msgstr "speichern"
 
-#: ../classes/class-cb-map-settings.php:318
+#: ../classes/class-cb-map-settings.php:312
 msgid "MARKER_IMAGE_MEASUREMENTS"
 msgstr "Bildmaße"
 
@@ -191,6 +187,10 @@ msgstr ""
 "füge eine Import-Quelle (eine andere Webseite mit installiertem Commons "
 "Booking Map-Plugin und vorbereitetem Karten-Export) hinzu, indem du die URL "
 "und den dazugehörigen Code eingibst, die du vom Webseiten-Admin bekommen hast"
+
+#: ../templates/settings-page-template.php:94
+msgid "ADD_IMPORT_SOURCE_BUTTON_TITLE"
+msgstr "Import-Quelle hinzufügen"
 
 #: ../templates/settings-page-template.php:99
 msgid "IMPORT_SOURCES"
@@ -405,6 +405,14 @@ msgstr "URL"
 #: ../templates/settings-page-template.php:428
 msgid "CODE"
 msgstr "Code"
+
+#: ../templates/settings-page-template.php:442
+msgid "REMOVE_IMPORT_SOURCE_BUTTON_TITLE"
+msgstr "Import-Quelle entfernen"
+
+#: ../templates/settings-page-template.php:450
+msgid "TEST_IMPORT_SOURCE_BUTTON_TITLE"
+msgstr "Import-Quelle testen"
 
 #~ msgid "SETTINGS_MENU"
 #~ msgstr "Commons Booking - Karte"
