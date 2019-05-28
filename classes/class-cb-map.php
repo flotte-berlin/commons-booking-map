@@ -278,7 +278,6 @@ class CB_Map {
 
   public static function validate_json($string) {
 
-
     if(self::is_json($string)) {
       require_once CB_MAP_PATH . 'libs/vendor/autoload.php';
 

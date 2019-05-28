@@ -4,7 +4,7 @@
 Plugin Name:  Commons Booking Map
 Plugin URI:   https://github.com/flotte-berlin/commons-booking-map
 Description:  Ein Plugin in Ergänzung zu Commons Booking, das die Einbindung einer Karte von verfügbaren Artikeln erlaubt
-Version:      0.4.4
+Version:      0.4.5
 Author:       poilu
 Author URI:   https://github.com/poilu
 License:      GPLv2 or later

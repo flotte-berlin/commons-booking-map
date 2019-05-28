@@ -174,7 +174,7 @@ var cb_map = {
               + location.address.zip + ' ' + location.address.city
               + '<p><b>' + that.translation['OPENING_HOURS'] + ':</b><br>' + location.opening_hours + '</p>';
 
-      if(that.settings.show_location_contact) {
+      if(that.settings.show_location_contact && location.contact) {
         popup_content += '<p><b>' + that.translation['CONTACT'] + ':</b><br>' + location.contact + '</p>'
       }
 

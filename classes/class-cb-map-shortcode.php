@@ -133,11 +133,13 @@ class CB_Map_Shortcode {
     return $translation;
   }
 
-  public static function replace_location_linebreaks($locations, $replacement) {
+  public static function replace_location_linebreaks($locations, $linebreak_replacement) {
     foreach ($locations as &$location) {
       foreach ($location as $key => &$value) {
         if($key == 'contact' || $key == 'opening_hours') {
-          $value = preg_replace('/(\r\n)|\n|\r/', $replacement, $value);
+          $value = preg_replace('/<.*(.*?)/', '', $value); //strip off everything that smell's like HTML
+          $value = preg_replace('/(\r\n)|\n|\r/', $linebreak_replacement, $value); //replace linebreaks
+
         }
       }
     }
@@ -222,7 +224,9 @@ class CB_Map_Shortcode {
         if(is_array($map_imports)) {
           foreach ($map_imports as $import_locations_string) {
             $import_locations = json_decode($import_locations_string);
-            $locations = array_merge($locations, $import_locations);
+            if(is_array($import_locations)) {
+              $locations = array_merge($locations, $import_locations);
+            }
           }
         }
 
