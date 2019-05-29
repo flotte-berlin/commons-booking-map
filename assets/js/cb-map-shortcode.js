@@ -113,7 +113,7 @@ var cb_map = {
         		var c = ' marker-cluster-';
         		if (child_count < 10) {
         			c += 'small';
-        		} else if (childCount < 100) {
+        		} else if (child_count < 100) {
         			c += 'medium';
         		} else {
         			c += 'large';

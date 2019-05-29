@@ -148,6 +148,7 @@ class CB_Map {
 
     $args = [
       'post_type'	=> 'cb_locations',
+      'posts_per_page' => -1,
       'meta_query' => [
         [
           'key' => 'cb-map_latitude',
@@ -424,7 +425,7 @@ class CB_Map {
       $locations = self::fetch_locations($cb_map_id, $url, $code);
 
       if($locations) {
-        $new_map_imports[$import_id] = $locations;
+        $new_map_imports[$import_id] = base64_encode($locations);
       }
       else {
         if(isset($map_imports[$import_id])) {
