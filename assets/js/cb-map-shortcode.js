@@ -1,15 +1,19 @@
 
-var cb_map = {
-  settings: null,
-  translation: null,
-  map: null,
-  markers: null,
+function CB_Map() {
+  //static property
+  //translation
 
-  init_filters: function($) {
+  var cb_map = {};
+
+  cb_map.settings = null;
+  cb_map.map = null;
+  cb_map.markers = null;
+
+  cb_map.init_filters = function($) {
     var that = this;
 
     if(this.settings.filter_cb_item_categories.length > 0) {
-      var $filter_container = $('<div style="width:100%; height: 50px;"></div>');
+      var $filter_container = $('<div class="cb-map-filters" style="width:100%; height: 50px;"></div>');
 
       var $form = $('<form></form');
       this.settings.filter_cb_item_categories.forEach(function(category) {
@@ -36,12 +40,11 @@ var cb_map = {
       $form.append($button_wrapper);
 
       $filter_container.append($form);
-
-      $filter_container.insertAfter($('#cb-map'));
+      $filter_container.insertAfter($('#cb-map-' + this.settings.cb_map_id));
     }
   },
 
-  init_map: function() {
+  cb_map.init_map = function() {
     var osm_url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
   	var osm_attrib='Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors';
     var map_options = {
@@ -51,7 +54,7 @@ var cb_map = {
     }
 
   	// set up the map
-  	var map = new L.Map('cb-map');
+  	var map = new L.Map('cb-map-' + this.settings.cb_map_id);
 
   	// create the tile layer with correct attribution
   	var osm = new L.TileLayer(osm_url, map_options);
@@ -66,7 +69,7 @@ var cb_map = {
 
   },
 
-  get_location_data: function(filters) {
+  cb_map.get_location_data = function(filters) {
     filters = filters || [];
 
     var that = this;
@@ -75,8 +78,7 @@ var cb_map = {
       'filters': filters,
       'cb_map_id': this.settings.cb_map_id
 		};
-
-    console.log('fetch location data from: ', this.settings.data_url);
+    //console.log('fetch location data from: ', this.settings.data_url);
 
     this.map.spin(true);
 
@@ -96,7 +98,7 @@ var cb_map = {
 
   },
 
-  render_locations: function(data, filters) {
+  cb_map.render_locations = function(data, filters) {
     var that = this;
 
     var markers;
@@ -137,7 +139,7 @@ var cb_map = {
 
     //iterate data and add markers
     jQuery.each(data, function(index, location) {
-      console.log(location);
+      //console.log(location);
 
       var marker_options = {};
 
@@ -172,10 +174,10 @@ var cb_map = {
       var popup_content = '<b>' + location.location_name + '</b><br>'
               + location.address.street + '<br>'
               + location.address.zip + ' ' + location.address.city
-              + '<p><b>' + that.translation['OPENING_HOURS'] + ':</b><br>' + location.opening_hours + '</p>';
+              + '<p><b>' + CB_Map.translation['OPENING_HOURS'] + ':</b><br>' + location.opening_hours + '</p>';
 
       if(that.settings.show_location_contact && location.contact) {
-        popup_content += '<p><b>' + that.translation['CONTACT'] + ':</b><br>' + location.contact + '</p>'
+        popup_content += '<p><b>' + CB_Map.translation['CONTACT'] + ':</b><br>' + location.contact + '</p>'
       }
 
       popup_content += popup_items;
@@ -199,12 +201,6 @@ var cb_map = {
     }
 
   }
+
+  return cb_map;
 }
-
-jQuery(document).ready(function ($) {
-  console.log('cb_map.settings: ', cb_map.settings);
-
-  cb_map.init_filters($);
-  cb_map.init_map();
-
-});

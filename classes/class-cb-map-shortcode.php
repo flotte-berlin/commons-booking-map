@@ -37,12 +37,21 @@ class CB_Map_Shortcode {
 
             //cb map shortcode js
             wp_register_script( 'cb_map_shortcode_js', CB_MAP_ASSETS_URL . 'js/cb-map-shortcode.js');
-            wp_add_inline_script( 'cb_map_shortcode_js', 'cb_map.settings=' . json_encode(self::get_settings($cb_map_id)) .';' );
-            wp_add_inline_script( 'cb_map_shortcode_js', 'cb_map.translation=' . json_encode(self::get_translation()) .';' );
+            wp_add_inline_script( 'cb_map_shortcode_js', 'CB_Map.translation=' . json_encode(self::get_translation()) .';' );
+
+            wp_add_inline_script( 'cb_map_shortcode_js',
+              "jQuery(document).ready(function ($) {
+                var cb_map = new CB_Map();
+                cb_map.settings = ". json_encode(self::get_settings($cb_map_id)) . ";
+                console.log('cb_map.settings: ', cb_map.settings);
+                cb_map.init_filters($);
+                cb_map.init_map();
+            });");
+
             wp_enqueue_script( 'cb_map_shortcode_js' );
 
             $map_height = CB_Map_Settings::get_option($cb_map_id, 'map_height');
-            return '<div id="cb-map" style="width: 100%; height: ' . $map_height . 'px;"></div>';
+            return '<div id="cb-map-' . $cb_map_id . '" style="width: 100%; height: ' . $map_height . 'px;"></div>';
           }
           else {
             return '<div>' . cb_map\__( 'NO_VALID_MAP_TYPE', 'commons-booking-map', 'no valid map type') . '</div>';
@@ -70,7 +79,7 @@ class CB_Map_Shortcode {
       'filter_cb_item_categories' => [],
       'cb_map_id' => $cb_map_id
     ];
-    $options = CB_Map_Settings::get_options($cb_map_id);
+    $options = CB_Map_Settings::get_options($cb_map_id, true);
 
     $pass_through = ['zoom_min', 'zoom_max', 'zoom_start', 'lat_start', 'lon_start', 'marker_map_bounds_initial', 'marker_map_bounds_filter', 'max_cluster_radius', 'show_location_contact'];
 
