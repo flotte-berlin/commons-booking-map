@@ -13,7 +13,7 @@ class CB_Map_Settings {
     'marker_map_bounds_initial', 'marker_map_bounds_filter',
     'max_cluster_radius',
     'custom_marker_media_id', 'marker_icon_width', 'marker_icon_height', 'marker_icon_anchor_x', 'marker_icon_anchor_y',
-    'show_location_contact',
+    'show_location_contact', 'label_location_contact', 'show_location_opening_hours', 'label_location_opening_hours',
     'custom_marker_cluster_media_id', 'marker_cluster_icon_width', 'marker_cluster_icon_height',
     'cb_items_available_categories', 'cb_items_preset_categories'];
 
@@ -49,7 +49,10 @@ class CB_Map_Settings {
   const CUSTOM_MARKER_CLUSTER_MEDIA_ID_DEFAULT = null;
   const MARKER_CLUSTER_ICON_WIDTH_DEFAULT = 0;
   const MARKER_CLUSTER_ICON_HEIGHT_DEFAULT = 0;
-  const SHOW_LOCATION_CONTACT_DEFAULT = true;
+  const SHOW_LOCATION_CONTACT_DEFAULT = false;
+  const LABEL_LOCATION_CONTACT_DEFAULT = "";
+  const SHOW_LOCATION_OPENING_HOURS_DEFAULT = false;
+  const LABEL_LOCATION_OPENING_HOURS_DEFAULT = "";
   const CB_ITEMS_AVAILABLE_CATEGORIES_DEFAULT = [];
   const CB_ITEMS_PRESET_CATEGORIES_DEFAULT = [];
 
@@ -230,9 +233,27 @@ class CB_Map_Settings {
       $validated_input['show_location_contact'] = false;
     }
 
+    //show_location_opening_hours
+    if(isset($input['show_location_opening_hours'])) {
+      $validated_input['show_location_opening_hours'] = true;
+    }
+    else {
+      $validated_input['show_location_opening_hours'] = false;
+    }
+
+    //label_location_opening_hours
+    if(isset($input['label_location_opening_hours']) && strlen($input['label_location_opening_hours']) > 0) {
+      $validated_input['label_location_opening_hours'] = sanitize_text_field($input['label_location_opening_hours']);
+    }
+
     // custom_marker_cluster_media_id
     if(isset($input['custom_marker_cluster_media_id'])) {
       $validated_input['custom_marker_cluster_media_id'] = abs((int) $input['custom_marker_cluster_media_id']);
+    }
+
+    //label_location_contact
+    if(isset($input['label_location_contact']) && strlen($input['label_location_contact']) > 0) {
+      $validated_input['label_location_contact'] = sanitize_text_field($input['label_location_contact']);
     }
 
     //marker_cluster_icon_width

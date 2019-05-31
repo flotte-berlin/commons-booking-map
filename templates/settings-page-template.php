@@ -5,7 +5,7 @@
 }
 
 th {
-  width: 220px;
+  width: 250px;
 }
 
 .category-wrapper {
@@ -205,10 +205,31 @@ button>span.dashicons {
       <table style="text-align: left;">
         <tr>
             <th>
+              <?= cb_map\__('SHOW_LOCATION_OPENING_HOURS', 'commons-booking-map', 'show location opening hours') ?>:
+              <span style="cursor: help;" class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'SHOW_LOCATION_OPENING_HOURS_DESC', 'commons-booking-map', 'activate to show the opening hours of locations in the marker popup') ?>"></span>
+            </th>
+            <td><input type="checkbox" name="cb_map_options[show_location_opening_hours]" <?= CB_Map_Settings::get_option($cb_map_id, 'show_location_opening_hours') ? 'checked="checked"' : '' ?> value="on"></td>
+        </tr>
+        <tr>
+            <th>
+              <?= cb_map\__('LABEL_LOCATION_OPENING_HOURS', 'commons-booking-map', 'label for opening hours') ?>:
+              <span style="cursor: help;" class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'LABEL_LOCATION_OPENING_HOURS_DESC', 'commons-booking-map', 'alternative label for the opening hours of locations in the marker popup') ?>"></span>
+            </th>
+            <td><input type="text" name="cb_map_options[label_location_opening_hours]" placeholder="<?= cb_map\__('OPENING_HOURS', 'commons-booking-map', 'opening hours') ?>" value="<?= CB_Map_Settings::get_option($cb_map_id, 'label_location_opening_hours') ?>"></td>
+        </tr>
+        <tr>
+            <th>
               <?= cb_map\__('SHOW_LOCATION_CONTACT', 'commons-booking-map', 'show location contact') ?>:
-              <span style="cursor: help;" class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'SHOW_LOCATION_CONTACT_DESC', 'commons-booking-map', 'activate to show  the location contact details in the marker popup') ?>"></span>
+              <span style="cursor: help;" class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'SHOW_LOCATION_CONTACT_DESC', 'commons-booking-map', 'activate to show the location contact details in the marker popup') ?>"></span>
             </th>
             <td><input type="checkbox" name="cb_map_options[show_location_contact]" <?= CB_Map_Settings::get_option($cb_map_id, 'show_location_contact') ? 'checked="checked"' : '' ?> value="on"></td>
+        </tr>
+        <tr>
+            <th>
+              <?= cb_map\__('LABEL_LOCATION_CONTACT', 'commons-booking-map', 'label for opening hours') ?>:
+              <span style="cursor: help;" class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'LABEL_LOCATION_CONTACT_DESC', 'commons-booking-map', 'alternative label for the contact information of locations in the marker popup') ?>"></span>
+            </th>
+            <td><input type="text" name="cb_map_options[label_location_contact]" placeholder="<?= cb_map\__('CONTACT', 'commons-booking-map', 'opening hours') ?>" value="<?= CB_Map_Settings::get_option($cb_map_id, 'label_location_contact') ?>"></td>
         </tr>
       </table>
     </div>

@@ -109,7 +109,9 @@ var cb_map_marker_upload = {
       var src = data.$image_preview.attr('src');
 
       if(src.length > 0) {
-        data.$image_preview.load();
+        setTimeout(function() {
+          data.$image_preview.load();
+        }, 0);
       }
     }
   }

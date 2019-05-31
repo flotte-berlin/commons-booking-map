@@ -1,11 +1,9 @@
 
 function CB_Map() {
-  //static property
-  //translation
-
   var cb_map = {};
 
   cb_map.settings = null;
+  cb_map.translation = null;
   cb_map.map = null;
   cb_map.markers = null;
 
@@ -151,7 +149,7 @@ function CB_Map() {
 
         var item_thumb_image = item.thumbnail ? '<img src="' + item.thumbnail + '">' : '';
 
-        popup_items += '<div>'
+        popup_items += '<div style="margin-top: 10px;">'
           + '<div style="display: inline-block; width: 25%; margin-right: 5%;">'
           + item_thumb_image
           + '</div>'
@@ -159,7 +157,8 @@ function CB_Map() {
           + item.short_desc
           + '</div>'
           + '</div>'
-      })
+      });
+
       var marker_options = {
         title: item_names.toString()
       };
@@ -171,24 +170,38 @@ function CB_Map() {
 
       var marker = L.marker([location.lat, location.lon], marker_options);
 
-      var popup_content = '<b>' + location.location_name + '</b><br>'
-              + location.address.street + '<br>'
-              + location.address.zip + ' ' + location.address.city
-              + '<p><b>' + CB_Map.translation['OPENING_HOURS'] + ':</b><br>' + location.opening_hours + '</p>';
+      var popup_content = '<b style="line-height: 25px;">' + location.location_name + '</b>';
+      popup_content += '<span id="location-zoom-in-' + that.settings.cb_map_id + '-' + index + '" style="cursor: pointer; padding-left: 5px; padding-top: 2.5px;" class="dashicons dashicons-search"></span><br>'
+      popup_content += location.address.street + '<br>';
+      popup_content += location.address.zip + ' ' + location.address.city
+
+      if(that.settings.show_location_opening_hours && location.opening_hours) {
+        popup_content += '<div style="margin-top: 10px;"><b>' + cb_map.translation['OPENING_HOURS'] + ':</b><br>' + location.opening_hours + '</div>'
+      }
 
       if(that.settings.show_location_contact && location.contact) {
-        popup_content += '<p><b>' + CB_Map.translation['CONTACT'] + ':</b><br>' + location.contact + '</p>'
+        popup_content += '<div style="margin-top: 10px;"><b>' + cb_map.translation['CONTACT'] + ':</b><br>' + location.contact + '</div>'
       }
 
       popup_content += popup_items;
-      marker.bindPopup(popup_content);
+
+      var popup = L.DomUtil.create('div', 'cb-map-location-info');
+      popup.innerHTML = popup_content;
+      marker.bindPopup(popup);
 
       markers.addLayer(marker);
 
-      that.markers = markers;
+      //set map view to location and zoom in
+      jQuery('#location-zoom-in-' + that.settings.cb_map_id + '-' + index, popup).on('click', function() {
+        that.map.closePopup();
+        that.map.setView(new L.LatLng(location.lat, location.lon), that.settings.zoom_max);
+      });
+
     });
 
     this.map.addLayer(markers);
+
+    that.markers = markers;
 
     //adjust map section to marker bounds based on settings
     if((filters.length > 0 && this.settings.marker_map_bounds_filter) || (filters.length == 0 && this.settings.marker_map_bounds_initial)) {

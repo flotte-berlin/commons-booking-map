@@ -37,12 +37,12 @@ class CB_Map_Shortcode {
 
             //cb map shortcode js
             wp_register_script( 'cb_map_shortcode_js', CB_MAP_ASSETS_URL . 'js/cb-map-shortcode.js');
-            wp_add_inline_script( 'cb_map_shortcode_js', 'CB_Map.translation=' . json_encode(self::get_translation()) .';' );
 
             wp_add_inline_script( 'cb_map_shortcode_js',
               "jQuery(document).ready(function ($) {
                 var cb_map = new CB_Map();
-                cb_map.settings = ". json_encode(self::get_settings($cb_map_id)) . ";
+                cb_map.settings = " . json_encode(self::get_settings($cb_map_id)) . ";
+                cb_map.translation = " . json_encode(self::get_translation($cb_map_id)) . ";
                 console.log('cb_map.settings: ', cb_map.settings);
                 cb_map.init_filters($);
                 cb_map.init_map();
@@ -81,7 +81,7 @@ class CB_Map_Shortcode {
     ];
     $options = CB_Map_Settings::get_options($cb_map_id, true);
 
-    $pass_through = ['zoom_min', 'zoom_max', 'zoom_start', 'lat_start', 'lon_start', 'marker_map_bounds_initial', 'marker_map_bounds_filter', 'max_cluster_radius', 'show_location_contact'];
+    $pass_through = ['zoom_min', 'zoom_max', 'zoom_start', 'lat_start', 'lon_start', 'marker_map_bounds_initial', 'marker_map_bounds_filter', 'max_cluster_radius', 'show_location_contact', 'show_location_opening_hours'];
 
     $icon_size = [$options['marker_icon_width'], $options['marker_icon_height']];
     $icon_anchor = [$options['marker_icon_anchor_x'], $options['marker_icon_anchor_y']];
@@ -133,10 +133,13 @@ class CB_Map_Shortcode {
     return $settings;
   }
 
-  public static function get_translation() {
+  public static function get_translation($cb_map_id) {
+    $label_location_opening_hours = CB_Map_Settings::get_option($cb_map_id, 'label_location_opening_hours');
+    $label_location_contact = CB_Map_Settings::get_option($cb_map_id, 'label_location_contact');
+
     $translation = [
-      'OPENING_HOURS' => cb_map\__('OPENING_HOURS', 'commons-booking-map', 'opening hours'),
-      'CONTACT' => cb_map\__('CONTACT', 'commons-booking-map', 'contact')
+      'OPENING_HOURS' => strlen($label_location_opening_hours) > 0 ? $label_location_opening_hours : cb_map\__('OPENING_HOURS', 'commons-booking-map', 'opening hours'),
+      'CONTACT' => strlen($label_location_contact) > 0 ? $label_location_contact : cb_map\__('CONTACT', 'commons-booking-map', 'contact')
     ];
 
     return $translation;
