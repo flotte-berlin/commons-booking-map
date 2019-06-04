@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: cb-admin-booking\n"
-"POT-Creation-Date: 2019-05-31 17:36+0200\n"
-"PO-Revision-Date: 2019-05-31 17:38+0200\n"
+"POT-Creation-Date: 2019-06-02 11:57+0200\n"
+"PO-Revision-Date: 2019-06-02 11:57+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -116,6 +116,14 @@ msgstr "Karten, um Commons Booking-Standorte mit ihren Artikeln darzustellen."
 #: ../classes/class-cb-map.php:68
 msgid "CB_MAP_SETTINGS_METABOX_TITLE"
 msgstr "Kartenkonfiguration"
+
+#: ../classes/class-cb-map.php:265
+msgid "FROM"
+msgstr "ab"
+
+#: ../classes/class-cb-map.php:269
+msgid "UNTIL"
+msgstr "bis"
 
 #: ../templates/settings-page-template.php:37
 msgid "SETTINGS_DESCRIPTION"

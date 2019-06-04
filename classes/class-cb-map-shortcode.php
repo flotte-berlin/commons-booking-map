@@ -77,7 +77,8 @@ class CB_Map_Shortcode {
       'data_url' => get_site_url(null, '', null) . '/wp-admin/admin-ajax.php',
       'marker_icon' => null,
       'filter_cb_item_categories' => [],
-      'cb_map_id' => $cb_map_id
+      'cb_map_id' => $cb_map_id,
+      'locale' => str_replace('_', '-', get_locale())
     ];
     $options = CB_Map_Settings::get_options($cb_map_id, true);
 
@@ -139,7 +140,9 @@ class CB_Map_Shortcode {
 
     $translation = [
       'OPENING_HOURS' => strlen($label_location_opening_hours) > 0 ? $label_location_opening_hours : cb_map\__('OPENING_HOURS', 'commons-booking-map', 'opening hours'),
-      'CONTACT' => strlen($label_location_contact) > 0 ? $label_location_contact : cb_map\__('CONTACT', 'commons-booking-map', 'contact')
+      'CONTACT' => strlen($label_location_contact) > 0 ? $label_location_contact : cb_map\__('CONTACT', 'commons-booking-map', 'contact'),
+      'FROM' => cb_map\__( 'FROM', 'commons-booking-map', 'from'),
+      'UNTIL' => cb_map\__( 'UNTIL', 'commons-booking-map', 'until')
     ];
 
     return $translation;

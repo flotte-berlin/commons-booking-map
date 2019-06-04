@@ -135,6 +135,8 @@ function CB_Map() {
       custom_marker_icon = L.icon(this.settings.marker_icon);
     }
 
+    var date_format_options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+
     //iterate data and add markers
     jQuery.each(data, function(index, location) {
       //console.log(location);
@@ -153,8 +155,27 @@ function CB_Map() {
           + '<div style="display: inline-block; width: 25%; margin-right: 5%;">'
           + item_thumb_image
           + '</div>'
-          + '<div style="display: inline-block; width: 70%;"><b><a href="' + item.link + '">' + item.name + '</a></b> - '
-          + item.short_desc
+          + '<div style="display: inline-block; width: 70%;"><b><a href="' + item.link + '">' + item.name + '</a></b>';
+
+        if(item.timeframe_hints && item.timeframe_hints.length > 0) {
+          popup_items += ' (';
+
+          for(var t = 0; t < item.timeframe_hints.length; t++) {
+            if(t > 0) {
+              popup_items += ', '
+            }
+
+            var timeframe_hint = item.timeframe_hints[t];
+
+            var date = new Date(timeframe_hint.timestamp * 1000);
+            var formatted_date_string = date.toLocaleDateString(cb_map.settings.locale, date_format_options);
+            popup_items += cb_map.translation[timeframe_hint.type.toUpperCase()] + ' ' + formatted_date_string;
+          }
+
+          popup_items += ') ';
+        }
+
+        popup_items += ' - ' + item.short_desc
           + '</div>'
           + '</div>'
       });

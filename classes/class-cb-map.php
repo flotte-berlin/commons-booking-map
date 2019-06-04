@@ -239,20 +239,39 @@ class CB_Map {
           }
           //add item to location
           if(!isset($result[$location_id]['items'][$timeframe['item']['id']])) {
-            $item['timeframes'] = [
-              [
-                'date_start' => $timeframe['date_start'],
-                'date_end' => $timeframe['date_end']
-              ]
-            ];
+            $item['timeframes'] = [];
+            $item['timeframe_hints'] = [];
             $result[$location_id]['items'][$timeframe['item']['id']] = $item;
           }
-          else {
-            $result[$location_id]['items'][$timeframe['item']['id']]['timeframes'][] = [
-              'date_start' => $timeframe['date_start'],
-              'date_end' => $timeframe['date_end']
-            ];
+
+          //add timeframe to item
+          $result[$location_id]['items'][$timeframe['item']['id']]['timeframes'][] = [
+            'date_start' => $timeframe['date_start'],
+            'date_end' => $timeframe['date_end']
+          ];
+
+          //add timeframe hint
+          $now = new DateTime();
+          
+          $date_start = new DateTime();
+          $date_start->setTimestamp(strtotime($timeframe['date_start']));
+
+          $date_end = new DateTime();
+          $date_end->setTimestamp(strtotime($timeframe['date_end']));
+          $diff_end = $date_end->diff($now)->format("%a");
+
+          $cb_data = new CB_Data();
+
+          //show hint if timeframe starts in the future
+          if($date_start > $now) {
+            $result[$location_id]['items'][$timeframe['item']['id']]['timeframe_hints'][] = ['type' => 'from', 'timestamp' => strtotime($timeframe['date_start'])];
           }
+
+          //show hint for near end of timeframe if it's before the last possible day to book (CB settings)
+          if($diff_end <= $cb_data->daystoshow) {
+            $result[$location_id]['items'][$timeframe['item']['id']]['timeframe_hints'][] = ['type' => 'until', 'timestamp' => strtotime($timeframe['date_end'])];
+          }
+
         }
       }
     }
@@ -344,9 +363,6 @@ class CB_Map {
             return false;
           }
         }
-
-
-
       }
       else {
         return false;
