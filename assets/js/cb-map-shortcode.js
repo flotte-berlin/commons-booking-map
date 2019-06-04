@@ -14,10 +14,17 @@ function CB_Map() {
       var $filter_container = $('<div class="cb-map-filters" style="width:100%; height: 50px;"></div>');
 
       var $form = $('<form></form');
+      var $filter_options = $('<div class="cb-filter-options"></div>');
       this.settings.filter_cb_item_categories.forEach(function(category) {
-        $input = $('<label style="margin-right: 20px;"><input type="checkbox" name="cb_item_categories[]" value="' + category.term_id + '">' + category.name + '</label>');
-        $form.append($input);
+        $input = $('<input type="checkbox" name="cb_item_categories[]" value="' + category.term_id + '">')
+        label_markup = that.settings.filter_cb_item_categories_custom_markup[category.term_id] || category.name;
+        $label = $('<label style="margin-right: 20px;"></label>');
+        $label.html(label_markup);
+        $filter_options.append($input);
+        $filter_options.append($label);
       })
+
+      $form.append($filter_options);
 
       var $button = $('<button>filter</button>');
 
@@ -33,7 +40,7 @@ function CB_Map() {
         that.get_location_data(filters);
       });
 
-      $button_wrapper = $('<div></div>');
+      $button_wrapper = $('<div class="cb-map-button-wrapper"></div>');
       $button_wrapper.append($button);
       $form.append($button_wrapper);
 
@@ -193,15 +200,14 @@ function CB_Map() {
 
       var popup_content = '<b style="line-height: 25px;">' + location.location_name + '</b>';
       popup_content += '<span id="location-zoom-in-' + that.settings.cb_map_id + '-' + index + '" style="cursor: pointer; padding-left: 5px; padding-top: 2.5px;" class="dashicons dashicons-search"></span><br>'
-      popup_content += location.address.street + '<br>';
-      popup_content += location.address.zip + ' ' + location.address.city
+      popup_content += location.address.street + ', ' + location.address.zip + ' ' + location.address.city
 
       if(that.settings.show_location_opening_hours && location.opening_hours) {
-        popup_content += '<div style="margin-top: 10px;"><b>' + cb_map.translation['OPENING_HOURS'] + ':</b><br>' + location.opening_hours + '</div>'
+        popup_content += '<div style="margin-top: 10px;"><b><i>' + cb_map.translation['OPENING_HOURS'] + ':</i></b><br>' + location.opening_hours + '</div>'
       }
 
       if(that.settings.show_location_contact && location.contact) {
-        popup_content += '<div style="margin-top: 10px;"><b>' + cb_map.translation['CONTACT'] + ':</b><br>' + location.contact + '</div>'
+        popup_content += '<div style="margin-top: 10px;"><b><i>' + cb_map.translation['CONTACT'] + ':</i></b><br>' + location.contact + '</div>'
       }
 
       popup_content += popup_items;

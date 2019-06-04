@@ -15,7 +15,8 @@ class CB_Map_Settings {
     'custom_marker_media_id', 'marker_icon_width', 'marker_icon_height', 'marker_icon_anchor_x', 'marker_icon_anchor_y',
     'show_location_contact', 'label_location_contact', 'show_location_opening_hours', 'label_location_opening_hours',
     'custom_marker_cluster_media_id', 'marker_cluster_icon_width', 'marker_cluster_icon_height',
-    'cb_items_available_categories', 'cb_items_preset_categories'];
+    'cb_items_available_categories', 'cb_items_available_categories_custom_markup',
+    'cb_items_preset_categories'];
 
   const EXPORT_CODE_VALUE_MIN_LENGTH = 10;
   const MAP_HEIGHT_VALUE_MIN = 100;
@@ -54,6 +55,7 @@ class CB_Map_Settings {
   const SHOW_LOCATION_OPENING_HOURS_DEFAULT = false;
   const LABEL_LOCATION_OPENING_HOURS_DEFAULT = "";
   const CB_ITEMS_AVAILABLE_CATEGORIES_DEFAULT = [];
+  const CB_ITEMS_AVAILABLE_CATEGORIES_CUSTOM_MARKUP_DEFAULT = [];
   const CB_ITEMS_PRESET_CATEGORIES_DEFAULT = [];
 
   //const MARKER_POPUP_CONTENT_DEFAULT = "'<b>' + location.location_name + '</b><br>' + location.address.street + '<br>' + location.address.zip + ' ' + location.address.city + '<p>' + location.opening_hours + '</p>'";
@@ -114,6 +116,10 @@ class CB_Map_Settings {
     $const_value = constant("self::$default_name");
 
     return isset($const_value) ? $const_value : null;
+  }
+
+  public static function strip_script_tags($input) {
+    return preg_replace( '/<script\b[^>]*>(.*?)<\/script>/is', '', $input );
   }
 
   /**
@@ -266,7 +272,7 @@ class CB_Map_Settings {
       $validated_input['marker_cluster_icon_height'] = abs((float) $input['marker_cluster_icon_height']);
     }
 
-    //cb_items_available_categories
+    //cb_items_available_categories && cb_items_available_categories_custom_markup
     $category_terms = get_terms([
       'taxonomy' => 'cb_items_category',
       'hide_empty' => false
@@ -284,6 +290,15 @@ class CB_Map_Settings {
       }
     }
 
+    //cb_items_available_categories_custom_markup
+    if(isset($input['cb_items_available_categories_custom_markup'])) {
+      foreach ($input['cb_items_available_categories_custom_markup'] as $cb_items_category_id => $markup) {
+        $validated_input['cb_items_available_categories_custom_markup'][$cb_items_category_id] = self::strip_script_tags($markup);
+      }
+
+    }
+
+    //cb_items_preset_categories
     if(isset($input['cb_items_preset_categories'])) {
       foreach($input['cb_items_preset_categories'] as $cb_items_category_id) {
         if(in_array((int) $cb_items_category_id, $valid_term_ids)) {
@@ -294,26 +309,33 @@ class CB_Map_Settings {
 
     update_post_meta($cb_map_id, 'cb_map_options', $validated_input);
 
-    //import locations from all import sources async
     if($validated_input['map_type'] == 2) {
-      $url = get_site_url(null, '', null) . '/wp-admin/admin-ajax.php';
-      $auth_code = CB_Map::create_import_auth_code();
-
-      update_post_meta( $cb_map_id, 'cb_map_import_auth_code', $auth_code );
-
-      $args = [
-        'blocking' => false,
-        'body' => [
-          'action' => 'cb_map_location_import_of_map',
-          'cb_map_id' => $cb_map_id,
-          'auth_code' => $auth_code
-        ]
-      ];
-
-      wp_safe_remote_post($url, $args);
+      self::start_import_from_all_sources_of_map($cb_map_id);
     }
 
     return $validated_input;
+  }
+
+  /**
+  * asynchronously import locations from all sources of given map
+  **/
+  public static function start_import_from_all_sources_of_map($cb_map_id) {
+    $url = get_site_url(null, '', null) . '/wp-admin/admin-ajax.php';
+    $auth_code = CB_Map::create_import_auth_code();
+
+    update_post_meta( $cb_map_id, 'cb_map_import_auth_code', $auth_code );
+
+    $args = [
+      'blocking' => false,
+      'body' => [
+        'action' => 'cb_map_location_import_of_map',
+        'cb_map_id' => $cb_map_id,
+        'auth_code' => $auth_code
+      ]
+    ];
+
+    wp_safe_remote_post($url, $args);
+
   }
 
   public function render_options_page($post) {
@@ -342,7 +364,7 @@ class CB_Map_Settings {
       'selected_cats' => self::get_option($cb_map_id, 'cb_items_available_categories')
     ];
     $available_categories_checklist_markup = wp_terms_checklist( 0, $available_categories_args);
-    $available_categories_checklist_markup = str_replace('name="tax_input[cb_items_category]', 'name="cb_map_options[cb_items_available_categories]', $available_categories_checklist_markup);
+    $available_categories_checklist_markup = str_replace('name="tax_input[cb_items_category]', 'class="cb_items_available_category" name="cb_map_options[cb_items_available_categories]', $available_categories_checklist_markup);
 
     $preset_categories_args = [
       'taxonomy' => 'cb_items_category',

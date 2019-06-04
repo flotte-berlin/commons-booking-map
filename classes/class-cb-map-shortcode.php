@@ -116,7 +116,8 @@ class CB_Map_Shortcode {
           ];
         }
       }
-      else if ($key == 'cb_items_available_categories') {
+      //categories are only meant to be shown on local maps
+      else if($key == 'cb_items_available_categories' && $options['map_type'] == 1 ) {
         $terms = get_terms([
           'taxonomy' => 'cb_items_category',
           'hide_empty' => false
@@ -127,6 +128,10 @@ class CB_Map_Shortcode {
             $settings['filter_cb_item_categories'][] = $term;
           }
         }
+      }
+      //categories are only meant to be shown on local maps
+      else if($key == 'cb_items_available_categories_custom_markup' && $options['map_type'] == 1) {
+        $settings['filter_cb_item_categories_custom_markup'] = $options['cb_items_available_categories_custom_markup'];
       }
 
     }

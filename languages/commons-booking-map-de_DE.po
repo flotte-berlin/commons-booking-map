@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: cb-admin-booking\n"
-"POT-Creation-Date: 2019-06-02 11:57+0200\n"
-"PO-Revision-Date: 2019-06-02 11:57+0200\n"
+"POT-Creation-Date: 2019-06-04 16:21+0200\n"
+"PO-Revision-Date: 2019-06-04 16:22+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -55,15 +55,23 @@ msgstr "Karte ist nicht veröffentlicht"
 msgid "NO_VALID_MAP_ID"
 msgstr "keine gültige Karten-ID"
 
-#: ../classes/class-cb-map-shortcode.php:141
+#: ../classes/class-cb-map-shortcode.php:142
 #: ../templates/settings-page-template.php:218
 msgid "OPENING_HOURS"
 msgstr "Öffnungszeiten"
 
-#: ../classes/class-cb-map-shortcode.php:142
+#: ../classes/class-cb-map-shortcode.php:143
 #: ../templates/settings-page-template.php:232
 msgid "CONTACT"
 msgstr "Kontakt"
+
+#: ../classes/class-cb-map-shortcode.php:144
+msgid "FROM"
+msgstr "ab"
+
+#: ../classes/class-cb-map-shortcode.php:145
+msgid "UNTIL"
+msgstr "bis"
 
 #: ../classes/class-cb-map.php:7
 msgid "POST_LABELS_NAME"
@@ -116,14 +124,6 @@ msgstr "Karten, um Commons Booking-Standorte mit ihren Artikeln darzustellen."
 #: ../classes/class-cb-map.php:68
 msgid "CB_MAP_SETTINGS_METABOX_TITLE"
 msgstr "Kartenkonfiguration"
-
-#: ../classes/class-cb-map.php:265
-msgid "FROM"
-msgstr "ab"
-
-#: ../classes/class-cb-map.php:269
-msgid "UNTIL"
-msgstr "bis"
 
 #: ../templates/settings-page-template.php:37
 msgid "SETTINGS_DESCRIPTION"
@@ -411,12 +411,12 @@ msgid "CUSTOM_CLUSTER_MARKER"
 msgstr "angepasster Cluster-Marker"
 
 #: ../templates/settings-page-template.php:339
-msgid "FILTER_CONFIGURATION"
-msgstr "Filter-Einstellungen"
+msgid "FILTER_USERS"
+msgstr "Filter für NutzerInnen"
 
 #: ../templates/settings-page-template.php:343
 msgid "AVAILABLE_CATEGORIES"
-msgstr "verfügbare Kategorien für NutzerInnen"
+msgstr "verfügbare Kategorien"
 
 #: ../templates/settings-page-template.php:344
 msgid "AVAILABLE_CATEGORIES_DESC"
@@ -425,30 +425,41 @@ msgstr ""
 "filtern - keine für Deaktivierung von Filtern"
 
 #: ../templates/settings-page-template.php:357
-msgid "PRESET_CATEGORIES"
-msgstr "vorab gesetzte Kategorien"
+msgid "CUSTOM_CATEGORY_FILTER_LABEL_MARKUP"
+msgstr "individuelles HTML für Filter-Label"
 
-#: ../templates/settings-page-template.php:358
+#: ../templates/settings-page-template.php:362
+msgid "FILTER_PRESETS"
+msgstr "Vorabfilter"
+
+#: ../templates/settings-page-template.php:366
+msgid "PRESET_CATEGORIES"
+msgstr "gesetzte Kategorien"
+
+#: ../templates/settings-page-template.php:367
 msgid "PRESET_CATEGORIES_DESC"
 msgstr ""
 "Auswahl der Kategorien, die genutzt werden, um Artikel vorzufiltern, die auf "
 "der Karte angezeigt werden - keine für alle Artikel"
 
-#: ../templates/settings-page-template.php:448
+#: ../templates/settings-page-template.php:471
 msgid "URL"
 msgstr "URL"
 
-#: ../templates/settings-page-template.php:449
+#: ../templates/settings-page-template.php:472
 msgid "CODE"
 msgstr "Code"
 
-#: ../templates/settings-page-template.php:463
+#: ../templates/settings-page-template.php:486
 msgid "REMOVE_IMPORT_SOURCE_BUTTON_TITLE"
 msgstr "Import-Quelle entfernen"
 
-#: ../templates/settings-page-template.php:471
+#: ../templates/settings-page-template.php:494
 msgid "TEST_IMPORT_SOURCE_BUTTON_TITLE"
 msgstr "Import-Quelle testen"
+
+#~ msgid "FILTER_CONFIGURATION"
+#~ msgstr "Filter-Einstellungen"
 
 #~ msgid "LABEL_OPENING_HOURS"
 #~ msgstr "Beschriftung der Öffnungszeiten"

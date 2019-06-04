@@ -335,10 +335,10 @@ button>span.dashicons {
       </table>
     </div>
 
-    <div class="option-group" id="option-group-filter-configuration">
-      <h1><?= cb_map\__('FILTER_CONFIGURATION', 'commons-booking-map', 'Filter Configuration') ?></h1>
+    <div class="option-group" id="option-group-filter-users">
+      <h1><?= cb_map\__('FILTER_USERS', 'commons-booking-map', 'Filter for Users') ?></h1>
       <table style="text-align: left;">
-        <tr class="option" id="option-available-categories">
+        <tr>
           <th>
             <?= cb_map\__('AVAILABLE_CATEGORIES', 'commons-booking-map', 'available categories')?>:
             <span style="cursor: help;" class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'AVAILABLE_CATEGORIES_DESC', 'commons-booking-map', 'select the categories that are presented the users to filter items - none for no filters') ?>"></span>
@@ -351,8 +351,17 @@ button>span.dashicons {
             </ul>
           </td>
         </tr>
+      </table>
 
-        <tr class="option" id="option-preset-categories">
+      <table style="text-align: left;" id="available-categories-custom-markup-wrapper">
+        <tr><th col-span="2"><?= cb_map\__('CUSTOM_CATEGORY_FILTER_LABEL_MARKUP', 'commons-booking-map', 'custom markup for filters')?></th><tr>
+      </table>
+    </div>
+
+    <div class="option-group" id="option-group-filter-presets">
+      <h1><?= cb_map\__('FILTER_PRESETS', 'commons-booking-map', 'Filter Presets') ?></h1>
+      <table style="text-align: left;">
+        <tr>
           <th>
             <?= cb_map\__('PRESET_CATEGORIES', 'commons-booking-map', 'preset categories')?>:
             <span style="cursor: help;" class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'PRESET_CATEGORIES_DESC', 'commons-booking-map', 'select the categories that are used to prefilter the items that are shown on the map - none for all items') ?>"></span>
@@ -374,15 +383,12 @@ button>span.dashicons {
 
 jQuery(document).ready(function($) {
   var map_type_option_groups = {
-    1: ['usage', 'map-presentation', 'zoom', 'positioning-start', 'adaptive-map-section', 'popup', 'custom-marker', 'cluster', 'filter-configuration'],
+    //local
+    1: ['usage', 'map-presentation', 'zoom', 'positioning-start', 'adaptive-map-section', 'popup', 'custom-marker', 'cluster', 'filter-users', 'filter-presets'],
+    //import
     2: ['usage', 'data-import', 'map-presentation', 'zoom', 'positioning-start', 'adaptive-map-section', 'popup', 'custom-marker', 'cluster'],
-    3: ['usage', 'data-export', 'popup', 'filter-configuration']
-  };
-
-  var map_type_exclude_options = {
-    1: [],
-    2: [],
-    3: ['available-categories']
+    //export
+    3: ['usage', 'data-export', 'popup', 'filter-presets']
   };
 
   function show_option_groups(map_type) {
@@ -394,11 +400,6 @@ jQuery(document).ready(function($) {
       var $this = $(this);
       if(map_type_option_groups[map_type].includes($this.attr('id').replace('option-group-', ''))) {
         $(this).show();
-
-        //hide options that are excluded from group appearance
-        $.each(map_type_exclude_options[map_type], function(index, value) {
-          $('#option-' + value).hide();
-        });
       }
       else {
         $(this).hide();
@@ -411,6 +412,50 @@ jQuery(document).ready(function($) {
   });
 
   show_option_groups($('#map_type').val());
+
+  //----------------------------------------------------------------------------
+  // users filters custom markup
+
+  $('.cb_items_available_category').change(function() {
+    var $this = $(this);
+    var el_id_arr = $this.attr('id').split('-');
+    var cat_id = el_id_arr[el_id_arr.length - 1];
+    //console.log(cat_id);
+
+    if ($this.prop("checked")) {
+      //console.log('checked');
+      add_custom_markup_option(cat_id, $this.parent().text(), $this.parent().text().trim());
+    }
+    else {
+      //console.log('unchecked');
+      $('#available_category_cutom_markup_' + cat_id).remove();
+    }
+
+  });
+
+  function add_custom_markup_option(cat_id, label_text, markup) {
+    var $accm_table = $('#available-categories-custom-markup-wrapper');
+    var $row = $('<tr id="available_category_cutom_markup_' + cat_id + '"><th>' + label_text + ':</th><td><textarea name="cb_map_options[cb_items_available_categories_custom_markup][' + cat_id + ']">' + markup + '</textarea></td></tr>');
+    $accm_table.append($row);
+  }
+
+  function add_custom_markup_options() {
+    var custom_markup_options_data = <?= json_encode( CB_Map_Settings::get_option($cb_map_id, 'cb_items_available_categories_custom_markup') ); ?>;
+    $('.cb_items_available_category').each(function() {
+      var $this = $(this);
+
+      if ($this.prop("checked")) {
+        var el_id_arr = $this.attr('id').split('-');
+        var cat_id = el_id_arr[el_id_arr.length - 1];
+
+        var markup = custom_markup_options_data[cat_id] || $this.parent().text().trim();
+        add_custom_markup_option(cat_id, $this.parent().text(), markup);
+      }
+
+    });
+  }
+
+  add_custom_markup_options();
 
   //----------------------------------------------------------------------------
   // data export
