@@ -441,10 +441,12 @@ class CB_Map {
       $code = $import_sources['codes'][$key];
       $import_id = self::create_import_id($url, $code);
 
-      $locations = self::fetch_locations($cb_map_id, $url, $code);
+      $locations_json = self::fetch_locations($cb_map_id, $url, $code);
+
+      $locations = CB_Map::cleanup_location_data(json_decode($locations_json, true), '<br>', 3);
 
       if($locations) {
-        $new_map_imports[$import_id] = base64_encode($locations);
+        $new_map_imports[$import_id] = base64_encode(json_encode($locations, JSON_UNESCAPED_UNICODE));
       }
       else {
         if(isset($map_imports[$import_id])) {
@@ -455,6 +457,53 @@ class CB_Map {
     }
 
     update_post_meta($cb_map_id, 'cb_map_imports', $new_map_imports);
+  }
+
+  /**
+  * recursive clean up of location data entries
+  **/
+  public static function cleanup_location_data_entry($key, $value, $linebreak_replacement, $map_type) {
+
+    if(is_string($value)) {
+      $value = preg_replace('/(\r\n)|\n|\r/', $linebreak_replacement, $value); //replace linebreaks
+      $value = preg_replace('/<.*(.*?)/', '', $value); //strip off everything that smell's like HTML
+    }
+
+    if(is_array($value)) {
+      foreach ($value as $child_key => &$child_value) {
+        $child_value = self::cleanup_location_data_entry($child_key, $child_value, $linebreak_replacement, $map_type);
+      }
+    }
+
+    //URL encoding/decoding of thumbnails
+    if($key === 'items') {
+      foreach($value as &$item) {
+        if($map_type == 3) {
+          if(is_string($item['thumbnail'])) {
+            $url_array = explode ( '/' , $item['thumbnail']);
+            foreach ($url_array as $index => &$url_part) {
+              if($index > 0) {
+                $url_part = rawurlencode($url_part);
+              }
+            }
+            $item['thumbnail'] = implode('/', $url_array);
+          }
+        }
+        if($map_type == 2) {
+          $item['thumbnail'] = rawurldecode($item['thumbnail']);
+        }
+      }
+    }
+
+    return $value;
+  }
+
+  public static function cleanup_location_data($locations, $linebreak_replacement, $map_type) {
+    foreach ($locations as $key => &$location) {
+      $location = self::cleanup_location_data_entry($key, $location, $linebreak_replacement, $map_type);
+    }
+
+    return $locations;
   }
 
   public static function replace_map_link_target() {

@@ -153,37 +153,6 @@ class CB_Map_Shortcode {
     return $translation;
   }
 
-  public static function cleanup_location_data($locations, $linebreak_replacement, $map_type) {
-    foreach ($locations as &$location) {
-      foreach ($location as $key => &$value) {
-        if($key == 'contact' || $key == 'opening_hours') {
-          $value = preg_replace('/(\r\n)|\n|\r/', $linebreak_replacement, $value); //replace linebreaks
-          $value = preg_replace('/<.*(.*?)/', '', $value); //strip off everything that smell's like HTML
-        }
-
-        if($key == 'items') {
-          foreach($value as &$item) {
-            if($map_type == 3) {
-              if(is_string($item['thumbnail'])) {
-                $url_array = explode ( '/' , $item['thumbnail']);
-                foreach ($url_array as $index => &$url_part) {
-                  if($index > 0) {
-                    $url_part = rawurlencode($url_part);
-                  }
-                }
-                $item['thumbnail'] = implode('/', $url_array);
-              }
-            }
-            if($map_type == 2) {
-              $item['thumbnail'] = rawurldecode($item['thumbnail']);
-            }
-          }
-        }
-      }
-    }
-    return $locations;
-  }
-
   /**
   * the ajax request handler for locations
   **/
@@ -251,6 +220,7 @@ class CB_Map_Shortcode {
 
         require_once( CB_MAP_PATH . 'classes/class-cb-map.php' );
         $locations = array_values(CB_Map::get_locations_by_timeframes($cb_map_id, $apply_filters));
+        $locations = CB_Map::cleanup_location_data($locations, '<br>', $map_type);
       }
 
       //import
@@ -275,9 +245,11 @@ class CB_Map_Shortcode {
         $available_filters = CB_Map_Admin::get_option($cb_map_id, 'cb_items_available_categories');
         require_once( CB_MAP_PATH . 'classes/class-cb-map.php' );
         $locations = array_values(CB_Map::get_locations_by_timeframes($cb_map_id, $apply_filters));
+        $locations = CB_Map::cleanup_location_data($locations, '<br>', $map_type);
       }
 
-      echo json_encode(self::cleanup_location_data($locations, '<br>', $map_type), JSON_UNESCAPED_UNICODE);
+      echo json_encode($locations, JSON_UNESCAPED_UNICODE);
+
       return wp_die();
 
     }
