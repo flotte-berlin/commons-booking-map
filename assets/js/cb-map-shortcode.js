@@ -198,16 +198,18 @@ function CB_Map() {
 
       var marker = L.marker([location.lat, location.lon], marker_options);
 
-      var popup_content = '<b style="line-height: 25px;">' + location.location_name + '</b>';
-      popup_content += '<span id="location-zoom-in-' + that.settings.cb_map_id + '-' + index + '" style="cursor: pointer; padding-left: 5px; padding-top: 2.5px;" class="dashicons dashicons-search"></span><br>'
-      popup_content += location.address.street + ', ' + location.address.zip + ' ' + location.address.city
+      var popup_content = '<div class="cb-map-location-info-name">';
+      popup_content += '<b style="line-height: 25px;">' + location.location_name + '</b>';
+      popup_content += '<span id="location-zoom-in-' + that.settings.cb_map_id + '-' + index + '" style="cursor: pointer; padding-left: 5px; padding-top: 2.5px;" class="dashicons dashicons-search"></span>';
+      popup_content += '</div>';
+      popup_content += '<div  class="cb-map-location-info-address">' + location.address.street + ', ' + location.address.zip + ' ' + location.address.city + '</div>';
 
       if(that.settings.show_location_opening_hours && location.opening_hours) {
-        popup_content += '<div style="margin-top: 10px;"><b><i>' + cb_map.translation['OPENING_HOURS'] + ':</i></b><br>' + location.opening_hours + '</div>'
+        popup_content += '<div class="cb-map-location-info-opening-hours" style="margin-top: 10px;"><b><i>' + cb_map.translation['OPENING_HOURS'] + ':</i></b><br>' + location.opening_hours + '</div>'
       }
 
       if(that.settings.show_location_contact && location.contact) {
-        popup_content += '<div style="margin-top: 10px;"><b><i>' + cb_map.translation['CONTACT'] + ':</i></b><br>' + location.contact + '</div>'
+        popup_content += '<div class="cb-map-location-info-contact" style="margin-top: 10px;"><b><i>' + cb_map.translation['CONTACT'] + ':</i></b><br>' + location.contact + '</div>'
       }
 
       popup_content += popup_items;
