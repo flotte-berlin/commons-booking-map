@@ -457,6 +457,37 @@ class CB_Map {
     update_post_meta($cb_map_id, 'cb_map_imports', $new_map_imports);
   }
 
+  public static function replace_map_link_target() {
+    global $post;
+  	$cb_item = 'cb_items';
+  	if ( $post->post_type == $cb_item) {
+  		$itemId = $post->ID;
+
+      //get timeframes of item
+      $cb_data = new CB_Data();
+      $date_start = date('Y-m-d'); // current date
+      $timeframes = $cb_data->get_timeframes( $post->ID, $date_start );
+
+      $geo_coordinates = [];
+      if($timeframes) {
+          foreach ($timeframes as $timeframe) {
+            $location =
+            $geo_coordinates[$timeframe['id']] = [
+              'lat' => get_post_meta($timeframe['location_id'], 'cb-map_latitude', true),
+              'lon' => get_post_meta($timeframe['location_id'], 'cb-map_longitude', true)
+            ];
+          }
+      }
+
+      wp_register_script( 'cb_map_replace_map_link_js', CB_MAP_ASSETS_URL . 'js/cb-map-replace-link.js' );
+
+      wp_add_inline_script( 'cb_map_replace_map_link_js',
+      "cb_map_timeframes_geo = " . json_encode($geo_coordinates) . ";");
+
+      wp_enqueue_script( 'cb_map_replace_map_link_js' );
+    }
+  }
+
 }
 
 ?>

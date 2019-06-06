@@ -23,6 +23,12 @@ if(cb_map\is_plugin_active('commons-booking.php')) {
   load_plugin_textdomain( 'commons-booking-map', false, CB_MAP_LANG_PATH );
 
   require_once( CB_MAP_PATH . 'classes/class-cb-map.php' );
+  require_once( CB_MAP_PATH . 'classes/class-cb-map-settings.php' );
+
+  $cb_map_settings = new CB_Map_Settings();
+  $cb_map_settings->prepare_settings();
+  add_filter( "plugin_action_links_" . plugin_basename( __FILE__ ), array($cb_map_settings, 'add_settings_link') );
+
   require_once( CB_MAP_PATH . 'classes/class-cb-map-admin.php' );
   add_action( 'init', 'CB_Map::register_cb_map_post_type' );
   add_action( 'save_post_cb_map', 'CB_Map_Admin::validate_options', 10, 3 );
@@ -47,4 +53,8 @@ if(cb_map\is_plugin_active('commons-booking.php')) {
   add_action('cb_map_import', 'CB_Map::import_all_locations');
   register_activation_hook( __FILE__, 'CB_Map::activate');
   register_deactivation_hook( __FILE__, 'CB_Map::deactivate');
+
+  if($cb_map_settings->get_option('booking_page_link_replacement')) {
+    add_filter( 'wp_enqueue_scripts', 'CB_Map::replace_map_link_target');
+  }
 }

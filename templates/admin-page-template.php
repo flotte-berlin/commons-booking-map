@@ -34,7 +34,7 @@ button>span.dashicons {
 
 <div class="inside">
 
-    <p><?= cb_map\__('SETTINGS_DESCRIPTION', 'commons-booking-map', 'These settings help you to configure the Commons Booking Map.') ?></p>
+    <p><?= cb_map\__('MAP_ADMIN_DESCRIPTION', 'commons-booking-map', 'These settings help you to configure the usage and appearance Commons Booking Map.') ?></p>
 
     <div class="option-group" id="option-group-usage">
       <h1><?= cb_map\__('USAGE', 'commons-booking-map', 'Usage') ?></h1>
