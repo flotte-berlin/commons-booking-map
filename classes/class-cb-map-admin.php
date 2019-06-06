@@ -377,7 +377,7 @@ class CB_Map_Admin {
 
     $data_export_base_url = get_site_url(null, '', null) . '/wp-admin/admin-ajax.php';
 
-    include_once( CB_MAP_PATH . 'templates/settings-page-template.php');
+    include_once( CB_MAP_PATH . 'templates/admin-page-template.php');
 
   }
 
