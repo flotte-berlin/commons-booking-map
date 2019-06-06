@@ -65,19 +65,18 @@ class CB_Map {
   }
 
   public static function add_meta_boxes() {
-    self::add_settings_meta_box('cb_map_settings', cb_map\__( 'CB_MAP_SETTINGS_METABOX_TITLE', 'commons-booking-map', 'Map Configuration'));
+    self::add_settings_meta_box('cb_map_admin', cb_map\__( 'CB_MAP_ADMIN_METABOX_TITLE', 'commons-booking-map', 'Map Configuration'));
   }
 
   public static function add_settings_meta_box($meta_box_id, $meta_box_title) {
     global $post;
 
-    require_once( CB_MAP_PATH . 'classes/class-cb-map-settings.php' );
-    $cb_map_settings = new CB_Map_Settings();
+    $cb_map_admin = new CB_Map_Admin();
 
     $plugin_prefix = 'cb_map_post_type_';
 
     $html_id_attribute = $plugin_prefix . $meta_box_id . '_meta_box';
-    $callback = array($cb_map_settings, 'render_options_page');
+    $callback = array($cb_map_admin, 'render_options_page');
     $show_on_post_type = 'cb_map';
     $box_placement = 'normal';
     $box_priority = 'high';
@@ -144,8 +143,8 @@ class CB_Map {
     global $wpdb;
     $locations = [];
 
-    $show_location_contact = CB_Map_Settings::get_option($cb_map_id, 'show_location_contact');
-    $show_location_opening_hours = CB_Map_Settings::get_option($cb_map_id, 'show_location_opening_hours');
+    $show_location_contact = CB_Map_Admin::get_option($cb_map_id, 'show_location_contact');
+    $show_location_opening_hours = CB_Map_Admin::get_option($cb_map_id, 'show_location_opening_hours');
 
     $args = [
       'post_type'	=> 'cb_locations',
@@ -252,7 +251,7 @@ class CB_Map {
 
           //add timeframe hint
           $now = new DateTime();
-          
+
           $date_start = new DateTime();
           $date_start->setTimestamp(strtotime($timeframe['date_start']));
 
@@ -337,7 +336,7 @@ class CB_Map {
     $post = get_post($cb_map_id);
 
     if($post && $post->post_type == 'cb_map') {
-      $map_type = CB_Map_Settings::get_option($cb_map_id, 'map_type');
+      $map_type = CB_Map_Admin::get_option($cb_map_id, 'map_type');
 
       if($map_type == 2) {
         $args = [
@@ -436,7 +435,7 @@ class CB_Map {
 
     $new_map_imports = [];
 
-    $import_sources = CB_Map_Settings::get_option($cb_map_id, 'import_sources');
+    $import_sources = CB_Map_Admin::get_option($cb_map_id, 'import_sources');
 
     foreach ($import_sources['urls'] as $key => $url) {
       $code = $import_sources['codes'][$key];

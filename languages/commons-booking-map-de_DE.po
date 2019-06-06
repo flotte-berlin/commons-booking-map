@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: cb-admin-booking\n"
-"POT-Creation-Date: 2019-06-04 16:21+0200\n"
-"PO-Revision-Date: 2019-06-04 16:22+0200\n"
+"POT-Creation-Date: 2019-06-06 11:57+0200\n"
+"PO-Revision-Date: 2019-06-06 11:59+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -30,15 +30,15 @@ msgstr "Längengrad"
 msgid "POSITION"
 msgstr "Position"
 
-#: ../classes/class-cb-map-settings.php:332
+#: ../classes/class-cb-map-admin.php:354
 msgid "SELECT_IMAGE"
 msgstr "Bild auswählen"
 
-#: ../classes/class-cb-map-settings.php:333
+#: ../classes/class-cb-map-admin.php:355
 msgid "SAVE"
 msgstr "speichern"
 
-#: ../classes/class-cb-map-settings.php:334
+#: ../classes/class-cb-map-admin.php:356
 msgid "MARKER_IMAGE_MEASUREMENTS"
 msgstr "Bildmaße"
 
@@ -55,21 +55,21 @@ msgstr "Karte ist nicht veröffentlicht"
 msgid "NO_VALID_MAP_ID"
 msgstr "keine gültige Karten-ID"
 
-#: ../classes/class-cb-map-shortcode.php:142
+#: ../classes/class-cb-map-shortcode.php:147
 #: ../templates/settings-page-template.php:218
 msgid "OPENING_HOURS"
 msgstr "Öffnungszeiten"
 
-#: ../classes/class-cb-map-shortcode.php:143
+#: ../classes/class-cb-map-shortcode.php:148
 #: ../templates/settings-page-template.php:232
 msgid "CONTACT"
 msgstr "Kontakt"
 
-#: ../classes/class-cb-map-shortcode.php:144
+#: ../classes/class-cb-map-shortcode.php:149
 msgid "FROM"
 msgstr "ab"
 
-#: ../classes/class-cb-map-shortcode.php:145
+#: ../classes/class-cb-map-shortcode.php:150
 msgid "UNTIL"
 msgstr "bis"
 
@@ -122,14 +122,14 @@ msgid "POST_TYPE_DESCRIPTION"
 msgstr "Karten, um Commons Booking-Standorte mit ihren Artikeln darzustellen."
 
 #: ../classes/class-cb-map.php:68
-msgid "CB_MAP_SETTINGS_METABOX_TITLE"
+msgid "CB_MAP_ADMIN_METABOX_TITLE"
 msgstr "Kartenkonfiguration"
 
 #: ../templates/settings-page-template.php:37
 msgid "SETTINGS_DESCRIPTION"
 msgstr ""
-"Die Einstellungen ermöglichen die Anpassung der Karteninformationen und -"
-"darstellung."
+"Die Einstellungen ermöglichen das Festlegen der Nutzungsart sowie die "
+"Anpassung der Karteninformationen und -darstellung."
 
 #: ../templates/settings-page-template.php:40
 msgid "USAGE"
@@ -442,19 +442,19 @@ msgstr ""
 "Auswahl der Kategorien, die genutzt werden, um Artikel vorzufiltern, die auf "
 "der Karte angezeigt werden - keine für alle Artikel"
 
-#: ../templates/settings-page-template.php:471
+#: ../templates/settings-page-template.php:493
 msgid "URL"
 msgstr "URL"
 
-#: ../templates/settings-page-template.php:472
+#: ../templates/settings-page-template.php:494
 msgid "CODE"
 msgstr "Code"
 
-#: ../templates/settings-page-template.php:486
+#: ../templates/settings-page-template.php:508
 msgid "REMOVE_IMPORT_SOURCE_BUTTON_TITLE"
 msgstr "Import-Quelle entfernen"
 
-#: ../templates/settings-page-template.php:494
+#: ../templates/settings-page-template.php:516
 msgid "TEST_IMPORT_SOURCE_BUTTON_TITLE"
 msgstr "Import-Quelle testen"
 

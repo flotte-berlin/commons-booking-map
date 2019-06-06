@@ -3,7 +3,7 @@
 /**
  *
 **/
-class CB_Map_Settings {
+class CB_Map_Admin {
 
   const OPTION_KEYS = [
     'map_type',

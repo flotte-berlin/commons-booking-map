@@ -46,7 +46,7 @@ button>span.dashicons {
               <span style="cursor: help;" class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'MAP_TYPE_DESC', 'commons-booking-map', 'the type of the map defines the usage - if the map is shown on the own website (local), collect data from external sources (import) or provide data for other websites (export)') ?>"></span>
             </th>
             <td>
-              <? $selected_option = CB_Map_Settings::get_option($cb_map_id, 'map_type') ?>
+              <? $selected_option = CB_Map_Admin::get_option($cb_map_id, 'map_type') ?>
               <select id="map_type" name="cb_map_options[map_type]">
                 <option value="1" <?= $selected_option == 1 ? 'selected' : '' ?>><?= cb_map\__('MAP_TYPE_LOCAL', 'commons-booking-map', 'local') ?></option>
                 <option value="2" <?= $selected_option == 2 ? 'selected' : '' ?>><?= cb_map\__('MAP_TYPE_IMPORT', 'commons-booking-map', 'import') ?></option>
@@ -68,7 +68,7 @@ button>span.dashicons {
               <span style="cursor: help;" class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'EXPORT_CODE_DESC', 'commons-booking-map', 'generate an export code, that you can give to someone running a website with Commons Booking Map plugin to import and show your locations and items') ?>"></span>
             </th>
             <td>
-              <input type="text" autocomplete="off" size="10" minlength="<?= CB_Map_Settings::EXPORT_CODE_VALUE_MIN_LENGTH ?>" name="cb_map_options[export_code]" value="<?= esc_attr( CB_Map_Settings::get_option($cb_map_id, 'export_code') ); ?>">
+              <input type="text" autocomplete="off" size="10" minlength="<?= CB_Map_Admin::EXPORT_CODE_VALUE_MIN_LENGTH ?>" name="cb_map_options[export_code]" value="<?= esc_attr( CB_Map_Admin::get_option($cb_map_id, 'export_code') ); ?>">
               <input id="create-export-code-button" type="button" class="button" value="<?= cb_map\__('CREATE', 'commons-booking-map', 'create') ?>" />
             </td>
         </tr>
@@ -120,7 +120,7 @@ button>span.dashicons {
               <?= cb_map\__('MAP_HEIGHT', 'commons-booking-map', 'map height') ?>:
               <span style="cursor: help;" class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'MAP_HEIGHT_DESC', 'commons-booking-map', 'the height the map is rendered with - the width is the same as of the parent element') ?>"></span>
             </th>
-            <td><input type="number" min="<?= CB_Map_Settings::MAP_HEIGHT_VALUE_MIN ?>" max="<?= CB_Map_Settings::MAP_HEIGHT_VALUE_MAX ?>" name="cb_map_options[map_height]" value="<?= esc_attr( CB_Map_Settings::get_option($cb_map_id, 'map_height') ); ?>" size="4"> px</td>
+            <td><input type="number" min="<?= CB_Map_Admin::MAP_HEIGHT_VALUE_MIN ?>" max="<?= CB_Map_Admin::MAP_HEIGHT_VALUE_MAX ?>" name="cb_map_options[map_height]" value="<?= esc_attr( CB_Map_Admin::get_option($cb_map_id, 'map_height') ); ?>" size="4"> px</td>
         </tr>
       </table>
     </div>
@@ -134,21 +134,21 @@ button>span.dashicons {
               <?= cb_map\__('MIN_ZOOM_LEVEL', 'commons-booking-map', 'min. zoom level') ?>:
               <span style="cursor: help;" class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'MIN_ZOOM_LEVEL_DESC', 'commons-booking-map', 'the minimal zoom level a user can choose') ?>"></span>
             </th>
-            <td><input type="number" min="<?= CB_Map_Settings::ZOOM_VALUE_MIN ?>" max="<?= CB_Map_Settings::ZOOM_VALUE_MAX ?>" name="cb_map_options[zoom_min]" value="<?= esc_attr( CB_Map_Settings::get_option($cb_map_id, 'zoom_min') ); ?>" size="3"></td>
+            <td><input type="number" min="<?= CB_Map_Admin::ZOOM_VALUE_MIN ?>" max="<?= CB_Map_Admin::ZOOM_VALUE_MAX ?>" name="cb_map_options[zoom_min]" value="<?= esc_attr( CB_Map_Admin::get_option($cb_map_id, 'zoom_min') ); ?>" size="3"></td>
         </tr>
         <tr>
             <th>
               <?= cb_map\__('MAX_ZOOM_LEVEL', 'commons-booking-map', 'max. zoom level') ?>:
               <span style="cursor: help;" class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'MAX_ZOOM_LEVEL_DESC', 'commons-booking-map', 'the maximal zoom level a user can choose') ?>"></span>
             </th>
-            <td><input type="number" min="<?= CB_Map_Settings::ZOOM_VALUE_MIN ?>" max="<?= CB_Map_Settings::ZOOM_VALUE_MAX ?>" name="cb_map_options[zoom_max]" value="<?= esc_attr( CB_Map_Settings::get_option($cb_map_id, 'zoom_max') ); ?>" size="3"></td>
+            <td><input type="number" min="<?= CB_Map_Admin::ZOOM_VALUE_MIN ?>" max="<?= CB_Map_Admin::ZOOM_VALUE_MAX ?>" name="cb_map_options[zoom_max]" value="<?= esc_attr( CB_Map_Admin::get_option($cb_map_id, 'zoom_max') ); ?>" size="3"></td>
         </tr>
         <tr>
             <th>
               <?= cb_map\__('START_ZOOM_LEVEL', 'commons-booking-map', 'start zoom level') ?>:
               <span style="cursor: help;" class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'START_ZOOM_LEVEL_DESC', 'commons-booking-map', 'the zoom level that will be set when the map is loaded') ?>"></span>
             </th>
-            <td><input type="number" min="<?= CB_Map_Settings::ZOOM_VALUE_MIN ?>" max="<?= CB_Map_Settings::ZOOM_VALUE_MAX ?>" name="cb_map_options[zoom_start]" value="<?= esc_attr( CB_Map_Settings::get_option($cb_map_id, 'zoom_start') ); ?>" size="3"></td>
+            <td><input type="number" min="<?= CB_Map_Admin::ZOOM_VALUE_MIN ?>" max="<?= CB_Map_Admin::ZOOM_VALUE_MAX ?>" name="cb_map_options[zoom_start]" value="<?= esc_attr( CB_Map_Admin::get_option($cb_map_id, 'zoom_start') ); ?>" size="3"></td>
         </tr>
       </table>
     </div>
@@ -162,7 +162,7 @@ button>span.dashicons {
               <?= cb_map\__('LATITUDE_START', 'commons-booking-map', 'start latitude') ?>:
               <span style="cursor: help;" class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'LATITUDE_START_DESC', 'commons-booking-map', 'the latitude of the map center when the map is loaded') ?>"></span>
             </th>
-            <td><input type="text" name="cb_map_options[lat_start]" value="<?= esc_attr( CB_Map_Settings::get_option($cb_map_id, 'lat_start') ); ?>" size="10"></td>
+            <td><input type="text" name="cb_map_options[lat_start]" value="<?= esc_attr( CB_Map_Admin::get_option($cb_map_id, 'lat_start') ); ?>" size="10"></td>
         </tr>
 
         <tr>
@@ -170,7 +170,7 @@ button>span.dashicons {
               <?= cb_map\__('LONGITUDE_START', 'commons-booking-map', 'start longitude') ?>:
               <span style="cursor: help;" class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'LONGITUDE_START_DESC', 'commons-booking-map', 'the longitude of the map center when the map is loaded') ?>"></span>
             </th>
-            <td><input type="text" name="cb_map_options[lon_start]" value="<?= esc_attr( CB_Map_Settings::get_option($cb_map_id, 'lon_start') ); ?>" size="10"></td>
+            <td><input type="text" name="cb_map_options[lon_start]" value="<?= esc_attr( CB_Map_Admin::get_option($cb_map_id, 'lon_start') ); ?>" size="10"></td>
         </tr>
       </table>
     </div>
@@ -185,7 +185,7 @@ button>span.dashicons {
               <span style="cursor: help;" class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'ADJUST_MAP_SECTION_TO_MARKERS_INITIALLY_DESC', 'commons-booking-map', 'adjust map section to bounds of shown markers automatically when map is loaded') ?>"></span>
             </th>
             <td>
-              <input type="checkbox" name="cb_map_options[marker_map_bounds_initial]" <?= CB_Map_Settings::get_option($cb_map_id, 'marker_map_bounds_initial') ? 'checked="checked"' : '' ?> value="on">
+              <input type="checkbox" name="cb_map_options[marker_map_bounds_initial]" <?= CB_Map_Admin::get_option($cb_map_id, 'marker_map_bounds_initial') ? 'checked="checked"' : '' ?> value="on">
             </td>
         </tr>
         <tr>
@@ -194,7 +194,7 @@ button>span.dashicons {
               <span style="cursor: help;" class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'ADJUST_MAP_SECTION_TO_MARKERS_FILTER_DESC', 'commons-booking-map', 'adjust map section to bounds of shown markers automatically when filtered by users') ?>"></span>
             </th>
             <td>
-              <input type="checkbox" name="cb_map_options[marker_map_bounds_filter]" <?= CB_Map_Settings::get_option($cb_map_id, 'marker_map_bounds_filter') ? 'checked="checked"' : '' ?> value="on">
+              <input type="checkbox" name="cb_map_options[marker_map_bounds_filter]" <?= CB_Map_Admin::get_option($cb_map_id, 'marker_map_bounds_filter') ? 'checked="checked"' : '' ?> value="on">
             </td>
         </tr>
       </table>
@@ -208,28 +208,28 @@ button>span.dashicons {
               <?= cb_map\__('SHOW_LOCATION_OPENING_HOURS', 'commons-booking-map', 'show location opening hours') ?>:
               <span style="cursor: help;" class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'SHOW_LOCATION_OPENING_HOURS_DESC', 'commons-booking-map', 'activate to show the opening hours of locations in the marker popup') ?>"></span>
             </th>
-            <td><input type="checkbox" name="cb_map_options[show_location_opening_hours]" <?= CB_Map_Settings::get_option($cb_map_id, 'show_location_opening_hours') ? 'checked="checked"' : '' ?> value="on"></td>
+            <td><input type="checkbox" name="cb_map_options[show_location_opening_hours]" <?= CB_Map_Admin::get_option($cb_map_id, 'show_location_opening_hours') ? 'checked="checked"' : '' ?> value="on"></td>
         </tr>
         <tr>
             <th>
               <?= cb_map\__('LABEL_LOCATION_OPENING_HOURS', 'commons-booking-map', 'label for opening hours') ?>:
               <span style="cursor: help;" class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'LABEL_LOCATION_OPENING_HOURS_DESC', 'commons-booking-map', 'alternative label for the opening hours of locations in the marker popup') ?>"></span>
             </th>
-            <td><input type="text" name="cb_map_options[label_location_opening_hours]" placeholder="<?= cb_map\__('OPENING_HOURS', 'commons-booking-map', 'opening hours') ?>" value="<?= CB_Map_Settings::get_option($cb_map_id, 'label_location_opening_hours') ?>"></td>
+            <td><input type="text" name="cb_map_options[label_location_opening_hours]" placeholder="<?= cb_map\__('OPENING_HOURS', 'commons-booking-map', 'opening hours') ?>" value="<?= CB_Map_Admin::get_option($cb_map_id, 'label_location_opening_hours') ?>"></td>
         </tr>
         <tr>
             <th>
               <?= cb_map\__('SHOW_LOCATION_CONTACT', 'commons-booking-map', 'show location contact') ?>:
               <span style="cursor: help;" class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'SHOW_LOCATION_CONTACT_DESC', 'commons-booking-map', 'activate to show the location contact details in the marker popup') ?>"></span>
             </th>
-            <td><input type="checkbox" name="cb_map_options[show_location_contact]" <?= CB_Map_Settings::get_option($cb_map_id, 'show_location_contact') ? 'checked="checked"' : '' ?> value="on"></td>
+            <td><input type="checkbox" name="cb_map_options[show_location_contact]" <?= CB_Map_Admin::get_option($cb_map_id, 'show_location_contact') ? 'checked="checked"' : '' ?> value="on"></td>
         </tr>
         <tr>
             <th>
               <?= cb_map\__('LABEL_LOCATION_CONTACT', 'commons-booking-map', 'label for opening hours') ?>:
               <span style="cursor: help;" class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'LABEL_LOCATION_CONTACT_DESC', 'commons-booking-map', 'alternative label for the contact information of locations in the marker popup') ?>"></span>
             </th>
-            <td><input type="text" name="cb_map_options[label_location_contact]" placeholder="<?= cb_map\__('CONTACT', 'commons-booking-map', 'opening hours') ?>" value="<?= CB_Map_Settings::get_option($cb_map_id, 'label_location_contact') ?>"></td>
+            <td><input type="text" name="cb_map_options[label_location_contact]" placeholder="<?= cb_map\__('CONTACT', 'commons-booking-map', 'opening hours') ?>" value="<?= CB_Map_Admin::get_option($cb_map_id, 'label_location_contact') ?>"></td>
         </tr>
       </table>
     </div>
@@ -251,9 +251,9 @@ button>span.dashicons {
         <tr id="marker-image-preview-settings" style="display: none;">
           <td>
             <div>
-                <img id="marker-image-preview" src="<?= wp_get_attachment_url(CB_Map_Settings::get_option($cb_map_id, 'custom_marker_media_id')); ?>">
+                <img id="marker-image-preview" src="<?= wp_get_attachment_url(CB_Map_Admin::get_option($cb_map_id, 'custom_marker_media_id')); ?>">
             </div>
-            <input type="hidden" name="cb_map_options[custom_marker_media_id]" value="<?= CB_Map_Settings::get_option($cb_map_id, 'custom_marker_media_id') ?>">
+            <input type="hidden" name="cb_map_options[custom_marker_media_id]" value="<?= CB_Map_Admin::get_option($cb_map_id, 'custom_marker_media_id') ?>">
           </td>
           <td>
             <div id="marker-image-preview-measurements"></div>
@@ -265,8 +265,8 @@ button>span.dashicons {
               <span style="cursor: help;" class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'ICON_SIZE_DESC', 'commons-booking-map', 'the size of the custom marker icon image as it is shown on the map') ?>"></span>
             </th>
             <td>
-              <input type="text" name="cb_map_options[marker_icon_width]" value="<?= esc_attr( CB_Map_Settings::get_option($cb_map_id, 'marker_icon_width') ); ?>" size="3"> x
-              <input type="text" name="cb_map_options[marker_icon_height]" value="<?= esc_attr( CB_Map_Settings::get_option($cb_map_id, 'marker_icon_height') ); ?>" size="3"> px
+              <input type="text" name="cb_map_options[marker_icon_width]" value="<?= esc_attr( CB_Map_Admin::get_option($cb_map_id, 'marker_icon_width') ); ?>" size="3"> x
+              <input type="text" name="cb_map_options[marker_icon_height]" value="<?= esc_attr( CB_Map_Admin::get_option($cb_map_id, 'marker_icon_height') ); ?>" size="3"> px
             </td>
 
         </tr>
@@ -276,8 +276,8 @@ button>span.dashicons {
             <span style="cursor: help;" class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'ANCHOR_POINT_DESC', 'commons-booking-map', 'the position of the anchor point of the icon image, seen from the left top corner of the icon, often it is half of the width and full height of the icon size - this point is used to place the marker on the geo coordinates') ?>"></span>
           </th>
           <td>
-            <input type="text" name="cb_map_options[marker_icon_anchor_x]" value="<?= esc_attr( CB_Map_Settings::get_option($cb_map_id, 'marker_icon_anchor_x') ); ?>" size="3"> x
-            <input type="text" name="cb_map_options[marker_icon_anchor_y]" value="<?= esc_attr( CB_Map_Settings::get_option($cb_map_id, 'marker_icon_anchor_y') ); ?>" size="3"> px
+            <input type="text" name="cb_map_options[marker_icon_anchor_x]" value="<?= esc_attr( CB_Map_Admin::get_option($cb_map_id, 'marker_icon_anchor_x') ); ?>" size="3"> x
+            <input type="text" name="cb_map_options[marker_icon_anchor_y]" value="<?= esc_attr( CB_Map_Admin::get_option($cb_map_id, 'marker_icon_anchor_y') ); ?>" size="3"> px
           </td>
         </tr>
       </table>
@@ -292,7 +292,7 @@ button>span.dashicons {
               <span style="cursor: help;" class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'MAX_CLUSTER_RADIUS_DESC', 'commons-booking-map', 'combine markers to a cluster within given radius - 0 for deactivation') ?>"></span>
             </th>
             <td>
-              <input type="number" size="3" step="10" min="<?= CB_Map_Settings::MAX_CLUSTER_RADIUS_VALUE_MIN ?>" max="<?= CB_Map_Settings::MAX_CLUSTER_RADIUS_VALUE_MAX ?>" name="cb_map_options[max_cluster_radius]" value="<?= esc_attr( CB_Map_Settings::get_option($cb_map_id, 'max_cluster_radius') ); ?>"> px
+              <input type="number" size="3" step="10" min="<?= CB_Map_Admin::MAX_CLUSTER_RADIUS_VALUE_MIN ?>" max="<?= CB_Map_Admin::MAX_CLUSTER_RADIUS_VALUE_MAX ?>" name="cb_map_options[max_cluster_radius]" value="<?= esc_attr( CB_Map_Admin::get_option($cb_map_id, 'max_cluster_radius') ); ?>"> px
             </td>
         </tr>
       </table>
@@ -313,9 +313,9 @@ button>span.dashicons {
         <tr id="marker-cluster-image-preview-settings" style="display: none;">
           <td>
             <div>
-                <img id="marker-cluster-image-preview" src="<?= wp_get_attachment_url(CB_Map_Settings::get_option($cb_map_id, 'custom_marker_cluster_media_id')); ?>">
+                <img id="marker-cluster-image-preview" src="<?= wp_get_attachment_url(CB_Map_Admin::get_option($cb_map_id, 'custom_marker_cluster_media_id')); ?>">
             </div>
-            <input type="hidden" name="cb_map_options[custom_marker_cluster_media_id]" value="<?= CB_Map_Settings::get_option($cb_map_id, 'custom_marker_cluster_media_id') ?>">
+            <input type="hidden" name="cb_map_options[custom_marker_cluster_media_id]" value="<?= CB_Map_Admin::get_option($cb_map_id, 'custom_marker_cluster_media_id') ?>">
           </td>
           <td>
             <div id="marker-cluster-image-preview-measurements"></div>
@@ -327,8 +327,8 @@ button>span.dashicons {
               <span style="cursor: help;" class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'ICON_SIZE_DESC', 'commons-booking-map', 'the size of the custom marker icon image as it is shown on the map') ?>"></span>
             </th>
             <td>
-              <input type="text" name="cb_map_options[marker_cluster_icon_width]" value="<?= esc_attr( CB_Map_Settings::get_option($cb_map_id, 'marker_cluster_icon_width') ); ?>" size="3"> x
-              <input type="text" name="cb_map_options[marker_cluster_icon_height]" value="<?= esc_attr( CB_Map_Settings::get_option($cb_map_id, 'marker_cluster_icon_height') ); ?>" size="3"> px
+              <input type="text" name="cb_map_options[marker_cluster_icon_width]" value="<?= esc_attr( CB_Map_Admin::get_option($cb_map_id, 'marker_cluster_icon_width') ); ?>" size="3"> x
+              <input type="text" name="cb_map_options[marker_cluster_icon_height]" value="<?= esc_attr( CB_Map_Admin::get_option($cb_map_id, 'marker_cluster_icon_height') ); ?>" size="3"> px
             </td>
 
         </tr>
@@ -440,7 +440,7 @@ jQuery(document).ready(function($) {
   }
 
   function add_custom_markup_options() {
-    var custom_markup_options_data = <?= json_encode( CB_Map_Settings::get_option($cb_map_id, 'cb_items_available_categories_custom_markup') ); ?>;
+    var custom_markup_options_data = <?= json_encode( CB_Map_Admin::get_option($cb_map_id, 'cb_items_available_categories_custom_markup') ); ?>;
     $('.cb_items_available_category').each(function() {
       var $this = $(this);
 
@@ -491,7 +491,7 @@ jQuery(document).ready(function($) {
 
   function add_import_source($target_element, url, code) {
     $url_input = $('<input type="url" pattern="https?://.*" autocomplete="off" size="20" name="cb_map_options[import_sources][urls][]" placeholder="<?= cb_map\__( 'URL', 'commons-booking-map', 'URL') ?>" required>');
-    $code_input = $('<input type="text" autocomplete="off" size="10" name="cb_map_options[import_sources][codes][]" minlength="<?= CB_Map_Settings::EXPORT_CODE_VALUE_MIN_LENGTH ?>" placeholder="<?= cb_map\__( 'CODE', 'commons-booking-map', 'Code') ?>" required>');
+    $code_input = $('<input type="text" autocomplete="off" size="10" name="cb_map_options[import_sources][codes][]" minlength="<?= CB_Map_Admin::EXPORT_CODE_VALUE_MIN_LENGTH ?>" placeholder="<?= cb_map\__( 'CODE', 'commons-booking-map', 'Code') ?>" required>');
 
     var $import_source = $('<div style="margin-top: 5px;"></div>');
 
@@ -565,7 +565,7 @@ jQuery(document).ready(function($) {
     add_import_source($('#import-sources'));
   });
 
-  var import_sources = <?= CB_Map_Settings::get_option($cb_map_id, 'import_sources') ? json_encode(CB_Map_Settings::get_option($cb_map_id, 'import_sources')) : 'null'; ?>;
+  var import_sources = <?= CB_Map_Admin::get_option($cb_map_id, 'import_sources') ? json_encode(CB_Map_Admin::get_option($cb_map_id, 'import_sources')) : 'null'; ?>;
 
   if(import_sources) {
     add_import_sources($('#import-sources'), import_sources.urls, import_sources.codes);

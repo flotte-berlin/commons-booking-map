@@ -17,7 +17,7 @@ class CB_Map_Shortcode {
       if($post && $post->post_type == 'cb_map') {
         $cb_map_id = $post->ID;
 
-        $map_type = CB_Map_Settings::get_option($cb_map_id, 'map_type');
+        $map_type = CB_Map_Admin::get_option($cb_map_id, 'map_type');
 
         if($post->post_status == 'publish') {
           if($map_type == 1 || $map_type == 2) {
@@ -50,7 +50,7 @@ class CB_Map_Shortcode {
 
             wp_enqueue_script( 'cb_map_shortcode_js' );
 
-            $map_height = CB_Map_Settings::get_option($cb_map_id, 'map_height');
+            $map_height = CB_Map_Admin::get_option($cb_map_id, 'map_height');
             return '<div id="cb-map-' . $cb_map_id . '" style="width: 100%; height: ' . $map_height . 'px;"></div>';
           }
           else {
@@ -80,7 +80,7 @@ class CB_Map_Shortcode {
       'cb_map_id' => $cb_map_id,
       'locale' => str_replace('_', '-', get_locale())
     ];
-    $options = CB_Map_Settings::get_options($cb_map_id, true);
+    $options = CB_Map_Admin::get_options($cb_map_id, true);
 
     $pass_through = ['zoom_min', 'zoom_max', 'zoom_start', 'lat_start', 'lon_start', 'marker_map_bounds_initial', 'marker_map_bounds_filter', 'max_cluster_radius', 'show_location_contact', 'show_location_opening_hours'];
 
@@ -140,8 +140,8 @@ class CB_Map_Shortcode {
   }
 
   public static function get_translation($cb_map_id) {
-    $label_location_opening_hours = CB_Map_Settings::get_option($cb_map_id, 'label_location_opening_hours');
-    $label_location_contact = CB_Map_Settings::get_option($cb_map_id, 'label_location_contact');
+    $label_location_opening_hours = CB_Map_Admin::get_option($cb_map_id, 'label_location_opening_hours');
+    $label_location_contact = CB_Map_Admin::get_option($cb_map_id, 'label_location_contact');
 
     $translation = [
       'OPENING_HOURS' => strlen($label_location_opening_hours) > 0 ? $label_location_opening_hours : cb_map\__('OPENING_HOURS', 'commons-booking-map', 'opening hours'),
@@ -222,7 +222,7 @@ class CB_Map_Shortcode {
         $cb_map_id = $post->ID;
 
         //prepare response payload
-        $map_type = CB_Map_Settings::get_option($cb_map_id, 'map_type');
+        $map_type = CB_Map_Admin::get_option($cb_map_id, 'map_type');
       }
       else {
         wp_send_json_error( [ 'error' => 2 ], 400);
@@ -234,12 +234,12 @@ class CB_Map_Shortcode {
       return wp_die();
     }
 
-    $apply_filters = CB_Map_Settings::get_option($cb_map_id, 'cb_items_preset_categories');
+    $apply_filters = CB_Map_Admin::get_option($cb_map_id, 'cb_items_preset_categories');
 
     if($post->post_status == 'publish') {
       //local
       if($map_type == 1) {
-        $available_filters = CB_Map_Settings::get_option($cb_map_id, 'cb_items_available_categories');
+        $available_filters = CB_Map_Admin::get_option($cb_map_id, 'cb_items_available_categories');
 
         if(isset($_POST['filters']) && is_array($_POST['filters'])) {
           foreach($_POST['filters'] as $filter) {
@@ -272,7 +272,7 @@ class CB_Map_Shortcode {
 
       //export
       if($map_type == 3) {
-        $available_filters = CB_Map_Settings::get_option($cb_map_id, 'cb_items_available_categories');
+        $available_filters = CB_Map_Admin::get_option($cb_map_id, 'cb_items_available_categories');
         require_once( CB_MAP_PATH . 'classes/class-cb-map.php' );
         $locations = array_values(CB_Map::get_locations_by_timeframes($cb_map_id, $apply_filters));
       }

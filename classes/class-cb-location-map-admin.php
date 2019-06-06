@@ -35,7 +35,7 @@ class CB_Location_Map_Admin {
     echo '<script src="' . $script_path . '"></script>';
 
     //map defaults
-    $options = CB_Map_Settings::get_options();
+    $options = CB_Map_Admin::get_options();
     $defaults = [
       'latitude' => $options['lat_start'],
       'longitude' => $options['lon_start'],
