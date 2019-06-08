@@ -416,7 +416,7 @@ jQuery(document).ready(function($) {
   //----------------------------------------------------------------------------
   // users filters custom markup
 
-  $('.cb_items_available_category').change(function() {
+  $('.cb_items_available_category_choice').change(function() {
     var $this = $(this);
     var el_id_arr = $this.attr('id').split('-');
     var cat_id = el_id_arr[el_id_arr.length - 1];
@@ -435,23 +435,16 @@ jQuery(document).ready(function($) {
 
   function add_custom_markup_option(cat_id, label_text, markup) {
     var $accm_table = $('#available-categories-custom-markup-wrapper');
-    var $row = $('<tr id="available_category_cutom_markup_' + cat_id + '"><th>' + label_text + ':</th><td><textarea name="cb_map_options[cb_items_available_categories_custom_markup][' + cat_id + ']">' + markup + '</textarea></td></tr>');
+    var $row = $('<tr id="available_category_cutom_markup_' + cat_id + '"><th>' + label_text + ':</th><td><textarea name="cb_map_options[cb_items_available_categories][' + cat_id + ']">' + markup + '</textarea></td></tr>');
     $accm_table.append($row);
   }
 
   function add_custom_markup_options() {
-    var custom_markup_options_data = <?= json_encode( CB_Map_Admin::get_option($cb_map_id, 'cb_items_available_categories_custom_markup') ); ?>;
-    $('.cb_items_available_category').each(function() {
-      var $this = $(this);
-
-      if ($this.prop("checked")) {
-        var el_id_arr = $this.attr('id').split('-');
-        var cat_id = el_id_arr[el_id_arr.length - 1];
-
-        var markup = custom_markup_options_data[cat_id] || $this.parent().text().trim();
-        add_custom_markup_option(cat_id, $this.parent().text(), markup);
-      }
-
+    var custom_markup_options_data = <?= json_encode( $available_categories ); ?>;
+    $.each(custom_markup_options_data, function(index, category) {
+      var $cat_choice = $(".cb_items_available_category_choice[value='" + category.cat_id + "']");
+      var markup = custom_markup_options_data[category.cat_id] || $cat_choice.parent().text().trim();
+      add_custom_markup_option(category.cat_id, $cat_choice.parent().text(), category.markup);
     });
   }
 

@@ -117,21 +117,14 @@ class CB_Map_Shortcode {
         }
       }
       //categories are only meant to be shown on local maps
-      else if($key == 'cb_items_available_categories' && $options['map_type'] == 1 ) {
-        $terms = get_terms([
-          'taxonomy' => 'cb_items_category',
-          'hide_empty' => false
-        ]);
-        //var_dump($terms);
-        foreach ($terms as $term) {
-          if(in_array($term->term_id, $value)) {
-            $settings['filter_cb_item_categories'][] = $term;
-          }
+      else if($key == 'cb_items_available_categories' && $options['map_type'] == 1) {
+        $settings['filter_cb_item_categories'] = [];
+        foreach ($options['cb_items_available_categories'] as $cat_id => $markup) {
+          $settings['filter_cb_item_categories'][] = [
+            'cat_id' => $cat_id,
+            'markup' => $markup
+          ];
         }
-      }
-      //categories are only meant to be shown on local maps
-      else if($key == 'cb_items_available_categories_custom_markup' && $options['map_type'] == 1) {
-        $settings['filter_cb_item_categories_custom_markup'] = $options['cb_items_available_categories_custom_markup'];
       }
 
     }

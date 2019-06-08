@@ -15,7 +15,7 @@ class CB_Map_Admin {
     'custom_marker_media_id', 'marker_icon_width', 'marker_icon_height', 'marker_icon_anchor_x', 'marker_icon_anchor_y',
     'show_location_contact', 'label_location_contact', 'show_location_opening_hours', 'label_location_opening_hours',
     'custom_marker_cluster_media_id', 'marker_cluster_icon_width', 'marker_cluster_icon_height',
-    'cb_items_available_categories', 'cb_items_available_categories_custom_markup',
+    'cb_items_available_categories',
     'cb_items_preset_categories'];
 
   const EXPORT_CODE_VALUE_MIN_LENGTH = 10;
@@ -55,7 +55,6 @@ class CB_Map_Admin {
   const SHOW_LOCATION_OPENING_HOURS_DEFAULT = false;
   const LABEL_LOCATION_OPENING_HOURS_DEFAULT = "";
   const CB_ITEMS_AVAILABLE_CATEGORIES_DEFAULT = [];
-  const CB_ITEMS_AVAILABLE_CATEGORIES_CUSTOM_MARKUP_DEFAULT = [];
   const CB_ITEMS_PRESET_CATEGORIES_DEFAULT = [];
 
   //const MARKER_POPUP_CONTENT_DEFAULT = "'<b>' + location.location_name + '</b><br>' + location.address.street + '<br>' + location.address.zip + ' ' + location.address.city + '<p>' + location.opening_hours + '</p>'";
@@ -272,7 +271,7 @@ class CB_Map_Admin {
       $validated_input['marker_cluster_icon_height'] = abs((float) $input['marker_cluster_icon_height']);
     }
 
-    //cb_items_available_categories && cb_items_available_categories_custom_markup
+    //cb_items_available_categories
     $category_terms = get_terms([
       'taxonomy' => 'cb_items_category',
       'hide_empty' => false
@@ -282,20 +281,13 @@ class CB_Map_Admin {
       $valid_term_ids[] = $category_term->term_id;
     }
 
+    //cb_items_available_categories
     if(isset($input['cb_items_available_categories'])) {
-      foreach($input['cb_items_available_categories'] as $cb_items_category_id) {
+      foreach ($input['cb_items_available_categories'] as $cb_items_category_id => $markup) {
         if(in_array((int) $cb_items_category_id, $valid_term_ids)) {
-          $validated_input['cb_items_available_categories'][] = $cb_items_category_id;
+          $validated_input['cb_items_available_categories'][$cb_items_category_id] = self::strip_script_tags($markup);
         }
       }
-    }
-
-    //cb_items_available_categories_custom_markup
-    if(isset($input['cb_items_available_categories_custom_markup'])) {
-      foreach ($input['cb_items_available_categories_custom_markup'] as $cb_items_category_id => $markup) {
-        $validated_input['cb_items_available_categories_custom_markup'][$cb_items_category_id] = self::strip_script_tags($markup);
-      }
-
     }
 
     //cb_items_preset_categories
@@ -357,15 +349,27 @@ class CB_Map_Admin {
     ];
     echo '<script>cb_map_marker_upload.translation = ' . json_encode($translation) . ';</script>';
 
+    //available categories
     $available_categories_args = [
       'taxonomy' => 'cb_items_category',
       'echo' => false,
       'checked_ontop' => false,
-      'selected_cats' => self::get_option($cb_map_id, 'cb_items_available_categories')
+      'selected_cats' => array_keys(self::get_option($cb_map_id, 'cb_items_available_categories'))
     ];
     $available_categories_checklist_markup = wp_terms_checklist( 0, $available_categories_args);
-    $available_categories_checklist_markup = str_replace('name="tax_input[cb_items_category]', 'class="cb_items_available_category" name="cb_map_options[cb_items_available_categories]', $available_categories_checklist_markup);
+    $available_categories_checklist_markup = str_replace('name="tax_input[cb_items_category]', 'class="cb_items_available_category_choice"', $available_categories_checklist_markup);
 
+    //rearrange to nummeric array, because object property order isn't stable in js
+    $cb_items_available_categories = CB_Map_Admin::get_option($cb_map_id, 'cb_items_available_categories');
+    $available_categories = [];
+    foreach ($cb_items_available_categories as $cat_id => $markup) {
+      $available_categories[] = [
+        'cat_id' => $cat_id,
+        'markup' => $markup
+      ];
+    }
+
+    //preset categories
     $preset_categories_args = [
       'taxonomy' => 'cb_items_category',
       'echo' => false,

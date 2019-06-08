@@ -10,19 +10,18 @@ function CB_Map() {
   cb_map.init_filters = function($) {
     var that = this;
 
-    if(this.settings.filter_cb_item_categories.length > 0) {
+    if(Object.keys(this.settings.filter_cb_item_categories).length > 0) {
       var $filter_container = $('<div class="cb-map-filters" style="width:100%; height: 50px;"></div>');
 
       var $form = $('<form></form');
       var $filter_options = $('<div class="cb-filter-options"></div>');
-      this.settings.filter_cb_item_categories.forEach(function(category) {
-        $input = $('<input type="checkbox" name="cb_item_categories[]" value="' + category.term_id + '">')
-        label_markup = that.settings.filter_cb_item_categories_custom_markup[category.term_id] || category.name;
+      $.each(this.settings.filter_cb_item_categories, function(index, category) {
+        $input = $('<input type="checkbox" name="cb_item_categories[]" value="' + category.cat_id + '">')
         $label = $('<label style="margin-right: 20px;"></label>');
-        $label.html(label_markup);
+        $label.html(category.markup);
         $filter_options.append($input);
         $filter_options.append($label);
-      })
+      });
 
       $form.append($filter_options);
 
