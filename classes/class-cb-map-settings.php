@@ -8,10 +8,13 @@ class CB_Map_Settings {
 
   public static $options;
 
+  /**
+  * prepare the plugin's settings and add settings page
+  **/
   public function prepare_settings() {
 
     add_action('admin_menu', function() {
-        add_options_page( cb_map\__('SETTINGS_TITLE', 'commons-booking-map', 'Settings for Commons Booking Map'), cb_map\__('SETTINGS_MENU', 'commons-booking-map', 'Commons Booking Map' ), 'manage_options', 'commons-booking-map', array($this, 'render_options_page') );
+        add_options_page( cb_map\__('SETTINGS_TITLE', 'commons-booking-map', 'Settings for Commons Booking Map'), cb_map\__('SETTINGS_MENU', 'commons-booking-map', 'Commons Booking Map' ), 'manage_options', 'commons-booking-map', array($this, 'render_settings_page') );
     });
 
     add_action( 'admin_init', function() {
@@ -20,6 +23,9 @@ class CB_Map_Settings {
 
   }
 
+  /**
+  * load CB Map settings options
+  **/
   private static function load_options() {
     if(!isset(self::$options)) {
       $options = get_option('cb_map_options', array());
@@ -27,6 +33,9 @@ class CB_Map_Settings {
     }
   }
 
+  /**
+  * populate the default values to the options
+  **/
   public static function populate_option_defaults($options) {
     //var_dump($options);
 
@@ -49,16 +58,8 @@ class CB_Map_Settings {
   }
 
   /**
-  *
+  * get the default value for the option with given name
   **/
-  public static function get_options($public = false) {
-    self::load_options();
-
-    //TODO: filter public
-
-    return self::$options;
-  }
-
   private static function get_option_default($option_name) {
 
     $default_name = strtoupper($option_name) . '_DEFAULT';
@@ -82,13 +83,20 @@ class CB_Map_Settings {
     return $validated_input;
   }
 
+  /**
+  * add the the link to settings page
+  **/
   public function add_settings_link( $links ) {
     $settings_link = '<a href="options-general.php?page=commons-booking-map">' . __( 'Settings') . '</a>';
     array_unshift( $links, $settings_link );
     return $links;
   }
 
-  public function render_options_page() {
+  /**
+  * render the settings page
+  **/
+  public function render_settings_page() {
+    wp_enqueue_style('cb_map_admin_css', CB_MAP_ASSETS_URL . 'css/admin-style.css');
 
     include_once( CB_MAP_PATH . 'templates/settings-page-template.php');
   }

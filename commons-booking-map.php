@@ -32,7 +32,7 @@ if(cb_map\is_plugin_active('commons-booking.php')) {
   require_once( CB_MAP_PATH . 'classes/class-cb-map-admin.php' );
   add_action( 'init', 'CB_Map::register_cb_map_post_type' );
   add_action( 'save_post_cb_map', 'CB_Map_Admin::validate_options', 10, 3 );
-  add_action( 'add_meta_boxes_cb_map', 'CB_Map::add_meta_boxes' );
+  add_action( 'add_meta_boxes_cb_map', 'CB_Map_Admin::add_meta_boxes' );
 
   require_once( CB_MAP_PATH . 'classes/class-cb-map-shortcode.php' );
   add_action( 'wp_ajax_cb_map_locations', 'CB_Map_Shortcode::get_locations' );

@@ -2,6 +2,9 @@
 
 class CB_Map {
 
+  /**
+  * register cb_map as custom post type
+  **/
   public static function register_cb_map_post_type() {
     $labels = array(
       'name'                  => cb_map\__( 'POST_LABELS_NAME', 'commons-booking-map', 'Commons Booking maps'),
@@ -11,34 +14,15 @@ class CB_Map {
       'edit_item'             => cb_map\__( 'POST_LABELS_EDIT_ITEM', 'commons-booking-map', 'edit Commons Booking map'),
       'new_item'              => cb_map\__( 'POST_LABELS_NEW_ITEM', 'commons-booking-map', 'create CB map'),
       'view_item'             => cb_map\__( 'POST_LABELS_VIEW_ITEM', 'commons-booking-map', 'view CB map'),
-      //'view_items'            => cb_map\__( 'POST_LABELS_VIEW_ITEMS', 'commons-booking-map', 'view CB maps'),
       'search_items'          => cb_map\__( 'POST_LABELS_SEARCH_ITEMS', 'commons-booking-map', 'search CB maps'),
       'not_found'             => cb_map\__( 'POST_LABELS_NOT_FOUND', 'commons-booking-map', 'no Commons Booking map found'),
       'not_found_in_trash'    => cb_map\__( 'POST_LABELS_NOT_FOUND_IN_TRASH', 'commons-booking-map', 'no Commons Booking map found in the trash'),
       'parent_item_colon'     => cb_map\__( 'POST_LABELS_PARENT_ITEM_COLON', 'commons-booking-map', 'parent CB maps'),
-      //'all_items'             => cb_map\__( 'POST_LABELS_ALL_ITEMS', 'commons-booking-map', 'all maps'),
-      //'archives'              => cb_map\__( 'POST_LABELS_ARCHIVES', 'commons-booking-map', 'CB map archive'),
-      //'attributes'            => cb_map\__( 'POST_LABELS_ATTRIBUTES', 'commons-booking-map', 'CB maps attributes'),
-      //'insert_into_item'      => cb_map\__( 'POST_LABELS_INSERT_INTO_ITEM', 'commons-booking-map', 'insert into to CB map'),
-      //'uploaded_to_this_item' => cb_map\__( 'POST_LABELS_UPLOADED_TO_THIS_ITEM', 'commons-booking-map', 'uploaded to this CB map'),
-      //'featured_image'        => cb_map\__( 'POST_LABELS_FEATURED_IMAGE', 'commons-booking-map', 'featured image of CB map'),
-      //'set_featured_image'    => cb_map\__( 'POST_LABELS_SET_FEATURED_IMAGE', 'commons-booking-map', 'set featured image of CB map'),
-      //'remove_featured_image' => cb_map\__( 'POST_LABELS_REMOVE_FEATURED_IMAGE', 'commons-booking-map', 'remove featured image of CB map'),
-      //'use_featured_image'    => cb_map\__( 'POST_LABELS_USE_FEATURED_IMAGE', 'commons-booking-map', 'use as featured image of CB map'),
-      //'menu_name'             => cb_map\__( 'POST_LABELS_MENU_NAME', 'commons-booking-map', 'Commons Booking Maps'),
     );
 
     $supports = array(
       'title',
-      //'editor', //content
-      //'excerpt',
-      'author',
-      //'thumbnail', // featured image
-      //'trackbacks',
-      //'custom-fields',
-      //'revisions',
-      //'page-attributes',
-      //'comments'
+      'author'
     );
 
     $args = array(
@@ -64,43 +48,27 @@ class CB_Map {
     register_post_type( 'cb_map', $args );
   }
 
-  public static function add_meta_boxes() {
-    self::add_settings_meta_box('cb_map_admin', cb_map\__( 'CB_MAP_ADMIN_METABOX_TITLE', 'commons-booking-map', 'Map Configuration'));
-  }
-
-  public static function add_settings_meta_box($meta_box_id, $meta_box_title) {
-    global $post;
-
-    $cb_map_admin = new CB_Map_Admin();
-
-    $plugin_prefix = 'cb_map_post_type_';
-
-    $html_id_attribute = $plugin_prefix . $meta_box_id . '_meta_box';
-    $callback = array($cb_map_admin, 'render_options_page');
-    $show_on_post_type = 'cb_map';
-    $box_placement = 'normal';
-    $box_priority = 'high';
-
-    add_meta_box(
-        $html_id_attribute,
-        $meta_box_title,
-        $callback,
-        $show_on_post_type,
-        $box_placement,
-        $box_priority
-    );
-  }
-
+  /**
+  * plugin activation handler
+  **/
   public static function activate() {
+    //schedule daily event to update import data
     $date_time = new DateTime();
     $date_time->setTime(23, 00);
     wp_schedule_event( $date_time->getTimestamp(), 'daily', 'cb_map_import');
   }
 
+  /**
+  * plugin deactivation handler
+  */
   public static function deactivate() {
+    //clear the scheduled import data event
     wp_clear_scheduled_hook('cb_map_import');
   }
 
+  /**
+  * load all timeframes from db (that end in the future)
+  **/
   public static function get_timeframes() {
     global $wpdb;
 
@@ -194,6 +162,9 @@ class CB_Map {
     return $locations;
   }
 
+  /**
+  * get all the locations of the map with provided id that belong to timeframes and filter by given categories
+  **/
   public static function get_locations_by_timeframes($cb_map_id, $filter_categories = []) {
     //var_dump($filter_categories);
 
@@ -283,6 +254,9 @@ class CB_Map {
     return $result;
   }
 
+  /**
+  * handler for location import test
+  **/
   public static function handle_location_import_test() {
 
     $import_result = self::fetch_locations((int) $_POST['cb_map_id'], $_POST['url'], $_POST['code']);
@@ -294,11 +268,17 @@ class CB_Map {
     wp_die();
   }
 
+  /**
+  * basic check if the given string is valid JSON
+  **/
   public static function is_json($string) {
    json_decode($string);
    return (json_last_error() == JSON_ERROR_NONE);
   }
 
+  /**
+  * validates the given JSON string against the location import schema
+  **/
   public static function validate_json($string) {
 
     if(self::is_json($string)) {
@@ -331,6 +311,9 @@ class CB_Map {
 
   }
 
+  /**
+  * execute an ajax post request to fetch locations from a remote source
+  **/
   public static function fetch_locations($cb_map_id, $url, $code) {
 
     $post = get_post($cb_map_id);
@@ -373,11 +356,17 @@ class CB_Map {
 
   }
 
+  /**
+  * create an import id (md5 hash) based on given url and import code
+  **/
   public static function create_import_id($url, $code) {
     $url_hash = hash('md5', $url);
     return $url_hash . '_' . $code;
   }
 
+  /**
+  * create a temporary random authentication code for a background location import
+  **/
   public static function create_import_auth_code() {
     $random_string_length = 24;
     $characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
@@ -391,7 +380,7 @@ class CB_Map {
   }
 
   /**
-  * for usage with cronjob
+  * import all locations - for usage with cronjob
   */
   public static function import_all_locations() {
 
@@ -410,8 +399,13 @@ class CB_Map {
     }
   }
 
+  /**
+  * handles the request for location import
+  **/
   public static function handle_location_import_of_map() {
     $cb_map_id = (int) $_POST['cb_map_id'];
+
+    //get the temporary import authentication code
     $import_auth_code = get_post_meta( $cb_map_id, 'cb_map_import_auth_code', true );
 
     if($import_auth_code == $_POST['auth_code']) {
@@ -498,6 +492,9 @@ class CB_Map {
     return $value;
   }
 
+  /**
+  * clean up the location data
+  **/
   public static function cleanup_location_data($locations, $linebreak_replacement, $map_type) {
     foreach ($locations as $key => &$location) {
       $location = self::cleanup_location_data_entry($key, $location, $linebreak_replacement, $map_type);
@@ -506,6 +503,9 @@ class CB_Map {
     return $locations;
   }
 
+  /**
+  * enforce the replacement of the original (google maps) link target on cb_item booking pages 
+  **/
   public static function replace_map_link_target() {
     global $post;
   	$cb_item = 'cb_items';

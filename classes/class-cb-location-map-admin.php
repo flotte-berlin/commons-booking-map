@@ -3,7 +3,7 @@
 class CB_Location_Map_Admin {
 
   /**
-  * loads special days admin functionality
+  * load the location administration map
   */
   public function load_location_map_admin() {
 
@@ -25,6 +25,9 @@ class CB_Location_Map_Admin {
 
   }
 
+  /**
+  * load needed assets for the map that provides fine tuning of the location's position
+  **/
   public function render_cb_map( $field, $escaped_value, $object_id, $object_type, $field_type_object ) {
     //map
     wp_enqueue_style('cb_map_leaflet_css', CB_MAP_ASSETS_URL . 'leaflet/leaflet.css');
@@ -43,6 +46,9 @@ class CB_Location_Map_Admin {
     echo '<script>cb_map_positioning.defaults = ' . json_encode($defaults) . ';</script>';
   }
 
+  /**
+  * add a metabox for location's positioning map
+  **/
   public function add_metabox(array $meta_boxes) {
 
     $meta_boxes['cb_locations_map'] = array(

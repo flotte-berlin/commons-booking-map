@@ -1,11 +1,3 @@
-<style>
-
-th {
-  width: 250px;
-}
-
-</style>
-
 <div class="wrap">
 
   <h1><?= cb_map\__('SETTINGS_PAGE_HEADER', 'commons-booking-map', 'Settings for Commons Booking Map') ?></h1>
@@ -18,11 +10,11 @@ th {
       do_settings_sections( 'cb-map-settings' );
     ?>
 
-    <table style="text-align: left;">
+    <table class="text-left">
       <tr>
           <th>
             <?= cb_map\__('BOOKING_PAGE_LINK_REPLACEMENT', 'commons-booking-map', 'replace map link on booking page') ?>:
-            <span style="cursor: help;" class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'BOOKING_PAGE_LINK_REPLACEMENT_DESC', 'commons-booking-map', 'set the target of the map link on booking page to openstreetmap') ?>"></span>
+            <span class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'BOOKING_PAGE_LINK_REPLACEMENT_DESC', 'commons-booking-map', 'set the target of the map link on booking page to openstreetmap') ?>"></span>
           </th>
           <td>
             <input type="checkbox" name="cb_map_options[booking_page_link_replacement]" <?= CB_Map_Settings::get_option('booking_page_link_replacement') ? 'checked="checked"' : '' ?> value="on">

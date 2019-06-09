@@ -1,37 +1,3 @@
-<style>
-
-.cb-map-settings-cat-filter-list .children {
-  margin-left: 1.5em;
-}
-
-th {
-  width: 250px;
-}
-
-.category-wrapper {
-  height: 150px;
-  padding: 10px;
-  background-color: #fff;
-  overflow-y: scroll;
-}
-
-.option-group {
-  display: none;
-}
-
-button>span.dashicons {
-  display: inline-block;
-  margin-top: 4px;
-}
-
-@keyframes spin { 100% { -webkit-transform: rotateZ(360deg); transform:rotateZ(360deg); } }
-
-.rotate {
-  animation:  spin 2s linear infinite;
-}
-
-</style>
-
 <div class="inside">
 
     <p><?= cb_map\__('MAP_ADMIN_DESCRIPTION', 'commons-booking-map', 'These settings help you to configure the usage and appearance Commons Booking Map.') ?></p>
@@ -39,11 +5,11 @@ button>span.dashicons {
     <div class="option-group" id="option-group-usage">
       <h1><?= cb_map\__('USAGE', 'commons-booking-map', 'Usage') ?></h1>
 
-      <table style="text-align: left;">
+      <table class="text-left">
         <tr>
             <th>
               <?= cb_map\__('MAP_TYPE', 'commons-booking-map', 'Map Type') ?>:
-              <span style="cursor: help;" class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'MAP_TYPE_DESC', 'commons-booking-map', 'the type of the map defines the usage - if the map is shown on the own website (local), collect data from external sources (import) or provide data for other websites (export)') ?>"></span>
+              <span class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'MAP_TYPE_DESC', 'commons-booking-map', 'the type of the map defines the usage - if the map is shown on the own website (local), collect data from external sources (import) or provide data for other websites (export)') ?>"></span>
             </th>
             <td>
               <? $selected_option = CB_Map_Admin::get_option($cb_map_id, 'map_type') ?>
@@ -61,11 +27,11 @@ button>span.dashicons {
 
       <h1><?= cb_map\__('DATA_EXPORT', 'commons-booking-map', 'Data Export') ?></h1>
 
-      <table style="text-align: left;">
+      <table class="text-left">
         <tr>
             <th>
               <?= cb_map\__('EXPORT_CODE', 'commons-booking-map', 'export code') ?>:
-              <span style="cursor: help;" class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'EXPORT_CODE_DESC', 'commons-booking-map', 'generate an export code, that you can give to someone running a website with Commons Booking Map plugin to import and show your locations and items') ?>"></span>
+              <span class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'EXPORT_CODE_DESC', 'commons-booking-map', 'generate an export code, that you can give to someone running a website with Commons Booking Map plugin to import and show your locations and items') ?>"></span>
             </th>
             <td>
               <input type="text" autocomplete="off" size="10" minlength="<?= CB_Map_Admin::EXPORT_CODE_VALUE_MIN_LENGTH ?>" name="cb_map_options[export_code]" value="<?= esc_attr( CB_Map_Admin::get_option($cb_map_id, 'export_code') ); ?>">
@@ -84,11 +50,11 @@ button>span.dashicons {
     <div class="option-group" id="option-group-data-import">
       <h1><?= cb_map\__('DATA_IMPORT', 'commons-booking-map', 'Data Import') ?></h1>
 
-      <table style="text-align: left;">
+      <table class="text-left">
         <tr>
             <th>
               <?= cb_map\__('ADD_IMPORT_SOURCE', 'commons-booking-map', 'new import source') ?>:
-              <span style="cursor: help;" class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'ADD_IMPORT_SOURCE_DESC', 'commons-booking-map', 'add an import source (another website with installed Commons Booking Map plugin and prepared map export) by typing the url and the code you got from the website admin'); ?>"></span>
+              <span class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'ADD_IMPORT_SOURCE_DESC', 'commons-booking-map', 'add an import source (another website with installed Commons Booking Map plugin and prepared map export) by typing the url and the code you got from the website admin'); ?>"></span>
             </th>
             <td>
               <button id="add-import-source-button" class="button" title="<?= cb_map\__('ADD_IMPORT_SOURCE_BUTTON_TITLE', 'commons-booking-map', 'add import source') ?>"><span class="dashicons dashicons-plus"></span></button>
@@ -107,18 +73,18 @@ button>span.dashicons {
 
       <h1><?= cb_map\__('MAP_PRESENTATION', 'commons-booking-map', 'Map Presentation') ?></h1>
 
-      <table style="text-align: left;">
+      <table class="text-left">
         <tr>
             <th>
               <?= cb_map\__('MAP_SHORTCODE', 'commons-booking-map', 'shortcode') ?>:
-              <span style="cursor: help;" class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'MAP_SHORTCODE_DESC', 'commons-booking-map', 'with this shortcode the map can be included in posts or pages') ?>"></span>
+              <span class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'MAP_SHORTCODE_DESC', 'commons-booking-map', 'with this shortcode the map can be included in posts or pages') ?>"></span>
             </th>
             <td>[cb_map id=<?= $cb_map_id ?>]</td>
         </tr>
         <tr>
             <th>
               <?= cb_map\__('MAP_HEIGHT', 'commons-booking-map', 'map height') ?>:
-              <span style="cursor: help;" class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'MAP_HEIGHT_DESC', 'commons-booking-map', 'the height the map is rendered with - the width is the same as of the parent element') ?>"></span>
+              <span class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'MAP_HEIGHT_DESC', 'commons-booking-map', 'the height the map is rendered with - the width is the same as of the parent element') ?>"></span>
             </th>
             <td><input type="number" min="<?= CB_Map_Admin::MAP_HEIGHT_VALUE_MIN ?>" max="<?= CB_Map_Admin::MAP_HEIGHT_VALUE_MAX ?>" name="cb_map_options[map_height]" value="<?= esc_attr( CB_Map_Admin::get_option($cb_map_id, 'map_height') ); ?>" size="4"> px</td>
         </tr>
@@ -128,25 +94,25 @@ button>span.dashicons {
     <div class="option-group" id="option-group-zoom">
       <h1><?= cb_map\__('ZOOM', 'commons-booking-map', 'Zoom') ?></h1>
 
-      <table style="text-align: left;">
+      <table class="text-left">
         <tr>
             <th>
               <?= cb_map\__('MIN_ZOOM_LEVEL', 'commons-booking-map', 'min. zoom level') ?>:
-              <span style="cursor: help;" class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'MIN_ZOOM_LEVEL_DESC', 'commons-booking-map', 'the minimal zoom level a user can choose') ?>"></span>
+              <span class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'MIN_ZOOM_LEVEL_DESC', 'commons-booking-map', 'the minimal zoom level a user can choose') ?>"></span>
             </th>
             <td><input type="number" min="<?= CB_Map_Admin::ZOOM_VALUE_MIN ?>" max="<?= CB_Map_Admin::ZOOM_VALUE_MAX ?>" name="cb_map_options[zoom_min]" value="<?= esc_attr( CB_Map_Admin::get_option($cb_map_id, 'zoom_min') ); ?>" size="3"></td>
         </tr>
         <tr>
             <th>
               <?= cb_map\__('MAX_ZOOM_LEVEL', 'commons-booking-map', 'max. zoom level') ?>:
-              <span style="cursor: help;" class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'MAX_ZOOM_LEVEL_DESC', 'commons-booking-map', 'the maximal zoom level a user can choose') ?>"></span>
+              <span class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'MAX_ZOOM_LEVEL_DESC', 'commons-booking-map', 'the maximal zoom level a user can choose') ?>"></span>
             </th>
             <td><input type="number" min="<?= CB_Map_Admin::ZOOM_VALUE_MIN ?>" max="<?= CB_Map_Admin::ZOOM_VALUE_MAX ?>" name="cb_map_options[zoom_max]" value="<?= esc_attr( CB_Map_Admin::get_option($cb_map_id, 'zoom_max') ); ?>" size="3"></td>
         </tr>
         <tr>
             <th>
               <?= cb_map\__('START_ZOOM_LEVEL', 'commons-booking-map', 'start zoom level') ?>:
-              <span style="cursor: help;" class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'START_ZOOM_LEVEL_DESC', 'commons-booking-map', 'the zoom level that will be set when the map is loaded') ?>"></span>
+              <span class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'START_ZOOM_LEVEL_DESC', 'commons-booking-map', 'the zoom level that will be set when the map is loaded') ?>"></span>
             </th>
             <td><input type="number" min="<?= CB_Map_Admin::ZOOM_VALUE_MIN ?>" max="<?= CB_Map_Admin::ZOOM_VALUE_MAX ?>" name="cb_map_options[zoom_start]" value="<?= esc_attr( CB_Map_Admin::get_option($cb_map_id, 'zoom_start') ); ?>" size="3"></td>
         </tr>
@@ -156,11 +122,11 @@ button>span.dashicons {
     <div class="option-group" id="option-group-positioning-start">
       <h1><?= cb_map\__('POSITIONING_START', 'commons-booking-map', 'Map Positioning (center) at Intialization') ?></h1>
 
-      <table style="text-align: left;">
+      <table class="text-left">
         <tr>
             <th>
               <?= cb_map\__('LATITUDE_START', 'commons-booking-map', 'start latitude') ?>:
-              <span style="cursor: help;" class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'LATITUDE_START_DESC', 'commons-booking-map', 'the latitude of the map center when the map is loaded') ?>"></span>
+              <span class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'LATITUDE_START_DESC', 'commons-booking-map', 'the latitude of the map center when the map is loaded') ?>"></span>
             </th>
             <td><input type="text" name="cb_map_options[lat_start]" value="<?= esc_attr( CB_Map_Admin::get_option($cb_map_id, 'lat_start') ); ?>" size="10"></td>
         </tr>
@@ -168,7 +134,7 @@ button>span.dashicons {
         <tr>
             <th>
               <?= cb_map\__('LONGITUDE_START', 'commons-booking-map', 'start longitude') ?>:
-              <span style="cursor: help;" class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'LONGITUDE_START_DESC', 'commons-booking-map', 'the longitude of the map center when the map is loaded') ?>"></span>
+              <span class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'LONGITUDE_START_DESC', 'commons-booking-map', 'the longitude of the map center when the map is loaded') ?>"></span>
             </th>
             <td><input type="text" name="cb_map_options[lon_start]" value="<?= esc_attr( CB_Map_Admin::get_option($cb_map_id, 'lon_start') ); ?>" size="10"></td>
         </tr>
@@ -178,11 +144,11 @@ button>span.dashicons {
     <div class="option-group" id="option-group-adaptive-map-section">
       <h1><?= cb_map\__('ADAPTIVE_MAP_SECTION', 'commons-booking-map', 'Adaptive Map Section') ?></h1>
 
-      <table style="text-align: left;">
+      <table class="text-left">
         <tr>
             <th>
               <?= cb_map\__('ADJUST_MAP_SECTION_TO_MARKERS_INITIALLY', 'commons-booking-map', 'initial adjustment to marker bounds') ?>:
-              <span style="cursor: help;" class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'ADJUST_MAP_SECTION_TO_MARKERS_INITIALLY_DESC', 'commons-booking-map', 'adjust map section to bounds of shown markers automatically when map is loaded') ?>"></span>
+              <span class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'ADJUST_MAP_SECTION_TO_MARKERS_INITIALLY_DESC', 'commons-booking-map', 'adjust map section to bounds of shown markers automatically when map is loaded') ?>"></span>
             </th>
             <td>
               <input type="checkbox" name="cb_map_options[marker_map_bounds_initial]" <?= CB_Map_Admin::get_option($cb_map_id, 'marker_map_bounds_initial') ? 'checked="checked"' : '' ?> value="on">
@@ -191,7 +157,7 @@ button>span.dashicons {
         <tr>
             <th>
               <?= cb_map\__('ADJUST_MAP_SECTION_TO_MARKERS_FILTER', 'commons-booking-map', 'adjustment to marker bounds on filter') ?>:
-              <span style="cursor: help;" class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'ADJUST_MAP_SECTION_TO_MARKERS_FILTER_DESC', 'commons-booking-map', 'adjust map section to bounds of shown markers automatically when filtered by users') ?>"></span>
+              <span class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'ADJUST_MAP_SECTION_TO_MARKERS_FILTER_DESC', 'commons-booking-map', 'adjust map section to bounds of shown markers automatically when filtered by users') ?>"></span>
             </th>
             <td>
               <input type="checkbox" name="cb_map_options[marker_map_bounds_filter]" <?= CB_Map_Admin::get_option($cb_map_id, 'marker_map_bounds_filter') ? 'checked="checked"' : '' ?> value="on">
@@ -202,32 +168,32 @@ button>span.dashicons {
 
     <div class="option-group" id="option-group-popup">
       <h1><?= cb_map\__('POPUP', 'commons-booking-map', 'Marker Popup') ?></h1>
-      <table style="text-align: left;">
+      <table class="text-left">
         <tr>
             <th>
               <?= cb_map\__('SHOW_LOCATION_OPENING_HOURS', 'commons-booking-map', 'show location opening hours') ?>:
-              <span style="cursor: help;" class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'SHOW_LOCATION_OPENING_HOURS_DESC', 'commons-booking-map', 'activate to show the opening hours of locations in the marker popup') ?>"></span>
+              <span class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'SHOW_LOCATION_OPENING_HOURS_DESC', 'commons-booking-map', 'activate to show the opening hours of locations in the marker popup') ?>"></span>
             </th>
             <td><input type="checkbox" name="cb_map_options[show_location_opening_hours]" <?= CB_Map_Admin::get_option($cb_map_id, 'show_location_opening_hours') ? 'checked="checked"' : '' ?> value="on"></td>
         </tr>
         <tr>
             <th>
               <?= cb_map\__('LABEL_LOCATION_OPENING_HOURS', 'commons-booking-map', 'label for opening hours') ?>:
-              <span style="cursor: help;" class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'LABEL_LOCATION_OPENING_HOURS_DESC', 'commons-booking-map', 'alternative label for the opening hours of locations in the marker popup') ?>"></span>
+              <span class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'LABEL_LOCATION_OPENING_HOURS_DESC', 'commons-booking-map', 'alternative label for the opening hours of locations in the marker popup') ?>"></span>
             </th>
             <td><input type="text" name="cb_map_options[label_location_opening_hours]" placeholder="<?= cb_map\__('OPENING_HOURS', 'commons-booking-map', 'opening hours') ?>" value="<?= CB_Map_Admin::get_option($cb_map_id, 'label_location_opening_hours') ?>"></td>
         </tr>
         <tr>
             <th>
               <?= cb_map\__('SHOW_LOCATION_CONTACT', 'commons-booking-map', 'show location contact') ?>:
-              <span style="cursor: help;" class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'SHOW_LOCATION_CONTACT_DESC', 'commons-booking-map', 'activate to show the location contact details in the marker popup') ?>"></span>
+              <span class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'SHOW_LOCATION_CONTACT_DESC', 'commons-booking-map', 'activate to show the location contact details in the marker popup') ?>"></span>
             </th>
             <td><input type="checkbox" name="cb_map_options[show_location_contact]" <?= CB_Map_Admin::get_option($cb_map_id, 'show_location_contact') ? 'checked="checked"' : '' ?> value="on"></td>
         </tr>
         <tr>
             <th>
               <?= cb_map\__('LABEL_LOCATION_CONTACT', 'commons-booking-map', 'label for opening hours') ?>:
-              <span style="cursor: help;" class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'LABEL_LOCATION_CONTACT_DESC', 'commons-booking-map', 'alternative label for the contact information of locations in the marker popup') ?>"></span>
+              <span class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'LABEL_LOCATION_CONTACT_DESC', 'commons-booking-map', 'alternative label for the contact information of locations in the marker popup') ?>"></span>
             </th>
             <td><input type="text" name="cb_map_options[label_location_contact]" placeholder="<?= cb_map\__('CONTACT', 'commons-booking-map', 'opening hours') ?>" value="<?= CB_Map_Admin::get_option($cb_map_id, 'label_location_contact') ?>"></td>
         </tr>
@@ -237,18 +203,18 @@ button>span.dashicons {
     <div class="option-group" id="option-group-custom-marker">
       <h1><?= cb_map\__('CUSTOM_MARKER', 'commons-booking-map', 'Custom Marker') ?></h1>
 
-      <table style="text-align: left;">
+      <table class="text-left">
         <tr>
           <th>
             <?= cb_map\__('IMAGE_FILE', 'commons-booking-map', 'image file') ?>:
-            <span style="cursor: help;" class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'IMAGE_FILE_DESC', 'commons-booking-map', 'the default marker icon can be replaced by a custom image') ?>"></span>
+            <span class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'IMAGE_FILE_DESC', 'commons-booking-map', 'the default marker icon can be replaced by a custom image') ?>"></span>
           </th>
           <td>
             <input id="select-marker-image-button" type="button" class="button" value="<?= cb_map\__('SELECT', 'commons-booking-map', 'select') ?>" />
             <input id="remove-marker-image-button" type="button" class="button" value="<?= cb_map\__('REMOVE', 'commons-booking-map', 'remove') ?>" />
           </td>
         </tr>
-        <tr id="marker-image-preview-settings" style="display: none;">
+        <tr id="marker-image-preview-settings" class="display-none">
           <td>
             <div>
                 <img id="marker-image-preview" src="<?= wp_get_attachment_url(CB_Map_Admin::get_option($cb_map_id, 'custom_marker_media_id')); ?>">
@@ -259,10 +225,10 @@ button>span.dashicons {
             <div id="marker-image-preview-measurements"></div>
           </td>
         </tr>
-        <tr id="marker-icon-size" style="display: none;">
+        <tr id="marker-icon-size" class="display-none">
             <th>
               <?= cb_map\__('ICON_SIZE', 'commons-booking-map', 'icon size') ?>:
-              <span style="cursor: help;" class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'ICON_SIZE_DESC', 'commons-booking-map', 'the size of the custom marker icon image as it is shown on the map') ?>"></span>
+              <span class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'ICON_SIZE_DESC', 'commons-booking-map', 'the size of the custom marker icon image as it is shown on the map') ?>"></span>
             </th>
             <td>
               <input type="text" name="cb_map_options[marker_icon_width]" value="<?= esc_attr( CB_Map_Admin::get_option($cb_map_id, 'marker_icon_width') ); ?>" size="3"> x
@@ -270,10 +236,10 @@ button>span.dashicons {
             </td>
 
         </tr>
-        <tr id="marker-icon-anchor" style="display: none;">
+        <tr id="marker-icon-anchor" class="display-none">
           <th>
             <?= cb_map\__('ANCHOR_POINT', 'commons-booking-map', 'anchor point') ?>:
-            <span style="cursor: help;" class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'ANCHOR_POINT_DESC', 'commons-booking-map', 'the position of the anchor point of the icon image, seen from the left top corner of the icon, often it is half of the width and full height of the icon size - this point is used to place the marker on the geo coordinates') ?>"></span>
+            <span class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'ANCHOR_POINT_DESC', 'commons-booking-map', 'the position of the anchor point of the icon image, seen from the left top corner of the icon, often it is half of the width and full height of the icon size - this point is used to place the marker on the geo coordinates') ?>"></span>
           </th>
           <td>
             <input type="text" name="cb_map_options[marker_icon_anchor_x]" value="<?= esc_attr( CB_Map_Admin::get_option($cb_map_id, 'marker_icon_anchor_x') ); ?>" size="3"> x
@@ -285,11 +251,11 @@ button>span.dashicons {
 
     <div class="option-group" id="option-group-cluster">
       <h1><?= cb_map\__('CLUSTER', 'commons-booking-map', 'Cluster') ?></h1>
-      <table style="text-align: left;">
+      <table class="text-left">
         <tr>
             <th>
               <?= cb_map\__('MAX_CLUSTER_RADIUS', 'commons-booking-map', 'max. cluster radius') ?>:
-              <span style="cursor: help;" class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'MAX_CLUSTER_RADIUS_DESC', 'commons-booking-map', 'combine markers to a cluster within given radius - 0 for deactivation') ?>"></span>
+              <span class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'MAX_CLUSTER_RADIUS_DESC', 'commons-booking-map', 'combine markers to a cluster within given radius - 0 for deactivation') ?>"></span>
             </th>
             <td>
               <input type="number" size="3" step="10" min="<?= CB_Map_Admin::MAX_CLUSTER_RADIUS_VALUE_MIN ?>" max="<?= CB_Map_Admin::MAX_CLUSTER_RADIUS_VALUE_MAX ?>" name="cb_map_options[max_cluster_radius]" value="<?= esc_attr( CB_Map_Admin::get_option($cb_map_id, 'max_cluster_radius') ); ?>"> px
@@ -299,18 +265,18 @@ button>span.dashicons {
 
       <h1><?= cb_map\__('CUSTOM_CLUSTER_MARKER', 'commons-booking-map', 'Custom Cluster Marker') ?></h1>
 
-      <table style="text-align: left;">
+      <table class="text-left">
         <tr>
           <th>
             <?= cb_map\__('IMAGE_FILE', 'commons-booking-map', 'image file') ?>:
-            <span style="cursor: help;" class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'IMAGE_FILE_DESC', 'commons-booking-map', 'the default marker icon can be replaced by a custom image') ?>"></span>
+            <span class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'IMAGE_FILE_DESC', 'commons-booking-map', 'the default marker icon can be replaced by a custom image') ?>"></span>
           </th>
           <td>
             <input id="select-marker-cluster-image-button" type="button" class="button" value="<?= cb_map\__('SELECT', 'commons-booking-map', 'select') ?>" />
             <input id="remove-marker-cluster-image-button" type="button" class="button" value="<?= cb_map\__('REMOVE', 'commons-booking-map', 'remove') ?>" />
           </td>
         </tr>
-        <tr id="marker-cluster-image-preview-settings" style="display: none;">
+        <tr id="marker-cluster-image-preview-settings" class="display-none">
           <td>
             <div>
                 <img id="marker-cluster-image-preview" src="<?= wp_get_attachment_url(CB_Map_Admin::get_option($cb_map_id, 'custom_marker_cluster_media_id')); ?>">
@@ -321,10 +287,10 @@ button>span.dashicons {
             <div id="marker-cluster-image-preview-measurements"></div>
           </td>
         </tr>
-        <tr id="marker-cluster-icon-size" style="display: none;">
+        <tr id="marker-cluster-icon-size" class="display-none">
             <th>
               <?= cb_map\__('ICON_SIZE', 'commons-booking-map', 'icon size') ?>:
-              <span style="cursor: help;" class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'ICON_SIZE_DESC', 'commons-booking-map', 'the size of the custom marker icon image as it is shown on the map') ?>"></span>
+              <span class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'ICON_SIZE_DESC', 'commons-booking-map', 'the size of the custom marker icon image as it is shown on the map') ?>"></span>
             </th>
             <td>
               <input type="text" name="cb_map_options[marker_cluster_icon_width]" value="<?= esc_attr( CB_Map_Admin::get_option($cb_map_id, 'marker_cluster_icon_width') ); ?>" size="3"> x
@@ -337,11 +303,11 @@ button>span.dashicons {
 
     <div class="option-group" id="option-group-filter-users">
       <h1><?= cb_map\__('FILTER_USERS', 'commons-booking-map', 'Filter for Users') ?></h1>
-      <table style="text-align: left;">
+      <table class="text-left">
         <tr>
           <th>
             <?= cb_map\__('AVAILABLE_CATEGORIES', 'commons-booking-map', 'available categories')?>:
-            <span style="cursor: help;" class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'AVAILABLE_CATEGORIES_DESC', 'commons-booking-map', 'select the categories that are presented the users to filter items - none for no filters') ?>"></span>
+            <span class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'AVAILABLE_CATEGORIES_DESC', 'commons-booking-map', 'select the categories that are presented the users to filter items - none for no filters') ?>"></span>
           </th>
           <td>
             <ul class="cb-map-settings-cat-filter-list">
@@ -353,18 +319,18 @@ button>span.dashicons {
         </tr>
       </table>
 
-      <table style="text-align: left;" id="available-categories-custom-markup-wrapper">
+      <table class="text-left" id="available-categories-custom-markup-wrapper">
         <tr><th col-span="2"><?= cb_map\__('CUSTOM_CATEGORY_FILTER_LABEL_MARKUP', 'commons-booking-map', 'custom markup for filters')?></th><tr>
       </table>
     </div>
 
     <div class="option-group" id="option-group-filter-presets">
       <h1><?= cb_map\__('FILTER_PRESETS', 'commons-booking-map', 'Filter Presets') ?></h1>
-      <table style="text-align: left;">
+      <table class="text-left">
         <tr>
           <th>
             <?= cb_map\__('PRESET_CATEGORIES', 'commons-booking-map', 'preset categories')?>:
-            <span style="cursor: help;" class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'PRESET_CATEGORIES_DESC', 'commons-booking-map', 'select the categories that are used to prefilter the items that are shown on the map - none for all items') ?>"></span>
+            <span class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'PRESET_CATEGORIES_DESC', 'commons-booking-map', 'select the categories that are used to prefilter the items that are shown on the map - none for all items') ?>"></span>
           </th>
           <td>
             <ul class="cb-map-settings-cat-filter-list">

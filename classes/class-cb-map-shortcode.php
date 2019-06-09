@@ -3,7 +3,7 @@
 class CB_Map_Shortcode {
 
   /**
-  * the shortcode handler
+  * the shortcode handler - load all the needed assets and render the map container
   **/
   public static function execute($atts) {
 
@@ -23,7 +23,7 @@ class CB_Map_Shortcode {
           if($map_type == 1 || $map_type == 2) {
             //leaflet
             wp_enqueue_style('cb_map_leaflet_css', CB_MAP_ASSETS_URL . 'leaflet/leaflet.css');
-            wp_enqueue_script( 'cb_map_leaflet_js', CB_MAP_ASSETS_URL . 'leaflet/leaflet-src.js' ); //TODO: change to leaflet.js
+            wp_enqueue_script( 'cb_map_leaflet_js', CB_MAP_ASSETS_URL . 'leaflet/leaflet.js' );
 
             //leaflet markercluster plugin
             wp_enqueue_style('cb_map_leaflet_markercluster_css', CB_MAP_ASSETS_URL . 'leaflet-markercluster/MarkerCluster.css');
@@ -72,6 +72,9 @@ class CB_Map_Shortcode {
 
   }
 
+  /**
+  * get the settings for the frontend of the map with given id
+  **/
   public static function get_settings($cb_map_id) {
     $settings = [
       'data_url' => get_site_url(null, '', null) . '/wp-admin/admin-ajax.php',
@@ -132,6 +135,9 @@ class CB_Map_Shortcode {
     return $settings;
   }
 
+  /**
+  * get the translations for the frontend
+  **/
   public static function get_translation($cb_map_id) {
     $label_location_opening_hours = CB_Map_Admin::get_option($cb_map_id, 'label_location_opening_hours');
     $label_location_contact = CB_Map_Admin::get_option($cb_map_id, 'label_location_contact');
@@ -151,6 +157,7 @@ class CB_Map_Shortcode {
   **/
   public static function get_locations() {
 
+    //handle export
     if(isset($_POST['code'])) {
 
       //find map with corresponding code
@@ -177,6 +184,7 @@ class CB_Map_Shortcode {
         return wp_die();
       }
     }
+    //handle local map
     else if(isset($_POST['cb_map_id'])) {
       $post = get_post((int) $_POST['cb_map_id']);
 
@@ -199,7 +207,7 @@ class CB_Map_Shortcode {
     $apply_filters = CB_Map_Admin::get_option($cb_map_id, 'cb_items_preset_categories');
 
     if($post->post_status == 'publish') {
-      //local
+      //local - get the locations and apply provided filters
       if($map_type == 1) {
         $available_filters = CB_Map_Admin::get_option($cb_map_id, 'cb_items_available_categories');
 
@@ -216,7 +224,7 @@ class CB_Map_Shortcode {
         $locations = CB_Map::cleanup_location_data($locations, '<br>', $map_type);
       }
 
-      //import
+      //import - get locations that are imported and stored in db
       if($map_type == 2) {
         $map_imports = get_post_meta( $cb_map_id, 'cb_map_imports', true );
 
@@ -230,10 +238,9 @@ class CB_Map_Shortcode {
             }
           }
         }
-
       }
 
-      //export
+      //export - get the locations that are supposed to be provided for external usage
       if($map_type == 3) {
         $available_filters = CB_Map_Admin::get_option($cb_map_id, 'cb_items_available_categories');
         require_once( CB_MAP_PATH . 'classes/class-cb-map.php' );

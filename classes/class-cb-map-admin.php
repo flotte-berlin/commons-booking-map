@@ -61,6 +61,33 @@ class CB_Map_Admin {
 
   public static $options;
 
+  public static function add_meta_boxes() {
+    self::add_settings_meta_box('cb_map_admin', cb_map\__( 'CB_MAP_ADMIN_METABOX_TITLE', 'commons-booking-map', 'Map Configuration'));
+  }
+
+  public static function add_settings_meta_box($meta_box_id, $meta_box_title) {
+    global $post;
+
+    $cb_map_admin = new self();
+
+    $plugin_prefix = 'cb_map_post_type_';
+
+    $html_id_attribute = $plugin_prefix . $meta_box_id . '_meta_box';
+    $callback = 'CB_Map_Admin::render_options_page';
+    $show_on_post_type = 'cb_map';
+    $box_placement = 'normal';
+    $box_priority = 'high';
+
+    add_meta_box(
+        $html_id_attribute,
+        $meta_box_title,
+        $callback,
+        $show_on_post_type,
+        $box_placement,
+        $box_priority
+    );
+  }
+
   private static function load_options($cb_map_id = null, $force_reload = false) {
     if(!isset(self::$options) || $force_reload) {
       if($cb_map_id) {
@@ -330,8 +357,8 @@ class CB_Map_Admin {
 
   }
 
-  public function render_options_page($post) {
-    //wp_nonce_field( basename( __FILE__ ), 'product_post_type_price_meta_box_nonce' );
+  public static function render_options_page($post) {
+    //wp_nonce_field( basename( __FILE__ ), 'cb_map_post_type_meta_box_nonce' );
 
     $cb_map_id = $post->ID;
 
@@ -380,6 +407,8 @@ class CB_Map_Admin {
     $preset_categories_checklist_markup = str_replace('name="tax_input[cb_items_category]', 'name="cb_map_options[cb_items_preset_categories]', $preset_categories_checklist_markup);
 
     $data_export_base_url = get_site_url(null, '', null) . '/wp-admin/admin-ajax.php';
+
+    wp_enqueue_style('cb_map_admin_css', CB_MAP_ASSETS_URL . 'css/admin-style.css');
 
     include_once( CB_MAP_PATH . 'templates/admin-page-template.php');
 

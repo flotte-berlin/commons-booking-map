@@ -1,0 +1,45 @@
+<style>
+
+.cb-map-settings-cat-filter-list .children {
+  margin-left: 1.5em;
+}
+
+th {
+  width: 250px;
+}
+
+.category-wrapper {
+  height: 150px;
+  padding: 10px;
+  background-color: #fff;
+  overflow-y: scroll;
+}
+
+.option-group {
+  display: none;
+}
+
+button>span.dashicons {
+  display: inline-block;
+  margin-top: 4px;
+}
+
+@keyframes spin { 100% { -webkit-transform: rotateZ(360deg); transform:rotateZ(360deg); } }
+
+.rotate {
+  animation:  spin 2s linear infinite;
+}
+
+.dashicons-editor-help {
+  cursor: help;
+}
+
+table.text-left {
+  text-align: left;
+}
+
+.display-none {
+  display: none;
+}
+
+</style>
