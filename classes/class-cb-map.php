@@ -437,7 +437,7 @@ class CB_Map {
 
       $locations_json = self::fetch_locations($cb_map_id, $url, $code);
 
-      $locations = CB_Map::cleanup_location_data(json_decode($locations_json, true), '<br>', 3);
+      $locations = CB_Map::cleanup_location_data(json_decode($locations_json, true), '<br>', 2);
 
       if($locations) {
         $new_map_imports[$import_id] = base64_encode(json_encode($locations, JSON_UNESCAPED_UNICODE));
@@ -469,23 +469,20 @@ class CB_Map {
       }
     }
 
-    //URL encoding/decoding of thumbnails
-    if($key === 'items') {
-      foreach($value as &$item) {
-        if($map_type == 3) {
-          if(is_string($item['thumbnail'])) {
-            $url_array = explode ( '/' , $item['thumbnail']);
-            foreach ($url_array as $index => &$url_part) {
-              if($index > 0) {
-                $url_part = rawurlencode($url_part);
-              }
-            }
-            $item['thumbnail'] = implode('/', $url_array);
+    //URL encoding/decoding of thumbnail url
+    if($key === 'thumbnail' && is_string($value)) {
+      if($map_type == 3) {
+        $url_array = explode ( '/' , $value);
+        foreach ($url_array as $index => &$url_part) {
+          if($index > 0) {
+            $url_part = rawurlencode($url_part);
           }
         }
-        if($map_type == 2) {
-          $item['thumbnail'] = rawurldecode($item['thumbnail']);
-        }
+        $value = implode('/', $url_array);
+      }
+
+      if($map_type == 2) {
+        $value = rawurldecode($value);
       }
     }
 
@@ -504,7 +501,7 @@ class CB_Map {
   }
 
   /**
-  * enforce the replacement of the original (google maps) link target on cb_item booking pages 
+  * enforce the replacement of the original (google maps) link target on cb_item booking pages
   **/
   public static function replace_map_link_target() {
     global $post;
