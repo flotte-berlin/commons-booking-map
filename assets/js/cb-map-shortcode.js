@@ -78,6 +78,7 @@ function CB_Map() {
 
     var that = this;
     var data = {
+      'nonce': this.settings.nonce,
 			'action': 'cb_map_locations',
       'filters': filters,
       'cb_map_id': this.settings.cb_map_id

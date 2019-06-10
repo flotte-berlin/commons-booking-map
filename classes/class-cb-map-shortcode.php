@@ -78,6 +78,7 @@ class CB_Map_Shortcode {
   public static function get_settings($cb_map_id) {
     $settings = [
       'data_url' => get_site_url(null, '', null) . '/wp-admin/admin-ajax.php',
+      'nonce' => wp_create_nonce('cb_map_locations'),
       'marker_icon' => null,
       'filter_cb_item_categories' => [],
       'cb_map_id' => $cb_map_id,
@@ -184,8 +185,10 @@ class CB_Map_Shortcode {
         return wp_die();
       }
     }
-    //handle local map
+    //handle local/import map
     else if(isset($_POST['cb_map_id'])) {
+      check_ajax_referer( 'cb_map_locations', 'nonce' );
+
       $post = get_post((int) $_POST['cb_map_id']);
 
       if($post && $post->post_type == 'cb_map') {
