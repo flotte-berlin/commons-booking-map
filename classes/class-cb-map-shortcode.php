@@ -30,6 +30,10 @@ class CB_Map_Shortcode {
             wp_enqueue_style('cb_map_leaflet_markercluster_default_css', CB_MAP_ASSETS_URL . 'leaflet-markercluster/MarkerCluster.Default.css');
             wp_enqueue_script( 'cb_map_leaflet_markercluster_js', CB_MAP_ASSETS_URL . 'leaflet-markercluster/leaflet.markercluster.js' );
 
+            //leaflet messagebox plugin
+            wp_enqueue_style('cb_map_leaflet_messagebox_css', CB_MAP_ASSETS_URL . 'leaflet-messagebox/leaflet-messagebox.css');
+            wp_enqueue_script('cb_map_leaflet_messagebox_js', CB_MAP_ASSETS_URL . 'leaflet-messagebox/leaflet-messagebox.js');
+
             //leaflet spin & dependencies
             wp_enqueue_style( 'cb_map_spin_css', CB_MAP_ASSETS_URL . 'spin-js/spin.css' );
             wp_enqueue_script( 'cb_map_spin_js', CB_MAP_ASSETS_URL . 'spin-js/spin.min.js' );
@@ -147,7 +151,8 @@ class CB_Map_Shortcode {
       'OPENING_HOURS' => strlen($label_location_opening_hours) > 0 ? $label_location_opening_hours : cb_map\__('OPENING_HOURS', 'commons-booking-map', 'opening hours'),
       'CONTACT' => strlen($label_location_contact) > 0 ? $label_location_contact : cb_map\__('CONTACT', 'commons-booking-map', 'contact'),
       'FROM' => cb_map\__( 'FROM', 'commons-booking-map', 'from'),
-      'UNTIL' => cb_map\__( 'UNTIL', 'commons-booking-map', 'until')
+      'UNTIL' => cb_map\__( 'UNTIL', 'commons-booking-map', 'until'),
+      'NO_LOCATIONS_MESSAGE' => cb_map\__( 'NO_LOCATIONS_MESSAGE', 'commons-booking-map', 'Sorry, no locations found.'),
     ];
 
     return $translation;

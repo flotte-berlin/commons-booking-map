@@ -6,6 +6,7 @@ function CB_Map() {
   cb_map.translation = null;
   cb_map.map = null;
   cb_map.markers = null;
+  cb_map.messagebox = null;
 
   cb_map.init_filters = function($) {
     var that = this;
@@ -60,6 +61,9 @@ function CB_Map() {
   	// set up the map
   	var map = new L.Map('cb-map-' + this.settings.cb_map_id);
 
+    //create messagebox
+    this.messagebox = L.control.messagebox({ timeout: 5000 }).addTo(map);
+
   	// create the tile layer with correct attribution
   	var osm = new L.TileLayer(osm_url, map_options);
 
@@ -96,6 +100,10 @@ function CB_Map() {
       console.log('location data: ', location_data);
 
       that.render_locations(location_data, filters);
+
+      if(location_data.length == 0) {
+        that.messagebox.show(cb_map.translation['NO_LOCATIONS_MESSAGE']);
+      }
 
 		}).always(function() {
       that.map.spin(false);

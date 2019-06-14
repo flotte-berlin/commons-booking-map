@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: cb-admin-booking\n"
-"POT-Creation-Date: 2019-06-06 12:47+0200\n"
-"PO-Revision-Date: 2019-06-08 12:06+0200\n"
+"POT-Creation-Date: 2019-06-14 13:16+0200\n"
+"PO-Revision-Date: 2019-06-14 13:16+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -14,144 +14,148 @@ msgstr ""
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../classes/class-cb-location-map-admin.php:50
+#: ../classes/class-cb-location-map-admin.php:56
 msgid "MAP_POSITIONING"
 msgstr "Kartenpositionierung"
 
-#: ../classes/class-cb-location-map-admin.php:58
+#: ../classes/class-cb-location-map-admin.php:64
 msgid "LATITUDE"
 msgstr "Breitengrad"
 
-#: ../classes/class-cb-location-map-admin.php:64
+#: ../classes/class-cb-location-map-admin.php:70
 msgid "LONGITUDE"
 msgstr "Längengrad"
 
-#: ../classes/class-cb-location-map-admin.php:70
+#: ../classes/class-cb-location-map-admin.php:76
 msgid "POSITION"
 msgstr "Position"
 
-#: ../classes/class-cb-map-admin.php:354
-msgid "SELECT_IMAGE"
-msgstr "Bild auswählen"
-
-#: ../classes/class-cb-map-admin.php:355
-msgid "SAVE"
-msgstr "speichern"
-
-#: ../classes/class-cb-map-admin.php:356
-msgid "MARKER_IMAGE_MEASUREMENTS"
-msgstr "Bildmaße"
-
-#: ../classes/class-cb-map-settings.php:14
-msgid "SETTINGS_TITLE"
-msgstr "Commons Booking  Map - Einstellungen"
-
-#: ../classes/class-cb-map-settings.php:14
-msgid "SETTINGS_MENU"
-msgstr "Commons Booking Map"
-
-#: ../classes/class-cb-map-settings.php:86
-msgid "Settings"
-msgstr ""
-
-#: ../classes/class-cb-map-shortcode.php:57
-msgid "NO_VALID_MAP_TYPE"
-msgstr "kein gültiger Karten-Typ"
-
-#: ../classes/class-cb-map-shortcode.php:61
-msgid "NO_VALID_POST_STATUS"
-msgstr "Karte ist nicht veröffentlicht"
-
-#: ../classes/class-cb-map-shortcode.php:65
-#: ../classes/class-cb-map-shortcode.php:70
-msgid "NO_VALID_MAP_ID"
-msgstr "keine gültige Karten-ID"
-
-#: ../classes/class-cb-map-shortcode.php:147
-#: ../templates/admin-page-template.php:218
-msgid "OPENING_HOURS"
-msgstr "Öffnungszeiten"
-
-#: ../classes/class-cb-map-shortcode.php:148
-#: ../templates/admin-page-template.php:232
-msgid "CONTACT"
-msgstr "Kontakt"
-
-#: ../classes/class-cb-map-shortcode.php:149
-msgid "FROM"
-msgstr "ab"
-
-#: ../classes/class-cb-map-shortcode.php:150
-msgid "UNTIL"
-msgstr "bis"
-
-#: ../classes/class-cb-map.php:7
-msgid "POST_LABELS_NAME"
-msgstr "Commons Booking Karten"
-
-#: ../classes/class-cb-map.php:8
-msgid "POST_LABELS_SINGULAR_NAME"
-msgstr "Commons Booking Karte"
-
-#: ../classes/class-cb-map.php:9
-msgid "POST_LABELS_ADD_NEW"
-msgstr "CB-Karte erstellen"
-
-#: ../classes/class-cb-map.php:10
-msgid "POST_LABELS_ADD_NEW_ITEM"
-msgstr "Commons Booking - Karte erstellen"
-
-#: ../classes/class-cb-map.php:11
-msgid "POST_LABELS_EDIT_ITEM"
-msgstr "Commons Booking-Karte bearbeiten"
-
-#: ../classes/class-cb-map.php:12
-msgid "POST_LABELS_NEW_ITEM"
-msgstr "CB-Karte erstellen"
-
-#: ../classes/class-cb-map.php:13
-msgid "POST_LABELS_VIEW_ITEM"
-msgstr "CB-Karte anzeigen"
-
-#: ../classes/class-cb-map.php:15
-msgid "POST_LABELS_SEARCH_ITEMS"
-msgstr "CB-Karten suchen"
-
-#: ../classes/class-cb-map.php:16
-msgid "POST_LABELS_NOT_FOUND"
-msgstr "keine Commons Booking-Karte gefunden"
-
-#: ../classes/class-cb-map.php:17
-msgid "POST_LABELS_NOT_FOUND_IN_TRASH"
-msgstr "keine Commons Booking-Karte im Papierkorb"
-
-#: ../classes/class-cb-map.php:18
-msgid "POST_LABELS_PARENT_ITEM_COLON"
-msgstr "übergeordnete CB-Karte"
-
-#: ../classes/class-cb-map.php:47
-msgid "POST_TYPE_DESCRIPTION"
-msgstr "Karten, um Commons Booking-Standorte mit ihren Artikeln darzustellen."
-
-#: ../classes/class-cb-map.php:68
+#: ../classes/class-cb-map-admin.php:65
 msgid "CB_MAP_ADMIN_METABOX_TITLE"
 msgstr "Kartenkonfiguration"
 
-#: ../templates/admin-page-template.php:37
+#: ../classes/class-cb-map-admin.php:373
+msgid "SELECT_IMAGE"
+msgstr "Bild auswählen"
+
+#: ../classes/class-cb-map-admin.php:374
+msgid "SAVE"
+msgstr "speichern"
+
+#: ../classes/class-cb-map-admin.php:375
+msgid "MARKER_IMAGE_MEASUREMENTS"
+msgstr "Bildmaße"
+
+#: ../classes/class-cb-map-settings.php:17
+msgid "SETTINGS_TITLE"
+msgstr "Commons Booking  Map - Einstellungen"
+
+#: ../classes/class-cb-map-settings.php:17
+msgid "SETTINGS_MENU"
+msgstr "Commons Booking Map"
+
+#: ../classes/class-cb-map-settings.php:90
+msgid "Settings"
+msgstr ""
+
+#: ../classes/class-cb-map-shortcode.php:61
+msgid "NO_VALID_MAP_TYPE"
+msgstr "kein gültiger Karten-Typ"
+
+#: ../classes/class-cb-map-shortcode.php:65
+msgid "NO_VALID_POST_STATUS"
+msgstr "Karte ist nicht veröffentlicht"
+
+#: ../classes/class-cb-map-shortcode.php:69
+#: ../classes/class-cb-map-shortcode.php:74
+msgid "NO_VALID_MAP_ID"
+msgstr "keine gültige Karten-ID"
+
+#: ../classes/class-cb-map-shortcode.php:151
+#: ../templates/admin-page-template.php:184
+msgid "OPENING_HOURS"
+msgstr "Öffnungszeiten"
+
+#: ../classes/class-cb-map-shortcode.php:152
+#: ../templates/admin-page-template.php:198
+msgid "CONTACT"
+msgstr "Kontakt"
+
+#: ../classes/class-cb-map-shortcode.php:153
+msgid "FROM"
+msgstr "ab"
+
+#: ../classes/class-cb-map-shortcode.php:154
+msgid "UNTIL"
+msgstr "bis"
+
+#: ../classes/class-cb-map-shortcode.php:155
+msgid "NO_LOCATIONS_MESSAGE"
+msgstr "Leider wurden keine Standorte gefunden."
+
+#: ../classes/class-cb-map.php:10
+msgid "POST_LABELS_NAME"
+msgstr "Commons Booking Karten"
+
+#: ../classes/class-cb-map.php:11
+msgid "POST_LABELS_SINGULAR_NAME"
+msgstr "Commons Booking Karte"
+
+#: ../classes/class-cb-map.php:12
+msgid "POST_LABELS_ADD_NEW"
+msgstr "CB-Karte erstellen"
+
+#: ../classes/class-cb-map.php:13
+msgid "POST_LABELS_ADD_NEW_ITEM"
+msgstr "Commons Booking - Karte erstellen"
+
+#: ../classes/class-cb-map.php:14
+msgid "POST_LABELS_EDIT_ITEM"
+msgstr "Commons Booking-Karte bearbeiten"
+
+#: ../classes/class-cb-map.php:15
+msgid "POST_LABELS_NEW_ITEM"
+msgstr "CB-Karte erstellen"
+
+#: ../classes/class-cb-map.php:16
+msgid "POST_LABELS_VIEW_ITEM"
+msgstr "CB-Karte anzeigen"
+
+#: ../classes/class-cb-map.php:17
+msgid "POST_LABELS_SEARCH_ITEMS"
+msgstr "CB-Karten suchen"
+
+#: ../classes/class-cb-map.php:18
+msgid "POST_LABELS_NOT_FOUND"
+msgstr "keine Commons Booking-Karte gefunden"
+
+#: ../classes/class-cb-map.php:19
+msgid "POST_LABELS_NOT_FOUND_IN_TRASH"
+msgstr "keine Commons Booking-Karte im Papierkorb"
+
+#: ../classes/class-cb-map.php:20
+msgid "POST_LABELS_PARENT_ITEM_COLON"
+msgstr "übergeordnete CB-Karte"
+
+#: ../classes/class-cb-map.php:31
+msgid "POST_TYPE_DESCRIPTION"
+msgstr "Karten, um Commons Booking-Standorte mit ihren Artikeln darzustellen."
+
+#: ../templates/admin-page-template.php:3
 msgid "MAP_ADMIN_DESCRIPTION"
 msgstr ""
 "Die Einstellungen ermöglichen das Festlegen der Nutzungsart sowie die "
 "Anpassung der Karteninformationen und -darstellung."
 
-#: ../templates/admin-page-template.php:40
+#: ../templates/admin-page-template.php:6
 msgid "USAGE"
 msgstr "Nutzung"
 
-#: ../templates/admin-page-template.php:45
+#: ../templates/admin-page-template.php:11
 msgid "MAP_TYPE"
 msgstr "Kartentyp"
 
-#: ../templates/admin-page-template.php:46
+#: ../templates/admin-page-template.php:12
 msgid "MAP_TYPE_DESC"
 msgstr ""
 "der Kartentyp definiert die Nutzungsart - ob die Karte auf der eigenen "
@@ -160,243 +164,243 @@ msgstr ""
 "Installationen mit dem CB-Map Plugin (Import) darstellen oder Daten für "
 "andere Webseiten bereitstellen soll (Export)"
 
-#: ../templates/admin-page-template.php:51
+#: ../templates/admin-page-template.php:17
 msgid "MAP_TYPE_LOCAL"
 msgstr "lokal"
 
-#: ../templates/admin-page-template.php:52
+#: ../templates/admin-page-template.php:18
 msgid "MAP_TYPE_IMPORT"
 msgstr "Import"
 
-#: ../templates/admin-page-template.php:53
+#: ../templates/admin-page-template.php:19
 msgid "MAP_TYPE_EXPORT"
 msgstr "Export"
 
-#: ../templates/admin-page-template.php:62
+#: ../templates/admin-page-template.php:28
 msgid "DATA_EXPORT"
 msgstr "Daten-Export"
 
-#: ../templates/admin-page-template.php:67
+#: ../templates/admin-page-template.php:33
 msgid "EXPORT_CODE"
 msgstr "Export-Code"
 
-#: ../templates/admin-page-template.php:68
+#: ../templates/admin-page-template.php:34
 msgid "EXPORT_CODE_DESC"
 msgstr ""
 "generiere einen Export-Code, den du an jemanden weiterreichen kannst, der "
 "eine Webseite mit dem Commons Booking Map-Plugin betreibt, um die Daten zu "
 "importieren und deine Standorte mit Artikeln anzuzeigen"
 
-#: ../templates/admin-page-template.php:72
+#: ../templates/admin-page-template.php:38
 msgid "CREATE"
 msgstr "erstellen"
 
-#: ../templates/admin-page-template.php:77
+#: ../templates/admin-page-template.php:43
 msgid "EXPORT_BASE_URL"
 msgstr "URL"
 
-#: ../templates/admin-page-template.php:85
+#: ../templates/admin-page-template.php:51
 msgid "DATA_IMPORT"
 msgstr "Daten-Import"
 
-#: ../templates/admin-page-template.php:90
+#: ../templates/admin-page-template.php:56
 msgid "ADD_IMPORT_SOURCE"
 msgstr "Import-Quelle hinzufügen"
 
-#: ../templates/admin-page-template.php:91
+#: ../templates/admin-page-template.php:57
 msgid "ADD_IMPORT_SOURCE_DESC"
 msgstr ""
 "füge eine Import-Quelle (eine andere Webseite mit installiertem Commons "
 "Booking Map-Plugin und vorbereitetem Karten-Export) hinzu, indem du die URL "
 "und den dazugehörigen Code eingibst, die du vom Webseiten-Admin bekommen hast"
 
-#: ../templates/admin-page-template.php:94
+#: ../templates/admin-page-template.php:60
 msgid "ADD_IMPORT_SOURCE_BUTTON_TITLE"
 msgstr "Import-Quelle hinzufügen"
 
-#: ../templates/admin-page-template.php:99
+#: ../templates/admin-page-template.php:65
 msgid "IMPORT_SOURCES"
 msgstr "Import-Quellen"
 
-#: ../templates/admin-page-template.php:108
+#: ../templates/admin-page-template.php:74
 msgid "MAP_PRESENTATION"
 msgstr "Kartendarstellung"
 
-#: ../templates/admin-page-template.php:113
+#: ../templates/admin-page-template.php:79
 msgid "MAP_SHORTCODE"
 msgstr "Shortcode"
 
-#: ../templates/admin-page-template.php:114
+#: ../templates/admin-page-template.php:80
 msgid "MAP_SHORTCODE_DESC"
 msgstr ""
 "mit diesem Shortcode kann die Karte in Beiträge oder Seiten eingebunden "
 "werden"
 
-#: ../templates/admin-page-template.php:120
+#: ../templates/admin-page-template.php:86
 msgid "MAP_HEIGHT"
 msgstr "Höhe"
 
-#: ../templates/admin-page-template.php:121
+#: ../templates/admin-page-template.php:87
 msgid "MAP_HEIGHT_DESC"
 msgstr ""
 "die Höhe, mit der die Karte angezeigt wird - die Breite entspricht der des "
 "Elternelements"
 
-#: ../templates/admin-page-template.php:129
+#: ../templates/admin-page-template.php:95
 msgid "ZOOM"
 msgstr "Zoom"
 
-#: ../templates/admin-page-template.php:134
+#: ../templates/admin-page-template.php:100
 msgid "MIN_ZOOM_LEVEL"
 msgstr "min. Zoom-Level"
 
-#: ../templates/admin-page-template.php:135
+#: ../templates/admin-page-template.php:101
 msgid "MIN_ZOOM_LEVEL_DESC"
 msgstr "das minimale Zoom-Level, das von NuzerInnen gewählt werden kann"
 
-#: ../templates/admin-page-template.php:141
+#: ../templates/admin-page-template.php:107
 msgid "MAX_ZOOM_LEVEL"
 msgstr "max. Zoom-Level"
 
-#: ../templates/admin-page-template.php:142
+#: ../templates/admin-page-template.php:108
 msgid "MAX_ZOOM_LEVEL_DESC"
 msgstr "das maximale Zoom-Level, das von NuzerInnen gewählt werden kann"
 
-#: ../templates/admin-page-template.php:148
+#: ../templates/admin-page-template.php:114
 msgid "START_ZOOM_LEVEL"
 msgstr "initiales Zoom-Level"
 
-#: ../templates/admin-page-template.php:149
+#: ../templates/admin-page-template.php:115
 msgid "START_ZOOM_LEVEL_DESC"
 msgstr "dieses Zoom-Level wird gesetzt, wenn die Karte geladen wird"
 
-#: ../templates/admin-page-template.php:157
+#: ../templates/admin-page-template.php:123
 msgid "POSITIONING_START"
 msgstr "initiale Kartenpositionierung (Mittelpunkt)"
 
-#: ../templates/admin-page-template.php:162
+#: ../templates/admin-page-template.php:128
 msgid "LATITUDE_START"
 msgstr "Breitengrad"
 
-#: ../templates/admin-page-template.php:163
+#: ../templates/admin-page-template.php:129
 msgid "LATITUDE_START_DESC"
 msgstr ""
 "der geografische Breitengrad des Kartenmittelpunkts, wenn die Karte geladen "
 "wird"
 
-#: ../templates/admin-page-template.php:170
+#: ../templates/admin-page-template.php:136
 msgid "LONGITUDE_START"
 msgstr "Längengrad"
 
-#: ../templates/admin-page-template.php:171
+#: ../templates/admin-page-template.php:137
 msgid "LONGITUDE_START_DESC"
 msgstr ""
 "der geografische Längengrad des Kartenmittelpunkts, wenn die Karte geladen "
 "wird"
 
-#: ../templates/admin-page-template.php:179
+#: ../templates/admin-page-template.php:145
 msgid "ADAPTIVE_MAP_SECTION"
 msgstr "Adaptiver Kartenausschnitt"
 
-#: ../templates/admin-page-template.php:184
+#: ../templates/admin-page-template.php:150
 msgid "ADJUST_MAP_SECTION_TO_MARKERS_INITIALLY"
 msgstr "initiale Anpassung an Marker-Umgrenzung"
 
-#: ../templates/admin-page-template.php:185
+#: ../templates/admin-page-template.php:151
 msgid "ADJUST_MAP_SECTION_TO_MARKERS_INITIALLY_DESC"
 msgstr ""
 "automatische Anpassung des Kartenausschnitts an den von Markern abgedeckten "
 "Bereich, wenn die Karte geladen wird"
 
-#: ../templates/admin-page-template.php:193
+#: ../templates/admin-page-template.php:159
 msgid "ADJUST_MAP_SECTION_TO_MARKERS_FILTER"
 msgstr "Anpassung an Marker-Umgrenzung nach Filterung"
 
-#: ../templates/admin-page-template.php:194
+#: ../templates/admin-page-template.php:160
 msgid "ADJUST_MAP_SECTION_TO_MARKERS_FILTER_DESC"
 msgstr ""
 "automatische Anpassung des Kartenausschnitts an den von Markern abgedeckten "
 "Bereich, wenn diese von NutzerInnen gefiltert werden"
 
-#: ../templates/admin-page-template.php:204
+#: ../templates/admin-page-template.php:170
 msgid "POPUP"
 msgstr "Marker Popup"
 
-#: ../templates/admin-page-template.php:208
+#: ../templates/admin-page-template.php:174
 msgid "SHOW_LOCATION_OPENING_HOURS"
 msgstr "zeige Standort-Öffnungszeiten"
 
-#: ../templates/admin-page-template.php:209
+#: ../templates/admin-page-template.php:175
 msgid "SHOW_LOCATION_OPENING_HOURS_DESC"
 msgstr "aktivieren, um die Standort-Öffnungszeiten im Marker-Popup anzuzeigen"
 
-#: ../templates/admin-page-template.php:215
+#: ../templates/admin-page-template.php:181
 msgid "LABEL_LOCATION_OPENING_HOURS"
 msgstr "Beschriftung der Öffnungszeiten"
 
-#: ../templates/admin-page-template.php:216
+#: ../templates/admin-page-template.php:182
 msgid "LABEL_LOCATION_OPENING_HOURS_DESC"
 msgstr ""
 "ein alternatives Label für die Öffnungszeiten von Standorten im Marker-Popup"
 
-#: ../templates/admin-page-template.php:222
+#: ../templates/admin-page-template.php:188
 msgid "SHOW_LOCATION_CONTACT"
 msgstr "zeige Standort-Kontakt"
 
-#: ../templates/admin-page-template.php:223
+#: ../templates/admin-page-template.php:189
 msgid "SHOW_LOCATION_CONTACT_DESC"
 msgstr "aktivieren, um die Standort-Kontaktdaten im Marker-Popup anzuzeigen"
 
-#: ../templates/admin-page-template.php:229
+#: ../templates/admin-page-template.php:195
 msgid "LABEL_LOCATION_CONTACT"
 msgstr "Beschriftung der Kontaktdaten"
 
-#: ../templates/admin-page-template.php:230
+#: ../templates/admin-page-template.php:196
 msgid "LABEL_LOCATION_CONTACT_DESC"
 msgstr ""
 "ein alternatives Label für die Kontaktdaten von Standorten im Marker-Popup"
 
-#: ../templates/admin-page-template.php:238
+#: ../templates/admin-page-template.php:204
 msgid "CUSTOM_MARKER"
 msgstr "angepasster Marker"
 
-#: ../templates/admin-page-template.php:243
-#: ../templates/admin-page-template.php:305
+#: ../templates/admin-page-template.php:209
+#: ../templates/admin-page-template.php:271
 msgid "IMAGE_FILE"
 msgstr "Bilddatei"
 
-#: ../templates/admin-page-template.php:244
-#: ../templates/admin-page-template.php:306
+#: ../templates/admin-page-template.php:210
+#: ../templates/admin-page-template.php:272
 msgid "IMAGE_FILE_DESC"
 msgstr "der Standard Marker kann durch ein eigenes Bild ersetzt werden"
 
-#: ../templates/admin-page-template.php:247
-#: ../templates/admin-page-template.php:309
+#: ../templates/admin-page-template.php:213
+#: ../templates/admin-page-template.php:275
 msgid "SELECT"
 msgstr "auswählen"
 
-#: ../templates/admin-page-template.php:248
-#: ../templates/admin-page-template.php:310
+#: ../templates/admin-page-template.php:214
+#: ../templates/admin-page-template.php:276
 msgid "REMOVE"
 msgstr "entfernen"
 
-#: ../templates/admin-page-template.php:264
-#: ../templates/admin-page-template.php:326
+#: ../templates/admin-page-template.php:230
+#: ../templates/admin-page-template.php:292
 msgid "ICON_SIZE"
 msgstr "Icon Größe"
 
-#: ../templates/admin-page-template.php:265
-#: ../templates/admin-page-template.php:327
+#: ../templates/admin-page-template.php:231
+#: ../templates/admin-page-template.php:293
 msgid "ICON_SIZE_DESC"
 msgstr ""
 "die Größe des angepassten Marker-Bildes, mit der es auf der Karte angezeigt "
 "wird"
 
-#: ../templates/admin-page-template.php:275
+#: ../templates/admin-page-template.php:241
 msgid "ANCHOR_POINT"
 msgstr "Anker-Punkt"
 
-#: ../templates/admin-page-template.php:276
+#: ../templates/admin-page-template.php:242
 msgid "ANCHOR_POINT_DESC"
 msgstr ""
 "die Position des Ankerpunkts des Marker-Bildes von der linken oberen Ecke "
@@ -404,87 +408,87 @@ msgstr ""
 "Höhe der Icon-Größe - mit diesem Punkt wird der Marker auf den "
 "Geokoordinaten platziert"
 
-#: ../templates/admin-page-template.php:287
+#: ../templates/admin-page-template.php:253
 msgid "CLUSTER"
 msgstr "Cluster"
 
-#: ../templates/admin-page-template.php:291
+#: ../templates/admin-page-template.php:257
 msgid "MAX_CLUSTER_RADIUS"
 msgstr "max. Cluster-Radius"
 
-#: ../templates/admin-page-template.php:292
+#: ../templates/admin-page-template.php:258
 msgid "MAX_CLUSTER_RADIUS_DESC"
 msgstr ""
 "Radius innerhalb dessen mehrere Marker zu einem Cluster zusammengefasst "
 "werden - 0 für Deaktivierung"
 
-#: ../templates/admin-page-template.php:300
+#: ../templates/admin-page-template.php:266
 msgid "CUSTOM_CLUSTER_MARKER"
 msgstr "angepasster Cluster-Marker"
 
-#: ../templates/admin-page-template.php:339
+#: ../templates/admin-page-template.php:305
 msgid "FILTER_USERS"
 msgstr "Filter für NutzerInnen"
 
-#: ../templates/admin-page-template.php:343
+#: ../templates/admin-page-template.php:309
 msgid "AVAILABLE_CATEGORIES"
 msgstr "verfügbare Kategorien"
 
-#: ../templates/admin-page-template.php:344
+#: ../templates/admin-page-template.php:310
 msgid "AVAILABLE_CATEGORIES_DESC"
 msgstr ""
 "Kategorien, die NutzerInnen angezeigt werden , um Artikel zu filtern "
 "(erscheinen in der Reihenfolge der Label-Liste unten) - keine Auswahl für "
 "Deaktivierung von Filtern"
 
-#: ../templates/admin-page-template.php:357
+#: ../templates/admin-page-template.php:323
 msgid "CUSTOM_CATEGORY_FILTER_LABEL_MARKUP"
 msgstr "individuelles HTML für Filter-Label"
 
-#: ../templates/admin-page-template.php:362
+#: ../templates/admin-page-template.php:328
 msgid "FILTER_PRESETS"
 msgstr "Vorabfilter"
 
-#: ../templates/admin-page-template.php:366
+#: ../templates/admin-page-template.php:332
 msgid "PRESET_CATEGORIES"
 msgstr "gesetzte Kategorien"
 
-#: ../templates/admin-page-template.php:367
+#: ../templates/admin-page-template.php:333
 msgid "PRESET_CATEGORIES_DESC"
 msgstr ""
 "Auswahl der Kategorien, die genutzt werden, um Artikel vorzufiltern, die auf "
 "der Karte angezeigt werden - keine für alle Artikel"
 
-#: ../templates/admin-page-template.php:493
+#: ../templates/admin-page-template.php:452
 msgid "URL"
 msgstr "URL"
 
-#: ../templates/admin-page-template.php:494
+#: ../templates/admin-page-template.php:453
 msgid "CODE"
 msgstr "Code"
 
-#: ../templates/admin-page-template.php:508
+#: ../templates/admin-page-template.php:467
 msgid "REMOVE_IMPORT_SOURCE_BUTTON_TITLE"
 msgstr "Import-Quelle entfernen"
 
-#: ../templates/admin-page-template.php:516
+#: ../templates/admin-page-template.php:475
 msgid "TEST_IMPORT_SOURCE_BUTTON_TITLE"
 msgstr "Import-Quelle testen"
 
-#: ../templates/settings-page-template.php:15
+#: ../templates/settings-page-template.php:3
 msgid "SETTINGS_PAGE_HEADER"
 msgstr "Einstellungen für  Commons Booking Map"
 
-#: ../templates/settings-page-template.php:17
+#: ../templates/settings-page-template.php:5
 msgid "SETTINGS_DESCRIPTION"
 msgstr ""
 "allgemeine Einstellungen zum Verhalten des Commons Booking Map - Plugins"
 
-#: ../templates/settings-page-template.php:28
+#: ../templates/settings-page-template.php:16
 msgid "BOOKING_PAGE_LINK_REPLACEMENT"
 msgstr "Karten-Link auf Buchungsseite ersetzen"
 
-#: ../templates/settings-page-template.php:29
+#: ../templates/settings-page-template.php:17
 msgid "BOOKING_PAGE_LINK_REPLACEMENT_DESC"
 msgstr ""
 "mit der Aktivierung wird das Ziel des Links 'Auf der Karte zeigen' auf der "
