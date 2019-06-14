@@ -212,12 +212,12 @@ class CB_Map_Shortcode {
     if($post->post_status == 'publish') {
       //local - get the locations and apply provided filters
       if($map_type == 1) {
-        $available_filters = CB_Map_Admin::get_option($cb_map_id, 'cb_items_available_categories');
+        $available_filters = array_keys(CB_Map_Admin::get_option($cb_map_id, 'cb_items_available_categories'));
 
         if(isset($_POST['filters']) && is_array($_POST['filters'])) {
           foreach($_POST['filters'] as $filter) {
-            if(in_array($filter, $available_filters)) {
-              $apply_filters[] = $filter;
+            if(in_array((int) $filter, $available_filters)) {
+              $apply_filters[] = (int) $filter;
             }
           }
         }
@@ -245,7 +245,7 @@ class CB_Map_Shortcode {
 
       //export - get the locations that are supposed to be provided for external usage
       if($map_type == 3) {
-        $available_filters = CB_Map_Admin::get_option($cb_map_id, 'cb_items_available_categories');
+        $apply_filters = CB_Map_Admin::get_option($cb_map_id, 'cb_items_preset_categories');
         require_once( CB_MAP_PATH . 'classes/class-cb-map.php' );
         $locations = array_values(CB_Map::get_locations_by_timeframes($cb_map_id, $apply_filters));
         $locations = CB_Map::cleanup_location_data($locations, '<br>', $map_type);
