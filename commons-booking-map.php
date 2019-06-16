@@ -55,6 +55,7 @@ if(cb_map\is_plugin_active('commons-booking.php')) {
   register_deactivation_hook( __FILE__, 'CB_Map::deactivate');
 
   if($cb_map_settings->get_option('booking_page_link_replacement')) {
-    add_filter( 'wp_enqueue_scripts', 'CB_Map::replace_map_link_target');
+    //add_filter( 'wp_enqueue_scripts', 'CB_Map::replace_map_link_target');
+    add_action( 'wp_enqueue_scripts', 'CB_Map::replace_map_link_target', 11 );
   }
 }

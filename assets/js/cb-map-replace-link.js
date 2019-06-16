@@ -25,9 +25,5 @@ jQuery(document).ready(function ($) {
         $map_button.attr('href', href);
       }
     }
-  }
-);
-
-
-
+  });
 });
