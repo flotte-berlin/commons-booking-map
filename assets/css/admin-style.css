@@ -39,3 +39,7 @@ table.text-left {
 .display-none {
   display: none;
 }
+
+.filter-label-name {
+  text-indent: 1em;
+}

@@ -127,11 +127,21 @@ class CB_Map_Shortcode {
       //categories are only meant to be shown on local maps
       else if($key == 'cb_items_available_categories' && $options['map_type'] == 1) {
         $settings['filter_cb_item_categories'] = [];
-        foreach ($options['cb_items_available_categories'] as $cat_id => $markup) {
-          $settings['filter_cb_item_categories'][] = [
-            'cat_id' => $cat_id,
-            'markup' => $markup
-          ];
+        $current_group_id = null;
+        foreach ($options['cb_items_available_categories'] as $key => $content) {
+          if(substr($key, 0, 1) == 'g') {
+            $current_group_id = $key;
+            $settings['filter_cb_item_categories'][$key] = [
+              'name' => $content,
+              'elements' => []
+            ];
+          }
+          else {
+            $settings['filter_cb_item_categories'][$current_group_id]['elements'][] = [
+              'cat_id' => $key,
+              'markup' => $content
+            ];
+          }
         }
       }
 
@@ -212,23 +222,24 @@ class CB_Map_Shortcode {
       return wp_die();
     }
 
-    $apply_filters = CB_Map_Admin::get_option($cb_map_id, 'cb_items_preset_categories');
+    $preset_categories = CB_Map_Admin::get_option($cb_map_id, 'cb_items_preset_categories');
 
     if($post->post_status == 'publish') {
       //local - get the locations and apply provided filters
       if($map_type == 1) {
-        $available_filters = array_keys(CB_Map_Admin::get_option($cb_map_id, 'cb_items_available_categories'));
+        $available_user_categories = array_keys(CB_Map_Admin::get_option($cb_map_id, 'cb_items_available_categories'));
+        $user_categories = [];
 
         if(isset($_POST['filters']) && is_array($_POST['filters'])) {
           foreach($_POST['filters'] as $filter) {
-            if(in_array((int) $filter, $available_filters)) {
-              $apply_filters[] = (int) $filter;
+            if(in_array((int) $filter, $available_user_categories)) {
+              $user_categories[] = (int) $filter;
             }
           }
         }
 
         require_once( CB_MAP_PATH . 'classes/class-cb-map.php' );
-        $locations = array_values(CB_Map::get_locations_by_timeframes($cb_map_id, $apply_filters));
+        $locations = array_values(CB_Map::get_locations_by_timeframes($cb_map_id, $preset_categories, $user_categories));
         $locations = CB_Map::cleanup_location_data($locations, '<br>', $map_type);
       }
 
@@ -250,9 +261,9 @@ class CB_Map_Shortcode {
 
       //export - get the locations that are supposed to be provided for external usage
       if($map_type == 3) {
-        $apply_filters = CB_Map_Admin::get_option($cb_map_id, 'cb_items_preset_categories');
+        $preset_categories = CB_Map_Admin::get_option($cb_map_id, 'cb_items_preset_categories');
         require_once( CB_MAP_PATH . 'classes/class-cb-map.php' );
-        $locations = array_values(CB_Map::get_locations_by_timeframes($cb_map_id, $apply_filters));
+        $locations = array_values(CB_Map::get_locations_by_timeframes($cb_map_id, $preset_categories));
         $locations = CB_Map::cleanup_location_data($locations, '<br>', $map_type);
       }
 

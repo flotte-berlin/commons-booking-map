@@ -308,11 +308,21 @@ class CB_Map_Admin {
       $valid_term_ids[] = $category_term->term_id;
     }
 
-    //cb_items_available_categories
     if(isset($input['cb_items_available_categories'])) {
-      foreach ($input['cb_items_available_categories'] as $cb_items_category_id => $markup) {
-        if(in_array((int) $cb_items_category_id, $valid_term_ids)) {
-          $validated_input['cb_items_available_categories'][$cb_items_category_id] = self::strip_script_tags($markup);
+      //first element has to be a filter group and has to contain at least one category
+      $array_keys = array_keys($input['cb_items_available_categories']);
+      if(count($input['cb_items_available_categories']) > 1 && substr($array_keys[0], 0, 1) == 'g' && substr($array_keys[1], 0, 1) != 'g') {
+        foreach ($input['cb_items_available_categories'] as $key => $value) {
+          //filter group
+          if(substr($key, 0, 1) == 'g') {
+            $validated_input['cb_items_available_categories'][$key] = sanitize_text_field($value);
+          }
+          //custom markup for category
+          else {
+            if(in_array((int) $key, $valid_term_ids)) {
+              $validated_input['cb_items_available_categories'][$key] = self::strip_script_tags($value);
+            }
+          }
         }
       }
     }
@@ -389,10 +399,10 @@ class CB_Map_Admin {
     //rearrange to nummeric array, because object property order isn't stable in js
     $cb_items_available_categories = CB_Map_Admin::get_option($cb_map_id, 'cb_items_available_categories');
     $available_categories = [];
-    foreach ($cb_items_available_categories as $cat_id => $markup) {
+    foreach ($cb_items_available_categories as $id => $content) {
       $available_categories[] = [
-        'cat_id' => $cat_id,
-        'markup' => $markup
+        'id' => (string) $id,
+        'content' => $content
       ];
     }
 

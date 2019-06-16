@@ -320,7 +320,12 @@
       </table>
 
       <table class="text-left" id="available-categories-custom-markup-wrapper">
-        <tr><th col-span="2"><?= cb_map\__('CUSTOM_CATEGORY_FILTER_LABEL_MARKUP', 'commons-booking-map', 'custom markup for filters')?></th><tr>
+        <tr>
+          <th><?= cb_map\__('CUSTOM_CATEGORY_FILTER_LABEL_MARKUP', 'commons-booking-map', 'grouping of and custom markup for filters')?></th>
+          <td>
+            <button id="add-filter-group-button" class="button" title="<?= cb_map\__('ADD_FILTER_GROUP_BUTTON_TITLE', 'commons-booking-map', 'add filter group') ?>"><span class="dashicons dashicons-plus"></span></button>
+          </td>
+        </tr>
       </table>
     </div>
 
@@ -380,7 +385,7 @@ jQuery(document).ready(function($) {
   show_option_groups($('#map_type').val());
 
   //----------------------------------------------------------------------------
-  // users filters custom markup
+  // grouping & custom markup of user filters
 
   $('.cb_items_available_category_choice').change(function() {
     var $this = $(this);
@@ -399,22 +404,58 @@ jQuery(document).ready(function($) {
 
   });
 
+  function add_filter_group(group_id, group_name) {
+    var $accm_table = $('#available-categories-custom-markup-wrapper');
+    group_id = group_id ? group_id : 'g' + new Date().getTime() + '-' + Math.floor(Math.random() * 1000000);
+    group_name = group_name ? group_name : '';
+    var $row = $('<tr><th><?= cb_map\__( 'FILTER_GROUP', 'commons-booking-map', 'filter group') ?>:</th><td><input style="width: 250px;" type="text" placeholder="<?= cb_map\__( 'FILTER_GROUP_PLACEHOLDER', 'commons-booking-map', 'group name') ?>" name="cb_map_options[cb_items_available_categories][' + group_id + ']" value="' + group_name + '"></td></tr>');
+    $accm_table.append($row);
+    if(!$row.is(':nth-child(2)')) {
+      var $group_remove_button = $('<button style="margin-left: 10px;" class="button" title="<?= cb_map\__('REMOVE_FILTER_GROUP_BUTTON_TITLE', 'commons-booking-map', 'remove filter group') ?>"><span class="dashicons dashicons-trash"></span></button>');
+
+      $($group_remove_button).click(function(event) {
+        event.preventDefault();
+
+        $(this).parent('tr').remove();
+      });
+
+      $row.append($group_remove_button);
+    }
+  }
+
   function add_custom_markup_option(cat_id, label_text, markup) {
     var $accm_table = $('#available-categories-custom-markup-wrapper');
-    var $row = $('<tr id="available_category_cutom_markup_' + cat_id + '"><th>' + label_text + ':</th><td><textarea name="cb_map_options[cb_items_available_categories][' + cat_id + ']">' + markup + '</textarea></td></tr>');
+    var $row = $('<tr id="available_category_cutom_markup_' + cat_id + '"><th class="filter-label-name">' + label_text + ':</th><td><textarea style="width: 250px;" name="cb_map_options[cb_items_available_categories][' + cat_id + ']">' + markup + '</textarea></td></tr>');
     $accm_table.append($row);
   }
 
   function add_custom_markup_options() {
     var custom_markup_options_data = <?= json_encode( $available_categories ); ?>;
-    $.each(custom_markup_options_data, function(index, category) {
-      var $cat_choice = $(".cb_items_available_category_choice[value='" + category.cat_id + "']");
-      var markup = custom_markup_options_data[category.cat_id] || $cat_choice.parent().text().trim();
-      add_custom_markup_option(category.cat_id, $cat_choice.parent().text(), category.markup);
-    });
+
+    if(custom_markup_options_data.length > 0) {
+      $.each(custom_markup_options_data, function(index, item) {
+        if(item.id.substring(0, 1) == 'g') {
+          add_filter_group(item.id, item.content);
+        }
+        else {
+          var $cat_choice = $(".cb_items_available_category_choice[value='" + item.id + "']");
+          var markup = custom_markup_options_data[item.id] || $cat_choice.parent().text().trim();
+          add_custom_markup_option(item.id, $cat_choice.parent().text(), item.content);
+        }
+      });
+    }
+    else {
+      add_filter_group();
+    }
+
   }
 
   add_custom_markup_options();
+
+  $('#add-filter-group-button').click(function(event) {
+    event.preventDefault();
+    add_filter_group();
+  });
 
   //----------------------------------------------------------------------------
   // data export

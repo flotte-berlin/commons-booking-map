@@ -162,40 +162,102 @@ class CB_Map {
     return $locations;
   }
 
+  public static function is_valid_item($item_terms, $category_groups) {
+    $valid_groups_count = 0;
+
+    foreach ($category_groups as $group) {
+      foreach ($item_terms as $term) {
+        if(in_array($term->term_id, $group)) {
+          $valid_groups_count++;
+          break;
+        }
+      }
+    }
+
+    return $valid_groups_count == count($category_groups);
+  }
+
+  public static function get_cb_items_category_groups($preset_categories) {
+    $groups = [];
+    $category_terms = get_terms([
+      'taxonomy' => 'cb_items_category',
+      'hide_empty' => false
+    ]);
+
+    foreach ($category_terms as $term) {
+      if(in_array($term->term_id, $preset_categories)) {
+        if(!isset($groups[$term->parent])) {
+          $groups[$term->parent] = [];
+        }
+        $groups[$term->parent][] = $term->term_id;
+
+      }
+    }
+    return $groups;
+  }
+
+  public static function get_user_category_groups($cb_map_id, $user_categories) {
+    $groups = [];
+    $current_group_id = null;
+    $available_categories = CB_Map_Admin::get_option($cb_map_id, 'cb_items_available_categories');
+
+    //create array for each group
+    foreach ($available_categories as $key => $content) {
+      if(substr($key, 0, 1) == 'g') {
+        $current_group_id = $key;
+      }
+      else {
+        $groups[$current_group_id][] = $key;
+      }
+    }
+
+    //filter out categories from groups that doesn't appear in $user_categories
+    $filtered_groups = [];
+    foreach ($groups as $group) {
+      $filtered_group = [];
+
+      foreach ($group as $category) {
+
+        if(in_array($category, $user_categories)) {
+          $filtered_group[] = $category;
+        }
+      }
+
+      if(count($filtered_group) > 0) {
+        $filtered_groups[] = $filtered_group;
+      }
+    }
+
+    return $filtered_groups;
+  }
+
   /**
   * get all the locations of the map with provided id that belong to timeframes and filter by given categories
   **/
-  public static function get_locations_by_timeframes($cb_map_id, $filter_categories = []) {
-    //var_dump($filter_categories);
+  public static function get_locations_by_timeframes($cb_map_id, $preset_categories = [], $user_categories = []) {
+    //var_dump($preset_categories);
 
     $result = [];
     $timeframes = self::get_timeframes();
     $locations = self::get_locations($cb_map_id);
 
+    //$category_tree = self::get_structured_cb_items_category_tree();
+    $preset_category_groups = self::get_cb_items_category_groups($preset_categories);
+
+    $user_category_groups = self::get_user_category_groups($cb_map_id, $user_categories);
+
     foreach ($timeframes as $timeframe) {
       $location_id = $timeframe['location_id'];
       $item = $timeframe['item'];
+      $is_valid_item = true;
+      $item_terms = wp_get_post_terms( $item['id'], 'cb_items_category');
 
-      //check if item categories (terms) match the filters
-      if(count($filter_categories) > 0) {
-        $is_valid_item = false;
-        $terms = wp_get_post_terms( $item['id'], 'cb_items_category');
-
-        //var_dump($terms);
-        $matched_terms = 0;
-        foreach ($terms as $term) {
-          if(in_array($term->term_id, $filter_categories)) {
-            $matched_terms++;
-          }
-        }
-
-        if($matched_terms == count($filter_categories)) {
-          $is_valid_item = true;
-        }
-
+      if(count($preset_category_groups) > 0) {
+        $is_valid_item = self::is_valid_item($item_terms, $preset_category_groups);
       }
-      else {
-        $is_valid_item = true;
+
+      if($is_valid_item && count($user_category_groups) > 0) {
+        $is_valid_item = self::is_valid_item($item_terms, $user_category_groups);
       }
 
       if($is_valid_item) {

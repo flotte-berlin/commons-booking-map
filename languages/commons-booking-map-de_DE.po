@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: cb-admin-booking\n"
-"POT-Creation-Date: 2019-06-14 13:16+0200\n"
-"PO-Revision-Date: 2019-06-14 13:16+0200\n"
+"POT-Creation-Date: 2019-06-16 10:32+0200\n"
+"PO-Revision-Date: 2019-06-16 10:33+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -34,15 +34,15 @@ msgstr "Position"
 msgid "CB_MAP_ADMIN_METABOX_TITLE"
 msgstr "Kartenkonfiguration"
 
-#: ../classes/class-cb-map-admin.php:373
+#: ../classes/class-cb-map-admin.php:383
 msgid "SELECT_IMAGE"
 msgstr "Bild auswählen"
 
-#: ../classes/class-cb-map-admin.php:374
+#: ../classes/class-cb-map-admin.php:384
 msgid "SAVE"
 msgstr "speichern"
 
-#: ../classes/class-cb-map-admin.php:375
+#: ../classes/class-cb-map-admin.php:385
 msgid "MARKER_IMAGE_MEASUREMENTS"
 msgstr "Bildmaße"
 
@@ -71,25 +71,25 @@ msgstr "Karte ist nicht veröffentlicht"
 msgid "NO_VALID_MAP_ID"
 msgstr "keine gültige Karten-ID"
 
-#: ../classes/class-cb-map-shortcode.php:151
+#: ../classes/class-cb-map-shortcode.php:161
 #: ../templates/admin-page-template.php:184
 msgid "OPENING_HOURS"
 msgstr "Öffnungszeiten"
 
-#: ../classes/class-cb-map-shortcode.php:152
+#: ../classes/class-cb-map-shortcode.php:162
 #: ../templates/admin-page-template.php:198
 msgid "CONTACT"
 msgstr "Kontakt"
 
-#: ../classes/class-cb-map-shortcode.php:153
+#: ../classes/class-cb-map-shortcode.php:163
 msgid "FROM"
 msgstr "ab"
 
-#: ../classes/class-cb-map-shortcode.php:154
+#: ../classes/class-cb-map-shortcode.php:164
 msgid "UNTIL"
 msgstr "bis"
 
-#: ../classes/class-cb-map-shortcode.php:155
+#: ../classes/class-cb-map-shortcode.php:165
 msgid "NO_LOCATIONS_MESSAGE"
 msgstr "Leider wurden keine Standorte gefunden."
 
@@ -438,40 +438,57 @@ msgstr "verfügbare Kategorien"
 msgid "AVAILABLE_CATEGORIES_DESC"
 msgstr ""
 "Kategorien, die NutzerInnen angezeigt werden , um Artikel zu filtern "
-"(erscheinen in der Reihenfolge der Label-Liste unten) - keine Auswahl für "
-"Deaktivierung von Filtern"
+"(erscheinen in der Gruppierung und Reihenfolge der Label-Liste unten) - "
+"keine Auswahl für Deaktivierung von Filtern"
 
-#: ../templates/admin-page-template.php:323
+#: ../templates/admin-page-template.php:324
 msgid "CUSTOM_CATEGORY_FILTER_LABEL_MARKUP"
-msgstr "individuelles HTML für Filter-Label"
+msgstr "Gruppierung der Filter-Label und individuelles HTML"
 
-#: ../templates/admin-page-template.php:328
+#: ../templates/admin-page-template.php:326
+msgid "ADD_FILTER_GROUP_BUTTON_TITLE"
+msgstr "Filter-Gruppe hinzufügen"
+
+#: ../templates/admin-page-template.php:333
 msgid "FILTER_PRESETS"
 msgstr "Vorabfilter"
 
-#: ../templates/admin-page-template.php:332
+#: ../templates/admin-page-template.php:337
 msgid "PRESET_CATEGORIES"
 msgstr "gesetzte Kategorien"
 
-#: ../templates/admin-page-template.php:333
+#: ../templates/admin-page-template.php:338
 msgid "PRESET_CATEGORIES_DESC"
 msgstr ""
 "Auswahl der Kategorien, die genutzt werden, um Artikel vorzufiltern, die auf "
-"der Karte angezeigt werden - keine für alle Artikel"
+"der Karte angezeigt werden (Kategorien auf einer Ebene sind ODER-verknüpft, "
+"d.h. nur eine muss erfüllt sein) - keine Auswahl zeigt alle Artikel an"
 
-#: ../templates/admin-page-template.php:452
+#: ../templates/admin-page-template.php:411
+msgid "FILTER_GROUP"
+msgstr "Filter-Gruppe"
+
+#: ../templates/admin-page-template.php:411
+msgid "FILTER_GROUP_PLACEHOLDER"
+msgstr "Gruppenname"
+
+#: ../templates/admin-page-template.php:414
+msgid "REMOVE_FILTER_GROUP_BUTTON_TITLE"
+msgstr "Filter-Gruppe entfernen"
+
+#: ../templates/admin-page-template.php:493
 msgid "URL"
 msgstr "URL"
 
-#: ../templates/admin-page-template.php:453
+#: ../templates/admin-page-template.php:494
 msgid "CODE"
 msgstr "Code"
 
-#: ../templates/admin-page-template.php:467
+#: ../templates/admin-page-template.php:508
 msgid "REMOVE_IMPORT_SOURCE_BUTTON_TITLE"
 msgstr "Import-Quelle entfernen"
 
-#: ../templates/admin-page-template.php:475
+#: ../templates/admin-page-template.php:516
 msgid "TEST_IMPORT_SOURCE_BUTTON_TITLE"
 msgstr "Import-Quelle testen"
 
@@ -493,6 +510,9 @@ msgid "BOOKING_PAGE_LINK_REPLACEMENT_DESC"
 msgstr ""
 "mit der Aktivierung wird das Ziel des Links 'Auf der Karte zeigen' auf der "
 "Buchungsseite durch openstreetmap ersetzt"
+
+#~ msgid "ADD_FILTER_GROUP"
+#~ msgstr "Filter-Gruppe hinzufügen"
 
 #~ msgid "FILTER_CONFIGURATION"
 #~ msgstr "Filter-Einstellungen"

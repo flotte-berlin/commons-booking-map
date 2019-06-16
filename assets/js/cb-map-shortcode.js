@@ -12,16 +12,25 @@ function CB_Map() {
     var that = this;
 
     if(Object.keys(this.settings.filter_cb_item_categories).length > 0) {
-      var $filter_container = $('<div class="cb-map-filters" style="width:100%; height: 50px;"></div>');
+      var $filter_container = $('<div  style="margin-top: 5px;" class="cb-map-filters"></div>');
 
       var $form = $('<form></form');
       var $filter_options = $('<div class="cb-filter-options"></div>');
-      $.each(this.settings.filter_cb_item_categories, function(index, category) {
-        $input = $('<input type="checkbox" name="cb_item_categories[]" value="' + category.cat_id + '">')
-        $label = $('<label style="margin-right: 20px;"></label>');
-        $label.html(category.markup);
-        $filter_options.append($input);
-        $filter_options.append($label);
+      $.each(this.settings.filter_cb_item_categories, function(index, group) {
+        var $fieldset = $('<fieldset style="display: inline-block; margin-right: 10px; border-radius: 5px; padding: 5px;"></fieldset>');
+        if(group.name.length > 0) {
+          $fieldset.append('<legend style="padding: 0.2em 0.5em;">' + group.name + '</legend>');
+        }
+
+        $.each(group.elements, function(index, category) {
+          var $input = $('<input style="margin-left: 10px;" type="checkbox" name="cb_item_categories[]" value="' + category.cat_id + '">')
+          var $label = $('<label style="margin-right: 10px;"></label>');
+          $label.html(category.markup);
+          $fieldset.append($input);
+          $fieldset.append($label);
+        });
+
+        $filter_options.append($fieldset);
       });
 
       $form.append($filter_options);
@@ -73,11 +82,11 @@ function CB_Map() {
     this.map = map;
 
     //get location data
-    this.get_location_data();
+    this.get_location_data(null, true);
 
   },
 
-  cb_map.get_location_data = function(filters) {
+  cb_map.get_location_data = function(filters, init) {
     filters = filters || [];
 
     var that = this;
@@ -99,7 +108,7 @@ function CB_Map() {
       var location_data = JSON.parse(response);
       console.log('location data: ', location_data);
 
-      that.render_locations(location_data, filters);
+      that.render_locations(location_data, filters, init);
 
       if(location_data.length == 0) {
         that.messagebox.show(cb_map.translation['NO_LOCATIONS_MESSAGE']);
@@ -111,7 +120,7 @@ function CB_Map() {
 
   },
 
-  cb_map.render_locations = function(data, filters) {
+  cb_map.render_locations = function(data, filters, init) {
     var that = this;
 
     var markers;
@@ -241,7 +250,7 @@ function CB_Map() {
     that.markers = markers;
 
     //adjust map section to marker bounds based on settings
-    if((filters.length > 0 && this.settings.marker_map_bounds_filter) || (filters.length == 0 && this.settings.marker_map_bounds_initial)) {
+    if((!init && this.settings.marker_map_bounds_filter) || (init && this.settings.marker_map_bounds_initial)) {
       if(Object.keys(data).length > 0) {
         that.map.fitBounds(markers.getBounds());
       }
