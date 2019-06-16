@@ -96,7 +96,7 @@ class CB_Map_Settings {
   * render the settings page
   **/
   public function render_settings_page() {
-    wp_enqueue_style('cb_map_admin_css', CB_MAP_ASSETS_URL . 'css/admin-style.css');
+    wp_enqueue_style('cb_map_admin_css', CB_MAP_ASSETS_URL . 'css/cb-map-admin.css');
 
     include_once( CB_MAP_PATH . 'templates/settings-page-template.php');
   }

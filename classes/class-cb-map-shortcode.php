@@ -39,7 +39,8 @@ class CB_Map_Shortcode {
             wp_enqueue_script( 'cb_map_spin_js', CB_MAP_ASSETS_URL . 'spin-js/spin.min.js' );
             wp_enqueue_script( 'cb_map_leaflet_spin_js', CB_MAP_ASSETS_URL . 'leaflet-spin/leaflet.spin.min.js' );
 
-            //cb map shortcode js
+            //cb map shortcode
+            wp_enqueue_style('cb_map_shortcode_css', CB_MAP_ASSETS_URL . 'css/cb-map-shortcode.css');
             wp_register_script( 'cb_map_shortcode_js', CB_MAP_ASSETS_URL . 'js/cb-map-shortcode.js');
 
             wp_add_inline_script( 'cb_map_shortcode_js',
@@ -163,6 +164,7 @@ class CB_Map_Shortcode {
       'FROM' => cb_map\__( 'FROM', 'commons-booking-map', 'from'),
       'UNTIL' => cb_map\__( 'UNTIL', 'commons-booking-map', 'until'),
       'NO_LOCATIONS_MESSAGE' => cb_map\__( 'NO_LOCATIONS_MESSAGE', 'commons-booking-map', 'Sorry, no locations found.'),
+      'FILTER' => cb_map\__( 'FILTER', 'commons-booking-map', 'filter')
     ];
 
     return $translation;

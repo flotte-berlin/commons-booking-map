@@ -418,7 +418,7 @@ class CB_Map_Admin {
 
     $data_export_base_url = get_site_url(null, '', null) . '/wp-admin/admin-ajax.php';
 
-    wp_enqueue_style('cb_map_admin_css', CB_MAP_ASSETS_URL . 'css/admin-style.css');
+    wp_enqueue_style('cb_map_admin_css', CB_MAP_ASSETS_URL . 'css/cb-map-admin.css');
 
     include_once( CB_MAP_PATH . 'templates/admin-page-template.php');
 

@@ -12,19 +12,19 @@ function CB_Map() {
     var that = this;
 
     if(Object.keys(this.settings.filter_cb_item_categories).length > 0) {
-      var $filter_container = $('<div  style="margin-top: 5px;" class="cb-map-filters"></div>');
+      var $filter_container = $('<div class="cb-map-filters"></div>');
 
       var $form = $('<form></form');
       var $filter_options = $('<div class="cb-filter-options"></div>');
       $.each(this.settings.filter_cb_item_categories, function(index, group) {
-        var $fieldset = $('<fieldset style="display: inline-block; margin-right: 10px; border-radius: 5px; padding: 5px;"></fieldset>');
+        var $fieldset = $('<fieldset></fieldset>');
         if(group.name.length > 0) {
-          $fieldset.append('<legend style="padding: 0.2em 0.5em;">' + group.name + '</legend>');
+          $fieldset.append('<legend>' + group.name + '</legend>');
         }
 
         $.each(group.elements, function(index, category) {
-          var $input = $('<input style="margin-left: 10px;" type="checkbox" name="cb_item_categories[]" value="' + category.cat_id + '">')
-          var $label = $('<label style="margin-right: 10px;"></label>');
+          var $input = $('<input type="checkbox" name="cb_item_categories[]" value="' + category.cat_id + '">')
+          var $label = $('<label></label>');
           $label.html(category.markup);
           $fieldset.append($input);
           $fieldset.append($label);
@@ -35,7 +35,7 @@ function CB_Map() {
 
       $form.append($filter_options);
 
-      var $button = $('<button>filter</button>');
+      var $button = $('<button>' + cb_map.translation['FILTER'] + '</button>');
 
       $button.click(function(event) {
         event.preventDefault();
@@ -143,7 +143,7 @@ function CB_Map() {
         			c += 'large';
         		}
 
-        		return new L.DivIcon({ html: '<div style="width: 100%; height: 100%; font-weight: bold; line-height: ' + that.settings.marker_cluster_icon.size.height + 'px; background-size: cover; background-image: url(' + that.settings.marker_cluster_icon.url + ')"><span>' + child_count + '</span></div>', className: 'marker-cluster', iconSize: new L.Point(that.settings.marker_cluster_icon.size.width, that.settings.marker_cluster_icon.size.height) });
+        		return new L.DivIcon({ html: '<div class="cb-map-marker-cluster-icon" style="line-height: ' + that.settings.marker_cluster_icon.size.height + 'px; background-image: url(' + that.settings.marker_cluster_icon.url + ')"><span>' + child_count + '</span></div>', className: 'marker-cluster', iconSize: new L.Point(that.settings.marker_cluster_icon.size.width, that.settings.marker_cluster_icon.size.height) });
         }
       }
 
@@ -175,11 +175,11 @@ function CB_Map() {
 
         var item_thumb_image = item.thumbnail ? '<img src="' + item.thumbnail + '">' : '';
 
-        popup_items += '<div style="margin-top: 10px;">'
-          + '<div style="display: inline-block; width: 25%; margin-right: 5%;">'
+        popup_items += '<div class="cb-map-popup-item">'
+          + '<div class="cb-map-popup-item-thumbnail">'
           + item_thumb_image
           + '</div>'
-          + '<div style="display: inline-block; width: 70%;"><b><a href="' + item.link + '">' + item.name + '</a></b>';
+          + '<div class="cb-map-popup-item-link"><b><a href="' + item.link + '">' + item.name + '</a></b>';
 
         if(item.timeframe_hints && item.timeframe_hints.length > 0) {
           popup_items += ' (';
@@ -216,17 +216,17 @@ function CB_Map() {
       var marker = L.marker([location.lat, location.lon], marker_options);
 
       var popup_content = '<div class="cb-map-location-info-name">';
-      popup_content += '<b style="line-height: 25px;">' + location.location_name + '</b>';
-      popup_content += '<span id="location-zoom-in-' + that.settings.cb_map_id + '-' + index + '" style="cursor: pointer; padding-left: 5px; padding-top: 2.5px;" class="dashicons dashicons-search"></span>';
+      popup_content += '<b>' + location.location_name + '</b>';
+      popup_content += '<span id="location-zoom-in-' + that.settings.cb_map_id + '-' + index + '" class="dashicons dashicons-search"></span>';
       popup_content += '</div>';
       popup_content += '<div  class="cb-map-location-info-address">' + location.address.street + ', ' + location.address.zip + ' ' + location.address.city + '</div>';
 
       if(that.settings.show_location_opening_hours && location.opening_hours) {
-        popup_content += '<div class="cb-map-location-info-opening-hours" style="margin-top: 10px;"><b><i>' + cb_map.translation['OPENING_HOURS'] + ':</i></b><br>' + location.opening_hours + '</div>'
+        popup_content += '<div class="cb-map-location-info-opening-hours"><b><i>' + cb_map.translation['OPENING_HOURS'] + ':</i></b><br>' + location.opening_hours + '</div>'
       }
 
       if(that.settings.show_location_contact && location.contact) {
-        popup_content += '<div class="cb-map-location-info-contact" style="margin-top: 10px;"><b><i>' + cb_map.translation['CONTACT'] + ':</i></b><br>' + location.contact + '</div>'
+        popup_content += '<div class="cb-map-location-info-contact"><b><i>' + cb_map.translation['CONTACT'] + ':</i></b><br>' + location.contact + '</div>'
       }
 
       popup_content += popup_items;
