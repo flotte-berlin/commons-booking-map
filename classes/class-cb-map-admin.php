@@ -9,6 +9,7 @@ class CB_Map_Admin {
     'map_type',
     'export_code',
     'import_sources',
+    'base_map', 'show_scale',
     'map_height', 'zoom_min', 'zoom_max', 'zoom_start', 'lat_start', 'lon_start',
     'marker_map_bounds_initial', 'marker_map_bounds_filter',
     'max_cluster_radius',
@@ -33,6 +34,8 @@ class CB_Map_Admin {
   const MAP_TYPE_DEFAULT = 1;
   const EXPORT_CODE_DEFAULT = "";
   const IMPORT_SOURCES_DEFAULT = [];
+  const BASE_MAP_DEFAULT = 1;
+  const SHOW_SCALE_DEFAULT = true;
   const MAP_HEIGHT_DEFAULT = 400;
   const ZOOM_MIN_DEFAULT = 8;
   const ZOOM_MAX_DEFAULT = 19;
@@ -180,6 +183,14 @@ class CB_Map_Admin {
         }
       }
     }
+
+    //base_map
+    if(isset($input['base_map']) && $input['base_map'] >= 1 && $input['base_map'] <= 3) {
+      $validated_input['base_map'] = (int) $input['base_map'];
+    }
+
+    //show_scale
+    $validated_input['show_scale'] = isset($input['show_scale']) ? true : false;
 
     //map_height
     if(isset($input['map_height']) && (int) $input['map_height'] >= self::MAP_HEIGHT_VALUE_MIN && $input['map_height'] <= self::MAP_HEIGHT_VALUE_MAX) {

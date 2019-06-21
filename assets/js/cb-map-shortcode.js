@@ -8,6 +8,12 @@ function CB_Map() {
   cb_map.markers = null;
   cb_map.messagebox = null;
 
+  cb_map.tile_servers = {
+    1: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    2: 'https://{s}.tile.openstreetmap.de/{z}/{x}/{y}.png',
+    3: 'https://tiles.wmflabs.org/hikebike/{z}/{x}/{y}.png'
+  }
+
   cb_map.init_filters = function($) {
     var that = this;
 
@@ -59,12 +65,12 @@ function CB_Map() {
   },
 
   cb_map.init_map = function() {
-    var osm_url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-  	var osm_attrib='Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors';
+    var tile_server_url = cb_map.tile_servers[this.settings.base_map];
+  	var attribution = 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors - <a href="https://www.openstreetmap.org/copyright">License</a>';
     var map_options = {
       minZoom: this.settings.zoom_min,
       maxZoom: this.settings.zoom_max,
-      attribution: osm_attrib
+      attribution: attribution
     }
 
   	// set up the map
@@ -73,8 +79,13 @@ function CB_Map() {
     //create messagebox
     this.messagebox = L.control.messagebox({ timeout: 5000 }).addTo(map);
 
+    //create scale
+    if(this.settings.show_scale) {
+      L.control.scale({imperial: false, updateWhenIdle: true}).addTo(map);
+    }
+
   	// create the tile layer with correct attribution
-  	var osm = new L.TileLayer(osm_url, map_options);
+  	var osm = new L.TileLayer(tile_server_url, map_options);
 
   	map.setView(new L.LatLng(this.settings.lat_start, this.settings.lon_start), this.settings.zoom_start);
   	map.addLayer(osm);

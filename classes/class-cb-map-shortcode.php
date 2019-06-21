@@ -91,7 +91,7 @@ class CB_Map_Shortcode {
     ];
     $options = CB_Map_Admin::get_options($cb_map_id, true);
 
-    $pass_through = ['zoom_min', 'zoom_max', 'zoom_start', 'lat_start', 'lon_start', 'marker_map_bounds_initial', 'marker_map_bounds_filter', 'max_cluster_radius', 'show_location_contact', 'show_location_opening_hours'];
+    $pass_through = ['base_map', 'show_scale', 'zoom_min', 'zoom_max', 'zoom_start', 'lat_start', 'lon_start', 'marker_map_bounds_initial', 'marker_map_bounds_filter', 'max_cluster_radius', 'show_location_contact', 'show_location_opening_hours'];
 
     $icon_size = [$options['marker_icon_width'], $options['marker_icon_height']];
     $icon_anchor = [$options['marker_icon_anchor_x'], $options['marker_icon_anchor_y']];

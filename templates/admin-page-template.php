@@ -8,15 +8,15 @@
       <table class="text-left">
         <tr>
             <th>
-              <?= cb_map\__('MAP_TYPE', 'commons-booking-map', 'Map Type') ?>:
+              <?= cb_map\__('MAP_TYPE', 'commons-booking-map', 'map type') ?>:
               <span class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'MAP_TYPE_DESC', 'commons-booking-map', 'the type of the map defines the usage - if the map is shown on the own website (local), collect data from external sources (import) or provide data for other websites (export)') ?>"></span>
             </th>
             <td>
-              <? $selected_option = CB_Map_Admin::get_option($cb_map_id, 'map_type') ?>
+              <? $selected_map_type = CB_Map_Admin::get_option($cb_map_id, 'map_type') ?>
               <select id="map_type" name="cb_map_options[map_type]">
-                <option value="1" <?= $selected_option == 1 ? 'selected' : '' ?>><?= cb_map\__('MAP_TYPE_LOCAL', 'commons-booking-map', 'local') ?></option>
-                <option value="2" <?= $selected_option == 2 ? 'selected' : '' ?>><?= cb_map\__('MAP_TYPE_IMPORT', 'commons-booking-map', 'import') ?></option>
-                <option value="3" <?= $selected_option == 3 ? 'selected' : '' ?>><?= cb_map\__('MAP_TYPE_EXPORT', 'commons-booking-map', 'export') ?></option>
+                <option value="1" <?= $selected_map_type == 1 ? 'selected' : '' ?>><?= cb_map\__('MAP_TYPE_LOCAL', 'commons-booking-map', 'local') ?></option>
+                <option value="2" <?= $selected_map_type == 2 ? 'selected' : '' ?>><?= cb_map\__('MAP_TYPE_IMPORT', 'commons-booking-map', 'import') ?></option>
+                <option value="3" <?= $selected_map_type == 3 ? 'selected' : '' ?>><?= cb_map\__('MAP_TYPE_EXPORT', 'commons-booking-map', 'export') ?></option>
               </select>
             </td>
         </tr>
@@ -80,6 +80,29 @@
               <span class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'MAP_SHORTCODE_DESC', 'commons-booking-map', 'with this shortcode the map can be included in posts or pages') ?>"></span>
             </th>
             <td>[cb_map id=<?= $cb_map_id ?>]</td>
+        </tr>
+        <tr>
+            <th>
+              <?= cb_map\__('BASE_MAP', 'commons-booking-map', 'base map') ?>:
+              <span class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'BASE_MAP_DESC', 'commons-booking-map', 'the base map defines the rendering style of the map tiles') ?>"></span>
+            </th>
+            <td>
+              <? $selected_base_map = CB_Map_Admin::get_option($cb_map_id, 'base_map') ?>
+              <select name="cb_map_options[base_map]">
+                <option value="1" <?= $selected_base_map == 1 ? 'selected' : '' ?>><?= cb_map\__('BASE_MAP_MAPNIK', 'commons-booking-map', 'OSM - mapnik') ?></option>
+                <option value="2" <?= $selected_base_map == 2 ? 'selected' : '' ?>><?= cb_map\__('BASE_MAP_GERMAN', 'commons-booking-map', 'OSM - german style') ?></option>
+                <option value="3" <?= $selected_base_map == 3 ? 'selected' : '' ?>><?= cb_map\__('BASE_MAP_HIKEANDBIKE', 'commons-booking-map', 'OSM - hike and bike') ?></option>
+              </select>
+            </td>
+        </tr>
+        <tr>
+            <th>
+              <?= cb_map\__('SHOW_SCALE', 'commons-booking-map', 'show scale') ?>:
+              <span class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'SHOW_SCALE_DESC', 'commons-booking-map', 'show the current scale in the left bottom corner of the map') ?>"></span>
+            </th>
+            <td>
+              <input type="checkbox" name="cb_map_options[show_scale]" <?= CB_Map_Admin::get_option($cb_map_id, 'show_scale') ? 'checked="checked"' : '' ?> value="on">
+            </td>
         </tr>
         <tr>
             <th>
