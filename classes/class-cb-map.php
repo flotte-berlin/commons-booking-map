@@ -67,7 +67,7 @@ class CB_Map {
   }
 
   /**
-  * load all timeframes from db (that end in the future)
+  * load all timeframes from db (that end in the future and it's item's status is 'publish')
   **/
   public static function get_timeframes() {
     global $wpdb;
@@ -82,23 +82,25 @@ class CB_Map {
     $timeframes = $wpdb->get_results($sql, ARRAY_A);
 
     foreach($timeframes as $key => $timeframe) {
-      $item_desc = get_post_meta($timeframe['item_id'], 'commons-booking_item_descr', true);
       $item = get_post($timeframe['item_id']);
 
-      $thumbnail = get_the_post_thumbnail_url($item, 'thumbnail');
+      if($item->post_status == 'publish') {
+        $item_desc = get_post_meta($timeframe['item_id'], 'commons-booking_item_descr', true);
+        $thumbnail = get_the_post_thumbnail_url($item, 'thumbnail');
 
-      $result[] = [
-        'location_id' => $timeframe['location_id'],
-        'item' => [
-          'id' => $item->ID,
-          'name' => $item->post_title,
-          'short_desc' => $item_desc,
-          'link' => get_permalink($item),
-          'thumbnail' => $thumbnail ? $thumbnail : null
-        ],
-        'date_start' => $timeframe['date_start'],
-        'date_end' => $timeframe['date_end']
-      ];
+        $result[] = [
+          'location_id' => $timeframe['location_id'],
+          'item' => [
+            'id' => $item->ID,
+            'name' => $item->post_title,
+            'short_desc' => $item_desc,
+            'link' => get_permalink($item),
+            'thumbnail' => $thumbnail ? $thumbnail : null
+          ],
+          'date_start' => $timeframe['date_start'],
+          'date_end' => $timeframe['date_end']
+        ];
+      }
     }
 
     return $result;
@@ -117,6 +119,7 @@ class CB_Map {
     $args = [
       'post_type'	=> 'cb_locations',
       'posts_per_page' => -1,
+      'post_status' => 'publish',
       'meta_query' => [
         [
           'key' => 'cb-map_latitude',
@@ -579,7 +582,6 @@ class CB_Map {
       $geo_coordinates = [];
       if($timeframes) {
           foreach ($timeframes as $timeframe) {
-            $location =
             $geo_coordinates[$timeframe['id']] = [
               'lat' => get_post_meta($timeframe['location_id'], 'cb-map_latitude', true),
               'lon' => get_post_meta($timeframe['location_id'], 'cb-map_longitude', true)
