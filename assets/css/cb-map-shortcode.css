@@ -42,6 +42,7 @@
 .cb-map-popup-item-link {
   display: inline-block;
   width: 70%;
+  vertical-align: top;
 }
 
 .cb-map-location-info-name b {
