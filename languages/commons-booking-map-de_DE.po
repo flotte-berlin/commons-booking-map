@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: cb-admin-booking\n"
-"POT-Creation-Date: 2019-06-21 11:11+0200\n"
-"PO-Revision-Date: 2019-06-21 11:12+0200\n"
+"POT-Creation-Date: 2019-06-27 12:02+0200\n"
+"PO-Revision-Date: 2019-06-27 12:04+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -30,19 +30,19 @@ msgstr "Längengrad"
 msgid "POSITION"
 msgstr "Position"
 
-#: ../classes/class-cb-map-admin.php:68
+#: ../classes/class-cb-map-admin.php:69
 msgid "CB_MAP_ADMIN_METABOX_TITLE"
 msgstr "Kartenkonfiguration"
 
-#: ../classes/class-cb-map-admin.php:394
+#: ../classes/class-cb-map-admin.php:398
 msgid "SELECT_IMAGE"
 msgstr "Bild auswählen"
 
-#: ../classes/class-cb-map-admin.php:395
+#: ../classes/class-cb-map-admin.php:399
 msgid "SAVE"
 msgstr "speichern"
 
-#: ../classes/class-cb-map-admin.php:396
+#: ../classes/class-cb-map-admin.php:400
 msgid "MARKER_IMAGE_MEASUREMENTS"
 msgstr "Bildmaße"
 
@@ -58,42 +58,42 @@ msgstr "Commons Booking Map"
 msgid "Settings"
 msgstr ""
 
-#: ../classes/class-cb-map-shortcode.php:62
+#: ../classes/class-cb-map-shortcode.php:65
 msgid "NO_VALID_MAP_TYPE"
 msgstr "kein gültiger Karten-Typ"
 
-#: ../classes/class-cb-map-shortcode.php:66
+#: ../classes/class-cb-map-shortcode.php:69
 msgid "NO_VALID_POST_STATUS"
 msgstr "Karte ist nicht veröffentlicht"
 
-#: ../classes/class-cb-map-shortcode.php:70
-#: ../classes/class-cb-map-shortcode.php:75
+#: ../classes/class-cb-map-shortcode.php:73
+#: ../classes/class-cb-map-shortcode.php:78
 msgid "NO_VALID_MAP_ID"
 msgstr "keine gültige Karten-ID"
 
-#: ../classes/class-cb-map-shortcode.php:162
-#: ../templates/admin-page-template.php:207
+#: ../classes/class-cb-map-shortcode.php:166
+#: ../templates/admin-page-template.php:215
 msgid "OPENING_HOURS"
 msgstr "Öffnungszeiten"
 
-#: ../classes/class-cb-map-shortcode.php:163
-#: ../templates/admin-page-template.php:221
+#: ../classes/class-cb-map-shortcode.php:167
+#: ../templates/admin-page-template.php:229
 msgid "CONTACT"
 msgstr "Kontakt"
 
-#: ../classes/class-cb-map-shortcode.php:164
+#: ../classes/class-cb-map-shortcode.php:168
 msgid "FROM"
 msgstr "ab"
 
-#: ../classes/class-cb-map-shortcode.php:165
+#: ../classes/class-cb-map-shortcode.php:169
 msgid "UNTIL"
 msgstr "bis"
 
-#: ../classes/class-cb-map-shortcode.php:166
+#: ../classes/class-cb-map-shortcode.php:170
 msgid "NO_LOCATIONS_MESSAGE"
 msgstr "Leider wurden keine Standorte gefunden."
 
-#: ../classes/class-cb-map-shortcode.php:167
+#: ../classes/class-cb-map-shortcode.php:171
 msgid "FILTER"
 msgstr "filtern"
 
@@ -261,179 +261,193 @@ msgstr "OSM - deutscher Stil"
 msgid "BASE_MAP_HIKEANDBIKE"
 msgstr "OSM - Hike and Bike"
 
-#: ../templates/admin-page-template.php:100
+#: ../templates/admin-page-template.php:95
+msgid "BASE_MAP_LOKALER"
+msgstr "OSM - Lokaler (min. Zoom: 9)"
+
+#: ../templates/admin-page-template.php:101
 msgid "SHOW_SCALE"
 msgstr "Maßstab anzeigen"
 
-#: ../templates/admin-page-template.php:101
+#: ../templates/admin-page-template.php:102
 msgid "SHOW_SCALE_DESC"
 msgstr "zeigt den jeweiligen Kartenmaßstab in der linken unteren Ecke an"
 
-#: ../templates/admin-page-template.php:109
+#: ../templates/admin-page-template.php:110
 msgid "MAP_HEIGHT"
 msgstr "Höhe"
 
-#: ../templates/admin-page-template.php:110
+#: ../templates/admin-page-template.php:111
 msgid "MAP_HEIGHT_DESC"
 msgstr ""
 "die Höhe, mit der die Karte angezeigt wird - die Breite entspricht der des "
 "Elternelements"
 
+#: ../templates/admin-page-template.php:117
+msgid "CUSTOM_NO_LOCATIONS_MESSAGE"
+msgstr "Keine Standorte - Hinweistext"
+
 #: ../templates/admin-page-template.php:118
+msgid "CUSTOM_NO_LOCATIONS_MESSAGE_DESC"
+msgstr ""
+"wenn NutzerInnen Filter setzen und kein Ergebnis bekommen, wird ein Hinweis "
+"angezeigt - der Text kann hier angepasst werden."
+
+#: ../templates/admin-page-template.php:126
 msgid "ZOOM"
 msgstr "Zoom"
 
-#: ../templates/admin-page-template.php:123
+#: ../templates/admin-page-template.php:131
 msgid "MIN_ZOOM_LEVEL"
 msgstr "min. Zoom-Level"
 
-#: ../templates/admin-page-template.php:124
+#: ../templates/admin-page-template.php:132
 msgid "MIN_ZOOM_LEVEL_DESC"
 msgstr "das minimale Zoom-Level, das von NuzerInnen gewählt werden kann"
 
-#: ../templates/admin-page-template.php:130
+#: ../templates/admin-page-template.php:138
 msgid "MAX_ZOOM_LEVEL"
 msgstr "max. Zoom-Level"
 
-#: ../templates/admin-page-template.php:131
+#: ../templates/admin-page-template.php:139
 msgid "MAX_ZOOM_LEVEL_DESC"
 msgstr "das maximale Zoom-Level, das von NuzerInnen gewählt werden kann"
 
-#: ../templates/admin-page-template.php:137
+#: ../templates/admin-page-template.php:145
 msgid "START_ZOOM_LEVEL"
 msgstr "initiales Zoom-Level"
 
-#: ../templates/admin-page-template.php:138
+#: ../templates/admin-page-template.php:146
 msgid "START_ZOOM_LEVEL_DESC"
 msgstr "dieses Zoom-Level wird gesetzt, wenn die Karte geladen wird"
 
-#: ../templates/admin-page-template.php:146
+#: ../templates/admin-page-template.php:154
 msgid "POSITIONING_START"
 msgstr "initiale Kartenpositionierung (Mittelpunkt)"
 
-#: ../templates/admin-page-template.php:151
+#: ../templates/admin-page-template.php:159
 msgid "LATITUDE_START"
 msgstr "Breitengrad"
 
-#: ../templates/admin-page-template.php:152
+#: ../templates/admin-page-template.php:160
 msgid "LATITUDE_START_DESC"
 msgstr ""
 "der geografische Breitengrad des Kartenmittelpunkts, wenn die Karte geladen "
 "wird"
 
-#: ../templates/admin-page-template.php:159
+#: ../templates/admin-page-template.php:167
 msgid "LONGITUDE_START"
 msgstr "Längengrad"
 
-#: ../templates/admin-page-template.php:160
+#: ../templates/admin-page-template.php:168
 msgid "LONGITUDE_START_DESC"
 msgstr ""
 "der geografische Längengrad des Kartenmittelpunkts, wenn die Karte geladen "
 "wird"
 
-#: ../templates/admin-page-template.php:168
+#: ../templates/admin-page-template.php:176
 msgid "ADAPTIVE_MAP_SECTION"
 msgstr "Adaptiver Kartenausschnitt"
 
-#: ../templates/admin-page-template.php:173
+#: ../templates/admin-page-template.php:181
 msgid "ADJUST_MAP_SECTION_TO_MARKERS_INITIALLY"
 msgstr "initiale Anpassung an Marker-Umgrenzung"
 
-#: ../templates/admin-page-template.php:174
+#: ../templates/admin-page-template.php:182
 msgid "ADJUST_MAP_SECTION_TO_MARKERS_INITIALLY_DESC"
 msgstr ""
 "automatische Anpassung des Kartenausschnitts an den von Markern abgedeckten "
 "Bereich, wenn die Karte geladen wird"
 
-#: ../templates/admin-page-template.php:182
+#: ../templates/admin-page-template.php:190
 msgid "ADJUST_MAP_SECTION_TO_MARKERS_FILTER"
 msgstr "Anpassung an Marker-Umgrenzung nach Filterung"
 
-#: ../templates/admin-page-template.php:183
+#: ../templates/admin-page-template.php:191
 msgid "ADJUST_MAP_SECTION_TO_MARKERS_FILTER_DESC"
 msgstr ""
 "automatische Anpassung des Kartenausschnitts an den von Markern abgedeckten "
 "Bereich, wenn diese von NutzerInnen gefiltert werden"
 
-#: ../templates/admin-page-template.php:193
+#: ../templates/admin-page-template.php:201
 msgid "POPUP"
 msgstr "Marker Popup"
 
-#: ../templates/admin-page-template.php:197
+#: ../templates/admin-page-template.php:205
 msgid "SHOW_LOCATION_OPENING_HOURS"
 msgstr "zeige Standort-Öffnungszeiten"
 
-#: ../templates/admin-page-template.php:198
+#: ../templates/admin-page-template.php:206
 msgid "SHOW_LOCATION_OPENING_HOURS_DESC"
 msgstr "aktivieren, um die Standort-Öffnungszeiten im Marker-Popup anzuzeigen"
 
-#: ../templates/admin-page-template.php:204
+#: ../templates/admin-page-template.php:212
 msgid "LABEL_LOCATION_OPENING_HOURS"
 msgstr "Beschriftung der Öffnungszeiten"
 
-#: ../templates/admin-page-template.php:205
+#: ../templates/admin-page-template.php:213
 msgid "LABEL_LOCATION_OPENING_HOURS_DESC"
 msgstr ""
 "ein alternatives Label für die Öffnungszeiten von Standorten im Marker-Popup"
 
-#: ../templates/admin-page-template.php:211
+#: ../templates/admin-page-template.php:219
 msgid "SHOW_LOCATION_CONTACT"
 msgstr "zeige Standort-Kontakt"
 
-#: ../templates/admin-page-template.php:212
+#: ../templates/admin-page-template.php:220
 msgid "SHOW_LOCATION_CONTACT_DESC"
 msgstr "aktivieren, um die Standort-Kontaktdaten im Marker-Popup anzuzeigen"
 
-#: ../templates/admin-page-template.php:218
+#: ../templates/admin-page-template.php:226
 msgid "LABEL_LOCATION_CONTACT"
 msgstr "Beschriftung der Kontaktdaten"
 
-#: ../templates/admin-page-template.php:219
+#: ../templates/admin-page-template.php:227
 msgid "LABEL_LOCATION_CONTACT_DESC"
 msgstr ""
 "ein alternatives Label für die Kontaktdaten von Standorten im Marker-Popup"
 
-#: ../templates/admin-page-template.php:227
+#: ../templates/admin-page-template.php:235
 msgid "CUSTOM_MARKER"
 msgstr "angepasster Marker"
 
-#: ../templates/admin-page-template.php:232
-#: ../templates/admin-page-template.php:294
+#: ../templates/admin-page-template.php:240
+#: ../templates/admin-page-template.php:302
 msgid "IMAGE_FILE"
 msgstr "Bilddatei"
 
-#: ../templates/admin-page-template.php:233
-#: ../templates/admin-page-template.php:295
+#: ../templates/admin-page-template.php:241
+#: ../templates/admin-page-template.php:303
 msgid "IMAGE_FILE_DESC"
 msgstr "der Standard Marker kann durch ein eigenes Bild ersetzt werden"
 
-#: ../templates/admin-page-template.php:236
-#: ../templates/admin-page-template.php:298
+#: ../templates/admin-page-template.php:244
+#: ../templates/admin-page-template.php:306
 msgid "SELECT"
 msgstr "auswählen"
 
-#: ../templates/admin-page-template.php:237
-#: ../templates/admin-page-template.php:299
+#: ../templates/admin-page-template.php:245
+#: ../templates/admin-page-template.php:307
 msgid "REMOVE"
 msgstr "entfernen"
 
-#: ../templates/admin-page-template.php:253
-#: ../templates/admin-page-template.php:315
+#: ../templates/admin-page-template.php:261
+#: ../templates/admin-page-template.php:323
 msgid "ICON_SIZE"
 msgstr "Icon Größe"
 
-#: ../templates/admin-page-template.php:254
-#: ../templates/admin-page-template.php:316
+#: ../templates/admin-page-template.php:262
+#: ../templates/admin-page-template.php:324
 msgid "ICON_SIZE_DESC"
 msgstr ""
 "die Größe des angepassten Marker-Bildes, mit der es auf der Karte angezeigt "
 "wird"
 
-#: ../templates/admin-page-template.php:264
+#: ../templates/admin-page-template.php:272
 msgid "ANCHOR_POINT"
 msgstr "Anker-Punkt"
 
-#: ../templates/admin-page-template.php:265
+#: ../templates/admin-page-template.php:273
 msgid "ANCHOR_POINT_DESC"
 msgstr ""
 "die Position des Ankerpunkts des Marker-Bildes von der linken oberen Ecke "
@@ -441,87 +455,87 @@ msgstr ""
 "Höhe der Icon-Größe - mit diesem Punkt wird der Marker auf den "
 "Geokoordinaten platziert"
 
-#: ../templates/admin-page-template.php:276
+#: ../templates/admin-page-template.php:284
 msgid "CLUSTER"
 msgstr "Cluster"
 
-#: ../templates/admin-page-template.php:280
+#: ../templates/admin-page-template.php:288
 msgid "MAX_CLUSTER_RADIUS"
 msgstr "max. Cluster-Radius"
 
-#: ../templates/admin-page-template.php:281
+#: ../templates/admin-page-template.php:289
 msgid "MAX_CLUSTER_RADIUS_DESC"
 msgstr ""
 "Radius innerhalb dessen mehrere Marker zu einem Cluster zusammengefasst "
 "werden - 0 für Deaktivierung"
 
-#: ../templates/admin-page-template.php:289
+#: ../templates/admin-page-template.php:297
 msgid "CUSTOM_CLUSTER_MARKER"
 msgstr "angepasster Cluster-Marker"
 
-#: ../templates/admin-page-template.php:328
+#: ../templates/admin-page-template.php:336
 msgid "FILTER_USERS"
 msgstr "Filter für NutzerInnen"
 
-#: ../templates/admin-page-template.php:332
+#: ../templates/admin-page-template.php:340
 msgid "AVAILABLE_CATEGORIES"
 msgstr "verfügbare Kategorien"
 
-#: ../templates/admin-page-template.php:333
+#: ../templates/admin-page-template.php:341
 msgid "AVAILABLE_CATEGORIES_DESC"
 msgstr ""
 "Kategorien, die NutzerInnen angezeigt werden , um Artikel zu filtern "
 "(erscheinen in der Gruppierung und Reihenfolge der Label-Liste unten) - "
 "keine Auswahl für Deaktivierung von Filtern"
 
-#: ../templates/admin-page-template.php:347
+#: ../templates/admin-page-template.php:355
 msgid "CUSTOM_CATEGORY_FILTER_LABEL_MARKUP"
 msgstr "Gruppierung der Filter-Label und individuelles HTML"
 
-#: ../templates/admin-page-template.php:349
+#: ../templates/admin-page-template.php:357
 msgid "ADD_FILTER_GROUP_BUTTON_TITLE"
 msgstr "Filter-Gruppe hinzufügen"
 
-#: ../templates/admin-page-template.php:356
+#: ../templates/admin-page-template.php:364
 msgid "FILTER_PRESETS"
 msgstr "Vorabfilter"
 
-#: ../templates/admin-page-template.php:360
+#: ../templates/admin-page-template.php:368
 msgid "PRESET_CATEGORIES"
 msgstr "gesetzte Kategorien"
 
-#: ../templates/admin-page-template.php:361
+#: ../templates/admin-page-template.php:369
 msgid "PRESET_CATEGORIES_DESC"
 msgstr ""
 "Auswahl der Kategorien, die genutzt werden, um Artikel vorzufiltern, die auf "
 "der Karte angezeigt werden (Kategorien auf einer Ebene sind ODER-verknüpft, "
 "d.h. nur eine muss erfüllt sein) - keine Auswahl zeigt alle Artikel an"
 
-#: ../templates/admin-page-template.php:434
+#: ../templates/admin-page-template.php:442
 msgid "FILTER_GROUP"
 msgstr "Filter-Gruppe"
 
-#: ../templates/admin-page-template.php:434
+#: ../templates/admin-page-template.php:442
 msgid "FILTER_GROUP_PLACEHOLDER"
 msgstr "Gruppenname"
 
-#: ../templates/admin-page-template.php:437
+#: ../templates/admin-page-template.php:445
 msgid "REMOVE_FILTER_GROUP_BUTTON_TITLE"
 msgstr "Filter-Gruppe entfernen"
 
-#: ../templates/admin-page-template.php:516
+#: ../templates/admin-page-template.php:524
 msgid "URL"
 msgstr "URL"
 
-#: ../templates/admin-page-template.php:517
+#: ../templates/admin-page-template.php:525
 msgid "CODE"
 msgstr "Code"
 
-#: ../templates/admin-page-template.php:531
+#: ../templates/admin-page-template.php:539
 msgid "REMOVE_IMPORT_SOURCE_BUTTON_TITLE"
 msgstr "Import-Quelle entfernen"
 
-#: ../templates/admin-page-template.php:539
+#: ../templates/admin-page-template.php:547
 msgid "TEST_IMPORT_SOURCE_BUTTON_TITLE"
 msgstr "Import-Quelle testen"
 
@@ -543,6 +557,9 @@ msgid "BOOKING_PAGE_LINK_REPLACEMENT_DESC"
 msgstr ""
 "mit der Aktivierung wird das Ziel des Links 'Auf der Karte zeigen' auf der "
 "Buchungsseite durch openstreetmap ersetzt"
+
+#~ msgid "LOKALER"
+#~ msgstr "OSM - Lokaler"
 
 #~ msgid "ADD_FILTER_GROUP"
 #~ msgstr "Filter-Gruppe hinzufügen"

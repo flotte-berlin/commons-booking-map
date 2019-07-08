@@ -9,8 +9,8 @@ class CB_Map_Admin {
     'map_type',
     'export_code',
     'import_sources',
-    'base_map', 'show_scale',
-    'map_height', 'zoom_min', 'zoom_max', 'zoom_start', 'lat_start', 'lon_start',
+    'base_map', 'show_scale', 'map_height', 'custom_no_locations_message',
+    'zoom_min', 'zoom_max', 'zoom_start', 'lat_start', 'lon_start',
     'marker_map_bounds_initial', 'marker_map_bounds_filter',
     'max_cluster_radius',
     'custom_marker_media_id', 'marker_icon_width', 'marker_icon_height', 'marker_icon_anchor_x', 'marker_icon_anchor_y',
@@ -37,9 +37,10 @@ class CB_Map_Admin {
   const BASE_MAP_DEFAULT = 1;
   const SHOW_SCALE_DEFAULT = true;
   const MAP_HEIGHT_DEFAULT = 400;
-  const ZOOM_MIN_DEFAULT = 8;
+  const CUSTOM_NO_LOCATIONS_MESSAGE_DEFAULT = '';
+  const ZOOM_MIN_DEFAULT = 9;
   const ZOOM_MAX_DEFAULT = 19;
-  const ZOOM_START_DEFAULT = 8;
+  const ZOOM_START_DEFAULT = 9;
   const LAT_START_DEFAULT = 52.49333;
   const LON_START_DEFAULT = 13.37933;
   const MARKER_MAP_BOUNDS_INITIAL_DEFAULT = false;
@@ -185,7 +186,7 @@ class CB_Map_Admin {
     }
 
     //base_map
-    if(isset($input['base_map']) && $input['base_map'] >= 1 && $input['base_map'] <= 3) {
+    if(isset($input['base_map']) && $input['base_map'] >= 1 && $input['base_map'] <= 4) {
       $validated_input['base_map'] = (int) $input['base_map'];
     }
 
@@ -196,6 +197,9 @@ class CB_Map_Admin {
     if(isset($input['map_height']) && (int) $input['map_height'] >= self::MAP_HEIGHT_VALUE_MIN && $input['map_height'] <= self::MAP_HEIGHT_VALUE_MAX) {
       $validated_input['map_height'] = (int) $input['map_height'];
     }
+
+    //custom_no_locations_message
+    $validated_input['custom_no_locations_message'] = sanitize_text_field($input['custom_no_locations_message']);
 
     //zoom_min
     if(isset($input['zoom_min']) && (int) $input['zoom_min'] >= self::ZOOM_VALUE_MIN && $input['zoom_min'] <= self::ZOOM_VALUE_MAX) {

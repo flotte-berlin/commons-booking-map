@@ -92,6 +92,7 @@
                 <option value="1" <?= $selected_base_map == 1 ? 'selected' : '' ?>><?= cb_map\__('BASE_MAP_MAPNIK', 'commons-booking-map', 'OSM - mapnik') ?></option>
                 <option value="2" <?= $selected_base_map == 2 ? 'selected' : '' ?>><?= cb_map\__('BASE_MAP_GERMAN', 'commons-booking-map', 'OSM - german style') ?></option>
                 <option value="3" <?= $selected_base_map == 3 ? 'selected' : '' ?>><?= cb_map\__('BASE_MAP_HIKEANDBIKE', 'commons-booking-map', 'OSM - hike and bike') ?></option>
+                <option value="4" <?= $selected_base_map == 4 ? 'selected' : '' ?>><?= cb_map\__('BASE_MAP_LOKALER', 'commons-booking-map', 'OSM - lokaler (min. zoom: 9)') ?></option>
               </select>
             </td>
         </tr>
@@ -110,6 +111,13 @@
               <span class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'MAP_HEIGHT_DESC', 'commons-booking-map', 'the height the map is rendered with - the width is the same as of the parent element') ?>"></span>
             </th>
             <td><input type="number" min="<?= CB_Map_Admin::MAP_HEIGHT_VALUE_MIN ?>" max="<?= CB_Map_Admin::MAP_HEIGHT_VALUE_MAX ?>" name="cb_map_options[map_height]" value="<?= esc_attr( CB_Map_Admin::get_option($cb_map_id, 'map_height') ); ?>" size="4"> px</td>
+        </tr>
+        <tr>
+            <th>
+              <?= cb_map\__('CUSTOM_NO_LOCATIONS_MESSAGE', 'commons-booking-map', 'no locations message') ?>:
+              <span class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'CUSTOM_NO_LOCATIONS_MESSAGE_DESC', 'commons-booking-map', 'in case a user filters locations and gets no result, a message is shown - here the text can be customized') ?>"></span>
+            </th>
+            <td><textarea name="cb_map_options[custom_no_locations_message]"><?= esc_attr(CB_Map_Admin::get_option($cb_map_id, 'custom_no_locations_message')) ?></textarea></td>
         </tr>
       </table>
     </div>

@@ -11,7 +11,8 @@ function CB_Map() {
   cb_map.tile_servers = {
     1: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
     2: 'https://{s}.tile.openstreetmap.de/{z}/{x}/{y}.png',
-    3: 'https://tiles.wmflabs.org/hikebike/{z}/{x}/{y}.png'
+    3: 'https://tiles.wmflabs.org/hikebike/{z}/{x}/{y}.png',
+    4: 'https://tiles.lokaler.de/osmbright-20171212/{z}/{x}/{y}/tile@1x.jpeg'
   }
 
   cb_map.init_filters = function($) {
