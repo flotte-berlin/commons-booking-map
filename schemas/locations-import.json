@@ -1,0 +1,130 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "List of Locations",
+  "description": "a list of locations to show in a commons booking map",
+  "type": "array",
+  "items": {
+    "required": [
+      "lat",
+      "lon",
+      "location_name",
+      "address",
+      "items"
+    ],
+    "type": "object",
+    "properties": {
+      "lat": {
+        "type": "number"
+      },
+      "lon": {
+        "type": "number"
+      },
+      "location_name": {
+        "type": "string"
+      },
+      "opening_hours": {
+        "type": "string"
+      },
+      "closed_days": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "enum": ["1","2","3","4","5","6","7"]
+        }
+      },
+      "contact": {
+        "type": "string"
+      },
+      "address": {
+        "type": "object",
+        "properties": {
+          "street": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "zip": {
+            "type": "string"
+          }
+        }
+      },
+      "items": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "id",
+            "name",
+            "short_desc",
+            "link",
+            "timeframes"
+          ],
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "name": {
+              "type": "string"
+            },
+            "short_desc": {
+              "type": "string"
+            },
+            "link": {
+              "type": "string",
+              "format": "uri",
+              "pattern": "^(https?)://"
+            },
+            "thumbnail": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "format": "uri",
+              "pattern": "^(https?)://"
+            },
+            "timeframes": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "date_start",
+                  "date_end"
+                ],
+                "properties": {
+                  "date_start": {
+                    "type": "string",
+                    "format": "date"
+                  },
+                  "date_end": {
+                    "type": "string",
+                    "format": "date"
+                  }
+                }
+              }
+            },
+            "timeframe_hints": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "type",
+                  "timestamp"
+                ],
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": ["from", "until"]
+                  },
+                  "timestamp": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

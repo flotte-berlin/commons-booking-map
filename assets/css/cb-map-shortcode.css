@@ -1,0 +1,63 @@
+.cb-map-filters {
+  margin-top: 5px;
+}
+
+.cb-map-filters fieldset {
+  display: inline-block;
+  margin-right: 10px;
+  border-radius: 5px;
+  padding: 5px;
+  vertical-align: top;
+}
+
+.cb-map-filters legend {
+  padding: 0.2em 0.5em;
+}
+
+.cb-map-filters input {
+  margin-left: 10px;
+}
+
+.cb-map-filters label {
+  margin-right: 10px;
+}
+
+.cb-map-marker-cluster-icon {
+  width: 100% !important;
+  height: 100% !important;
+  font-weight: bold !important;
+  background-size: cover;
+}
+
+.cb-map-popup-item {
+  margin-top: 10px;
+}
+
+.cb-map-popup-item-thumbnail {
+  display: inline-block;
+  width: 25%;
+  margin-right: 5%;
+}
+
+.cb-map-popup-item-link {
+  display: inline-block;
+  width: 70%;
+  vertical-align: top;
+}
+
+.cb-map-location-info-name b {
+  line-height: 25px;
+}
+.cb-map-location-info-name span.dashicons-search {
+  cursor: pointer;
+  padding-left: 5px;
+  padding-top: 2.5px;
+}
+
+.cb-map-location-info-opening-hours {
+  margin-top: 10px;
+}
+
+.cb-map-location-info-contact {
+  margin-top: 10px;
+}
