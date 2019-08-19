@@ -3,7 +3,7 @@
 **Contributors:** poilu  
 **Donate link:** https://flotte-berlin.de/mitmachen/unterstuetzt-uns/  
 **Tags:** booking, commons, map, locations  
-**Tested:** Wordpress 4.9.x, Commons Booking > 0.9.2.3  
+**Tested:** Wordpress 4.9.x, Commons Booking > 0.9.4  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -23,6 +23,10 @@ Das Plugin ermöglicht die Erstellung und individuelle Konfiguration von verschi
 Neben der Anzeige lokal verwalteter Standorte und Artikel erlaubt Commons Booking Map den Export/Import von Standorten zu/von anderen Plugin-Installationen. So können Daten mit anderen geteilt werden und es wird die Aggregation und Präsentation über mehrere Wordpress-Instanzen hinweg ermöglicht.
 
 Die Einbindung einer Commons Booking Karte in eine Seite erfolgt über einen Shortcode mit folgendem Schema: [cb_map id=123].
+
+## Screenshot
+
+![example](/screenshots/example_0.5.9_de.png?raw=true "example")
 
 ## Credits
 
