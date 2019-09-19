@@ -7,22 +7,26 @@ class CB_Location_Map_Admin {
   */
   public function load_location_map_admin() {
 
-    require_once( CB_MAP_PATH . '../commons-booking/admin/includes/CMB2/init.php' );
+    $cb_path = cb_map\get_active_plugin_directory('commons-booking.php');
 
-    // render map
-    add_action( 'cmb2_render_cb_map', array($this, 'render_cb_map'), 10, 5 );
+    if($cb_path) {
+      $cmb_path = '../' . $cb_path . '/admin/includes/CMB2/init.php';
+      require_once( CB_MAP_PATH . $cmb_path );
 
-    // sanitize the field
-    /*
-    add_filter( 'cmb2_sanitize_text_number', 'sm_cmb2_sanitize_text_number', 10, 2 );
-    function sm_cmb2_sanitize_text_number( $null, $new ) {
-    	$new = preg_replace( "/[^0-9]/", "", $new );
+      // render map
+      add_action( 'cmb2_render_cb_map', array($this, 'render_cb_map'), 10, 5 );
 
-    	return $new;
-    }*/
+      // sanitize the field
+      /*
+      add_filter( 'cmb2_sanitize_text_number', 'sm_cmb2_sanitize_text_number', 10, 2 );
+      function sm_cmb2_sanitize_text_number( $null, $new ) {
+        $new = preg_replace( "/[^0-9]/", "", $new );
 
-    add_filter( 'cmb2_meta_boxes', array($this, 'add_metabox'));
+        return $new;
+      }*/
 
+      add_filter( 'cmb2_meta_boxes', array($this, 'add_metabox'));
+    }
   }
 
   /**
