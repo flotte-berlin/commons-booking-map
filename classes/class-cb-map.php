@@ -571,7 +571,7 @@ class CB_Map {
   public static function replace_map_link_target() {
     global $post;
   	$cb_item = 'cb_items';
-  	if ( $post->post_type == $cb_item) {
+  	if (is_object($post) && $post->post_type == $cb_item) {
   		$itemId = $post->ID;
 
       //get timeframes of item
