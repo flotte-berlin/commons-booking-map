@@ -1,3 +1,7 @@
+.leaflet-popup-content {
+  min-width: 300px;
+}
+
 .cb-map-filters {
   margin-top: 5px;
 }
@@ -14,7 +18,7 @@
   padding: 0.2em 0.5em;
 }
 
-.cb-map-filters input {
+.cb-map-filters input[type="checkbox"] {
   margin-left: 10px;
 }
 
@@ -39,10 +43,65 @@
   margin-right: 5%;
 }
 
-.cb-map-popup-item-link {
+.cb-map-popup-item-info {
   display: inline-block;
   width: 70%;
   vertical-align: top;
+}
+
+.cb-map-popup-item-link {
+
+}
+
+.cb-map-popup-item-availability {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+
+  -webkit-overflow-scrolling: touch;
+  margin: 3px 0;
+}
+
+.cb-map-popup-item-availability-day {
+  flex: 0 0 auto;
+
+  color: #000;
+  font-weight: normal;
+  padding: 3px;
+
+  width: 50px;
+  text-align: center;
+  border: 1px solid #fff;
+}
+
+.cb-map-popup-item-availability-day.available {
+  background-color: rgb(127, 198, 0);
+}
+.cb-map-popup-item-availability-day.location-closed {
+  background-color: #bbb;
+}
+.cb-map-popup-item-availability-day.no-timeframe {
+  background-color: #ddd;
+  color: #fff;
+}
+.cb-map-popup-item-availability-day.booked {
+  background-color: rgb(238, 116, 0);
+}
+
+.cb-map-popup-item-desc {
+
+}
+
+/*
+.cb-map-popup-item-info span.dashicons-calendar-alt {
+  cursor: pointer;
+  padding-left: 3px;
+  padding-top: -3px;
+}
+*/
+
+.leaflet-popup-content {
+  min-width: 300px;
 }
 
 .cb-map-location-info-name b {
@@ -60,4 +119,22 @@
 
 .cb-map-location-info-contact {
   margin-top: 10px;
+}
+
+.cb-map-filter-group-label {
+  font-weight: 700;
+}
+
+.cb-map-filter-group {
+  margin-top: 5px;
+  width: 100%;
+}
+
+.cb-map-filters input[type="date"] {
+  margin-right: 10px;
+  display: inline;
+  width: 25%;
+}
+.cb-map-filters select {
+  margin-right: 10px;
 }

@@ -42,6 +42,9 @@ class CB_Map_Shortcode {
             //dashicons
             wp_enqueue_style('dashicons');
 
+            //overscroll
+            wp_enqueue_script( 'cb_map_slider_js', CB_MAP_ASSETS_URL . 'overscroll/jquery.overscroll.js' );
+
             //cb map shortcode
             wp_enqueue_style('cb_map_shortcode_css', CB_MAP_ASSETS_URL . 'css/cb-map-shortcode.css');
             wp_register_script( 'cb_map_shortcode_js', CB_MAP_ASSETS_URL . 'js/cb-map-shortcode.js');
@@ -84,14 +87,30 @@ class CB_Map_Shortcode {
   * get the settings for the frontend of the map with given id
   **/
   public static function get_settings($cb_map_id) {
+    $commons_booking_settings = get_option('commons-booking-settings-bookings');
+
+    $date_min = new DateTime();
+    $date_min = $date_min->format('Y-m-d');
+    $max_days_in_future = $commons_booking_settings['commons-booking_bookingsettings_daystoshow'] - 1;
+    $date_max = new DateTime($date_min . ' +' . $max_days_in_future . ' days');
+    $date_max = $date_max->format('Y-m-d');
+
+    $maxdays = $commons_booking_settings['commons-booking_bookingsettings_maxdays'];
+
     $settings = [
       'data_url' => get_site_url(null, '', null) . '/wp-admin/admin-ajax.php',
       'nonce' => wp_create_nonce('cb_map_locations'),
       'marker_icon' => null,
       'filter_cb_item_categories' => [],
+      'filter_availability' => [
+        'date_min' => $date_min,
+        'date_max' => $date_max,
+        'day_count_max' => $maxdays
+      ],
       'cb_map_id' => $cb_map_id,
       'locale' => str_replace('_', '-', get_locale())
     ];
+
     $options = CB_Map_Admin::get_options($cb_map_id, true);
 
     $pass_through = ['base_map', 'show_scale', 'zoom_min', 'zoom_max', 'zoom_start', 'lat_start', 'lon_start', 'marker_map_bounds_initial', 'marker_map_bounds_filter', 'max_cluster_radius', 'show_location_contact', 'show_location_opening_hours'];
@@ -167,8 +186,12 @@ class CB_Map_Shortcode {
       'CONTACT' => strlen($label_location_contact) > 0 ? $label_location_contact : cb_map\__('CONTACT', 'commons-booking-map', 'contact'),
       'FROM' => cb_map\__( 'FROM', 'commons-booking-map', 'from'),
       'UNTIL' => cb_map\__( 'UNTIL', 'commons-booking-map', 'until'),
+      'AT_LEAST' => cb_map\__( 'AT_LEAST', 'commons-booking-map', 'for at least'),
+      'DAYS' => cb_map\__( 'DAYS', 'commons-booking-map', 'day(s)'),
       'NO_LOCATIONS_MESSAGE' => strlen($custom_no_locations_message) > 0 ? $custom_no_locations_message : cb_map\__( 'NO_LOCATIONS_MESSAGE', 'commons-booking-map', 'Sorry, no locations found.'),
-      'FILTER' => cb_map\__( 'FILTER', 'commons-booking-map', 'filter')
+      'FILTER' => cb_map\__( 'FILTER', 'commons-booking-map', 'filter'),
+      'AVAILABILITY' => cb_map\__( 'AVAILABILITY', 'commons-booking-map', 'availability'),
+      'CATEGORIES' => cb_map\__( 'CATEGORIES', 'commons-booking-map', 'categories'),
     ];
 
     return $translation;
@@ -231,22 +254,65 @@ class CB_Map_Shortcode {
     $preset_categories = CB_Map_Admin::get_option($cb_map_id, 'cb_items_preset_categories');
 
     if($post->post_status == 'publish') {
+      require_once( CB_MAP_PATH . 'classes/class-cb-map.php' );
+      require_once( CB_MAP_PATH . 'classes/class-cb-map-filter.php' );
+
       //local - get the locations and apply provided filters
       if($map_type == 1) {
         $available_user_categories = array_keys(CB_Map_Admin::get_option($cb_map_id, 'cb_items_available_categories'));
         $user_categories = [];
+        $location_filters = [];
+        $filters = isset($_POST['filters']) && is_array($_POST['filters']) ? $_POST['filters'] : [];
 
-        if(isset($_POST['filters']) && is_array($_POST['filters'])) {
-          foreach($_POST['filters'] as $filter) {
+        if(isset($filters['cb_item_categories']) && is_array($filters['cb_item_categories'])) {
+          foreach($filters['cb_item_categories'] as $filter) {
             if(in_array((int) $filter, $available_user_categories)) {
               $user_categories[] = (int) $filter;
             }
           }
         }
 
-        require_once( CB_MAP_PATH . 'classes/class-cb-map.php' );
-        $locations = array_values(CB_Map::get_locations_by_timeframes($cb_map_id, $preset_categories, $user_categories));
+        $location_filters['timeframes_and_categories'] = [
+          'preset_categories' => $preset_categories,
+          'user_categories' => $user_categories
+        ];
+
+        $locations = CB_Map::get_locations($cb_map_id);
+        $locations = CB_Map_Filter::filter_locations($locations, $cb_map_id, $location_filters);
+
+        $settings = self::get_settings($cb_map_id);
+        $default_date_start = $settings['filter_availability']['date_min'];
+        $default_date_end = $settings['filter_availability']['date_max'];
+
+        //validate availability filter input
+        if(isset($filters['date_start']) || isset($filters['date_end'] ) || isset($filters['day_count'])) {
+
+          $date_start = isset($filters['date_start']) && strlen($filters['date_start']) > 0 && new DateTime($filters['date_start']) && new DateTime($filters['date_start']) >= new DAteTime($default_date_start) ? $filters['date_start'] : $default_date_start;
+          $date_end = isset($filters['date_end']) && strlen($filters['date_end']) > 0 && new DateTime($filters['date_start']) && new DateTime($filters['date_end']) <= new DateTime($default_date_end) ? $filters['date_end']: $default_date_end;
+
+          //ensure: date_start < date_end
+          if(new DateTime($date_start) > new DateTime($date_end)) {
+            $tmp_date = $date_start;
+            $date_start = $date_end;
+            $date_end = $tmp_date;
+          }
+
+          $locations = CB_Map_Item_Availability::create_items_availabilities($locations, $date_start, $date_end);
+
+          $location_filter['item_availability'] = [
+            'day_count' => isset($filters['day_count']) && (int) $filters['day_count'] > 0 && (int) $filters['day_count'] <= $settings['filter_availability']['day_count_max'] ? (int) $filters['day_count'] : 1
+          ];
+
+          $locations = CB_Map_Filter::filter_locations($locations, $cb_map_id, $location_filter);
+        }
+        else {
+          //create availabilities
+          $locations = CB_Map_Item_Availability::create_items_availabilities($locations, $default_date_start, $default_date_end);
+        }
+        $locations = CB_Map_Item_Availability::availability_to_indexed_array($locations);
+        $locations = array_values($locations); //locations to indexed array
         $locations = CB_Map::cleanup_location_data($locations, '<br>', $map_type);
+
       }
 
       //import - get locations that are imported and stored in db
@@ -268,8 +334,14 @@ class CB_Map_Shortcode {
       //export - get the locations that are supposed to be provided for external usage
       if($map_type == 3) {
         $preset_categories = CB_Map_Admin::get_option($cb_map_id, 'cb_items_preset_categories');
-        require_once( CB_MAP_PATH . 'classes/class-cb-map.php' );
-        $locations = array_values(CB_Map::get_locations_by_timeframes($cb_map_id, $preset_categories));
+        $locations = CB_Map::get_locations($cb_map_id);
+        $filters = [
+          'timeframes' => [
+            'preset_categories' => $preset_categories
+          ]
+        ];
+        $locations = CB_Map_Filter::filter_locations($locations, $cb_map_id, $filters);
+        $locations = array_values($locations); //locations to indexed array
         $locations = CB_Map::cleanup_location_data($locations, '<br>', $map_type);
       }
 

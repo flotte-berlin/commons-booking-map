@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: cb-admin-booking\n"
-"POT-Creation-Date: 2019-06-27 12:02+0200\n"
-"PO-Revision-Date: 2019-06-27 12:04+0200\n"
+"POT-Creation-Date: 2019-10-31 21:56+0100\n"
+"PO-Revision-Date: 2019-10-31 21:56+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -14,19 +14,19 @@ msgstr ""
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../classes/class-cb-location-map-admin.php:56
+#: ../classes/class-cb-location-map-admin.php:60
 msgid "MAP_POSITIONING"
 msgstr "Kartenpositionierung"
 
-#: ../classes/class-cb-location-map-admin.php:64
+#: ../classes/class-cb-location-map-admin.php:68
 msgid "LATITUDE"
 msgstr "Breitengrad"
 
-#: ../classes/class-cb-location-map-admin.php:70
+#: ../classes/class-cb-location-map-admin.php:74
 msgid "LONGITUDE"
 msgstr "Längengrad"
 
-#: ../classes/class-cb-location-map-admin.php:76
+#: ../classes/class-cb-location-map-admin.php:80
 msgid "POSITION"
 msgstr "Position"
 
@@ -58,44 +58,60 @@ msgstr "Commons Booking Map"
 msgid "Settings"
 msgstr ""
 
-#: ../classes/class-cb-map-shortcode.php:65
+#: ../classes/class-cb-map-shortcode.php:68
 msgid "NO_VALID_MAP_TYPE"
 msgstr "kein gültiger Karten-Typ"
 
-#: ../classes/class-cb-map-shortcode.php:69
+#: ../classes/class-cb-map-shortcode.php:72
 msgid "NO_VALID_POST_STATUS"
 msgstr "Karte ist nicht veröffentlicht"
 
-#: ../classes/class-cb-map-shortcode.php:73
-#: ../classes/class-cb-map-shortcode.php:78
+#: ../classes/class-cb-map-shortcode.php:76
+#: ../classes/class-cb-map-shortcode.php:81
 msgid "NO_VALID_MAP_ID"
 msgstr "keine gültige Karten-ID"
 
-#: ../classes/class-cb-map-shortcode.php:166
+#: ../classes/class-cb-map-shortcode.php:185
 #: ../templates/admin-page-template.php:215
 msgid "OPENING_HOURS"
 msgstr "Öffnungszeiten"
 
-#: ../classes/class-cb-map-shortcode.php:167
+#: ../classes/class-cb-map-shortcode.php:186
 #: ../templates/admin-page-template.php:229
 msgid "CONTACT"
 msgstr "Kontakt"
 
-#: ../classes/class-cb-map-shortcode.php:168
+#: ../classes/class-cb-map-shortcode.php:187
 msgid "FROM"
 msgstr "ab"
 
-#: ../classes/class-cb-map-shortcode.php:169
+#: ../classes/class-cb-map-shortcode.php:188
 msgid "UNTIL"
 msgstr "bis"
 
-#: ../classes/class-cb-map-shortcode.php:170
+#: ../classes/class-cb-map-shortcode.php:189
+msgid "AT_LEAST"
+msgstr "mind."
+
+#: ../classes/class-cb-map-shortcode.php:190
+msgid "DAYS"
+msgstr "Tag(e)"
+
+#: ../classes/class-cb-map-shortcode.php:191
 msgid "NO_LOCATIONS_MESSAGE"
 msgstr "Leider wurden keine Standorte gefunden."
 
-#: ../classes/class-cb-map-shortcode.php:171
+#: ../classes/class-cb-map-shortcode.php:192
 msgid "FILTER"
 msgstr "filtern"
+
+#: ../classes/class-cb-map-shortcode.php:193
+msgid "AVAILABILITY"
+msgstr "Verfügbarkeit"
+
+#: ../classes/class-cb-map-shortcode.php:194
+msgid "CATEGORIES"
+msgstr "Kategorien"
 
 #: ../classes/class-cb-map.php:10
 msgid "POST_LABELS_NAME"
