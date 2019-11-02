@@ -228,6 +228,13 @@
             </th>
             <td><input type="text" name="cb_map_options[label_location_contact]" placeholder="<?= cb_map\__('CONTACT', 'commons-booking-map', 'opening hours') ?>" value="<?= CB_Map_Admin::get_option($cb_map_id, 'label_location_contact') ?>"></td>
         </tr>
+        <tr>
+            <th>
+              <?= cb_map\__('SHOW_ITEM_AVAILABILITY', 'commons-booking-map', 'show item availability') ?>:
+              <span class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'SHOW_ITEM_AVAILABILITY_DESC', 'commons-booking-map', 'activate to show the item availability in the marker popup') ?>"></span>
+            </th>
+            <td><input type="checkbox" name="cb_map_options[show_item_availability]" <?= CB_Map_Admin::get_option($cb_map_id, 'show_item_availability') ? 'checked="checked"' : '' ?> value="on"></td>
+        </tr>
       </table>
     </div>
 
@@ -335,6 +342,28 @@
     <div class="option-group" id="option-group-filter-users">
       <h1><?= cb_map\__('FILTER_USERS', 'commons-booking-map', 'Filter for Users') ?></h1>
       <table class="text-left">
+        <tr>
+            <th>
+              <?= cb_map\__('SHOW_ITEM_AVAILABILITY_FILTER', 'commons-booking-map', 'show item availability') ?>:
+              <span class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'SHOW_ITEM_AVAILABILITY_FILTER_DESC', 'commons-booking-map', 'activate to show the item availability filter') ?>"></span>
+            </th>
+            <td><input type="checkbox" name="cb_map_options[show_item_availability_filter]" <?= CB_Map_Admin::get_option($cb_map_id, 'show_item_availability_filter') ? 'checked="checked"' : '' ?> value="on"></td>
+        </tr>
+        <tr>
+            <th>
+              <?= cb_map\__('LABEL_ITEM_AVAILABILITY_FILTER', 'commons-booking-map', 'label for item availability filter') ?>:
+              <span class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'LABEL_ITEM_AVAILABILITY_FILTER_DESC', 'commons-booking-map', 'alternative label for the item availability filter') ?>"></span>
+            </th>
+            <td><input type="text" name="cb_map_options[label_item_availability_filter]" placeholder="<?= cb_map\__('AVAILABILITY', 'commons-booking-map', 'availability') ?>" value="<?= CB_Map_Admin::get_option($cb_map_id, 'label_item_availability_filter') ?>"></td>
+        </tr>
+        <tr>
+            <th>
+              <?= cb_map\__('LABEL_ITEM_CATEGORY_FILTER', 'commons-booking-map', 'label for item category filter') ?>:
+              <span class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'LABEL_ITEM_CATEGORY_FILTER_DESC', 'commons-booking-map', 'alternative label for the item category filter') ?>"></span>
+            </th>
+            <td><input type="text" name="cb_map_options[label_item_category_filter]" placeholder="<?= cb_map\__('ITEM_CATEGORIES', 'commons-booking-map', 'categories') ?>" value="<?= CB_Map_Admin::get_option($cb_map_id, 'label_item_category_filter') ?>"></td>
+        </tr>
+
         <tr>
           <th>
             <?= cb_map\__('AVAILABLE_CATEGORIES', 'commons-booking-map', 'available categories')?>:

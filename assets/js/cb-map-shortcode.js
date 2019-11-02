@@ -15,30 +15,34 @@ function CB_Map() {
     4: 'https://tiles.lokaler.de/osmbright-20171212/{z}/{x}/{y}/tile@1x.jpeg'
   }
 
-  cb_map.init_availability_filters = function($, $filter_options) {
-    var $container = $('<div><div class="cb-map-filter-group-label">' + cb_map.translation['AVAILABILITY'] + '</div></div>');
-    var $wrapper = $('<div class="cb-map-filter-group"></div>');
-    $container.append($wrapper);
-    var $date_start_input = $('<input type="date" name="date_start" min="' + cb_map.settings.filter_availability.date_min + '" max="' + cb_map.settings.filter_availability.date_max + '">');
-    var $date_end_input = $('<input type="date" name="date_end" min="' + cb_map.settings.filter_availability.date_min + '" max="' + cb_map.settings.filter_availability.date_max + '">');
-    var $day_count_select = $('<select name="day_count"></select>')
-    for(var d = 0; d <= cb_map.settings.filter_availability.day_count_max; d++) {
-      var show_value = d == 0 ? '-' : d;
-      $day_count_select.append('<option value="' + d + '">' + show_value + '</option>')
-    }
+  cb_map.init_availability_filter = function($, $filter_options) {
+    if(this.settings.show_item_availability_filter) {
 
-    $wrapper.append('<label>' + cb_map.translation['FROM'] + '</label>'); //TODO: translate label texts
-    $wrapper.append($date_start_input);
-    $wrapper.append('<label>' + cb_map.translation['UNTIL'] + '</label>');
-    $wrapper.append($date_end_input);
-    $wrapper.append('<label>' + cb_map.translation['AT_LEAST'] + '</label>');
-    $wrapper.append($day_count_select);
-    $wrapper.append('<label>' + cb_map.translation['DAYS'] + '</label>');
+      var $container = $('<div><div class="cb-map-filter-group-label">' + cb_map.translation['AVAILABILITY'] + '</div></div>');
+      var $wrapper = $('<div class="cb-map-filter-group"></div>');
+      $container.append($wrapper);
+
+      var $date_start_input = $('<input type="date" name="date_start" min="' + cb_map.settings.filter_availability.date_min + '" max="' + cb_map.settings.filter_availability.date_max + '">');
+      var $date_end_input = $('<input type="date" name="date_end" min="' + cb_map.settings.filter_availability.date_min + '" max="' + cb_map.settings.filter_availability.date_max + '">');
+      var $day_count_select = $('<select name="day_count"></select>')
+      for(var d = 0; d <= cb_map.settings.filter_availability.day_count_max; d++) {
+        var show_value = d == 0 ? '-' : d;
+        $day_count_select.append('<option value="' + d + '">' + show_value + '</option>')
+      }
+
+      $wrapper.append('<label>' + cb_map.translation['FROM'] + '</label>'); //TODO: translate label texts
+      $wrapper.append($date_start_input);
+      $wrapper.append('<label>' + cb_map.translation['UNTIL'] + '</label>');
+      $wrapper.append($date_end_input);
+      $wrapper.append('<label>' + cb_map.translation['AT_LEAST'] + '</label>');
+      $wrapper.append($day_count_select);
+      $wrapper.append('<label>' + cb_map.translation['DAYS'] + '</label>');
+    }
 
     $filter_options.append($container);
   },
 
-  cb_map.init_category_filters = function($, $filter_options) {
+  cb_map.init_category_filter = function($, $filter_options) {
     var $container = $('<div><div class="cb-map-filter-group-label">' + cb_map.translation['CATEGORIES'] + '</div></div>');
     var $wrapper = $('<div class="cb-map-filter-group"></div>');
     $container.append($wrapper);
@@ -68,12 +72,20 @@ function CB_Map() {
 
     var $filter_container = $('<div class="cb-map-filters"></div>');
 
-    if(Object.keys(this.settings.filter_cb_item_categories).length > 0) {
+    var show_item_availability_filter =  this.settings.show_item_availability_filter;
+    var show_cb_item_categories_filter = Object.keys(this.settings.filter_cb_item_categories).length > 0
+
+    if(show_item_availability_filter || show_cb_item_categories_filter) {
       var $form = $('<form></form');
       var $filter_options = $('<div class="cb-filter-options"></div>');
 
-      cb_map.init_availability_filters($, $filter_options);
-      cb_map.init_category_filters($, $filter_options);
+      if(show_item_availability_filter) {
+        cb_map.init_availability_filter($, $filter_options);
+      }
+
+      if(show_cb_item_categories_filter) {
+        cb_map.init_category_filter($, $filter_options);
+      }
 
       $form.append($filter_options);
 
@@ -194,20 +206,15 @@ function CB_Map() {
         3: 'no-timeframe'
     }
 
-    if(availability) {
-      markup += '';
-
-      availability.forEach(function(day) {
-        var timestamp = Date.parse(day.date);
-        var date = new Date(timestamp);
-        var show_date = date.getDate();
-        show_date = show_date <= 9 ? '0' + show_date : show_date;
-        var show_month = date.getMonth() + 1;
-        var date_string = show_date + '.' + show_month + '.';
-        markup += '<div class="cb-map-popup-item-availability-day ' + status_classes[day.status] + '">' + date_string + '</div>'
-      });
-
-    }
+    availability.forEach(function(day) {
+      var timestamp = Date.parse(day.date);
+      var date = new Date(timestamp);
+      var show_date = date.getDate();
+      show_date = show_date <= 9 ? '0' + show_date : show_date;
+      var show_month = date.getMonth() + 1;
+      var date_string = show_date + '.' + show_month + '.';
+      markup += '<div class="cb-map-popup-item-availability-day ' + status_classes[day.status] + '">' + date_string + '</div>'
+    });
 
     return markup;
   }
@@ -297,7 +304,9 @@ function CB_Map() {
 
         popup_items += '</div>';
 
-        popup_items += '<div class="cb-map-popup-item-availability">' + cb_map.render_item_availability(item.availability) + '</div>';
+        if(cb_map.settings.show_item_availability && item.availability) {
+          popup_items += '<div class="cb-map-popup-item-availability">' + cb_map.render_item_availability(item.availability) + '</div>';
+        }
 
         popup_items += '<div class="cb-map-popup-item-desc">' + item.short_desc + '</div>';
         popup_items += '</div></div>';

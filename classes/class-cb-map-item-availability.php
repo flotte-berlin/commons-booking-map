@@ -123,6 +123,7 @@ class CB_Map_Item_Availability {
 
     return $availability;
   }
+
   protected static function fetch_all_bookings_in_period($date_start, $date_end, $status = 'confirmed') {
     global $wpdb;
 
@@ -148,7 +149,7 @@ class CB_Map_Item_Availability {
 
     //booked days (by item id)
     foreach ($bookings as $booking) {
-      if(!isset($bookings_by_item[$booking->item_id])) {
+      if(!isset($booked_days_by_item[$booking->item_id])) {
         $booked_days_by_item[$booking->item_id] = [];
       }
 

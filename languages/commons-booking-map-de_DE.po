@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: cb-admin-booking\n"
-"POT-Creation-Date: 2019-10-31 21:56+0100\n"
-"PO-Revision-Date: 2019-10-31 21:56+0100\n"
+"POT-Creation-Date: 2019-11-02 18:21+0100\n"
+"PO-Revision-Date: 2019-11-02 18:23+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -30,19 +30,19 @@ msgstr "Längengrad"
 msgid "POSITION"
 msgstr "Position"
 
-#: ../classes/class-cb-map-admin.php:69
+#: ../classes/class-cb-map-admin.php:71
 msgid "CB_MAP_ADMIN_METABOX_TITLE"
 msgstr "Kartenkonfiguration"
 
-#: ../classes/class-cb-map-admin.php:398
+#: ../classes/class-cb-map-admin.php:408
 msgid "SELECT_IMAGE"
 msgstr "Bild auswählen"
 
-#: ../classes/class-cb-map-admin.php:399
+#: ../classes/class-cb-map-admin.php:409
 msgid "SAVE"
 msgstr "speichern"
 
-#: ../classes/class-cb-map-admin.php:400
+#: ../classes/class-cb-map-admin.php:410
 msgid "MARKER_IMAGE_MEASUREMENTS"
 msgstr "Bildmaße"
 
@@ -106,6 +106,7 @@ msgid "FILTER"
 msgstr "filtern"
 
 #: ../classes/class-cb-map-shortcode.php:193
+#: ../templates/admin-page-template.php:357
 msgid "AVAILABILITY"
 msgstr "Verfügbarkeit"
 
@@ -423,47 +424,55 @@ msgid "LABEL_LOCATION_CONTACT_DESC"
 msgstr ""
 "ein alternatives Label für die Kontaktdaten von Standorten im Marker-Popup"
 
-#: ../templates/admin-page-template.php:235
+#: ../templates/admin-page-template.php:233
+msgid "SHOW_ITEM_AVAILABILITY"
+msgstr "Artikel-Verfügbarkeit anzeigen"
+
+#: ../templates/admin-page-template.php:234
+msgid "SHOW_ITEM_AVAILABILITY_DESC"
+msgstr "aktivieren, um die Artikel-Verfügbarkeit im Marker-Popup anzuzeigen"
+
+#: ../templates/admin-page-template.php:242
 msgid "CUSTOM_MARKER"
 msgstr "angepasster Marker"
 
-#: ../templates/admin-page-template.php:240
-#: ../templates/admin-page-template.php:302
+#: ../templates/admin-page-template.php:247
+#: ../templates/admin-page-template.php:309
 msgid "IMAGE_FILE"
 msgstr "Bilddatei"
 
-#: ../templates/admin-page-template.php:241
-#: ../templates/admin-page-template.php:303
+#: ../templates/admin-page-template.php:248
+#: ../templates/admin-page-template.php:310
 msgid "IMAGE_FILE_DESC"
 msgstr "der Standard Marker kann durch ein eigenes Bild ersetzt werden"
 
-#: ../templates/admin-page-template.php:244
-#: ../templates/admin-page-template.php:306
+#: ../templates/admin-page-template.php:251
+#: ../templates/admin-page-template.php:313
 msgid "SELECT"
 msgstr "auswählen"
 
-#: ../templates/admin-page-template.php:245
-#: ../templates/admin-page-template.php:307
+#: ../templates/admin-page-template.php:252
+#: ../templates/admin-page-template.php:314
 msgid "REMOVE"
 msgstr "entfernen"
 
-#: ../templates/admin-page-template.php:261
-#: ../templates/admin-page-template.php:323
+#: ../templates/admin-page-template.php:268
+#: ../templates/admin-page-template.php:330
 msgid "ICON_SIZE"
 msgstr "Icon Größe"
 
-#: ../templates/admin-page-template.php:262
-#: ../templates/admin-page-template.php:324
+#: ../templates/admin-page-template.php:269
+#: ../templates/admin-page-template.php:331
 msgid "ICON_SIZE_DESC"
 msgstr ""
 "die Größe des angepassten Marker-Bildes, mit der es auf der Karte angezeigt "
 "wird"
 
-#: ../templates/admin-page-template.php:272
+#: ../templates/admin-page-template.php:279
 msgid "ANCHOR_POINT"
 msgstr "Anker-Punkt"
 
-#: ../templates/admin-page-template.php:273
+#: ../templates/admin-page-template.php:280
 msgid "ANCHOR_POINT_DESC"
 msgstr ""
 "die Position des Ankerpunkts des Marker-Bildes von der linken oberen Ecke "
@@ -471,87 +480,115 @@ msgstr ""
 "Höhe der Icon-Größe - mit diesem Punkt wird der Marker auf den "
 "Geokoordinaten platziert"
 
-#: ../templates/admin-page-template.php:284
+#: ../templates/admin-page-template.php:291
 msgid "CLUSTER"
 msgstr "Cluster"
 
-#: ../templates/admin-page-template.php:288
+#: ../templates/admin-page-template.php:295
 msgid "MAX_CLUSTER_RADIUS"
 msgstr "max. Cluster-Radius"
 
-#: ../templates/admin-page-template.php:289
+#: ../templates/admin-page-template.php:296
 msgid "MAX_CLUSTER_RADIUS_DESC"
 msgstr ""
 "Radius innerhalb dessen mehrere Marker zu einem Cluster zusammengefasst "
 "werden - 0 für Deaktivierung"
 
-#: ../templates/admin-page-template.php:297
+#: ../templates/admin-page-template.php:304
 msgid "CUSTOM_CLUSTER_MARKER"
 msgstr "angepasster Cluster-Marker"
 
-#: ../templates/admin-page-template.php:336
+#: ../templates/admin-page-template.php:343
 msgid "FILTER_USERS"
 msgstr "Filter für NutzerInnen"
 
-#: ../templates/admin-page-template.php:340
+#: ../templates/admin-page-template.php:347
+msgid "SHOW_ITEM_AVAILABILITY_FILTER"
+msgstr "Filter für Artikel-Verfügbarkeit anzeigen"
+
+#: ../templates/admin-page-template.php:348
+msgid "SHOW_ITEM_AVAILABILITY_FILTER_DESC"
+msgstr "aktivieren, um den Filter für die Artikel-Verfügbarkeit anzuzeigen"
+
+#: ../templates/admin-page-template.php:354
+msgid "LABEL_ITEM_AVAILABILITY_FILTER"
+msgstr "Beschriftung für Artikel-Verfügbarkeit anzeigen"
+
+#: ../templates/admin-page-template.php:355
+msgid "LABEL_ITEM_AVAILABILITY_FILTER_DESC"
+msgstr "ein alternatives Label für den Artikel-Verfügbarkeits-Filter"
+
+#: ../templates/admin-page-template.php:361
+msgid "LABEL_ITEM_CATEGORY_FILTER"
+msgstr "Beschriftung für Artikel-Kategorie-Filter"
+
+#: ../templates/admin-page-template.php:362
+msgid "LABEL_ITEM_CATEGORY_FILTER_DESC"
+msgstr "ein alternatives Label für Artikel-Kategorie-Filter"
+
+#: ../templates/admin-page-template.php:364
+msgid "ITEM_CATEGORIES"
+msgstr "Kategorien"
+
+#: ../templates/admin-page-template.php:369
 msgid "AVAILABLE_CATEGORIES"
 msgstr "verfügbare Kategorien"
 
-#: ../templates/admin-page-template.php:341
+#: ../templates/admin-page-template.php:370
 msgid "AVAILABLE_CATEGORIES_DESC"
 msgstr ""
 "Kategorien, die NutzerInnen angezeigt werden , um Artikel zu filtern "
 "(erscheinen in der Gruppierung und Reihenfolge der Label-Liste unten) - "
-"keine Auswahl für Deaktivierung von Filtern"
+"keine Auswahl für Deaktivierung von Kategorie-Filtern"
 
-#: ../templates/admin-page-template.php:355
+#: ../templates/admin-page-template.php:384
 msgid "CUSTOM_CATEGORY_FILTER_LABEL_MARKUP"
 msgstr "Gruppierung der Filter-Label und individuelles HTML"
 
-#: ../templates/admin-page-template.php:357
+#: ../templates/admin-page-template.php:386
 msgid "ADD_FILTER_GROUP_BUTTON_TITLE"
 msgstr "Filter-Gruppe hinzufügen"
 
-#: ../templates/admin-page-template.php:364
+#: ../templates/admin-page-template.php:393
 msgid "FILTER_PRESETS"
 msgstr "Vorabfilter"
 
-#: ../templates/admin-page-template.php:368
+#: ../templates/admin-page-template.php:397
 msgid "PRESET_CATEGORIES"
 msgstr "gesetzte Kategorien"
 
-#: ../templates/admin-page-template.php:369
+#: ../templates/admin-page-template.php:398
 msgid "PRESET_CATEGORIES_DESC"
 msgstr ""
 "Auswahl der Kategorien, die genutzt werden, um Artikel vorzufiltern, die auf "
 "der Karte angezeigt werden (Kategorien auf einer Ebene sind ODER-verknüpft, "
 "d.h. nur eine muss erfüllt sein) - keine Auswahl zeigt alle Artikel an"
 
-#: ../templates/admin-page-template.php:442
+#: ../templates/admin-page-template.php:471
 msgid "FILTER_GROUP"
 msgstr "Filter-Gruppe"
 
-#: ../templates/admin-page-template.php:442
+#: ../templates/admin-page-template.php:471
 msgid "FILTER_GROUP_PLACEHOLDER"
 msgstr "Gruppenname"
 
-#: ../templates/admin-page-template.php:445
+#: ../templates/admin-page-template.php:474
 msgid "REMOVE_FILTER_GROUP_BUTTON_TITLE"
 msgstr "Filter-Gruppe entfernen"
 
-#: ../templates/admin-page-template.php:524
+#: ../templates/admin-page-template.php:553
 msgid "URL"
 msgstr "URL"
 
-#: ../templates/admin-page-template.php:525
+#: ../templates/admin-page-template.php:554
 msgid "CODE"
 msgstr "Code"
 
-#: ../templates/admin-page-template.php:539
+#: ../templates/admin-page-template.php:568
 msgid "REMOVE_IMPORT_SOURCE_BUTTON_TITLE"
 msgstr "Import-Quelle entfernen"
 
-#: ../templates/admin-page-template.php:547
+#: ../templates/admin-page-template.php:576
 msgid "TEST_IMPORT_SOURCE_BUTTON_TITLE"
 msgstr "Import-Quelle testen"
 
@@ -573,6 +610,9 @@ msgid "BOOKING_PAGE_LINK_REPLACEMENT_DESC"
 msgstr ""
 "mit der Aktivierung wird das Ziel des Links 'Auf der Karte zeigen' auf der "
 "Buchungsseite durch openstreetmap ersetzt"
+
+#~ msgid "SHOW_SHOW_ITEM_AVAILABILITY_DESC"
+#~ msgstr "aktivieren, um die Artikel-Verfügbarkeit im Marker-Popup anzuzeigen"
 
 #~ msgid "LOKALER"
 #~ msgstr "OSM - Lokaler"

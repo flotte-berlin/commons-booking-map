@@ -138,3 +138,7 @@
 .cb-map-filters select {
   margin-right: 10px;
 }
+
+.cb-map-button-wrapper {
+  margin-top: 5px;
+}

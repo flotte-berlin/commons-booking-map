@@ -113,7 +113,13 @@ class CB_Map_Shortcode {
 
     $options = CB_Map_Admin::get_options($cb_map_id, true);
 
-    $pass_through = ['base_map', 'show_scale', 'zoom_min', 'zoom_max', 'zoom_start', 'lat_start', 'lon_start', 'marker_map_bounds_initial', 'marker_map_bounds_filter', 'max_cluster_radius', 'show_location_contact', 'show_location_opening_hours'];
+    $pass_through = [
+      'base_map',
+      'show_scale', 'zoom_min', 'zoom_max', 'zoom_start', 'lat_start', 'lon_start',
+      'marker_map_bounds_initial', 'marker_map_bounds_filter', 'max_cluster_radius',
+      'show_location_contact', 'show_location_opening_hours', 'show_item_availability',
+      'show_item_availability_filter', 'label_item_availability_filter', 'label_item_category_filter'
+    ];
 
     $icon_size = [$options['marker_icon_width'], $options['marker_icon_height']];
     $icon_anchor = [$options['marker_icon_anchor_x'], $options['marker_icon_anchor_y']];
@@ -180,6 +186,8 @@ class CB_Map_Shortcode {
     $label_location_opening_hours = CB_Map_Admin::get_option($cb_map_id, 'label_location_opening_hours');
     $label_location_contact = CB_Map_Admin::get_option($cb_map_id, 'label_location_contact');
     $custom_no_locations_message = CB_Map_Admin::get_option($cb_map_id, 'custom_no_locations_message');
+    $label_item_availability_filter = CB_Map_Admin::get_option($cb_map_id, 'label_item_availability_filter');
+    $label_item_category_filter = CB_Map_Admin::get_option($cb_map_id, 'label_item_category_filter');
 
     $translation = [
       'OPENING_HOURS' => strlen($label_location_opening_hours) > 0 ? $label_location_opening_hours : cb_map\__('OPENING_HOURS', 'commons-booking-map', 'opening hours'),
@@ -190,8 +198,8 @@ class CB_Map_Shortcode {
       'DAYS' => cb_map\__( 'DAYS', 'commons-booking-map', 'day(s)'),
       'NO_LOCATIONS_MESSAGE' => strlen($custom_no_locations_message) > 0 ? $custom_no_locations_message : cb_map\__( 'NO_LOCATIONS_MESSAGE', 'commons-booking-map', 'Sorry, no locations found.'),
       'FILTER' => cb_map\__( 'FILTER', 'commons-booking-map', 'filter'),
-      'AVAILABILITY' => cb_map\__( 'AVAILABILITY', 'commons-booking-map', 'availability'),
-      'CATEGORIES' => cb_map\__( 'CATEGORIES', 'commons-booking-map', 'categories'),
+      'AVAILABILITY' => strlen($label_item_availability_filter) > 0 ? $label_item_availability_filter : cb_map\__( 'AVAILABILITY', 'commons-booking-map', 'availability'),
+      'CATEGORIES' => strlen($label_item_category_filter) > 0 ? $label_item_category_filter : cb_map\__( 'CATEGORIES', 'commons-booking-map', 'categories'),
     ];
 
     return $translation;
@@ -284,8 +292,8 @@ class CB_Map_Shortcode {
         $default_date_start = $settings['filter_availability']['date_min'];
         $default_date_end = $settings['filter_availability']['date_max'];
 
-        //validate availability filter input
-        if(isset($filters['date_start']) || isset($filters['date_end'] ) || isset($filters['day_count'])) {
+        //if availability filter is enabled & any related input is set: validate availability filter input
+        if(CB_Map_Admin::get_option($cb_map_id, 'show_item_availability_filter') && (isset($filters['date_start']) || isset($filters['date_end'] ) || isset($filters['day_count']))) {
 
           $date_start = isset($filters['date_start']) && strlen($filters['date_start']) > 0 && new DateTime($filters['date_start']) && new DateTime($filters['date_start']) >= new DAteTime($default_date_start) ? $filters['date_start'] : $default_date_start;
           $date_end = isset($filters['date_end']) && strlen($filters['date_end']) > 0 && new DateTime($filters['date_start']) && new DateTime($filters['date_end']) <= new DateTime($default_date_end) ? $filters['date_end']: $default_date_end;
@@ -307,7 +315,11 @@ class CB_Map_Shortcode {
         }
         else {
           //create availabilities
-          $locations = CB_Map_Item_Availability::create_items_availabilities($locations, $default_date_start, $default_date_end);
+          $show_item_availability = CB_Map_Admin::get_option($cb_map_id, 'show_item_availability');
+          if($show_item_availability) {
+            $locations = CB_Map_Item_Availability::create_items_availabilities($locations, $default_date_start, $default_date_end);
+          }
+
         }
         $locations = CB_Map_Item_Availability::availability_to_indexed_array($locations);
         $locations = array_values($locations); //locations to indexed array
