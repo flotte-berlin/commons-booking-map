@@ -348,7 +348,7 @@ class CB_Map_Shortcode {
         $preset_categories = CB_Map_Admin::get_option($cb_map_id, 'cb_items_preset_categories');
         $locations = CB_Map::get_locations($cb_map_id);
         $filters = [
-          'timeframes' => [
+          'timeframes_and_categories' => [
             'preset_categories' => $preset_categories
           ]
         ];

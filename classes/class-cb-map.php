@@ -402,17 +402,18 @@ class CB_Map {
 
       $locations_json = self::fetch_locations($cb_map_id, $url, $code);
 
-      $locations = CB_Map::cleanup_location_data(json_decode($locations_json, true), '<br>', 2);
+      if($locations_json) {
+        $locations = CB_Map::cleanup_location_data(json_decode($locations_json, true), '<br>', 2);
 
-      if($locations) {
-        $new_map_imports[$import_id] = base64_encode(json_encode($locations, JSON_UNESCAPED_UNICODE));
-      }
-      else {
-        if(isset($map_imports[$import_id])) {
-            $new_map_imports[$import_id] = $map_imports[$import_id];
+        if($locations) {
+          $new_map_imports[$import_id] = base64_encode(json_encode($locations, JSON_UNESCAPED_UNICODE));
+        }
+        else {
+          if(isset($map_imports[$import_id])) {
+              $new_map_imports[$import_id] = $map_imports[$import_id];
+          }
         }
       }
-
     }
 
     update_post_meta($cb_map_id, 'cb_map_imports', $new_map_imports);
