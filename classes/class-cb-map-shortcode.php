@@ -49,6 +49,9 @@ class CB_Map_Shortcode {
             wp_enqueue_style('cb_map_shortcode_css', CB_MAP_ASSETS_URL . 'css/cb-map-shortcode.css');
             wp_register_script( 'cb_map_shortcode_js', CB_MAP_ASSETS_URL . 'js/cb-map-shortcode.js');
 
+            wp_register_script( 'cb_map_filters_js', CB_MAP_ASSETS_URL . 'js/cb-map-filters.js');
+            wp_enqueue_script( 'cb_map_filters_js' );
+
             wp_add_inline_script( 'cb_map_shortcode_js',
               "jQuery(document).ready(function ($) {
                 var cb_map = new CB_Map();
@@ -265,62 +268,21 @@ class CB_Map_Shortcode {
       require_once( CB_MAP_PATH . 'classes/class-cb-map.php' );
       require_once( CB_MAP_PATH . 'classes/class-cb-map-filter.php' );
 
-      //local - get the locations and apply provided filters
+      //local - get the locations
       if($map_type == 1) {
-        $available_user_categories = array_keys(CB_Map_Admin::get_option($cb_map_id, 'cb_items_available_categories'));
-        $user_categories = [];
-        $location_filters = [];
-        $filters = isset($_POST['filters']) && is_array($_POST['filters']) ? $_POST['filters'] : [];
-
-        if(isset($filters['cb_item_categories']) && is_array($filters['cb_item_categories'])) {
-          foreach($filters['cb_item_categories'] as $filter) {
-            if(in_array((int) $filter, $available_user_categories)) {
-              $user_categories[] = (int) $filter;
-            }
-          }
-        }
-
-        $location_filters['timeframes_and_categories'] = [
-          'preset_categories' => $preset_categories,
-          'user_categories' => $user_categories
-        ];
-
         $locations = CB_Map::get_locations($cb_map_id);
-        $locations = CB_Map_Filter::filter_locations($locations, $cb_map_id, $location_filters);
+        $locations = CB_Map_Filter::filter_locations_by_timeframes_and_categories($locations, $cb_map_id, $preset_categories);
 
         $settings = self::get_settings($cb_map_id);
         $default_date_start = $settings['filter_availability']['date_min'];
         $default_date_end = $settings['filter_availability']['date_max'];
 
-        //if availability filter is enabled & any related input is set: validate availability filter input
-        if(CB_Map_Admin::get_option($cb_map_id, 'show_item_availability_filter') && (isset($filters['date_start']) || isset($filters['date_end'] ) || isset($filters['day_count']))) {
-
-          $date_start = isset($filters['date_start']) && strlen($filters['date_start']) > 0 && new DateTime($filters['date_start']) && new DateTime($filters['date_start']) >= new DAteTime($default_date_start) ? $filters['date_start'] : $default_date_start;
-          $date_end = isset($filters['date_end']) && strlen($filters['date_end']) > 0 && new DateTime($filters['date_start']) && new DateTime($filters['date_end']) <= new DateTime($default_date_end) ? $filters['date_end']: $default_date_end;
-
-          //ensure: date_start < date_end
-          if(new DateTime($date_start) > new DateTime($date_end)) {
-            $tmp_date = $date_start;
-            $date_start = $date_end;
-            $date_end = $tmp_date;
-          }
-
-          $locations = CB_Map_Item_Availability::create_items_availabilities($locations, $date_start, $date_end);
-
-          $location_filter['item_availability'] = [
-            'day_count' => isset($filters['day_count']) && (int) $filters['day_count'] > 0 && (int) $filters['day_count'] <= $settings['filter_availability']['day_count_max'] ? (int) $filters['day_count'] : 1
-          ];
-
-          $locations = CB_Map_Filter::filter_locations($locations, $cb_map_id, $location_filter);
+        //create availabilities
+        $show_item_availability = CB_Map_Admin::get_option($cb_map_id, 'show_item_availability');
+        if($show_item_availability) {
+          $locations = CB_Map_Item_Availability::create_items_availabilities($locations, $default_date_start, $default_date_end);
         }
-        else {
-          //create availabilities
-          $show_item_availability = CB_Map_Admin::get_option($cb_map_id, 'show_item_availability');
-          if($show_item_availability) {
-            $locations = CB_Map_Item_Availability::create_items_availabilities($locations, $default_date_start, $default_date_end);
-          }
 
-        }
         $locations = CB_Map_Item_Availability::availability_to_indexed_array($locations);
         $locations = array_values($locations); //locations to indexed array
         $locations = CB_Map::cleanup_location_data($locations, '<br>', $map_type);
@@ -347,12 +309,8 @@ class CB_Map_Shortcode {
       if($map_type == 3) {
         $preset_categories = CB_Map_Admin::get_option($cb_map_id, 'cb_items_preset_categories');
         $locations = CB_Map::get_locations($cb_map_id);
-        $filters = [
-          'timeframes_and_categories' => [
-            'preset_categories' => $preset_categories
-          ]
-        ];
-        $locations = CB_Map_Filter::filter_locations($locations, $cb_map_id, $filters);
+        $locations = CB_Map_Filter::filter_locations_by_timeframes_and_categories($locations, $cb_map_id, $preset_categories);
+
         $locations = array_values($locations); //locations to indexed array
         $locations = CB_Map::cleanup_location_data($locations, '<br>', $map_type);
       }

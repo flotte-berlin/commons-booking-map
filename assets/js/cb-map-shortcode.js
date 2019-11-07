@@ -7,6 +7,7 @@ function CB_Map() {
   cb_map.map = null;
   cb_map.markers = null;
   cb_map.messagebox = null;
+  cb_map.location_data = [];
 
   cb_map.tile_servers = {
     1: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -15,111 +16,9 @@ function CB_Map() {
     4: 'https://tiles.lokaler.de/osmbright-20171212/{z}/{x}/{y}/tile@1x.jpeg'
   }
 
-  cb_map.init_availability_filter = function($, $filter_options) {
-    if(this.settings.show_item_availability_filter) {
-
-      var $container = $('<div><div class="cb-map-filter-group-label">' + cb_map.translation['AVAILABILITY'] + '</div></div>');
-      var $wrapper = $('<div class="cb-map-filter-group"></div>');
-      $container.append($wrapper);
-
-      var $date_start_input = $('<input type="date" name="date_start" min="' + cb_map.settings.filter_availability.date_min + '" max="' + cb_map.settings.filter_availability.date_max + '">');
-      var $date_end_input = $('<input type="date" name="date_end" min="' + cb_map.settings.filter_availability.date_min + '" max="' + cb_map.settings.filter_availability.date_max + '">');
-      var $day_count_select = $('<select name="day_count"></select>')
-      for(var d = 0; d <= cb_map.settings.filter_availability.day_count_max; d++) {
-        var show_value = d == 0 ? '-' : d;
-        $day_count_select.append('<option value="' + d + '">' + show_value + '</option>')
-      }
-
-      $wrapper.append('<label>' + cb_map.translation['FROM'] + '</label>'); //TODO: translate label texts
-      $wrapper.append($date_start_input);
-      $wrapper.append('<label>' + cb_map.translation['UNTIL'] + '</label>');
-      $wrapper.append($date_end_input);
-      $wrapper.append('<label>' + cb_map.translation['AT_LEAST'] + '</label>');
-      $wrapper.append($day_count_select);
-      $wrapper.append('<label>' + cb_map.translation['DAYS'] + '</label>');
-    }
-
-    $filter_options.append($container);
-  },
-
-  cb_map.init_category_filter = function($, $filter_options) {
-    var $container = $('<div><div class="cb-map-filter-group-label">' + cb_map.translation['CATEGORIES'] + '</div></div>');
-    var $wrapper = $('<div class="cb-map-filter-group"></div>');
-    $container.append($wrapper);
-
-    $.each(this.settings.filter_cb_item_categories, function(index, group) {
-      var $fieldset = $('<fieldset></fieldset>');
-      if(group.name.length > 0) {
-        $fieldset.append('<legend>' + group.name + '</legend>');
-      }
-
-      $.each(group.elements, function(index, category) {
-        var $input = $('<input type="checkbox" name="cb_item_categories[]" value="' + category.cat_id + '">')
-        var $label = $('<label></label>');
-        $label.html(category.markup);
-        $fieldset.append($input);
-        $fieldset.append($label);
-      });
-
-      $wrapper.append($fieldset);
-    });
-
-    $filter_options.append($container);
-  },
-
   cb_map.init_filters = function($) {
-    var that = this;
-
-    var $filter_container = $('<div class="cb-map-filters"></div>');
-
-    var show_item_availability_filter =  this.settings.show_item_availability_filter;
-    var show_cb_item_categories_filter = Object.keys(this.settings.filter_cb_item_categories).length > 0
-
-    if(show_item_availability_filter || show_cb_item_categories_filter) {
-      var $form = $('<form></form');
-      var $filter_options = $('<div class="cb-filter-options"></div>');
-
-      if(show_item_availability_filter) {
-        cb_map.init_availability_filter($, $filter_options);
-      }
-
-      if(show_cb_item_categories_filter) {
-        cb_map.init_category_filter($, $filter_options);
-      }
-
-      $form.append($filter_options);
-
-      var $button = $('<button>' + cb_map.translation['FILTER'] + '</button>');
-
-      $button.click(function(event) {
-        event.preventDefault();
-
-        var filters = {
-          cb_item_categories: [],
-          availability: {}
-        };
-        var data = $form.serializeArray();
-        data.forEach(function(obj) {
-          if(obj.name.indexOf('cb_item_categories') > -1) {
-            filters.cb_item_categories.push(obj.value);
-          }
-          else {
-            console.log('obj.name: ', obj.name)
-            filters[obj.name] = obj.value;
-          }
-        })
-
-        that.get_location_data(filters);
-      });
-
-      $button_wrapper = $('<div class="cb-map-button-wrapper"></div>');
-      $button_wrapper.append($button);
-      $form.append($button_wrapper);
-
-      $filter_container.append($form);
-      $filter_container.insertAfter($('#cb-map-' + this.settings.cb_map_id));
-    }
-  },
+    cb_map.filters = new CB_Map_Filters($, cb_map);
+  }
 
   cb_map.init_map = function() {
     var tile_server_url = cb_map.tile_servers[this.settings.base_map];
@@ -158,18 +57,15 @@ function CB_Map() {
   });
 
     //get location data
-    this.get_location_data(null, true);
+    this.get_location_data(true);
 
   },
 
-  cb_map.get_location_data = function(filters, init) {
-    filters = filters || [];
-
+  cb_map.get_location_data = function(init) {
     var that = this;
     var data = {
       'nonce': this.settings.nonce,
 			'action': 'cb_map_locations',
-      'filters': filters,
       'cb_map_id': this.settings.cb_map_id
 		};
     //console.log('fetch location data from: ', this.settings.data_url);
@@ -181,14 +77,10 @@ function CB_Map() {
     }
 
     jQuery.post(this.settings.data_url, data, function(response) {
-      var location_data = JSON.parse(response);
-      console.log('location data: ', location_data);
+      cb_map.location_data = JSON.parse(response);
+      console.log('location data: ', cb_map.location_data);
 
-      that.render_locations(location_data, filters, init);
-
-      if(location_data.length == 0) {
-        that.messagebox.show(cb_map.translation['NO_LOCATIONS_MESSAGE']);
-      }
+      that.render_locations(cb_map.location_data, init);
 
 		}).always(function() {
       that.map.spin(false);
@@ -219,7 +111,11 @@ function CB_Map() {
     return markup;
   }
 
-  cb_map.render_locations = function(data, filters, init) {
+  cb_map.render_locations = function(data, init) {
+    if(data.length == 0) {
+      this.messagebox.show(cb_map.translation['NO_LOCATIONS_MESSAGE']);
+    }
+
     var that = this;
 
     var markers;
