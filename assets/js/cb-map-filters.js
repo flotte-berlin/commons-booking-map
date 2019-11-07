@@ -55,9 +55,20 @@ function CB_Map_Filters($, cb_map) {
           if(!filters.day_count) {
             filters.day_count = $('select[name="day_count"]').lastChild('option').val();
           }
-        }
 
-        //TODO: ensure date_start < date_end
+          //ensure date_end is not less then date_start, flip if needed
+          var date_start_timestamp = Date.parse(filters.date_start);
+          var date_end_timestamp = Date.parse(filters.date_end);
+
+          if(date_end_timestamp < date_start_timestamp) {
+            var date_tmp = filters.date_start;
+            filters.date_start = filters.date_end;
+            filters.date_end = date_tmp;
+
+             $('input[name="date_start"]').val(filters.date_start);
+             $('input[name="date_end"]').val(filters.date_end);
+          }
+        }
 
         var location_data = JSON.parse(JSON.stringify(cb_map.location_data)); //TODO: use a more efficient way of object cloning
         location_data = that.apply_filters(location_data, filters);
