@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: cb-admin-booking\n"
-"POT-Creation-Date: 2019-11-02 18:21+0100\n"
-"PO-Revision-Date: 2019-11-02 18:23+0100\n"
+"POT-Creation-Date: 2019-11-08 16:36+0100\n"
+"PO-Revision-Date: 2019-11-08 16:40+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -19,10 +19,14 @@ msgid "MAP_POSITIONING"
 msgstr "Kartenpositionierung"
 
 #: ../classes/class-cb-location-map-admin.php:68
+#: ../templates/admin-page-template.php:366
+#: ../templates/admin-page-template.php:376
 msgid "LATITUDE"
 msgstr "Breitengrad"
 
 #: ../classes/class-cb-location-map-admin.php:74
+#: ../templates/admin-page-template.php:365
+#: ../templates/admin-page-template.php:375
 msgid "LONGITUDE"
 msgstr "Längengrad"
 
@@ -30,19 +34,19 @@ msgstr "Längengrad"
 msgid "POSITION"
 msgstr "Position"
 
-#: ../classes/class-cb-map-admin.php:71
+#: ../classes/class-cb-map-admin.php:77
 msgid "CB_MAP_ADMIN_METABOX_TITLE"
 msgstr "Kartenkonfiguration"
 
-#: ../classes/class-cb-map-admin.php:408
+#: ../classes/class-cb-map-admin.php:445
 msgid "SELECT_IMAGE"
 msgstr "Bild auswählen"
 
-#: ../classes/class-cb-map-admin.php:409
+#: ../classes/class-cb-map-admin.php:446
 msgid "SAVE"
 msgstr "speichern"
 
-#: ../classes/class-cb-map-admin.php:410
+#: ../classes/class-cb-map-admin.php:447
 msgid "MARKER_IMAGE_MEASUREMENTS"
 msgstr "Bildmaße"
 
@@ -58,61 +62,70 @@ msgstr "Commons Booking Map"
 msgid "Settings"
 msgstr ""
 
-#: ../classes/class-cb-map-shortcode.php:68
+#: ../classes/class-cb-map-shortcode.php:71
 msgid "NO_VALID_MAP_TYPE"
 msgstr "kein gültiger Karten-Typ"
 
-#: ../classes/class-cb-map-shortcode.php:72
+#: ../classes/class-cb-map-shortcode.php:75
 msgid "NO_VALID_POST_STATUS"
 msgstr "Karte ist nicht veröffentlicht"
 
-#: ../classes/class-cb-map-shortcode.php:76
-#: ../classes/class-cb-map-shortcode.php:81
+#: ../classes/class-cb-map-shortcode.php:79
+#: ../classes/class-cb-map-shortcode.php:84
 msgid "NO_VALID_MAP_ID"
 msgstr "keine gültige Karten-ID"
 
-#: ../classes/class-cb-map-shortcode.php:185
+#: ../classes/class-cb-map-shortcode.php:197
 #: ../templates/admin-page-template.php:215
 msgid "OPENING_HOURS"
 msgstr "Öffnungszeiten"
 
-#: ../classes/class-cb-map-shortcode.php:186
+#: ../classes/class-cb-map-shortcode.php:198
 #: ../templates/admin-page-template.php:229
 msgid "CONTACT"
 msgstr "Kontakt"
 
-#: ../classes/class-cb-map-shortcode.php:187
+#: ../classes/class-cb-map-shortcode.php:199
 msgid "FROM"
 msgstr "ab"
 
-#: ../classes/class-cb-map-shortcode.php:188
+#: ../classes/class-cb-map-shortcode.php:200
 msgid "UNTIL"
 msgstr "bis"
 
-#: ../classes/class-cb-map-shortcode.php:189
+#: ../classes/class-cb-map-shortcode.php:201
 msgid "AT_LEAST"
 msgstr "mind."
 
-#: ../classes/class-cb-map-shortcode.php:190
+#: ../classes/class-cb-map-shortcode.php:202
 msgid "DAYS"
 msgstr "Tag(e)"
 
-#: ../classes/class-cb-map-shortcode.php:191
+#: ../classes/class-cb-map-shortcode.php:203
 msgid "NO_LOCATIONS_MESSAGE"
 msgstr "Leider wurden keine Standorte gefunden."
 
-#: ../classes/class-cb-map-shortcode.php:192
+#: ../classes/class-cb-map-shortcode.php:204
 msgid "FILTER"
 msgstr "filtern"
 
-#: ../classes/class-cb-map-shortcode.php:193
-#: ../templates/admin-page-template.php:357
+#: ../classes/class-cb-map-shortcode.php:205
+#: ../templates/admin-page-template.php:391
 msgid "AVAILABILITY"
 msgstr "Verfügbarkeit"
 
-#: ../classes/class-cb-map-shortcode.php:194
+#: ../classes/class-cb-map-shortcode.php:206
 msgid "CATEGORIES"
 msgstr "Kategorien"
+
+#: ../classes/class-cb-map-shortcode.php:207
+#: ../templates/admin-page-template.php:357
+msgid "DISTANCE"
+msgstr "Entfernung"
+
+#: ../classes/class-cb-map-shortcode.php:208
+msgid "ADDRESS"
+msgstr "Adresse"
 
 #: ../classes/class-cb-map.php:10
 msgid "POST_LABELS_NAME"
@@ -503,92 +516,128 @@ msgid "FILTER_USERS"
 msgstr "Filter für NutzerInnen"
 
 #: ../templates/admin-page-template.php:347
+msgid "SHOW_LOCATION_DISTANCE_FILTER"
+msgstr "Filter für Standort-Entfernung anzeigen"
+
+#: ../templates/admin-page-template.php:348
+msgid "SHOW_LOCATION_DISTANCE_FILTER_DESC"
+msgstr "aktivieren, um den Filter für die Standort-Entfernung anzuzeigen"
+
+#: ../templates/admin-page-template.php:354
+msgid "LABEL_LOCATION_DISTANCE_FILTER"
+msgstr "Beschriftung für Standort-Entfernungs-Filter"
+
+#: ../templates/admin-page-template.php:355
+msgid "LABEL_LOCATION_DISTANCE_FILTER_DESC"
+msgstr "ein alternatives Label für den Standort-Entfernungs-Filter"
+
+#: ../templates/admin-page-template.php:361
+msgid "ADDRESS_SEARCH_BOUNDS_LEFT_BOTTOM"
+msgstr "Begrenzung Addresssuche - links unten"
+
+#: ../templates/admin-page-template.php:362
+msgid "ADDRESS_SEARCH_BOUNDS_LEFT_BOTTOM_DESC"
+msgstr ""
+"die linke untere Ecke des Bereichs, in dem Adressen in Geokoordinaten "
+"aufgelöst werden"
+
+#: ../templates/admin-page-template.php:371
+msgid "ADDRESS_SEARCH_BOUNDS_RIGHT_TOP"
+msgstr "Begrenzung Addresssuche - rechts oben"
+
+#: ../templates/admin-page-template.php:372
+msgid "ADDRESS_SEARCH_BOUNDS_RIGHT_TOP_DESC"
+msgstr ""
+"die rechte obere Ecke des Bereichs, in dem Adressen in Geokoordinaten "
+"aufgelöst werden"
+
+#: ../templates/admin-page-template.php:381
 msgid "SHOW_ITEM_AVAILABILITY_FILTER"
 msgstr "Filter für Artikel-Verfügbarkeit anzeigen"
 
-#: ../templates/admin-page-template.php:348
+#: ../templates/admin-page-template.php:382
 msgid "SHOW_ITEM_AVAILABILITY_FILTER_DESC"
 msgstr "aktivieren, um den Filter für die Artikel-Verfügbarkeit anzuzeigen"
 
-#: ../templates/admin-page-template.php:354
+#: ../templates/admin-page-template.php:388
 msgid "LABEL_ITEM_AVAILABILITY_FILTER"
-msgstr "Beschriftung für Artikel-Verfügbarkeit anzeigen"
+msgstr "Beschriftung für Artikel-Verfügbarkeit"
 
-#: ../templates/admin-page-template.php:355
+#: ../templates/admin-page-template.php:389
 msgid "LABEL_ITEM_AVAILABILITY_FILTER_DESC"
 msgstr "ein alternatives Label für den Artikel-Verfügbarkeits-Filter"
 
-#: ../templates/admin-page-template.php:361
+#: ../templates/admin-page-template.php:395
 msgid "LABEL_ITEM_CATEGORY_FILTER"
 msgstr "Beschriftung für Artikel-Kategorie-Filter"
 
-#: ../templates/admin-page-template.php:362
+#: ../templates/admin-page-template.php:396
 msgid "LABEL_ITEM_CATEGORY_FILTER_DESC"
 msgstr "ein alternatives Label für Artikel-Kategorie-Filter"
 
-#: ../templates/admin-page-template.php:364
+#: ../templates/admin-page-template.php:398
 msgid "ITEM_CATEGORIES"
 msgstr "Kategorien"
 
-#: ../templates/admin-page-template.php:369
+#: ../templates/admin-page-template.php:403
 msgid "AVAILABLE_CATEGORIES"
 msgstr "verfügbare Kategorien"
 
-#: ../templates/admin-page-template.php:370
+#: ../templates/admin-page-template.php:404
 msgid "AVAILABLE_CATEGORIES_DESC"
 msgstr ""
 "Kategorien, die NutzerInnen angezeigt werden , um Artikel zu filtern "
 "(erscheinen in der Gruppierung und Reihenfolge der Label-Liste unten) - "
 "keine Auswahl für Deaktivierung von Kategorie-Filtern"
 
-#: ../templates/admin-page-template.php:384
+#: ../templates/admin-page-template.php:418
 msgid "CUSTOM_CATEGORY_FILTER_LABEL_MARKUP"
 msgstr "Gruppierung der Filter-Label und individuelles HTML"
 
-#: ../templates/admin-page-template.php:386
+#: ../templates/admin-page-template.php:420
 msgid "ADD_FILTER_GROUP_BUTTON_TITLE"
 msgstr "Filter-Gruppe hinzufügen"
 
-#: ../templates/admin-page-template.php:393
+#: ../templates/admin-page-template.php:427
 msgid "FILTER_PRESETS"
 msgstr "Vorabfilter"
 
-#: ../templates/admin-page-template.php:397
+#: ../templates/admin-page-template.php:431
 msgid "PRESET_CATEGORIES"
 msgstr "gesetzte Kategorien"
 
-#: ../templates/admin-page-template.php:398
+#: ../templates/admin-page-template.php:432
 msgid "PRESET_CATEGORIES_DESC"
 msgstr ""
 "Auswahl der Kategorien, die genutzt werden, um Artikel vorzufiltern, die auf "
 "der Karte angezeigt werden (Kategorien auf einer Ebene sind ODER-verknüpft, "
 "d.h. nur eine muss erfüllt sein) - keine Auswahl zeigt alle Artikel an"
 
-#: ../templates/admin-page-template.php:471
+#: ../templates/admin-page-template.php:505
 msgid "FILTER_GROUP"
 msgstr "Filter-Gruppe"
 
-#: ../templates/admin-page-template.php:471
+#: ../templates/admin-page-template.php:505
 msgid "FILTER_GROUP_PLACEHOLDER"
 msgstr "Gruppenname"
 
-#: ../templates/admin-page-template.php:474
+#: ../templates/admin-page-template.php:508
 msgid "REMOVE_FILTER_GROUP_BUTTON_TITLE"
 msgstr "Filter-Gruppe entfernen"
 
-#: ../templates/admin-page-template.php:553
+#: ../templates/admin-page-template.php:587
 msgid "URL"
 msgstr "URL"
 
-#: ../templates/admin-page-template.php:554
+#: ../templates/admin-page-template.php:588
 msgid "CODE"
 msgstr "Code"
 
-#: ../templates/admin-page-template.php:568
+#: ../templates/admin-page-template.php:602
 msgid "REMOVE_IMPORT_SOURCE_BUTTON_TITLE"
 msgstr "Import-Quelle entfernen"
 
-#: ../templates/admin-page-template.php:576
+#: ../templates/admin-page-template.php:610
 msgid "TEST_IMPORT_SOURCE_BUTTON_TITLE"
 msgstr "Import-Quelle testen"
 

@@ -1,87 +1,65 @@
 function CB_Map_Filters($, cb_map) {
+  var that = this;
+
+  this.current_address = '';
+  this.position_marker = null;
+  this.position = null;
+
+  this.show_filters = {
+    location_distance: false,
+    item_availability: false,
+    cb_item_categories: false
+  };
+
+  this.$form = null;
 
   this.init = function($) {
-    var that = this;
-
     var $filter_container = $('<div class="cb-map-filters"></div>');
 
-    var show_item_availability_filter =  cb_map.settings.show_item_availability_filter;
-    var show_cb_item_categories_filter = Object.keys(cb_map.settings.filter_cb_item_categories).length > 0
+    this.show_filters.location_distance = cb_map.settings.show_location_distance_filter;
+    this.show_filters.item_availability =  cb_map.settings.show_item_availability_filter;
+    this.show_filters.cb_item_categories = Object.keys(cb_map.settings.filter_cb_item_categories).length > 0
 
-    if(show_item_availability_filter || show_cb_item_categories_filter) {
+    if(this.show_filters.location_distance || this.show_filters.item_availability || this.show_filters.cb_item_categories) {
       var $form = $('<form></form');
+      this.$form = $form;
+
       var $filter_options = $('<div class="cb-filter-options"></div>');
 
-      if(show_item_availability_filter) {
+      if(this.show_filters.location_distance) {
+        this.init_distance_filter($, $filter_options);
+      }
+
+      if(this.show_filters.item_availability) {
         this.init_availability_filter($, $filter_options);
       }
 
-      if(show_cb_item_categories_filter) {
+      if(this.show_filters.cb_item_categories) {
         this.init_category_filter($, $filter_options);
       }
 
       $form.append($filter_options);
 
-      var $button = $('<button>' + cb_map.translation['FILTER'] + '</button>');
+      var $filter_button = $('<button type="button">' + cb_map.translation['FILTER'] + '</button>');
 
-      $button.click(function(event) {
+      $filter_button.click(function(event) {
         event.preventDefault();
+        $filter_button.blur();
 
-        var filters = {
-          cb_item_categories: []
-        };
-        var data = $form.serializeArray();
-        data.forEach(function(obj) {
-          if(obj.name.indexOf('cb_item_categories') > -1) {
-            filters.cb_item_categories.push(obj.value);
-          }
-          else {
-            filters[obj.name] = obj.value;
-          }
-        });
+        if(that.show_filters.location_distance) {
+          var $address = $form.find('input[name="position_address"]').first();
+          console.log('$address: ', $address);
 
-        console.log('filters: ', filters);
-
-        //set default values
-        if(that.do_availability_check(filters)) {
-          if(!filters.date_start) {
-            filters.date_start = $('input[name="date_start"]').attr('min');
-          }
-
-          if(!filters.date_end) {
-            filters.date_end = $('input[name="date_end"]').attr('max');
-          }
-
-          if(!filters.day_count) {
-            filters.day_count = $('select[name="day_count"]').lastChild('option').val();
-          }
-
-          //ensure date_end is not less then date_start, flip if needed
-          var date_start_timestamp = Date.parse(filters.date_start);
-          var date_end_timestamp = Date.parse(filters.date_end);
-
-          if(date_end_timestamp < date_start_timestamp) {
-            var date_tmp = filters.date_start;
-            filters.date_start = filters.date_end;
-            filters.date_end = date_tmp;
-
-             $('input[name="date_start"]').val(filters.date_start);
-             $('input[name="date_end"]').val(filters.date_end);
-          }
+          that.do_geo_search($address.val(), function() {that.do_filtering($form) });
+        }
+        else {
+          that.do_filtering($form);
         }
 
-        var location_data = JSON.parse(JSON.stringify(cb_map.location_data)); //TODO: use a more efficient way of object cloning
-        location_data = that.apply_filters(location_data, filters);
-
-        if(cb_map.markers) {
-          cb_map.markers.clearLayers();
-        }
-
-        cb_map.render_locations(location_data);
       });
 
       $button_wrapper = $('<div class="cb-map-button-wrapper"></div>');
-      $button_wrapper.append($button);
+      $button_wrapper.append($filter_button);
       $form.append($button_wrapper);
 
       $filter_container.append($form);
@@ -89,33 +67,188 @@ function CB_Map_Filters($, cb_map) {
     }
   }
 
+  this.do_geo_search = function(address, callback) {
+    console.log('do_geo_search: ', address, callback);
+
+    if(address.length > 0 && address != that.current_address) {
+      that.current_address = address;
+
+      if(that.position) {
+        cb_map.map.removeLayer(that.position_marker);
+        that.position_marker = null;
+        that.position = null;
+        that.current_address = '';
+      }
+
+      var url = 'https://nominatim.openstreetmap.org/search';
+      var params = {
+        q: address,
+        format: 'json',
+        limit: 1,
+      }
+
+      if(cb_map.settings.filter_location_distance.address_bounds) {
+        params.bounded = 1;
+        params.viewbox = cb_map.settings.filter_location_distance.address_bounds.toString(); //lon1, lat1, lon2, lat2: 12.856779316446545, 52.379790828551016, 13.948545673868422, 52.79694936237738
+      }
+
+
+      jQuery.getJSON(url, params, function(data) {
+        var $address = that.$form.find('input[name="position_address"]').first();
+
+        if(data.length > 0) {
+
+          console.log('geo search result: ', data);
+          var result = data[0];
+
+          that.position = {
+            lat: parseFloat(result.lat),
+            lon: parseFloat(result.lon)
+          }
+
+          //create postioning marker
+          that.position_marker = L.marker([that.position.lat, that.position.lon], {});
+          cb_map.map.addLayer(that.position_marker);
+
+          cb_map.map.setView(new L.LatLng(that.position.lat, that.position.lon));
+        }
+        else {
+          console.log('no geo search result');
+
+          $address.addClass('highlight-border');
+          setTimeout(function() {
+            $address.removeClass('highlight-border');
+          }, 2000);
+        }
+
+        typeof callback == 'function' && callback();
+
+      });
+    }
+    else {
+      typeof callback == 'function' && callback();
+    }
+  }
+
+  this.do_filtering = function($form) {
+    var filters = {
+      cb_item_categories: []
+    };
+    var data = $form.serializeArray();
+    data.forEach(function(obj) {
+      if(obj.name.indexOf('cb_item_categories') > -1) {
+        filters.cb_item_categories.push(obj.value);
+      }
+      else {
+        filters[obj.name] = obj.value;
+      }
+    });
+
+    console.log('filters: ', filters);
+
+    //set default values
+    if(that.do_availability_check(filters)) {
+      if(!filters.date_start) {
+        filters.date_start = $('input[name="date_start"]').attr('min');
+      }
+
+      if(!filters.date_end) {
+        filters.date_end = $('input[name="date_end"]').attr('max');
+      }
+
+      if(!filters.day_count) {
+        filters.day_count = $('select[name="day_count"]').lastChild('option').val();
+      }
+
+      //ensure date_end is not less then date_start, flip if needed
+      var date_start_timestamp = Date.parse(filters.date_start);
+      var date_end_timestamp = Date.parse(filters.date_end);
+
+      if(date_end_timestamp < date_start_timestamp) {
+        var date_tmp = filters.date_start;
+        filters.date_start = filters.date_end;
+        filters.date_end = date_tmp;
+
+         $('input[name="date_start"]').val(filters.date_start);
+         $('input[name="date_end"]').val(filters.date_end);
+      }
+    }
+
+    var location_data = JSON.parse(JSON.stringify(cb_map.location_data)); //TODO: use a more efficient way of object cloning
+    location_data = that.apply_filters(location_data, filters);
+
+    if(cb_map.markers) {
+      cb_map.markers.clearLayers();
+    }
+
+    cb_map.render_locations(location_data, false, that.position);
+  }
+
+  this.init_distance_filter = function($, $filter_options) {
+    var $container = $('<div><div class="cb-map-filter-group-label">' + cb_map.translation['DISTANCE'] + '</div></div>');
+    var $wrapper = $('<div class="cb-map-filter-group"></div>');
+    $container.append($wrapper);
+
+    var $undo_geo_search_button = $('<button type="button" class="no-right-radius"><span class="dashicons dashicons-no"></span></button>');
+    $wrapper.append($undo_geo_search_button);
+    var $address = $('<input type="text" class="no-left-radius no-right-radius" name="position_address" placeholder="' + cb_map.translation['ADDRESS'] + '"></input>');
+    $wrapper.append($address);
+    var $geo_search_button = $('<button class="no-left-radius"><span class="dashicons dashicons-location-alt"></span></button>');
+    $wrapper.append($geo_search_button);
+    var $distance_input = $('<input name="max_distance" class="cb-map-distance" type="number" min="0" value="2.5" step="0.25"></input>');
+    $wrapper.append($distance_input);
+    $wrapper.append('<label>km</label>');
+
+    $undo_geo_search_button.click(function(event) {
+      event.preventDefault();
+      $undo_geo_search_button.blur();
+
+      if(that.position) {
+        cb_map.map.removeLayer(that.position_marker);
+        that.position_marker = null;
+        that.position = null;
+      }
+
+      $address.val('');
+    });
+
+    $geo_search_button.click(function(event) {
+      event.preventDefault();
+      $geo_search_button.blur();
+
+      var address = $address.val();
+      that.do_geo_search(address);
+
+    });
+
+    $filter_options.append($container);
+  }
+
   this.do_availability_check = function(filters) {
     return filters.date_start.length > 0 || filters.date_end.length > 0 || filters.day_count > 0;
   }
 
   this.init_availability_filter = function($, $filter_options) {
-    if(cb_map.settings.show_item_availability_filter) {
 
-      var $container = $('<div><div class="cb-map-filter-group-label">' + cb_map.translation['AVAILABILITY'] + '</div></div>');
-      var $wrapper = $('<div class="cb-map-filter-group"></div>');
-      $container.append($wrapper);
+    var $container = $('<div><div class="cb-map-filter-group-label">' + cb_map.translation['AVAILABILITY'] + '</div></div>');
+    var $wrapper = $('<div class="cb-map-filter-group"></div>');
+    $container.append($wrapper);
 
-      var $date_start_input = $('<input type="date" name="date_start" min="' + cb_map.settings.filter_availability.date_min + '" max="' + cb_map.settings.filter_availability.date_max + '">');
-      var $date_end_input = $('<input type="date" name="date_end" min="' + cb_map.settings.filter_availability.date_min + '" max="' + cb_map.settings.filter_availability.date_max + '">');
-      var $day_count_select = $('<select name="day_count"></select>')
-      for(var d = 0; d <= cb_map.settings.filter_availability.day_count_max; d++) {
-        var show_value = d == 0 ? '-' : d;
-        $day_count_select.append('<option value="' + d + '">' + show_value + '</option>')
-      }
-
-      $wrapper.append('<label>' + cb_map.translation['FROM'] + '</label>'); //TODO: translate label texts
-      $wrapper.append($date_start_input);
-      $wrapper.append('<label>' + cb_map.translation['UNTIL'] + '</label>');
-      $wrapper.append($date_end_input);
-      $wrapper.append('<label>' + cb_map.translation['AT_LEAST'] + '</label>');
-      $wrapper.append($day_count_select);
-      $wrapper.append('<label>' + cb_map.translation['DAYS'] + '</label>');
+    var $date_start_input = $('<input type="date" name="date_start" min="' + cb_map.settings.filter_availability.date_min + '" max="' + cb_map.settings.filter_availability.date_max + '">');
+    var $date_end_input = $('<input type="date" name="date_end" min="' + cb_map.settings.filter_availability.date_min + '" max="' + cb_map.settings.filter_availability.date_max + '">');
+    var $day_count_select = $('<select name="day_count"></select>')
+    for(var d = 0; d <= cb_map.settings.filter_availability.day_count_max; d++) {
+      var show_value = d == 0 ? '-' : d;
+      $day_count_select.append('<option value="' + d + '">' + show_value + '</option>')
     }
+
+    $wrapper.append('<label>' + cb_map.translation['FROM'] + '</label>');
+    $wrapper.append($date_start_input);
+    $wrapper.append('<label>' + cb_map.translation['UNTIL'] + '</label>');
+    $wrapper.append($date_end_input);
+    $wrapper.append('<label>' + cb_map.translation['AT_LEAST'] + '</label>');
+    $wrapper.append($day_count_select);
+    $wrapper.append('<label>' + cb_map.translation['DAYS'] + '</label>');
 
     $filter_options.append($container);
   },
@@ -146,8 +279,12 @@ function CB_Map_Filters($, cb_map) {
   }
 
   this.apply_filters = function(location_data, filters) {
-    var that = this;
     console.log('apply_filters: ', filters)
+
+    //distance filters
+    if(this.position) {
+      location_data = this.apply_distance_filters(location_data, filters, this.position);
+    }
 
     //availability filters
     if(this.do_availability_check(filters)) {
@@ -162,12 +299,27 @@ function CB_Map_Filters($, cb_map) {
     return location_data;
   }
 
+  this.apply_distance_filters = function(location_data, filters, position) {
+    console.log('apply_distance_filters');
+    var filtered_locations = [];
+
+    //filter the items
+    location_data.forEach(function(location) {
+      var distance = that.calc_distance(position, {lat: location.lat, lon: location.lon});
+      //console.log('distance: ', distance);
+      if(distance <= filters.max_distance) {
+        filtered_locations.push(location);
+      }
+    });
+
+    return filtered_locations;
+  }
+
   this.apply_item_category_filters = function(location_data, filters) {
     console.log('apply_item_category_filters');
 
     var user_categories = filters.cb_item_categories;
     var filtered_locations = [];
-    var that = this;
 
     //prepare category groups array
     var category_groups = [];
@@ -245,7 +397,6 @@ function CB_Map_Filters($, cb_map) {
   this.apply_item_availability_filters = function(location_data, filters) {
     console.log('apply_item_availability_filters');
 
-    var that = this;
     var filtered_locations = [];
 
     location_data.forEach(function(location) {
@@ -352,6 +503,26 @@ function CB_Map_Filters($, cb_map) {
     });
 
     return max_free_days_in_row;
+  }
+
+  /**
+  * see: https://www.movable-type.co.uk/scripts/latlong.html
+  **/
+  this.calc_distance = function(position1, position2) {
+    const R = 6371e3;
+    var φ1 = this.deg_to_rad(position1.lat),
+        φ2 = this.deg_to_rad(position2.lat),
+        Δλ = this.deg_to_rad(position2.lon - position1.lon);
+
+    var x = Δλ * Math.cos((φ1 + φ2) / 2);
+    var y = (φ2 - φ1);
+    var d = Math.sqrt(x*x + y*y) * R;
+
+    return d / 1000; //in km
+  }
+
+  this.deg_to_rad = function(deg) {
+    return deg * (Math.PI / 180);
   }
 
   this.init($, cb_map);

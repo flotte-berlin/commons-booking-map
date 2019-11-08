@@ -17,7 +17,8 @@ class CB_Map_Admin {
     'show_location_contact', 'label_location_contact', 'show_location_opening_hours', 'label_location_opening_hours',
     'show_item_availability',
     'custom_marker_cluster_media_id', 'marker_cluster_icon_width', 'marker_cluster_icon_height',
-    'show_item_availability_filter', 'label_item_availability_filter', 'label_item_category_filter',
+    'address_search_bounds_left_bottom_lon', 'address_search_bounds_left_bottom_lat', 'address_search_bounds_right_top_lon', 'address_search_bounds_right_top_lat',
+    'show_location_distance_filter', 'label_location_distance_filter', 'show_item_availability_filter', 'label_item_availability_filter', 'label_item_category_filter',
     'cb_items_available_categories',
     'cb_items_preset_categories'];
 
@@ -60,7 +61,13 @@ class CB_Map_Admin {
   const LABEL_LOCATION_CONTACT_DEFAULT = "";
   const SHOW_LOCATION_OPENING_HOURS_DEFAULT = false;
   const LABEL_LOCATION_OPENING_HOURS_DEFAULT = "";
+  const ADDRESS_SEARCH_BOUNDS_LEFT_BOTTOM_LAT_DEFAULT = null;
+  const ADDRESS_SEARCH_BOUNDS_LEFT_BOTTOM_LON_DEFAULT = null;
+  const ADDRESS_SEARCH_BOUNDS_RIGHT_TOP_LAT_DEFAULT = null;
+  const ADDRESS_SEARCH_BOUNDS_RIGHT_TOP_LON_DEFAULT = null;
   const SHOW_ITEM_AVAILABILITY_DEFAULT = false;
+  const SHOW_LOCATION_DISTANCE_FILTER_DEFAULT = false;
+  const LABEL_LOCATION_DISTANCE_FILTER_DEFAULT = "";
   const SHOW_ITEM_AVAILABILITY_FILTER_DEFAULT = false;
   const LABEL_ITEM_AVAILABILITY_FILTER_DEFAULT = "";
   CONST LABEL_ITEM_CATEGORY_FILTER_DEFAULT = "";
@@ -233,12 +240,12 @@ class CB_Map_Admin {
     }
 
     //lat_start
-    if(isset($input['lat_start']) && (float) $input['lat_start'] >= self::LAT_VALUE_MIN && (float) $input['lat_start'] <= self::LAT_VALUE_MAX) {
+    if(isset($input['lat_start']) && strlen($input['lat_start']) > 0 && (float) $input['lat_start'] >= self::LAT_VALUE_MIN && (float) $input['lat_start'] <= self::LAT_VALUE_MAX) {
       $validated_input['lat_start'] = (float) $input['lat_start'];
     }
 
     //lon_start
-    if(isset($input['lon_start']) && (float) $input['lon_start'] >= self::LON_VALUE_MIN && (float) $input['lon_start'] <= self::LON_VALUE_MAX) {
+    if(isset($input['lon_start']) && strlen($input['lon_start']) > 0 && (float) $input['lon_start'] >= self::LON_VALUE_MIN && (float) $input['lon_start'] <= self::LON_VALUE_MAX) {
       $validated_input['lon_start'] = (float) $input['lon_start'];
     }
 
@@ -325,6 +332,38 @@ class CB_Map_Admin {
     //marker_cluster_icon_height
     if(isset($input['marker_cluster_icon_height'])) {
       $validated_input['marker_cluster_icon_height'] = abs((float) $input['marker_cluster_icon_height']);
+    }
+
+    //show_location_distance_filter
+    if(isset($input['show_location_distance_filter'])) {
+      $validated_input['show_location_distance_filter'] = true;
+    }
+    else {
+      $validated_input['show_location_distance_filter'] = false;
+    }
+
+    //address_search_bounds_left_bottom_lat
+    if(isset($input['address_search_bounds_left_bottom_lat']) && strlen($input['address_search_bounds_left_bottom_lat']) > 0 && (float) $input['address_search_bounds_left_bottom_lat'] >= self::LAT_VALUE_MIN && (float) $input['address_search_bounds_left_bottom_lat'] <= self::LAT_VALUE_MAX) {
+      $validated_input['address_search_bounds_left_bottom_lat'] = (float) $input['address_search_bounds_left_bottom_lat'];
+    }
+
+    if(isset($input['address_search_bounds_left_bottom_lon']) && strlen($input['address_search_bounds_left_bottom_lon']) > 0 && (float) $input['address_search_bounds_left_bottom_lon'] >= self::LON_VALUE_MIN && (float) $input['address_search_bounds_left_bottom_lon'] <= self::LON_VALUE_MAX) {
+      $validated_input['address_search_bounds_left_bottom_lon'] = (float) $input['address_search_bounds_left_bottom_lon'];
+    }
+
+    //address_search_bounds_right_top_lat
+    if(isset($input['address_search_bounds_right_top_lat']) && strlen($input['address_search_bounds_right_top_lat']) > 0 && (float) $input['address_search_bounds_right_top_lat'] >= self::LAT_VALUE_MIN && (float) $input['address_search_bounds_right_top_lat'] <= self::LAT_VALUE_MAX) {
+      $validated_input['address_search_bounds_right_top_lat'] = (float) $input['address_search_bounds_right_top_lat'];
+    }
+
+    //address_search_bounds_right_top_lon
+    if(isset($input['address_search_bounds_right_top_lon']) && strlen($input['address_search_bounds_right_top_lon']) > 0 && (float) $input['address_search_bounds_right_top_lon'] >= self::LON_VALUE_MIN && (float) $input['address_search_bounds_right_top_lon'] <= self::LON_VALUE_MAX) {
+      $validated_input['address_search_bounds_right_top_lon'] = (float) $input['address_search_bounds_right_top_lon'];
+    }
+
+    //label_location_distance_filter
+    if(isset($input['label_location_distance_filter']) && strlen($input['label_location_distance_filter']) > 0) {
+      $validated_input['label_location_distance_filter'] = sanitize_text_field($input['label_location_distance_filter']);
     }
 
     //show_item_availability_filter

@@ -344,7 +344,41 @@
       <table class="text-left">
         <tr>
             <th>
-              <?= cb_map\__('SHOW_ITEM_AVAILABILITY_FILTER', 'commons-booking-map', 'show item availability') ?>:
+              <?= cb_map\__('SHOW_LOCATION_DISTANCE_FILTER', 'commons-booking-map', 'show location distance filter') ?>:
+              <span class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'SHOW_LOCATION_DISTANCE_FILTER_DESC', 'commons-booking-map', 'activate to show the location distance filter') ?>"></span>
+            </th>
+            <td><input type="checkbox" name="cb_map_options[show_location_distance_filter]" <?= CB_Map_Admin::get_option($cb_map_id, 'show_location_distance_filter') ? 'checked="checked"' : '' ?> value="on"></td>
+        </tr>
+        <tr>
+            <th>
+              <?= cb_map\__('LABEL_LOCATION_DISTANCE_FILTER', 'commons-booking-map', 'label for location distance filter') ?>:
+              <span class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'LABEL_LOCATION_DISTANCE_FILTER_DESC', 'commons-booking-map', 'alternative label for the location distance filter') ?>"></span>
+            </th>
+            <td><input type="text" name="cb_map_options[label_location_distance_filter]" placeholder="<?= cb_map\__('DISTANCE', 'commons-booking-map', 'distance') ?>" value="<?= CB_Map_Admin::get_option($cb_map_id, 'label_location_distance_filter') ?>"></td>
+        </tr>
+        <tr>
+            <th>
+              <?= cb_map\__('ADDRESS_SEARCH_BOUNDS_LEFT_BOTTOM', 'commons-booking-map', 'address search bounds - left bottom') ?>:
+              <span class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'ADDRESS_SEARCH_BOUNDS_LEFT_BOTTOM_DESC', 'commons-booking-map', 'the bottom left corner of the address search bounds') ?>"></span>
+            </th>
+            <td>
+              <input type="text" name="cb_map_options[address_search_bounds_left_bottom_lon]" placeholder="<?= cb_map\__('LONGITUDE', 'commons-booking-map', 'longitude') ?>" value="<?= esc_attr( CB_Map_Admin::get_option($cb_map_id, 'address_search_bounds_left_bottom_lon') ); ?>" size="7"> /
+              <input type="text" name="cb_map_options[address_search_bounds_left_bottom_lat]" placeholder="<?= cb_map\__('LATITUDE', 'commons-booking-map', 'latitude') ?>" value="<?= esc_attr( CB_Map_Admin::get_option($cb_map_id, 'address_search_bounds_left_bottom_lat') ); ?>" size="7">
+            </td>
+        </tr>
+        <tr>
+            <th>
+              <?= cb_map\__('ADDRESS_SEARCH_BOUNDS_RIGHT_TOP', 'commons-booking-map', 'address search bounds - right top') ?>:
+              <span class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'ADDRESS_SEARCH_BOUNDS_RIGHT_TOP_DESC', 'commons-booking-map', 'the top right corner of the address search bounds') ?>"></span>
+            </th>
+            <td>
+              <input type="text" name="cb_map_options[address_search_bounds_right_top_lon]" placeholder="<?= cb_map\__('LONGITUDE', 'commons-booking-map', 'longitude') ?>" value="<?= esc_attr( CB_Map_Admin::get_option($cb_map_id, 'address_search_bounds_right_top_lon') ); ?>" size="7"> /
+              <input type="text" name="cb_map_options[address_search_bounds_right_top_lat]" placeholder="<?= cb_map\__('LATITUDE', 'commons-booking-map', 'latitude') ?>" value="<?= esc_attr( CB_Map_Admin::get_option($cb_map_id, 'address_search_bounds_right_top_lat') ); ?>" size="7">
+            </td>
+        </tr>
+        <tr>
+            <th>
+              <?= cb_map\__('SHOW_ITEM_AVAILABILITY_FILTER', 'commons-booking-map', 'show item availability filter') ?>:
               <span class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'SHOW_ITEM_AVAILABILITY_FILTER_DESC', 'commons-booking-map', 'activate to show the item availability filter') ?>"></span>
             </th>
             <td><input type="checkbox" name="cb_map_options[show_item_availability_filter]" <?= CB_Map_Admin::get_option($cb_map_id, 'show_item_availability_filter') ? 'checked="checked"' : '' ?> value="on"></td>

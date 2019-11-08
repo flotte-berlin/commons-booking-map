@@ -72,10 +72,6 @@ function CB_Map() {
 
     this.map.spin(true);
 
-    if(this.markers) {
-      this.markers.clearLayers();
-    }
-
     jQuery.post(this.settings.data_url, data, function(response) {
       cb_map.location_data = JSON.parse(response);
       console.log('location data: ', cb_map.location_data);
@@ -111,7 +107,7 @@ function CB_Map() {
     return markup;
   }
 
-  cb_map.render_locations = function(data, init) {
+  cb_map.render_locations = function(data, init, center_position) {
     if(data.length == 0) {
       this.messagebox.show(cb_map.translation['NO_LOCATIONS_MESSAGE']);
     }
@@ -249,17 +245,54 @@ function CB_Map() {
 
     });
 
-    this.map.addLayer(markers);
+    //this.map.addLayer(markers);
+    markers.addTo(this.map);
 
     that.markers = markers;
 
     //adjust map section to marker bounds based on settings
     if((!init && this.settings.marker_map_bounds_filter) || (init && this.settings.marker_map_bounds_initial)) {
       if(Object.keys(data).length > 0) {
-        that.map.fitBounds(markers.getBounds());
+
+        //keep center position & set bounds based on markers to show around
+        if(center_position) {
+          var max_delta_lat = 0;
+          var max_delta_lng = 0;
+
+          markers.eachLayer(function (marker) {
+              //console.log('marker latlng: ', marker.getLatLng());
+              var lat_lng = marker.getLatLng()
+
+              var delta_lat = Math.abs(lat_lng.lat - center_position.lat);
+              var delta_lng = Math.abs(lat_lng.lng - center_position.lon);
+              if(delta_lat > max_delta_lat) {
+                max_delta_lat = delta_lat;
+              }
+              if(delta_lng > max_delta_lng) {
+                max_delta_lng = delta_lng;
+              }
+          });
+
+          var bounds = [
+            [center_position.lat + max_delta_lat, center_position.lon + max_delta_lng],
+            [center_position.lat - max_delta_lat, center_position.lon - max_delta_lng]
+          ];
+
+          that.map.fitBounds(bounds);
+        }
+        else {
+          console.log('markers.getBounds(): ', markers.getBounds())
+          that.map.fitBounds(markers.getBounds());
+        }
       }
       else {
-        this.map.setView(new L.LatLng(this.settings.lat_start, this.settings.lon_start), this.settings.zoom_start);
+        if(center_position) {
+          this.map.setView(new L.LatLng(center_position.lat, center_position.lon), this.settings.zoom_start);
+        }
+        else {
+          this.map.setView(new L.LatLng(this.settings.lat_start, this.settings.lon_start), this.settings.zoom_start);
+        }
+
       }
     }
 

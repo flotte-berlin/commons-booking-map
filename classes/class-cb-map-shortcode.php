@@ -104,6 +104,7 @@ class CB_Map_Shortcode {
       'data_url' => get_site_url(null, '', null) . '/wp-admin/admin-ajax.php',
       'nonce' => wp_create_nonce('cb_map_locations'),
       'marker_icon' => null,
+      'filter_location_distance' => [],
       'filter_cb_item_categories' => [],
       'filter_availability' => [
         'date_min' => $date_min,
@@ -116,12 +117,16 @@ class CB_Map_Shortcode {
 
     $options = CB_Map_Admin::get_options($cb_map_id, true);
 
+    if($options['address_search_bounds_left_bottom_lat'] && $options['address_search_bounds_left_bottom_lon'] && $options['address_search_bounds_right_top_lat'] && $options['address_search_bounds_right_top_lon']) {
+      $settings['filter_location_distance']['address_bounds'] = [$options['address_search_bounds_left_bottom_lon'], $options['address_search_bounds_left_bottom_lat'], $options['address_search_bounds_right_top_lon'], $options['address_search_bounds_right_top_lat']];
+    }
+
     $pass_through = [
       'base_map',
       'show_scale', 'zoom_min', 'zoom_max', 'zoom_start', 'lat_start', 'lon_start',
       'marker_map_bounds_initial', 'marker_map_bounds_filter', 'max_cluster_radius',
       'show_location_contact', 'show_location_opening_hours', 'show_item_availability',
-      'show_item_availability_filter', 'label_item_availability_filter', 'label_item_category_filter'
+      'show_location_distance_filter', 'label_location_distance_filter', 'show_item_availability_filter', 'label_item_availability_filter', 'label_item_category_filter'
     ];
 
     $icon_size = [$options['marker_icon_width'], $options['marker_icon_height']];
@@ -191,6 +196,7 @@ class CB_Map_Shortcode {
     $custom_no_locations_message = CB_Map_Admin::get_option($cb_map_id, 'custom_no_locations_message');
     $label_item_availability_filter = CB_Map_Admin::get_option($cb_map_id, 'label_item_availability_filter');
     $label_item_category_filter = CB_Map_Admin::get_option($cb_map_id, 'label_item_category_filter');
+    $label_location_distance_filter = CB_Map_Admin::get_option($cb_map_id, 'label_location_distance_filter');
 
     $translation = [
       'OPENING_HOURS' => strlen($label_location_opening_hours) > 0 ? $label_location_opening_hours : cb_map\__('OPENING_HOURS', 'commons-booking-map', 'opening hours'),
@@ -203,6 +209,8 @@ class CB_Map_Shortcode {
       'FILTER' => cb_map\__( 'FILTER', 'commons-booking-map', 'filter'),
       'AVAILABILITY' => strlen($label_item_availability_filter) > 0 ? $label_item_availability_filter : cb_map\__( 'AVAILABILITY', 'commons-booking-map', 'availability'),
       'CATEGORIES' => strlen($label_item_category_filter) > 0 ? $label_item_category_filter : cb_map\__( 'CATEGORIES', 'commons-booking-map', 'categories'),
+      'DISTANCE' => strlen($label_location_distance_filter) > 0 ? $label_location_distance_filter : cb_map\__( 'DISTANCE', 'commons-booking-map', 'distance'),
+      'ADDRESS' => cb_map\__( 'ADDRESS', 'commons-booking-map', 'address')
     ];
 
     return $translation;
@@ -270,6 +278,7 @@ class CB_Map_Shortcode {
 
       //local - get the locations
       if($map_type == 1) {
+
         $locations = CB_Map::get_locations($cb_map_id);
         $locations = CB_Map_Filter::filter_locations_by_timeframes_and_categories($locations, $cb_map_id, $preset_categories);
 
