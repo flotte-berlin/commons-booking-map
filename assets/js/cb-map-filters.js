@@ -106,8 +106,17 @@ function CB_Map_Filters($, cb_map) {
             lon: parseFloat(result.lon)
           }
 
-          //create postioning marker
-          that.position_marker = L.marker([that.position.lat, that.position.lon], {});
+          //create position marker
+          var icon = new L.Icon({
+            iconUrl: cb_map.settings.asset_path + 'images/marker-icon-2x-black.png',
+            shadowUrl: cb_map.settings.asset_path + 'images/marker-shadow.png',
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            shadowSize: [41, 41]
+          });
+
+          that.position_marker = L.marker([that.position.lat, that.position.lon], {icon: icon});
           cb_map.map.addLayer(that.position_marker);
 
           cb_map.map.setView(new L.LatLng(that.position.lat, that.position.lon));

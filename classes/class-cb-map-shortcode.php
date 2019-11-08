@@ -111,7 +111,8 @@ class CB_Map_Shortcode {
         'day_count_max' => $maxdays
       ],
       'cb_map_id' => $cb_map_id,
-      'locale' => str_replace('_', '-', get_locale())
+      'locale' => str_replace('_', '-', get_locale()),
+      'asset_path' => CB_MAP_ASSETS_URL
     ];
 
     $options = CB_Map_Admin::get_options($cb_map_id, true);
