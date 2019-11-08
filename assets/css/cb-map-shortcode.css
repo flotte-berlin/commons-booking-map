@@ -154,7 +154,15 @@
 .cb-map-filter-group button {
   margin-left: 0;
   height: 52px;
-  line-height: 19px;
+  line-height: 20px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.cb-map-filter-group button[disabled]:hover {
+  margin-left: 0;
+  height: 52px;
+  line-height: 20px;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .cb-map-filter-group .no-right-radius {
@@ -163,6 +171,11 @@
 }
 
 .cb-map-filter-group .no-left-radius {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+}
+
+.cb-map-filter-group .no-left-radius[disabled]:hover {
   border-top-left-radius: 0px;
   border-bottom-left-radius: 0px;
 }

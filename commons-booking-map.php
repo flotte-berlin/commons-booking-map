@@ -38,6 +38,8 @@ if(cb_map\is_plugin_active('commons-booking.php')) {
   require_once( CB_MAP_PATH . 'classes/class-cb-map-shortcode.php' );
   add_action( 'wp_ajax_cb_map_locations', 'CB_Map_Shortcode::get_locations' );
   add_action( 'wp_ajax_nopriv_cb_map_locations', 'CB_Map_Shortcode::get_locations' );
+  add_action( 'wp_ajax_cb_map_geo_search', 'CB_Map_Shortcode::geo_search' );
+  add_action( 'wp_ajax_nopriv_cb_map_geo_search', 'CB_Map_Shortcode::geo_search' );
   add_shortcode( 'cb_map', 'CB_Map_Shortcode::execute' );
 
   add_action( 'wp_ajax_cb_map_import_spurce_test', 'CB_Map::handle_location_import_test' );

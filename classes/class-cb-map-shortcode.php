@@ -104,7 +104,6 @@ class CB_Map_Shortcode {
       'data_url' => get_site_url(null, '', null) . '/wp-admin/admin-ajax.php',
       'nonce' => wp_create_nonce('cb_map_locations'),
       'marker_icon' => null,
-      'filter_location_distance' => [],
       'filter_cb_item_categories' => [],
       'filter_availability' => [
         'date_min' => $date_min,
@@ -116,10 +115,6 @@ class CB_Map_Shortcode {
     ];
 
     $options = CB_Map_Admin::get_options($cb_map_id, true);
-
-    if($options['address_search_bounds_left_bottom_lat'] && $options['address_search_bounds_left_bottom_lon'] && $options['address_search_bounds_right_top_lat'] && $options['address_search_bounds_right_top_lon']) {
-      $settings['filter_location_distance']['address_bounds'] = [$options['address_search_bounds_left_bottom_lon'], $options['address_search_bounds_left_bottom_lat'], $options['address_search_bounds_right_top_lon'], $options['address_search_bounds_right_top_lat']];
-    }
 
     $pass_through = [
       'base_map',
@@ -210,10 +205,82 @@ class CB_Map_Shortcode {
       'AVAILABILITY' => strlen($label_item_availability_filter) > 0 ? $label_item_availability_filter : cb_map\__( 'AVAILABILITY', 'commons-booking-map', 'availability'),
       'CATEGORIES' => strlen($label_item_category_filter) > 0 ? $label_item_category_filter : cb_map\__( 'CATEGORIES', 'commons-booking-map', 'categories'),
       'DISTANCE' => strlen($label_location_distance_filter) > 0 ? $label_location_distance_filter : cb_map\__( 'DISTANCE', 'commons-booking-map', 'distance'),
-      'ADDRESS' => cb_map\__( 'ADDRESS', 'commons-booking-map', 'address')
+      'ADDRESS' => cb_map\__( 'ADDRESS', 'commons-booking-map', 'address'),
+      'GEO_SEARCH_UNAVAILABLE' => cb_map\__( 'GEO_SEARCH_UNAVAILABLE', 'commons-booking-map', 'The service is currently not available. Please try again later.')
     ];
 
     return $translation;
+  }
+
+  public static function geo_search() {
+    if(isset($_POST['query']) && $_POST['cb_map_id']) {
+
+      $check_capacity = true;
+      $attempts = 0;
+
+      //because requests to nominatim are limited (max 1/s), we have to check for timestamp of last one and loop for a while, if needed
+      while($check_capacity) {
+
+        if($attempts > 10) {
+          wp_send_json_error([ 'error' => 5 ], 408);
+          return wp_die();
+        }
+
+        $attempts++;
+
+        $last_call_timestamp = get_option('cb_map_last_nominatim_call', 0);
+        $current_timestamp = time();
+
+        if($current_timestamp > $last_call_timestamp + 1) {
+          $check_capacity = false;
+        }
+        else {
+          sleep(1);
+        }
+      }
+
+      update_option('cb_map_last_nominatim_call', $current_timestamp);
+
+      $params = [
+        'q' => $_POST['query'],
+        'format' => 'json',
+        'limit' => 1
+      ];
+
+      $options = CB_Map_Admin::get_options($_POST['cb_map_id'], true);
+
+      if($options['address_search_bounds_left_bottom_lat'] && $options['address_search_bounds_left_bottom_lon'] && $options['address_search_bounds_right_top_lat'] && $options['address_search_bounds_right_top_lon']) {
+        $params['bounded'] = 1;
+        //viewbox - lon1, lat1, lon2, lat2: 12.856779316446545, 52.379790828551016, 13.948545673868422, 52.79694936237738
+        $params['viewbox'] = $options['address_search_bounds_left_bottom_lon'] . ',' . $options['address_search_bounds_left_bottom_lat'] . ',' .  $options['address_search_bounds_right_top_lon'] . ',' .  $options['address_search_bounds_right_top_lat'];
+      }
+
+      $url = 'https://nominatim.openstreetmap.org/search?' . http_build_query($params);
+      $data = wp_safe_remote_get($url);
+
+      if(is_wp_error($data)) {
+          wp_send_json_error([ 'error' => 2 ], 404);
+      }
+      else {
+        if($data['response']['code'] == 200) {
+
+          if(CB_Map::is_json($data['body'])) {
+            wp_send_json($data['body']);
+          }
+          else {
+            wp_send_json_error([ 'error' => 4 ], 403);
+          }
+        }
+        else {
+          wp_send_json_error([ 'error' => 3 ], 404);
+        }
+      }
+    }
+    else {
+      wp_send_json_error([ 'error' => 1 ], 400);
+    }
+
+    return wp_die();
   }
 
   /**

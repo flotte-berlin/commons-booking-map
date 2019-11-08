@@ -80,25 +80,25 @@ function CB_Map_Filters($, cb_map) {
         that.current_address = '';
       }
 
-      var url = 'https://nominatim.openstreetmap.org/search';
-      var params = {
-        q: address,
-        format: 'json',
-        limit: 1,
-      }
+      var post_data = {
+        //'nonce': this.settings.nonce,
+  			action: 'cb_map_geo_search',
+        query: address,
+        cb_map_id: cb_map.settings.cb_map_id
+  		};
+      //console.log('fetch location data from: ', this.settings.data_url);
 
-      if(cb_map.settings.filter_location_distance.address_bounds) {
-        params.bounded = 1;
-        params.viewbox = cb_map.settings.filter_location_distance.address_bounds.toString(); //lon1, lat1, lon2, lat2: 12.856779316446545, 52.379790828551016, 13.948545673868422, 52.79694936237738
-      }
+      //TODO: button block
+      var $button = that.$form.find('button.geo-search')
+      $button.prop("disabled", true);
 
+      jQuery.post(cb_map.settings.data_url, post_data, function(response) {
+        var data = JSON.parse(response);
+        console.log('geo search result: ', data);
 
-      jQuery.getJSON(url, params, function(data) {
         var $address = that.$form.find('input[name="position_address"]').first();
 
         if(data.length > 0) {
-
-          console.log('geo search result: ', data);
           var result = data[0];
 
           that.position = {
@@ -123,6 +123,15 @@ function CB_Map_Filters($, cb_map) {
 
         typeof callback == 'function' && callback();
 
+      }).fail(function(response) {
+        console.log('geo search failed: ', response);
+
+        if(response.status == 408) {
+          alert(cb_map.translation['GEO_SEARCH_UNAVAILABLE']);
+        }
+
+      }).always(function() {
+        $button.prop("disabled", false);
       });
     }
     else {
@@ -189,11 +198,11 @@ function CB_Map_Filters($, cb_map) {
     var $wrapper = $('<div class="cb-map-filter-group"></div>');
     $container.append($wrapper);
 
-    var $undo_geo_search_button = $('<button type="button" class="no-right-radius"><span class="dashicons dashicons-no"></span></button>');
+    var $undo_geo_search_button = $('<button type="button" class="undo-geo-search no-right-radius"><span class="dashicons dashicons-no"></span></button>');
     $wrapper.append($undo_geo_search_button);
     var $address = $('<input type="text" class="no-left-radius no-right-radius" name="position_address" placeholder="' + cb_map.translation['ADDRESS'] + '"></input>');
     $wrapper.append($address);
-    var $geo_search_button = $('<button class="no-left-radius"><span class="dashicons dashicons-location-alt"></span></button>');
+    var $geo_search_button = $('<button class="geo-search no-left-radius"><span class="dashicons dashicons-location-alt"></span></button>');
     $wrapper.append($geo_search_button);
     var $distance_input = $('<input name="max_distance" class="cb-map-distance" type="number" min="0" value="2.5" step="0.25"></input>');
     $wrapper.append($distance_input);

@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: cb-admin-booking\n"
-"POT-Creation-Date: 2019-11-08 16:36+0100\n"
-"PO-Revision-Date: 2019-11-08 16:40+0100\n"
+"POT-Creation-Date: 2019-11-08 20:59+0100\n"
+"PO-Revision-Date: 2019-11-08 20:59+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -34,19 +34,19 @@ msgstr "Längengrad"
 msgid "POSITION"
 msgstr "Position"
 
-#: ../classes/class-cb-map-admin.php:77
+#: ../classes/class-cb-map-admin.php:82
 msgid "CB_MAP_ADMIN_METABOX_TITLE"
 msgstr "Kartenkonfiguration"
 
-#: ../classes/class-cb-map-admin.php:445
+#: ../classes/class-cb-map-admin.php:469
 msgid "SELECT_IMAGE"
 msgstr "Bild auswählen"
 
-#: ../classes/class-cb-map-admin.php:446
+#: ../classes/class-cb-map-admin.php:470
 msgid "SAVE"
 msgstr "speichern"
 
-#: ../classes/class-cb-map-admin.php:447
+#: ../classes/class-cb-map-admin.php:471
 msgid "MARKER_IMAGE_MEASUREMENTS"
 msgstr "Bildmaße"
 
@@ -126,6 +126,11 @@ msgstr "Entfernung"
 #: ../classes/class-cb-map-shortcode.php:208
 msgid "ADDRESS"
 msgstr "Adresse"
+
+#: ../classes/class-cb-map-shortcode.php:209
+msgid "GEO_SEARCH_UNAVAILABLE"
+msgstr ""
+"Der Service ist zur Zeit überlastet. Bitte versuche es später noch einmal."
 
 #: ../classes/class-cb-map.php:10
 msgid "POST_LABELS_NAME"
