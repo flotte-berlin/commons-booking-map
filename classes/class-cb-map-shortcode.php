@@ -207,6 +207,7 @@ class CB_Map_Shortcode {
       'CATEGORIES' => strlen($label_item_category_filter) > 0 ? $label_item_category_filter : cb_map\__( 'CATEGORIES', 'commons-booking-map', 'categories'),
       'DISTANCE' => strlen($label_location_distance_filter) > 0 ? $label_location_distance_filter : cb_map\__( 'DISTANCE', 'commons-booking-map', 'distance'),
       'ADDRESS' => cb_map\__( 'ADDRESS', 'commons-booking-map', 'address'),
+      'GEO_SEARCH_ERROR' => cb_map\__( 'GEO_SEARCH_ERROR', 'commons-booking-map', 'Sorry, an error occured during your request. Please try again later.'),
       'GEO_SEARCH_UNAVAILABLE' => cb_map\__( 'GEO_SEARCH_UNAVAILABLE', 'commons-booking-map', 'The service is currently not available. Please try again later.')
     ];
 
@@ -257,7 +258,11 @@ class CB_Map_Shortcode {
       }
 
       $url = 'https://nominatim.openstreetmap.org/search?' . http_build_query($params);
-      $data = wp_safe_remote_get($url);
+      $args = [
+        'headers' => [
+          'Referer' => 'http' . (isset($_SERVER['HTTPS']) ? 's' : '') . '://' . "{$_SERVER['HTTP_HOST']}"
+      ]];
+      $data = wp_safe_remote_get($url, $args);
 
       if(is_wp_error($data)) {
           wp_send_json_error([ 'error' => 2 ], 404);

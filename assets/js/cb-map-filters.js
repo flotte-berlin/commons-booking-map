@@ -138,6 +138,9 @@ function CB_Map_Filters($, cb_map) {
         if(response.status == 408) {
           alert(cb_map.translation['GEO_SEARCH_UNAVAILABLE']);
         }
+        else {
+          alert(cb_map.translation['GEO_SEARCH_ERROR']);
+        }
 
       }).always(function() {
         $button.prop("disabled", false);

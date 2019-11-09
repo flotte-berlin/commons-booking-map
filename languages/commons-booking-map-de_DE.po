@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: cb-admin-booking\n"
-"POT-Creation-Date: 2019-11-08 20:59+0100\n"
-"PO-Revision-Date: 2019-11-08 20:59+0100\n"
+"POT-Creation-Date: 2019-11-09 11:57+0100\n"
+"PO-Revision-Date: 2019-11-09 11:58+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -75,59 +75,65 @@ msgstr "Karte ist nicht veröffentlicht"
 msgid "NO_VALID_MAP_ID"
 msgstr "keine gültige Karten-ID"
 
-#: ../classes/class-cb-map-shortcode.php:197
+#: ../classes/class-cb-map-shortcode.php:198
 #: ../templates/admin-page-template.php:215
 msgid "OPENING_HOURS"
 msgstr "Öffnungszeiten"
 
-#: ../classes/class-cb-map-shortcode.php:198
+#: ../classes/class-cb-map-shortcode.php:199
 #: ../templates/admin-page-template.php:229
 msgid "CONTACT"
 msgstr "Kontakt"
 
-#: ../classes/class-cb-map-shortcode.php:199
+#: ../classes/class-cb-map-shortcode.php:200
 msgid "FROM"
 msgstr "ab"
 
-#: ../classes/class-cb-map-shortcode.php:200
+#: ../classes/class-cb-map-shortcode.php:201
 msgid "UNTIL"
 msgstr "bis"
 
-#: ../classes/class-cb-map-shortcode.php:201
+#: ../classes/class-cb-map-shortcode.php:202
 msgid "AT_LEAST"
 msgstr "mind."
 
-#: ../classes/class-cb-map-shortcode.php:202
+#: ../classes/class-cb-map-shortcode.php:203
 msgid "DAYS"
 msgstr "Tag(e)"
 
-#: ../classes/class-cb-map-shortcode.php:203
+#: ../classes/class-cb-map-shortcode.php:204
 msgid "NO_LOCATIONS_MESSAGE"
 msgstr "Leider wurden keine Standorte gefunden."
 
-#: ../classes/class-cb-map-shortcode.php:204
+#: ../classes/class-cb-map-shortcode.php:205
 msgid "FILTER"
 msgstr "filtern"
 
-#: ../classes/class-cb-map-shortcode.php:205
+#: ../classes/class-cb-map-shortcode.php:206
 #: ../templates/admin-page-template.php:391
 msgid "AVAILABILITY"
 msgstr "Verfügbarkeit"
 
-#: ../classes/class-cb-map-shortcode.php:206
+#: ../classes/class-cb-map-shortcode.php:207
 msgid "CATEGORIES"
 msgstr "Kategorien"
 
-#: ../classes/class-cb-map-shortcode.php:207
+#: ../classes/class-cb-map-shortcode.php:208
 #: ../templates/admin-page-template.php:357
 msgid "DISTANCE"
 msgstr "Entfernung"
 
-#: ../classes/class-cb-map-shortcode.php:208
+#: ../classes/class-cb-map-shortcode.php:209
 msgid "ADDRESS"
 msgstr "Adresse"
 
-#: ../classes/class-cb-map-shortcode.php:209
+#: ../classes/class-cb-map-shortcode.php:210
+msgid "GEO_SEARCH_ERROR"
+msgstr ""
+"Leider ist bei der Verarbeitung deiner Anfrage ein Fehler aufgetreten. Bitte "
+"versuche es später noch einmal."
+
+#: ../classes/class-cb-map-shortcode.php:211
 msgid "GEO_SEARCH_UNAVAILABLE"
 msgstr ""
 "Der Service ist zur Zeit überlastet. Bitte versuche es später noch einmal."

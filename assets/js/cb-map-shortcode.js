@@ -23,6 +23,9 @@ function CB_Map() {
   cb_map.init_map = function() {
     var tile_server_url = cb_map.tile_servers[this.settings.base_map];
   	var attribution = 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors - <a href="https://www.openstreetmap.org/copyright">License</a>';
+    if(this.settings.show_location_distance_filter) {
+      attribution += ' | Address search by <a href="https://nominatim.openstreetmap.org/">Nominatim</a>'
+    }
     var map_options = {
       minZoom: this.settings.zoom_min,
       maxZoom: this.settings.zoom_max,
