@@ -168,23 +168,31 @@ function CB_Map_Filters($, cb_map) {
     console.log('filters: ', filters);
 
     //set default values
-    if(that.do_availability_check(filters)) {
+    if(filters.day_count > 0) {
+      var date_start_min_timestamp = Date.parse(cb_map.settings.filter_availability.date_min);
+      var date_end_max_timestamp = Date.parse(cb_map.settings.filter_availability.date_max);
+
       if(!filters.date_start) {
         filters.date_start = $('input[name="date_start"]').attr('min');
       }
-
       if(!filters.date_end) {
         filters.date_end = $('input[name="date_end"]').attr('max');
       }
 
-      if(!filters.day_count) {
-        filters.day_count = $('select[name="day_count"]').lastChild('option').val();
-      }
-
-      //ensure date_end is not less then date_start, flip if needed
       var date_start_timestamp = Date.parse(filters.date_start);
       var date_end_timestamp = Date.parse(filters.date_end);
 
+      //ensure dates are inside allowed bounds
+      if(date_start_timestamp < date_start_min_timestamp) {
+        filters.date_start = cb_map.settings.filter_availability.date_min;
+        $('input[name="date_start"]').val(cb_map.settings.filter_availability.date_min);
+      }
+      if(date_end_timestamp > date_end_max_timestamp) {
+        filters.date_end = cb_map.settings.filter_availability.date_max;
+        $('input[name="date_end"]').val(cb_map.settings.filter_availability.date_max);
+      }
+
+      //ensure date_end is not less then date_start, flip if needed
       if(date_end_timestamp < date_start_timestamp) {
         var date_tmp = filters.date_start;
         filters.date_start = filters.date_end;
@@ -245,18 +253,14 @@ function CB_Map_Filters($, cb_map) {
     $filter_options.append($container);
   }
 
-  this.do_availability_check = function(filters) {
-    return filters.date_start.length > 0 || filters.date_end.length > 0 || filters.day_count > 0;
-  }
-
   this.init_availability_filter = function($, $filter_options) {
 
     var $container = $('<div><div class="cb-map-filter-group-label">' + cb_map.translation['AVAILABILITY'] + '</div></div>');
     var $wrapper = $('<div class="cb-map-filter-group"></div>');
     $container.append($wrapper);
 
-    var $date_start_input = $('<input type="date" name="date_start" min="' + cb_map.settings.filter_availability.date_min + '" max="' + cb_map.settings.filter_availability.date_max + '">');
-    var $date_end_input = $('<input type="date" name="date_end" min="' + cb_map.settings.filter_availability.date_min + '" max="' + cb_map.settings.filter_availability.date_max + '">');
+    var $date_start_input = $('<input type="date" name="date_start" min="' + cb_map.settings.filter_availability.date_min + '" max="' + cb_map.settings.filter_availability.date_max + '" value="' + cb_map.settings.filter_availability.date_min +'">');
+    var $date_end_input = $('<input type="date" name="date_end" min="' + cb_map.settings.filter_availability.date_min + '" max="' + cb_map.settings.filter_availability.date_max + '"  value="' + cb_map.settings.filter_availability.date_max +'">');
     var $day_count_select = $('<select name="day_count"></select>')
     for(var d = 0; d <= cb_map.settings.filter_availability.day_count_max; d++) {
       var show_value = d == 0 ? '-' : d;
@@ -308,7 +312,7 @@ function CB_Map_Filters($, cb_map) {
     }
 
     //availability filters
-    if(this.do_availability_check(filters)) {
+    if(filters.day_count > 0) {
       location_data = this.apply_item_availability_filters(location_data, filters);
     }
 
