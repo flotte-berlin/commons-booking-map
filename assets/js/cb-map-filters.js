@@ -218,12 +218,15 @@ function CB_Map_Filters($, cb_map) {
     var $wrapper = $('<div class="cb-map-filter-group"></div>');
     $container.append($wrapper);
 
+    var $geo_search_input_group = $('<div class="cb-map-filter-input-group"></div>');
+
     var $undo_geo_search_button = $('<button type="button" class="undo-geo-search no-right-radius"><span class="dashicons dashicons-no"></span></button>');
-    $wrapper.append($undo_geo_search_button);
+    $geo_search_input_group.append($undo_geo_search_button);
     var $address = $('<input type="text" class="no-left-radius no-right-radius" name="position_address" placeholder="' + cb_map.translation['ADDRESS'] + '"></input>');
-    $wrapper.append($address);
+    $geo_search_input_group.append($address);
     var $geo_search_button = $('<button class="geo-search no-left-radius"><span class="dashicons dashicons-location-alt"></span></button>');
-    $wrapper.append($geo_search_button);
+    $geo_search_input_group.append($geo_search_button);
+    $wrapper.append($geo_search_input_group);
     var $distance_input = $('<input name="max_distance" class="cb-map-distance" type="number" min="0" value="2.5" step="0.25"></input>');
     $wrapper.append($distance_input);
     $wrapper.append('<label>km</label>');

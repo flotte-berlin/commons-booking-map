@@ -40,7 +40,7 @@ function CB_Map() {
 
     //create scale
     if(this.settings.show_scale) {
-      L.control.scale({imperial: false, updateWhenIdle: true}).addTo(map);
+      L.control.scale({imperial: false, updateWhenIdle: true, position: 'topright'}).addTo(map);
     }
 
   	// create the tile layer with correct attribution

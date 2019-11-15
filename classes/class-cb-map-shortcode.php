@@ -299,7 +299,8 @@ class CB_Map_Shortcode {
 
       //find map with corresponding code
       $args = [
-        'post_type' => 'cb_map'
+        'post_type' => 'cb_map',
+        'numberposts' => -1
       ];
       $cb_maps = get_posts($args);
 

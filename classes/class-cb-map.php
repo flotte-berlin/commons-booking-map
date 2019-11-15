@@ -351,7 +351,8 @@ class CB_Map {
 
     //find maps of type import
     $args = [
-      'post_type' => 'cb_map'
+      'post_type' => 'cb_map',
+      'numberposts' => -1
     ];
     $cb_maps = get_posts($args);
 

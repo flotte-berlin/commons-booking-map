@@ -14,6 +14,12 @@
   vertical-align: top;
 }
 
+@media screen and (max-width: 600px) {
+  .cb-map-filters fieldset {
+    width: 100%;
+  }
+}
+
 .cb-map-filters legend {
   padding: 0.2em 0.5em;
 }
@@ -126,6 +132,7 @@
 
 .cb-map-filter-group-label {
   font-weight: 700;
+  margin-top: 5px;
 }
 
 .cb-map-filter-group {
@@ -139,16 +146,44 @@
   width: 25%;
 }
 
+@media screen and (max-width: 600px) {
+  .cb-map-filters input[type="date"] {
+    width:100%;
+  }
+}
+
 .cb-map-filters select {
+  margin-top: 3px;
   margin-right: 10px;
+  height: 52px;
 }
 
 .cb-map-button-wrapper {
   margin-top: 5px;
 }
 
+.cb-map-filter-input-group {
+  display: inline;
+}
+
+@media screen and (max-width: 600px) {
+  .cb-map-filter-input-group {
+    width: 100%;
+  }
+}
+
+.cb-map-filter-group input {
+  margin-top: 3px;
+}
+
 .cb-map-filter-group input[type="text"] {
-  width: 50%;
+  width: 50%
+}
+
+@media screen and (max-width: 600px) {
+  .cb-map-filter-group input[type="text"] {
+    width: calc(100% - 96px);
+  }
 }
 
 .cb-map-filter-group button {
@@ -173,6 +208,12 @@
 .cb-map-filter-group .no-left-radius {
   border-top-left-radius: 0px;
   border-bottom-left-radius: 0px;
+}
+
+@media screen and (max-width: 600px) {
+  .cb-map-filter-group .no-left-radius {
+    margin-right: 0px !important;
+  }
 }
 
 .cb-map-filter-group .no-left-radius[disabled]:hover {
