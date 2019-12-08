@@ -104,16 +104,16 @@ var cb_map_marker_upload = {
 
     });
 
-    //for cached images, trigger load
-    if(data.$image_preview[0].complete) {
+    //if parent details got opened, trigger load for cached images
+    var $parent_details = data.$image_preview.closest('details');
+    $parent_details.on('toggle', function() {
       var src = data.$image_preview.attr('src');
-
-      if(src.length > 0) {
+      if($parent_details.prop('open') == true && src.length > 0) {
         setTimeout(function() {
           data.$image_preview.load();
         }, 0);
       }
-    }
+    });
   }
 }
 
