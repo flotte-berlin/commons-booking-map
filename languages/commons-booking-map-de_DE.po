@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cb-admin-booking\n"
 "POT-Creation-Date: 2019-12-08 20:00+0100\n"
-"PO-Revision-Date: 2019-12-08 20:00+0100\n"
+"PO-Revision-Date: 2019-12-08 20:48+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -140,7 +140,7 @@ msgstr ""
 
 #: ../classes/class-cb-map-shortcode.php:219
 msgid "COMING_SOON"
-msgstr "bald verfügbar"
+msgstr "demnächst buchbar"
 
 #: ../classes/class-cb-map.php:10
 msgid "POST_LABELS_NAME"
