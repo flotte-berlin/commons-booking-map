@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: cb-admin-booking\n"
-"POT-Creation-Date: 2019-11-09 11:57+0100\n"
-"PO-Revision-Date: 2019-11-09 11:58+0100\n"
+"POT-Creation-Date: 2019-12-08 11:28+0100\n"
+"PO-Revision-Date: 2019-12-08 11:28+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -19,14 +19,14 @@ msgid "MAP_POSITIONING"
 msgstr "Kartenpositionierung"
 
 #: ../classes/class-cb-location-map-admin.php:68
-#: ../templates/admin-page-template.php:366
-#: ../templates/admin-page-template.php:376
+#: ../templates/admin-page-template.php:428
+#: ../templates/admin-page-template.php:438
 msgid "LATITUDE"
 msgstr "Breitengrad"
 
 #: ../classes/class-cb-location-map-admin.php:74
-#: ../templates/admin-page-template.php:365
-#: ../templates/admin-page-template.php:375
+#: ../templates/admin-page-template.php:427
+#: ../templates/admin-page-template.php:437
 msgid "LONGITUDE"
 msgstr "Längengrad"
 
@@ -34,19 +34,19 @@ msgstr "Längengrad"
 msgid "POSITION"
 msgstr "Position"
 
-#: ../classes/class-cb-map-admin.php:82
+#: ../classes/class-cb-map-admin.php:84
 msgid "CB_MAP_ADMIN_METABOX_TITLE"
 msgstr "Kartenkonfiguration"
 
-#: ../classes/class-cb-map-admin.php:469
+#: ../classes/class-cb-map-admin.php:491
 msgid "SELECT_IMAGE"
 msgstr "Bild auswählen"
 
-#: ../classes/class-cb-map-admin.php:470
+#: ../classes/class-cb-map-admin.php:492
 msgid "SAVE"
 msgstr "speichern"
 
-#: ../classes/class-cb-map-admin.php:471
+#: ../classes/class-cb-map-admin.php:493
 msgid "MARKER_IMAGE_MEASUREMENTS"
 msgstr "Bildmaße"
 
@@ -110,7 +110,7 @@ msgid "FILTER"
 msgstr "filtern"
 
 #: ../classes/class-cb-map-shortcode.php:206
-#: ../templates/admin-page-template.php:391
+#: ../templates/admin-page-template.php:453
 msgid "AVAILABILITY"
 msgstr "Verfügbarkeit"
 
@@ -119,7 +119,7 @@ msgid "CATEGORIES"
 msgstr "Kategorien"
 
 #: ../classes/class-cb-map-shortcode.php:208
-#: ../templates/admin-page-template.php:357
+#: ../templates/admin-page-template.php:419
 msgid "DISTANCE"
 msgstr "Entfernung"
 
@@ -462,31 +462,37 @@ msgstr "angepasster Marker"
 
 #: ../templates/admin-page-template.php:247
 #: ../templates/admin-page-template.php:309
+#: ../templates/admin-page-template.php:370
 msgid "IMAGE_FILE"
 msgstr "Bilddatei"
 
 #: ../templates/admin-page-template.php:248
 #: ../templates/admin-page-template.php:310
+#: ../templates/admin-page-template.php:371
 msgid "IMAGE_FILE_DESC"
 msgstr "der Standard Marker kann durch ein eigenes Bild ersetzt werden"
 
 #: ../templates/admin-page-template.php:251
 #: ../templates/admin-page-template.php:313
+#: ../templates/admin-page-template.php:374
 msgid "SELECT"
 msgstr "auswählen"
 
 #: ../templates/admin-page-template.php:252
 #: ../templates/admin-page-template.php:314
+#: ../templates/admin-page-template.php:375
 msgid "REMOVE"
 msgstr "entfernen"
 
 #: ../templates/admin-page-template.php:268
 #: ../templates/admin-page-template.php:330
+#: ../templates/admin-page-template.php:391
 msgid "ICON_SIZE"
 msgstr "Icon Größe"
 
 #: ../templates/admin-page-template.php:269
 #: ../templates/admin-page-template.php:331
+#: ../templates/admin-page-template.php:392
 msgid "ICON_SIZE_DESC"
 msgstr ""
 "die Größe des angepassten Marker-Bildes, mit der es auf der Karte angezeigt "
@@ -523,132 +529,162 @@ msgid "CUSTOM_CLUSTER_MARKER"
 msgstr "angepasster Cluster-Marker"
 
 #: ../templates/admin-page-template.php:343
+msgid "APPEARANCE_BY_ITEM_STATUS"
+msgstr "Verhalten abhängig vom Artikel-Status"
+
+#: ../templates/admin-page-template.php:348
+msgid "APPEARANCE"
+msgstr "Erscheinen"
+
+#: ../templates/admin-page-template.php:349
+msgid "APPEARANCE_DESC"
+msgstr ""
+"wie Standorte von Artikeln abhängig vom Veröffentlichungsstatus behandelt "
+"werden"
+
+#: ../templates/admin-page-template.php:354
+msgid "ITEM_DRAFT_APPEARANCE_NO"
+msgstr "zeige keine Entwürfe"
+
+#: ../templates/admin-page-template.php:355
+msgid "ITEM_DRAFT_APPEARANCE_ONLY"
+msgstr "zeige nur Entwürfe"
+
+#: ../templates/admin-page-template.php:356
+msgid "ITEM_DRAFT_APPEARANCE_ALL"
+msgstr "zeige alle zusammen"
+
+#: ../templates/admin-page-template.php:365
+msgid "CUSTOM_ITEM_DRAFT_MARKER"
+msgstr "angepasster Artikel-Entwurfs-Marker"
+
+#: ../templates/admin-page-template.php:405
 msgid "FILTER_USERS"
 msgstr "Filter für NutzerInnen"
 
-#: ../templates/admin-page-template.php:347
+#: ../templates/admin-page-template.php:409
 msgid "SHOW_LOCATION_DISTANCE_FILTER"
 msgstr "Filter für Standort-Entfernung anzeigen"
 
-#: ../templates/admin-page-template.php:348
+#: ../templates/admin-page-template.php:410
 msgid "SHOW_LOCATION_DISTANCE_FILTER_DESC"
 msgstr "aktivieren, um den Filter für die Standort-Entfernung anzuzeigen"
 
-#: ../templates/admin-page-template.php:354
+#: ../templates/admin-page-template.php:416
 msgid "LABEL_LOCATION_DISTANCE_FILTER"
 msgstr "Beschriftung für Standort-Entfernungs-Filter"
 
-#: ../templates/admin-page-template.php:355
+#: ../templates/admin-page-template.php:417
 msgid "LABEL_LOCATION_DISTANCE_FILTER_DESC"
 msgstr "ein alternatives Label für den Standort-Entfernungs-Filter"
 
-#: ../templates/admin-page-template.php:361
+#: ../templates/admin-page-template.php:423
 msgid "ADDRESS_SEARCH_BOUNDS_LEFT_BOTTOM"
 msgstr "Begrenzung Addresssuche - links unten"
 
-#: ../templates/admin-page-template.php:362
+#: ../templates/admin-page-template.php:424
 msgid "ADDRESS_SEARCH_BOUNDS_LEFT_BOTTOM_DESC"
 msgstr ""
 "die linke untere Ecke des Bereichs, in dem Adressen in Geokoordinaten "
 "aufgelöst werden"
 
-#: ../templates/admin-page-template.php:371
+#: ../templates/admin-page-template.php:433
 msgid "ADDRESS_SEARCH_BOUNDS_RIGHT_TOP"
 msgstr "Begrenzung Addresssuche - rechts oben"
 
-#: ../templates/admin-page-template.php:372
+#: ../templates/admin-page-template.php:434
 msgid "ADDRESS_SEARCH_BOUNDS_RIGHT_TOP_DESC"
 msgstr ""
 "die rechte obere Ecke des Bereichs, in dem Adressen in Geokoordinaten "
 "aufgelöst werden"
 
-#: ../templates/admin-page-template.php:381
+#: ../templates/admin-page-template.php:443
 msgid "SHOW_ITEM_AVAILABILITY_FILTER"
 msgstr "Filter für Artikel-Verfügbarkeit anzeigen"
 
-#: ../templates/admin-page-template.php:382
+#: ../templates/admin-page-template.php:444
 msgid "SHOW_ITEM_AVAILABILITY_FILTER_DESC"
 msgstr "aktivieren, um den Filter für die Artikel-Verfügbarkeit anzuzeigen"
 
-#: ../templates/admin-page-template.php:388
+#: ../templates/admin-page-template.php:450
 msgid "LABEL_ITEM_AVAILABILITY_FILTER"
 msgstr "Beschriftung für Artikel-Verfügbarkeit"
 
-#: ../templates/admin-page-template.php:389
+#: ../templates/admin-page-template.php:451
 msgid "LABEL_ITEM_AVAILABILITY_FILTER_DESC"
 msgstr "ein alternatives Label für den Artikel-Verfügbarkeits-Filter"
 
-#: ../templates/admin-page-template.php:395
+#: ../templates/admin-page-template.php:457
 msgid "LABEL_ITEM_CATEGORY_FILTER"
 msgstr "Beschriftung für Artikel-Kategorie-Filter"
 
-#: ../templates/admin-page-template.php:396
+#: ../templates/admin-page-template.php:458
 msgid "LABEL_ITEM_CATEGORY_FILTER_DESC"
 msgstr "ein alternatives Label für Artikel-Kategorie-Filter"
 
-#: ../templates/admin-page-template.php:398
+#: ../templates/admin-page-template.php:460
 msgid "ITEM_CATEGORIES"
 msgstr "Kategorien"
 
-#: ../templates/admin-page-template.php:403
+#: ../templates/admin-page-template.php:465
 msgid "AVAILABLE_CATEGORIES"
 msgstr "verfügbare Kategorien"
 
-#: ../templates/admin-page-template.php:404
+#: ../templates/admin-page-template.php:466
 msgid "AVAILABLE_CATEGORIES_DESC"
 msgstr ""
 "Kategorien, die NutzerInnen angezeigt werden , um Artikel zu filtern "
 "(erscheinen in der Gruppierung und Reihenfolge der Label-Liste unten) - "
 "keine Auswahl für Deaktivierung von Kategorie-Filtern"
 
-#: ../templates/admin-page-template.php:418
+#: ../templates/admin-page-template.php:480
 msgid "CUSTOM_CATEGORY_FILTER_LABEL_MARKUP"
 msgstr "Gruppierung der Filter-Label und individuelles HTML"
 
-#: ../templates/admin-page-template.php:420
+#: ../templates/admin-page-template.php:482
 msgid "ADD_FILTER_GROUP_BUTTON_TITLE"
 msgstr "Filter-Gruppe hinzufügen"
 
-#: ../templates/admin-page-template.php:427
+#: ../templates/admin-page-template.php:489
 msgid "FILTER_PRESETS"
 msgstr "Vorabfilter"
 
-#: ../templates/admin-page-template.php:431
+#: ../templates/admin-page-template.php:493
 msgid "PRESET_CATEGORIES"
 msgstr "gesetzte Kategorien"
 
-#: ../templates/admin-page-template.php:432
+#: ../templates/admin-page-template.php:494
 msgid "PRESET_CATEGORIES_DESC"
 msgstr ""
 "Auswahl der Kategorien, die genutzt werden, um Artikel vorzufiltern, die auf "
 "der Karte angezeigt werden (Kategorien auf einer Ebene sind ODER-verknüpft, "
 "d.h. nur eine muss erfüllt sein) - keine Auswahl zeigt alle Artikel an"
 
-#: ../templates/admin-page-template.php:505
+#: ../templates/admin-page-template.php:567
 msgid "FILTER_GROUP"
 msgstr "Filter-Gruppe"
 
-#: ../templates/admin-page-template.php:505
+#: ../templates/admin-page-template.php:567
 msgid "FILTER_GROUP_PLACEHOLDER"
 msgstr "Gruppenname"
 
-#: ../templates/admin-page-template.php:508
+#: ../templates/admin-page-template.php:570
 msgid "REMOVE_FILTER_GROUP_BUTTON_TITLE"
 msgstr "Filter-Gruppe entfernen"
 
-#: ../templates/admin-page-template.php:587
+#: ../templates/admin-page-template.php:649
 msgid "URL"
 msgstr "URL"
 
-#: ../templates/admin-page-template.php:588
+#: ../templates/admin-page-template.php:650
 msgid "CODE"
 msgstr "Code"
 
-#: ../templates/admin-page-template.php:602
+#: ../templates/admin-page-template.php:664
 msgid "REMOVE_IMPORT_SOURCE_BUTTON_TITLE"
 msgstr "Import-Quelle entfernen"
 
-#: ../templates/admin-page-template.php:610
+#: ../templates/admin-page-template.php:672
 msgid "TEST_IMPORT_SOURCE_BUTTON_TITLE"
 msgstr "Import-Quelle testen"
 
@@ -670,6 +706,9 @@ msgid "BOOKING_PAGE_LINK_REPLACEMENT_DESC"
 msgstr ""
 "mit der Aktivierung wird das Ziel des Links 'Auf der Karte zeigen' auf der "
 "Buchungsseite durch openstreetmap ersetzt"
+
+#~ msgid "ITEM_STATUS"
+#~ msgstr "Verhalten abhängig vom Artikel-Status"
 
 #~ msgid "SHOW_SHOW_ITEM_AVAILABILITY_DESC"
 #~ msgstr "aktivieren, um die Artikel-Verfügbarkeit im Marker-Popup anzuzeigen"

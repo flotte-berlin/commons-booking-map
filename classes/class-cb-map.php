@@ -66,11 +66,26 @@ class CB_Map {
     wp_clear_scheduled_hook('cb_map_import');
   }
 
+  public static function has_item_valid_status($item, $item_draft_appearance) {
+
+    if($item_draft_appearance == 1) {
+      return $item->post_status == 'publish';
+    }
+    if($item_draft_appearance == 2) {
+      return $item->post_status != 'publish';
+    }
+    if($item_draft_appearance == 3) {
+      return true;
+    }
+  }
+
   /**
   * load all timeframes from db (that end in the future and it's item's status is 'publish')
   **/
-  public static function get_timeframes() {
+  public static function get_timeframes($cb_map_id) {
     global $wpdb;
+
+    $item_draft_appearance = CB_Map_Admin::get_option($cb_map_id, 'item_draft_appearance');
 
     $result = [];
 
@@ -84,7 +99,7 @@ class CB_Map {
     foreach($timeframes as $key => $timeframe) {
       $item = get_post($timeframe['item_id']);
 
-      if($item->post_status == 'publish') {
+      if(self::has_item_valid_status($item, $item_draft_appearance)) {
         $item_desc = get_post_meta($timeframe['item_id'], 'commons-booking_item_descr', true);
         $thumbnail = get_the_post_thumbnail_url($item, 'thumbnail');
 
@@ -95,7 +110,8 @@ class CB_Map {
             'name' => $item->post_title,
             'short_desc' => $item_desc,
             'link' => get_permalink($item),
-            'thumbnail' => $thumbnail ? $thumbnail : null
+            'thumbnail' => $thumbnail ? $thumbnail : null,
+            'status' => $item->post_status
           ],
           'date_start' => $timeframe['date_start'],
           'date_end' => $timeframe['date_end']

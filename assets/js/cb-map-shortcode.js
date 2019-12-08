@@ -149,8 +149,12 @@ function CB_Map() {
     }
 
     var custom_marker_icon;
-    if(this.settings.marker_icon) {
-      custom_marker_icon = L.icon(this.settings.marker_icon);
+    if(this.settings.custom_marker_icon) {
+      custom_marker_icon = L.icon(this.settings.custom_marker_icon);
+    }
+    var item_draft_marker_icon;
+    if(this.settings.item_draft_marker_icon) {
+      item_draft_marker_icon = L.icon(this.settings.item_draft_marker_icon);
     }
 
     var date_format_options = { year: 'numeric', month: '2-digit', day: '2-digit' };
@@ -164,6 +168,7 @@ function CB_Map() {
       //item names
       var item_names = [];
       popup_items = '';
+      var item_statuses = [];
       location.items.forEach(function(item) {
         item_names.push(item.name);
 
@@ -205,6 +210,8 @@ function CB_Map() {
 
         popup_items += '<div class="cb-map-popup-item-desc">' + item.short_desc + '</div>';
         popup_items += '</div></div>';
+
+        item_statuses.push(item.status);
       });
 
       var marker_options = {
@@ -212,12 +219,25 @@ function CB_Map() {
       };
 
       //icon
-      if(custom_marker_icon) {
-        marker_options.icon = custom_marker_icon;
+      var marker_icon;
+      if(item_statuses.includes('publish') && cb_map.settings.preferred_status_marker_icon == 'publish') {
+        if(custom_marker_icon) {
+          marker_icon = custom_marker_icon;
+        }
+      }
+      else {
+        if(item_draft_marker_icon) {
+          marker_icon = item_draft_marker_icon;
+        }
+      }
+
+      if(marker_icon) {
+        marker_options.icon = marker_icon;
       }
 
       var marker = L.marker([location.lat, location.lon], marker_options);
 
+      //popup content
       var popup_content = '<div class="cb-map-location-info-name">';
       popup_content += '<b>' + location.location_name + '</b>';
       popup_content += '<span id="location-zoom-in-' + that.settings.cb_map_id + '-' + index + '" class="dashicons dashicons-search"></span>';

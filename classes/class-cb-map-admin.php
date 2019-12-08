@@ -19,6 +19,7 @@ class CB_Map_Admin {
     'custom_marker_cluster_media_id', 'marker_cluster_icon_width', 'marker_cluster_icon_height',
     'address_search_bounds_left_bottom_lon', 'address_search_bounds_left_bottom_lat', 'address_search_bounds_right_top_lon', 'address_search_bounds_right_top_lat',
     'show_location_distance_filter', 'label_location_distance_filter', 'show_item_availability_filter', 'label_item_availability_filter', 'label_item_category_filter',
+    'item_draft_appearance', 'marker_item_draft_media_id', 'marker_item_draft_icon_width', 'marker_item_draft_icon_height', 'marker_item_draft_icon_anchor_x', 'marker_item_draft_icon_anchor_y',
     'cb_items_available_categories',
     'cb_items_preset_categories'];
 
@@ -73,6 +74,12 @@ class CB_Map_Admin {
   CONST LABEL_ITEM_CATEGORY_FILTER_DEFAULT = "";
   const CB_ITEMS_AVAILABLE_CATEGORIES_DEFAULT = [];
   const CB_ITEMS_PRESET_CATEGORIES_DEFAULT = [];
+  const ITEM_DRAFT_APPEARANCE_DEFAULT = 1;
+  const MARKER_ITEM_DRAFT_MEDIA_ID = null;
+  const MARKER_ITEM_DRAFT_ICON_WIDTH = 0;
+  const MARKER_ITEM_DRAFT_ICON_HEIGHT = 0;
+  const MARKER_ITEM_DRAFT_ICON_ANCHOR_X = 0;
+  const MARKER_ITEM_DRAFT_ICON_ANCHOR_Y = 0;
 
   //const MARKER_POPUP_CONTENT_DEFAULT = "'<b>' + location.location_name + '</b><br>' + location.address.street + '<br>' + location.address.zip + ' ' + location.address.city + '<p>' + location.opening_hours + '</p>'";
 
@@ -332,6 +339,36 @@ class CB_Map_Admin {
     //marker_cluster_icon_height
     if(isset($input['marker_cluster_icon_height'])) {
       $validated_input['marker_cluster_icon_height'] = abs((float) $input['marker_cluster_icon_height']);
+    }
+
+    //item_draft_appearance
+    if(isset($input['item_draft_appearance']) && $input['item_draft_appearance'] >= 1 && $input['item_draft_appearance'] <= 3) {
+      $validated_input['item_draft_appearance'] = $input['item_draft_appearance'];
+    }
+
+    // marker_item_draft_media_id
+    if(isset($input['marker_item_draft_media_id'])) {
+      $validated_input['marker_item_draft_media_id'] = abs((int) $input['marker_item_draft_media_id']);
+    }
+
+    //marker_item_draft_icon_width
+    if(isset($input['marker_item_draft_icon_width'])) {
+      $validated_input['marker_item_draft_icon_width'] = abs((float) $input['marker_item_draft_icon_width']);
+    }
+
+    //marker_item_draft_icon_height
+    if(isset($input['marker_item_draft_icon_height'])) {
+      $validated_input['marker_item_draft_icon_height'] = abs((float) $input['marker_item_draft_icon_height']);
+    }
+
+    //marker_item_draft_icon_anchor_x
+    if(isset($input['marker_item_draft_icon_anchor_x'])) {
+      $validated_input['marker_item_draft_icon_anchor_x'] = (float) $input['marker_item_draft_icon_anchor_x'];
+    }
+
+    //marker_item_draft_icon_anchor_y
+    if(isset($input['marker_item_draft_icon_anchor_y'])) {
+      $validated_input['marker_item_draft_icon_anchor_y'] = (float) $input['marker_item_draft_icon_anchor_y'];
     }
 
     //show_location_distance_filter

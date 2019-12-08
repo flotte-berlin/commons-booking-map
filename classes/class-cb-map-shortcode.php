@@ -103,7 +103,9 @@ class CB_Map_Shortcode {
     $settings = [
       'data_url' => get_site_url(null, '', null) . '/wp-admin/admin-ajax.php',
       'nonce' => wp_create_nonce('cb_map_locations'),
-      'marker_icon' => null,
+      'custom_marker_icon' => null,
+      'item_draft_marker_icon' => null,
+      'preferred_status_marker_icon' => 'publish',
       'filter_cb_item_categories' => [],
       'filter_availability' => [
         'date_min' => $date_min,
@@ -125,24 +127,29 @@ class CB_Map_Shortcode {
       'show_location_distance_filter', 'label_location_distance_filter', 'show_item_availability_filter', 'label_item_availability_filter', 'label_item_category_filter'
     ];
 
-    $icon_size = [$options['marker_icon_width'], $options['marker_icon_height']];
-    $icon_anchor = [$options['marker_icon_anchor_x'], $options['marker_icon_anchor_y']];
-
     foreach ($options as $key => $value) {
       if(in_array($key, $pass_through)) {
         $settings[$key] = $value;
       }
       else if($key == 'custom_marker_media_id') {
         if($value != null) {
-          $settings['marker_icon'] = [
+          $settings['custom_marker_icon'] = [
             'iconUrl'       => wp_get_attachment_url($options['custom_marker_media_id']),
             //'shadowUrl'     => 'leaf-shadow.png',
-
-            'iconSize'      => $icon_size, //[27, 35], // size of the icon
+            'iconSize'      => [$options['marker_icon_width'], $options['marker_icon_height']], //[27, 35], // size of the icon
             //'shadowSize'    => [50, 64], // size of the shadow
-            'iconAnchor'    => $icon_anchor, //[13.5, 0], // point of the icon which will correspond to marker's location
+            'iconAnchor'    => [$options['marker_icon_anchor_x'], $options['marker_icon_anchor_y']], //[13.5, 0], // point of the icon which will correspond to marker's location
             //'shadowAnchor'  => [4, 62],  // the same for the shadow
             //'popupAnchor'   => [-3, -76] // point from which the popup should open relative to the iconAnchor
+          ];
+        }
+      }
+      else if($key == 'marker_item_draft_media_id') {
+        if($value != null) {
+          $settings['item_draft_marker_icon'] = [
+            'iconUrl'       => wp_get_attachment_url($options['marker_item_draft_media_id']),
+            'iconSize'      => [$options['marker_item_draft_icon_width'], $options['marker_item_draft_icon_height']], //[27, 35], // size of the icon
+            'iconAnchor'    => [$options['marker_item_draft_icon_anchor_x'], $options['marker_item_draft_icon_anchor_y']], //[13.5, 0], // point of the icon which will correspond to marker's location
           ];
         }
       }

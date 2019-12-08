@@ -1,6 +1,6 @@
 <div class="inside">
 
-    <p><?= cb_map\__('MAP_ADMIN_DESCRIPTION', 'commons-booking-map', 'These settings help you to configure the usage and appearance Commons Booking Map.') ?></p>
+    <p><?= cb_map\__('MAP_ADMIN_DESCRIPTION', 'commons-booking-map', 'These settings help you to configure the usage and appearance of Commons Booking Map.') ?></p>
 
     <div class="option-group" id="option-group-usage">
       <h1><?= cb_map\__('USAGE', 'commons-booking-map', 'Usage') ?></h1>
@@ -339,6 +339,77 @@
       </table>
     </div>
 
+    <div class="option-group" id="option-group-item-status-appearance">
+      <h1><?= cb_map\__('APPEARANCE_BY_ITEM_STATUS', 'commons-booking-map', 'Appearance by Item Status') ?></h1>
+
+      <table class="text-left">
+        <tr>
+            <th>
+              <?= cb_map\__('APPEARANCE', 'commons-booking-map', 'appearance') ?>:
+              <span class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'APPEARANCE_DESC', 'commons-booking-map', 'how locations with items that are in draft status should be handled') ?>"></span>
+            </th>
+            <td>
+              <?php $item_draft_appearance = CB_Map_Admin::get_option($cb_map_id, 'item_draft_appearance') ?>
+              <select id="item_draft_appearance" name="cb_map_options[item_draft_appearance]">
+                <option value="1" <?= $item_draft_appearance == 1 ? 'selected' : '' ?>><?= cb_map\__('ITEM_DRAFT_APPEARANCE_NO', 'commons-booking-map', "don't show drafts") ?></option>
+                <option value="2" <?= $item_draft_appearance == 2 ? 'selected' : '' ?>><?= cb_map\__('ITEM_DRAFT_APPEARANCE_ONLY', 'commons-booking-map', "show only drafts") ?></option>
+                <option value="3" <?= $item_draft_appearance == 3 ? 'selected' : '' ?>><?= cb_map\__('ITEM_DRAFT_APPEARANCE_ALL', 'commons-booking-map', "show all together") ?></option>
+              </select>
+            </td>
+        </tr>
+      </table>
+
+    </div>
+
+    <div class="option-group" id="option-group-item-status-appearance">
+      <h1><?= cb_map\__('CUSTOM_ITEM_DRAFT_MARKER', 'commons-booking-map', 'Custom Item Draft Marker') ?></h1>
+
+      <table class="text-left">
+        <tr>
+          <th>
+            <?= cb_map\__('IMAGE_FILE', 'commons-booking-map', 'image file') ?>:
+            <span class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'IMAGE_FILE_DESC', 'commons-booking-map', 'the default marker icon can be replaced by a custom image') ?>"></span>
+          </th>
+          <td>
+            <input id="select-marker-item-draft-image-button" type="button" class="button" value="<?= cb_map\__('SELECT', 'commons-booking-map', 'select') ?>" />
+            <input id="remove-marker-item-draft-image-button" type="button" class="button" value="<?= cb_map\__('REMOVE', 'commons-booking-map', 'remove') ?>" />
+          </td>
+        </tr>
+        <tr id="marker-item-draft-image-preview-settings" class="display-none">
+          <td>
+            <div>
+                <img id="marker-item-draft-image-preview" src="<?= wp_get_attachment_url(CB_Map_Admin::get_option($cb_map_id, 'marker_item_draft_media_id')); ?>">
+            </div>
+            <input type="hidden" name="cb_map_options[marker_item_draft_media_id]" value="<?= CB_Map_Admin::get_option($cb_map_id, 'marker_item_draft_media_id') ?>">
+          </td>
+          <td>
+            <div id="marker-item-draft-image-preview-measurements"></div>
+          </td>
+        </tr>
+        <tr id="marker-item-draft-icon-size" class="display-none">
+            <th>
+              <?= cb_map\__('ICON_SIZE', 'commons-booking-map', 'icon size') ?>:
+              <span class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'ICON_SIZE_DESC', 'commons-booking-map', 'the size of the custom marker icon image as it is shown on the map') ?>"></span>
+            </th>
+            <td>
+              <input type="text" name="cb_map_options[marker_item_draft_icon_width]" value="<?= esc_attr( CB_Map_Admin::get_option($cb_map_id, 'marker_item_draft_icon_width') ); ?>" size="3"> x
+              <input type="text" name="cb_map_options[marker_item_draft_icon_height]" value="<?= esc_attr( CB_Map_Admin::get_option($cb_map_id, 'marker_item_draft_icon_height') ); ?>" size="3"> px
+            </td>
+        </tr>
+        <tr id="marker-item-draft-icon-anchor" class="display-none">
+          <th>
+            <?= cb_map\__('ANCHOR_POINT', 'commons-booking-map', 'anchor point') ?>:
+            <span class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'ANCHOR_POINT_DESC', 'commons-booking-map', 'the position of the anchor point of the icon image, seen from the left top corner of the icon, often it is half of the width and full height of the icon size - this point is used to place the marker on the geo coordinates') ?>"></span>
+          </th>
+          <td>
+            <input type="text" name="cb_map_options[marker_item_draft_icon_anchor_x]" value="<?= esc_attr( CB_Map_Admin::get_option($cb_map_id, 'marker_item_draft_icon_anchor_x') ); ?>" size="3"> x
+            <input type="text" name="cb_map_options[marker_item_draft_icon_anchor_y]" value="<?= esc_attr( CB_Map_Admin::get_option($cb_map_id, 'marker_item_draft_icon_anchor_y') ); ?>" size="3"> px
+          </td>
+        </tr>
+      </table>
+
+    </div>
+
     <div class="option-group" id="option-group-filter-users">
       <h1><?= cb_map\__('FILTER_USERS', 'commons-booking-map', 'Filter for Users') ?></h1>
       <table class="text-left">
@@ -449,7 +520,7 @@
 jQuery(document).ready(function($) {
   var map_type_option_groups = {
     //local
-    1: ['usage', 'map-presentation', 'zoom', 'positioning-start', 'adaptive-map-section', 'popup', 'custom-marker', 'cluster', 'filter-users', 'filter-presets'],
+    1: ['usage', 'map-presentation', 'zoom', 'positioning-start', 'adaptive-map-section', 'popup', 'custom-marker', 'cluster', 'filter-users', 'filter-presets', 'item-status-appearance'],
     //import
     2: ['usage', 'data-import', 'map-presentation', 'zoom', 'positioning-start', 'adaptive-map-section', 'popup', 'custom-marker', 'cluster'],
     //export

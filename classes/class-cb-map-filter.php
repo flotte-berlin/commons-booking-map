@@ -13,7 +13,7 @@ class CB_Map_Filter {
     require_once( CB_MAP_PATH . 'classes/class-cb-map-item-availability.php' );
 
     $result = [];
-    $timeframes = CB_Map::get_timeframes();
+    $timeframes = CB_Map::get_timeframes($cb_map_id);
 
     //$category_tree = CB_Map::get_structured_cb_items_category_tree();
     $preset_category_groups = CB_Map::get_cb_items_category_groups($preset_categories);
@@ -89,7 +89,7 @@ class CB_Map_Filter {
 
     return $result;
   }
-  
+
   protected static function check_item_terms_against_categories($item_terms, $category_groups) {
     $valid_groups_count = 0;
 
