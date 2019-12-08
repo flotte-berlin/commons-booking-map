@@ -215,7 +215,8 @@ class CB_Map_Shortcode {
       'DISTANCE' => strlen($label_location_distance_filter) > 0 ? $label_location_distance_filter : cb_map\__( 'DISTANCE', 'commons-booking-map', 'distance'),
       'ADDRESS' => cb_map\__( 'ADDRESS', 'commons-booking-map', 'address'),
       'GEO_SEARCH_ERROR' => cb_map\__( 'GEO_SEARCH_ERROR', 'commons-booking-map', 'Sorry, an error occured during your request. Please try again later.'),
-      'GEO_SEARCH_UNAVAILABLE' => cb_map\__( 'GEO_SEARCH_UNAVAILABLE', 'commons-booking-map', 'The service is currently not available. Please try again later.')
+      'GEO_SEARCH_UNAVAILABLE' => cb_map\__( 'GEO_SEARCH_UNAVAILABLE', 'commons-booking-map', 'The service is currently not available. Please try again later.'),
+      'COMING_SOON' => cb_map\__( 'COMING_SOON', 'commons-booking-map', 'comming soon')
     ];
 
     return $translation;

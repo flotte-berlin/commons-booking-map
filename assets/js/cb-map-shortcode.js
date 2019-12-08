@@ -180,7 +180,14 @@ function CB_Map() {
           + '</div>';
 
         popup_items += '<div class="cb-map-popup-item-info">';
-        popup_items += '<div class="cb-map-popup-item-link"><b><a href="' + item.link + '">' + item.name + '</a></b>';
+        popup_items += '<div class="cb-map-popup-item-link">'
+
+        if(item.status == 'publish') {
+          popup_items += '<b><a href="' + item.link + '">' + item.name + '</a></b>';
+        }
+        else {
+          popup_items += '<b>' + item.name + '</b> - ' + cb_map.translation['COMING_SOON'];
+        }
 
         //popup_items += '<span class="dashicons dashicons-calendar-alt"></span>';
 
