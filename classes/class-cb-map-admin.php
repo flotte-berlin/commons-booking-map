@@ -75,11 +75,11 @@ class CB_Map_Admin {
   const CB_ITEMS_AVAILABLE_CATEGORIES_DEFAULT = [];
   const CB_ITEMS_PRESET_CATEGORIES_DEFAULT = [];
   const ITEM_DRAFT_APPEARANCE_DEFAULT = 1;
-  const MARKER_ITEM_DRAFT_MEDIA_ID = null;
-  const MARKER_ITEM_DRAFT_ICON_WIDTH = 0;
-  const MARKER_ITEM_DRAFT_ICON_HEIGHT = 0;
-  const MARKER_ITEM_DRAFT_ICON_ANCHOR_X = 0;
-  const MARKER_ITEM_DRAFT_ICON_ANCHOR_Y = 0;
+  const MARKER_ITEM_DRAFT_MEDIA_ID_DEFAULT = null;
+  const MARKER_ITEM_DRAFT_ICON_WIDTH_DEFAULT = 0;
+  const MARKER_ITEM_DRAFT_ICON_HEIGHT_DEFAULT = 0;
+  const MARKER_ITEM_DRAFT_ICON_ANCHOR_X_DEFAULT = 0;
+  const MARKER_ITEM_DRAFT_ICON_ANCHOR_Y_DEFAULT = 0;
 
   //const MARKER_POPUP_CONTENT_DEFAULT = "'<b>' + location.location_name + '</b><br>' + location.address.street + '<br>' + location.address.zip + ' ' + location.address.city + '<p>' + location.opening_hours + '</p>'";
 
@@ -517,7 +517,8 @@ class CB_Map_Admin {
       'selected_cats' => array_keys(self::get_option($cb_map_id, 'cb_items_available_categories'))
     ];
     $available_categories_checklist_markup = wp_terms_checklist( 0, $available_categories_args);
-    $available_categories_checklist_markup = str_replace('name="tax_input[cb_items_category]', 'class="cb_items_available_category_choice"', $available_categories_checklist_markup);
+    $available_categories_checklist_markup = str_replace('name="tax_input[cb_items_category][]"', 'class="cb_items_available_category_choice"', $available_categories_checklist_markup);
+    $available_categories_checklist_markup = str_replace('id="in-cb_items_category-', 'id="cb_items_available_category-', $available_categories_checklist_markup);
 
     //rearrange to nummeric array, because object property order isn't stable in js
     $cb_items_available_categories = CB_Map_Admin::get_option($cb_map_id, 'cb_items_available_categories');
@@ -538,6 +539,8 @@ class CB_Map_Admin {
     ];
     $preset_categories_checklist_markup = wp_terms_checklist( 0, $preset_categories_args);
     $preset_categories_checklist_markup = str_replace('name="tax_input[cb_items_category]', 'name="cb_map_options[cb_items_preset_categories]', $preset_categories_checklist_markup);
+    $preset_categories_checklist_markup = str_replace('id="in-cb_items_category-', 'id="cb_items_preset_category-', $preset_categories_checklist_markup);
+
 
     $data_export_base_url = get_site_url(null, '', null) . '/wp-admin/admin-ajax.php';
 

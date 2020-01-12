@@ -23,7 +23,10 @@
         "type": "string"
       },
       "opening_hours": {
-        "type": "string"
+        "type": [
+          "string",
+          "null"
+        ]
       },
       "closed_days": {
         "type": "array",

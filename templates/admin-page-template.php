@@ -543,6 +543,17 @@ jQuery(document).ready(function($) {
     3: ['usage', 'data-export', 'popup', 'filter-presets']
   };
 
+  //restricted options by input name
+  var map_type_resctricted_options = {
+    1: {},
+    2: {
+      popup: ['show_item_availability']
+    },
+    3: {
+      popup: ['show_item_availability']
+    }
+  };
+
   function show_option_groups(map_type) {
     //show options inside option groups
     $('.option').show();
@@ -550,8 +561,24 @@ jQuery(document).ready(function($) {
     //show/hide groups
     $('.option-group').each(function() {
       var $this = $(this);
-      if(map_type_option_groups[map_type].includes($this.attr('id').replace('option-group-', ''))) {
+      var option_group_name = $this.attr('id').replace('option-group-', '');
+      if(map_type_option_groups[map_type].includes(option_group_name)) {
         $(this).show();
+
+        //show options
+        $('input').show();
+        $('textarea').show();
+
+        //hide restricted options
+        var restricted_options = map_type_resctricted_options[map_type][option_group_name];
+        if(restricted_options) {
+          restricted_options.forEach(function(option_name) {
+            var $option_input = $('[name="cb_map_options[' + option_name + ']"]');
+            console.log('$option_input: ', option_name, $option_input)
+            var $closest_wrapper = $option_input.closest('tr');
+            $closest_wrapper.hide();
+          });
+        }
       }
       else {
         $(this).hide();
