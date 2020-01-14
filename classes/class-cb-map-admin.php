@@ -112,7 +112,7 @@ class CB_Map_Admin {
     );
   }
 
-  private static function load_options($cb_map_id = null, $force_reload = false) {
+  public static function load_options($cb_map_id = null, $force_reload = false) {
     if(!isset(self::$options) || $force_reload) {
       if($cb_map_id) {
         $options = get_post_meta( $cb_map_id, 'cb_map_options', true );

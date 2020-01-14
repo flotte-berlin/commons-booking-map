@@ -411,6 +411,7 @@ class CB_Map {
 
     $new_map_imports = [];
 
+    CB_Map_Admin::load_options($cb_map_id, true);
     $import_sources = CB_Map_Admin::get_option($cb_map_id, 'import_sources');
 
     foreach ($import_sources['urls'] as $key => $url) {
