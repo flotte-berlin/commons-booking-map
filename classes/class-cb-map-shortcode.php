@@ -47,7 +47,7 @@ class CB_Map_Shortcode {
 
             //cb map shortcode
             wp_enqueue_style('cb_map_shortcode_css', CB_MAP_ASSETS_URL . 'css/cb-map-shortcode.css');
-            wp_register_script( 'cb_map_shortcode_js', CB_MAP_ASSETS_URL . 'js/cb-map-shortcode.js');
+            wp_register_script( 'cb_map_shortcode_js', CB_MAP_ASSETS_URL . 'js/cb-map-shortcode.js?t=1579947981');
 
             wp_register_script( 'cb_map_filters_js', CB_MAP_ASSETS_URL . 'js/cb-map-filters.js');
             wp_enqueue_script( 'cb_map_filters_js' );
@@ -406,6 +406,7 @@ class CB_Map_Shortcode {
         $locations = CB_Map::cleanup_location_data($locations, '<br>', $map_type);
       }
 
+      header('Content-Type: application/json');
       echo json_encode($locations, JSON_UNESCAPED_UNICODE);
 
       return wp_die();
