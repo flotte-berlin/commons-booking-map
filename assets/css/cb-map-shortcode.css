@@ -236,3 +236,7 @@
 .highlight-border {
   border-color: rgb(238, 116, 0) !important;
 }
+
+.leaflet-bar button {
+  font-size: 7px;
+}

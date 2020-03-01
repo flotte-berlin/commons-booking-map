@@ -119,6 +119,13 @@
               </th>
               <td><textarea name="cb_map_options[custom_no_locations_message]"><?= esc_attr(CB_Map_Admin::get_option($cb_map_id, 'custom_no_locations_message')) ?></textarea></td>
           </tr>
+          <tr>
+              <th>
+                <?= cb_map\__('ENABLE_MAP_DATA_EXPORT', 'commons-booking-map', 'enable data export') ?>:
+                <span class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'ENABLE_MAP_DATA_EXPORT_DESC', 'commons-booking-map', 'activate to enable a button that allows the export of map data') ?>"></span>
+              </th>
+              <td><input type="checkbox" name="cb_map_options[enable_map_data_export]" <?= CB_Map_Admin::get_option($cb_map_id, 'enable_map_data_export') ? 'checked="checked"' : '' ?> value="on"></td>
+          </tr>
         </table>
       </details>
     </div>
@@ -196,6 +203,22 @@
               <td>
                 <input type="checkbox" name="cb_map_options[marker_map_bounds_filter]" <?= CB_Map_Admin::get_option($cb_map_id, 'marker_map_bounds_filter') ? 'checked="checked"' : '' ?> value="on">
               </td>
+          </tr>
+        </table>
+      </details>
+    </div>
+
+    <div class="option-group" id="option-group-tooltip">
+      <details>
+        <summary><?= cb_map\__('TOOLTIP', 'commons-booking-map', 'Marker Tooltip') ?></summary>
+
+        <table class="text-left">
+          <tr>
+              <th>
+                <?= cb_map\__('MARKER_TOOLTIP_PERMANENT', 'commons-booking-map', 'show permanently') ?>:
+                <span class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'MARKER_TOOLTIP_PERMANENT_DESC', 'commons-booking-map', 'activate to show the marker tooltips permanently') ?>"></span>
+              </th>
+              <td><input type="checkbox" name="cb_map_options[marker_tooltip_permanent]" <?= CB_Map_Admin::get_option($cb_map_id, 'marker_tooltip_permanent') ? 'checked="checked"' : '' ?> value="on"></td>
           </tr>
         </table>
       </details>
@@ -536,9 +559,9 @@
 jQuery(document).ready(function($) {
   var map_type_option_groups = {
     //local
-    1: ['usage', 'map-presentation', 'zoom', 'positioning-start', 'adaptive-map-section', 'popup', 'custom-marker', 'cluster', 'filter-users', 'filter-presets', 'item-status-appearance'],
+    1: ['usage', 'map-presentation', 'zoom', 'positioning-start', 'adaptive-map-section', 'tooltip', 'popup', 'custom-marker', 'cluster', 'filter-users', 'filter-presets', 'item-status-appearance'],
     //import
-    2: ['usage', 'data-import', 'map-presentation', 'zoom', 'positioning-start', 'adaptive-map-section', 'popup', 'custom-marker', 'cluster'],
+    2: ['usage', 'data-import', 'map-presentation', 'zoom', 'positioning-start', 'adaptive-map-section', 'tooltip', 'popup', 'custom-marker', 'cluster'],
     //export
     3: ['usage', 'data-export', 'popup', 'filter-presets']
   };

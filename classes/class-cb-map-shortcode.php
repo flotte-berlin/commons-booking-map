@@ -39,6 +39,10 @@ class CB_Map_Shortcode {
             wp_enqueue_script( 'cb_map_spin_js', CB_MAP_ASSETS_URL . 'spin-js/spin.min.js' );
             wp_enqueue_script( 'cb_map_leaflet_spin_js', CB_MAP_ASSETS_URL . 'leaflet-spin/leaflet.spin.min.js' );
 
+            //leaflet easybutton
+            wp_enqueue_style( 'cb_map_leaflet_easybutton_css', CB_MAP_ASSETS_URL . 'leaflet-easybutton/easy-button.css' );
+            wp_enqueue_script( 'cb_map_leaflet_easybutton_js', CB_MAP_ASSETS_URL . 'leaflet-easybutton/easy-button.js' );
+
             //dashicons
             wp_enqueue_style('dashicons');
 
@@ -63,6 +67,12 @@ class CB_Map_Shortcode {
             });");
 
             wp_enqueue_script( 'cb_map_shortcode_js' );
+
+            //cb map export
+            if(CB_Map_Admin::get_option($cb_map_id, 'enable_map_data_export') == true) {
+              wp_register_script( 'cb_map_export_js', CB_MAP_ASSETS_URL . 'js/cb-map-export.js?pv=' . CB_MAP_PLUGIN_DATA['Version']);
+              wp_enqueue_script( 'cb_map_export_js' );
+            }
 
             $map_height = CB_Map_Admin::get_option($cb_map_id, 'map_height');
             return '<div id="cb-map-' . $cb_map_id . '" style="width: 100%; height: ' . $map_height . 'px;"></div>';
@@ -120,9 +130,10 @@ class CB_Map_Shortcode {
     $options = CB_Map_Admin::get_options($cb_map_id, true);
 
     $pass_through = [
-      'base_map',
-      'show_scale', 'zoom_min', 'zoom_max', 'zoom_start', 'lat_start', 'lon_start',
+      'base_map', 'show_scale', 'enable_map_data_export',
+      'zoom_min', 'zoom_max', 'zoom_start', 'lat_start', 'lon_start',
       'marker_map_bounds_initial', 'marker_map_bounds_filter', 'max_cluster_radius',
+      'marker_tooltip_permanent',
       'show_location_contact', 'show_location_opening_hours', 'show_item_availability',
       'show_location_distance_filter', 'label_location_distance_filter', 'show_item_availability_filter', 'label_item_availability_filter', 'label_item_category_filter'
     ];

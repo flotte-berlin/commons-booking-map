@@ -9,10 +9,11 @@ class CB_Map_Admin {
     'map_type',
     'export_code',
     'import_sources',
-    'base_map', 'show_scale', 'map_height', 'custom_no_locations_message',
+    'base_map', 'show_scale', 'map_height', 'custom_no_locations_message', 'enable_map_data_export',
     'zoom_min', 'zoom_max', 'zoom_start', 'lat_start', 'lon_start',
     'marker_map_bounds_initial', 'marker_map_bounds_filter',
     'max_cluster_radius',
+    'marker_tooltip_permanent',
     'custom_marker_media_id', 'marker_icon_width', 'marker_icon_height', 'marker_icon_anchor_x', 'marker_icon_anchor_y',
     'show_location_contact', 'label_location_contact', 'show_location_opening_hours', 'label_location_opening_hours',
     'show_item_availability',
@@ -42,6 +43,7 @@ class CB_Map_Admin {
   const SHOW_SCALE_DEFAULT = true;
   const MAP_HEIGHT_DEFAULT = 400;
   const CUSTOM_NO_LOCATIONS_MESSAGE_DEFAULT = '';
+  const ENABLE_MAP_DATA_EXPORT_DEFAULT = false;
   const ZOOM_MIN_DEFAULT = 9;
   const ZOOM_MAX_DEFAULT = 19;
   const ZOOM_START_DEFAULT = 9;
@@ -50,6 +52,7 @@ class CB_Map_Admin {
   const MARKER_MAP_BOUNDS_INITIAL_DEFAULT = false;
   const MARKER_MAP_BOUNDS_FILTER_DEFAULT = true;
   const MAX_CLUSTER_RADIUS_DEFAULT = 80;
+  const MARKER_TOOLTIP_PERMANENT_DEFAULT = false;
   const CUSTOM_MARKER_MEDIA_ID_DEFAULT = null;
   const MARKER_ICON_WIDTH_DEFAULT = 0;
   const MARKER_ICON_HEIGHT_DEFAULT = 0;
@@ -221,6 +224,14 @@ class CB_Map_Admin {
     //custom_no_locations_message
     $validated_input['custom_no_locations_message'] = sanitize_text_field($input['custom_no_locations_message']);
 
+    //enable_map_data_export
+    if(isset($input['enable_map_data_export'])) {
+      $validated_input['enable_map_data_export'] = true;
+    }
+    else {
+      $validated_input['enable_map_data_export'] = false;
+    }
+
     //zoom_min
     if(isset($input['zoom_min']) && (int) $input['zoom_min'] >= self::ZOOM_VALUE_MIN && $input['zoom_min'] <= self::ZOOM_VALUE_MAX) {
       $validated_input['zoom_min'] = (int) $input['zoom_min'];
@@ -265,6 +276,14 @@ class CB_Map_Admin {
     //max_cluster_radius
     if(isset($input['max_cluster_radius']) && (int) $input['max_cluster_radius'] >= self::MAX_CLUSTER_RADIUS_VALUE_MIN && $input['max_cluster_radius'] <= self::MAX_CLUSTER_RADIUS_VALUE_MAX) {
       $validated_input['max_cluster_radius'] = (int) $input['max_cluster_radius'];
+    }
+
+    //marker_tooltip_permanent
+    if(isset($input['marker_tooltip_permanent'])) {
+      $validated_input['marker_tooltip_permanent'] = true;
+    }
+    else {
+      $validated_input['marker_tooltip_permanent'] = false;
     }
 
     // custom_marker_media_id

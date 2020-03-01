@@ -57,11 +57,17 @@ function CB_Map() {
       jQuery(e.popup._container).find('.cb-map-popup-item-availability').overscroll({
         direction: 'horizontal'
       });
-  });
+    });
+
+    //export button
+    if(this.settings.enable_map_data_export) {
+      L.easyButton('dashicons dashicons-download', function(btn, map){
+          CB_Map.export('geojson', cb_map, {});
+      }).addTo(map);
+    }
 
     //get location data
     this.get_location_data(true);
-
   },
 
   cb_map.get_location_data = function(init) {
@@ -221,10 +227,6 @@ function CB_Map() {
         item_statuses.push(item.status);
       });
 
-      var marker_options = {
-        title: item_names.toString()
-      };
-
       //icon
       var marker_icon;
       if(item_statuses.includes('publish') && cb_map.settings.preferred_status_marker_icon == 'publish') {
@@ -243,6 +245,8 @@ function CB_Map() {
       }
 
       var marker = L.marker([location.lat, location.lon], marker_options);
+
+      marker.bindTooltip(item_names.toString(), {permanent: that.settings.marker_tooltip_permanent})
 
       //popup content
       var popup_content = '<div class="cb-map-location-info-name">';
