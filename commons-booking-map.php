@@ -14,6 +14,7 @@ License URI:  https://www.gnu.org/licenses/gpl-2.0.html
 define( 'CB_MAP_PATH', plugin_dir_path( __FILE__ ) );
 define( 'CB_MAP_ASSETS_URL', plugins_url( 'assets/', __FILE__ ));
 define( 'CB_MAP_LANG_PATH', dirname( plugin_basename( __FILE__ )) . '/languages/' );
+define ('CB_MAP_PLUGIN_DATA', get_file_data( __FILE__, array('Version' => 'Version'), false));
 
 require_once( CB_MAP_PATH . 'functions/is-plugin-active.php' );
 require_once( CB_MAP_PATH . 'functions/get-active-plugin-directory.php' );

@@ -46,10 +46,10 @@ class CB_Map_Shortcode {
             wp_enqueue_script( 'cb_map_slider_js', CB_MAP_ASSETS_URL . 'overscroll/jquery.overscroll.js' );
 
             //cb map shortcode
-            wp_enqueue_style('cb_map_shortcode_css', CB_MAP_ASSETS_URL . 'css/cb-map-shortcode.css');
-            wp_register_script( 'cb_map_shortcode_js', CB_MAP_ASSETS_URL . 'js/cb-map-shortcode.js');
+            wp_enqueue_style('cb_map_shortcode_css', CB_MAP_ASSETS_URL . 'css/cb-map-shortcode.css?pv=' . CB_MAP_PLUGIN_DATA['Version']);
+            wp_register_script( 'cb_map_shortcode_js', CB_MAP_ASSETS_URL . 'js/cb-map-shortcode.js?pv=' . CB_MAP_PLUGIN_DATA['Version']);
 
-            wp_register_script( 'cb_map_filters_js', CB_MAP_ASSETS_URL . 'js/cb-map-filters.js');
+            wp_register_script( 'cb_map_filters_js', CB_MAP_ASSETS_URL . 'js/cb-map-filters.js?pv=' . CB_MAP_PLUGIN_DATA['Version']);
             wp_enqueue_script( 'cb_map_filters_js' );
 
             wp_add_inline_script( 'cb_map_shortcode_js',
@@ -406,6 +406,7 @@ class CB_Map_Shortcode {
         $locations = CB_Map::cleanup_location_data($locations, '<br>', $map_type);
       }
 
+      header('Content-Type: application/json');
       echo json_encode($locations, JSON_UNESCAPED_UNICODE);
 
       return wp_die();

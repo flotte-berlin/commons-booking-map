@@ -76,7 +76,7 @@ function CB_Map() {
     this.map.spin(true);
 
     jQuery.post(this.settings.data_url, data, function(response) {
-      cb_map.location_data = JSON.parse(response);
+      cb_map.location_data = response;
       console.log('location data: ', cb_map.location_data);
 
       that.render_locations(cb_map.location_data, init);
