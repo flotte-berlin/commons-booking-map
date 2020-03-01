@@ -122,7 +122,7 @@
           <tr>
               <th>
                 <?= cb_map\__('ENABLE_MAP_DATA_EXPORT', 'commons-booking-map', 'enable data export') ?>:
-                <span class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'ENABLE_MAP_DATA_EXPORT_DESC', 'commons-booking-map', 'activate to enable a button that allows the export of map data') ?>"></span>
+                <span class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'ENABLE_MAP_DATA_EXPORT_DESC', 'commons-booking-map', 'activate to enable a button that allows the export of map data (geojson format)') ?>"></span>
               </th>
               <td><input type="checkbox" name="cb_map_options[enable_map_data_export]" <?= CB_Map_Admin::get_option($cb_map_id, 'enable_map_data_export') ? 'checked="checked"' : '' ?> value="on"></td>
           </tr>
