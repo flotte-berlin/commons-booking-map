@@ -9,13 +9,18 @@ class CB_Map_Admin {
     'map_type',
     'export_code',
     'import_sources',
-    'base_map', 'show_scale', 'map_height', 'custom_no_locations_message',
+    'base_map', 'show_scale', 'map_height', 'custom_no_locations_message', 'enable_map_data_export',
     'zoom_min', 'zoom_max', 'zoom_start', 'lat_start', 'lon_start',
     'marker_map_bounds_initial', 'marker_map_bounds_filter',
     'max_cluster_radius',
+    'marker_tooltip_permanent',
     'custom_marker_media_id', 'marker_icon_width', 'marker_icon_height', 'marker_icon_anchor_x', 'marker_icon_anchor_y',
     'show_location_contact', 'label_location_contact', 'show_location_opening_hours', 'label_location_opening_hours',
+    'show_item_availability',
     'custom_marker_cluster_media_id', 'marker_cluster_icon_width', 'marker_cluster_icon_height',
+    'address_search_bounds_left_bottom_lon', 'address_search_bounds_left_bottom_lat', 'address_search_bounds_right_top_lon', 'address_search_bounds_right_top_lat',
+    'show_location_distance_filter', 'label_location_distance_filter', 'show_item_availability_filter', 'label_item_availability_filter', 'label_item_category_filter',
+    'item_draft_appearance', 'marker_item_draft_media_id', 'marker_item_draft_icon_width', 'marker_item_draft_icon_height', 'marker_item_draft_icon_anchor_x', 'marker_item_draft_icon_anchor_y',
     'cb_items_available_categories',
     'cb_items_preset_categories'];
 
@@ -38,6 +43,7 @@ class CB_Map_Admin {
   const SHOW_SCALE_DEFAULT = true;
   const MAP_HEIGHT_DEFAULT = 400;
   const CUSTOM_NO_LOCATIONS_MESSAGE_DEFAULT = '';
+  const ENABLE_MAP_DATA_EXPORT_DEFAULT = false;
   const ZOOM_MIN_DEFAULT = 9;
   const ZOOM_MAX_DEFAULT = 19;
   const ZOOM_START_DEFAULT = 9;
@@ -46,6 +52,7 @@ class CB_Map_Admin {
   const MARKER_MAP_BOUNDS_INITIAL_DEFAULT = false;
   const MARKER_MAP_BOUNDS_FILTER_DEFAULT = true;
   const MAX_CLUSTER_RADIUS_DEFAULT = 80;
+  const MARKER_TOOLTIP_PERMANENT_DEFAULT = false;
   const CUSTOM_MARKER_MEDIA_ID_DEFAULT = null;
   const MARKER_ICON_WIDTH_DEFAULT = 0;
   const MARKER_ICON_HEIGHT_DEFAULT = 0;
@@ -58,8 +65,24 @@ class CB_Map_Admin {
   const LABEL_LOCATION_CONTACT_DEFAULT = "";
   const SHOW_LOCATION_OPENING_HOURS_DEFAULT = false;
   const LABEL_LOCATION_OPENING_HOURS_DEFAULT = "";
+  const ADDRESS_SEARCH_BOUNDS_LEFT_BOTTOM_LAT_DEFAULT = null;
+  const ADDRESS_SEARCH_BOUNDS_LEFT_BOTTOM_LON_DEFAULT = null;
+  const ADDRESS_SEARCH_BOUNDS_RIGHT_TOP_LAT_DEFAULT = null;
+  const ADDRESS_SEARCH_BOUNDS_RIGHT_TOP_LON_DEFAULT = null;
+  const SHOW_ITEM_AVAILABILITY_DEFAULT = false;
+  const SHOW_LOCATION_DISTANCE_FILTER_DEFAULT = false;
+  const LABEL_LOCATION_DISTANCE_FILTER_DEFAULT = "";
+  const SHOW_ITEM_AVAILABILITY_FILTER_DEFAULT = false;
+  const LABEL_ITEM_AVAILABILITY_FILTER_DEFAULT = "";
+  CONST LABEL_ITEM_CATEGORY_FILTER_DEFAULT = "";
   const CB_ITEMS_AVAILABLE_CATEGORIES_DEFAULT = [];
   const CB_ITEMS_PRESET_CATEGORIES_DEFAULT = [];
+  const ITEM_DRAFT_APPEARANCE_DEFAULT = 1;
+  const MARKER_ITEM_DRAFT_MEDIA_ID_DEFAULT = null;
+  const MARKER_ITEM_DRAFT_ICON_WIDTH_DEFAULT = 0;
+  const MARKER_ITEM_DRAFT_ICON_HEIGHT_DEFAULT = 0;
+  const MARKER_ITEM_DRAFT_ICON_ANCHOR_X_DEFAULT = 0;
+  const MARKER_ITEM_DRAFT_ICON_ANCHOR_Y_DEFAULT = 0;
 
   //const MARKER_POPUP_CONTENT_DEFAULT = "'<b>' + location.location_name + '</b><br>' + location.address.street + '<br>' + location.address.zip + ' ' + location.address.city + '<p>' + location.opening_hours + '</p>'";
 
@@ -92,7 +115,7 @@ class CB_Map_Admin {
     );
   }
 
-  private static function load_options($cb_map_id = null, $force_reload = false) {
+  public static function load_options($cb_map_id = null, $force_reload = false) {
     if(!isset(self::$options) || $force_reload) {
       if($cb_map_id) {
         $options = get_post_meta( $cb_map_id, 'cb_map_options', true );
@@ -201,6 +224,14 @@ class CB_Map_Admin {
     //custom_no_locations_message
     $validated_input['custom_no_locations_message'] = sanitize_text_field($input['custom_no_locations_message']);
 
+    //enable_map_data_export
+    if(isset($input['enable_map_data_export'])) {
+      $validated_input['enable_map_data_export'] = true;
+    }
+    else {
+      $validated_input['enable_map_data_export'] = false;
+    }
+
     //zoom_min
     if(isset($input['zoom_min']) && (int) $input['zoom_min'] >= self::ZOOM_VALUE_MIN && $input['zoom_min'] <= self::ZOOM_VALUE_MAX) {
       $validated_input['zoom_min'] = (int) $input['zoom_min'];
@@ -227,12 +258,12 @@ class CB_Map_Admin {
     }
 
     //lat_start
-    if(isset($input['lat_start']) && (float) $input['lat_start'] >= self::LAT_VALUE_MIN && (float) $input['lat_start'] <= self::LAT_VALUE_MAX) {
+    if(isset($input['lat_start']) && strlen($input['lat_start']) > 0 && (float) $input['lat_start'] >= self::LAT_VALUE_MIN && (float) $input['lat_start'] <= self::LAT_VALUE_MAX) {
       $validated_input['lat_start'] = (float) $input['lat_start'];
     }
 
     //lon_start
-    if(isset($input['lon_start']) && (float) $input['lon_start'] >= self::LON_VALUE_MIN && (float) $input['lon_start'] <= self::LON_VALUE_MAX) {
+    if(isset($input['lon_start']) && strlen($input['lon_start']) > 0 && (float) $input['lon_start'] >= self::LON_VALUE_MIN && (float) $input['lon_start'] <= self::LON_VALUE_MAX) {
       $validated_input['lon_start'] = (float) $input['lon_start'];
     }
 
@@ -245,6 +276,14 @@ class CB_Map_Admin {
     //max_cluster_radius
     if(isset($input['max_cluster_radius']) && (int) $input['max_cluster_radius'] >= self::MAX_CLUSTER_RADIUS_VALUE_MIN && $input['max_cluster_radius'] <= self::MAX_CLUSTER_RADIUS_VALUE_MAX) {
       $validated_input['max_cluster_radius'] = (int) $input['max_cluster_radius'];
+    }
+
+    //marker_tooltip_permanent
+    if(isset($input['marker_tooltip_permanent'])) {
+      $validated_input['marker_tooltip_permanent'] = true;
+    }
+    else {
+      $validated_input['marker_tooltip_permanent'] = false;
     }
 
     // custom_marker_media_id
@@ -293,6 +332,14 @@ class CB_Map_Admin {
       $validated_input['label_location_opening_hours'] = sanitize_text_field($input['label_location_opening_hours']);
     }
 
+    //show_item_availability
+    if(isset($input['show_item_availability'])) {
+      $validated_input['show_item_availability'] = true;
+    }
+    else {
+      $validated_input['show_item_availability'] = false;
+    }
+
     // custom_marker_cluster_media_id
     if(isset($input['custom_marker_cluster_media_id'])) {
       $validated_input['custom_marker_cluster_media_id'] = abs((int) $input['custom_marker_cluster_media_id']);
@@ -311,6 +358,86 @@ class CB_Map_Admin {
     //marker_cluster_icon_height
     if(isset($input['marker_cluster_icon_height'])) {
       $validated_input['marker_cluster_icon_height'] = abs((float) $input['marker_cluster_icon_height']);
+    }
+
+    //item_draft_appearance
+    if(isset($input['item_draft_appearance']) && $input['item_draft_appearance'] >= 1 && $input['item_draft_appearance'] <= 3) {
+      $validated_input['item_draft_appearance'] = $input['item_draft_appearance'];
+    }
+
+    // marker_item_draft_media_id
+    if(isset($input['marker_item_draft_media_id'])) {
+      $validated_input['marker_item_draft_media_id'] = abs((int) $input['marker_item_draft_media_id']);
+    }
+
+    //marker_item_draft_icon_width
+    if(isset($input['marker_item_draft_icon_width'])) {
+      $validated_input['marker_item_draft_icon_width'] = abs((float) $input['marker_item_draft_icon_width']);
+    }
+
+    //marker_item_draft_icon_height
+    if(isset($input['marker_item_draft_icon_height'])) {
+      $validated_input['marker_item_draft_icon_height'] = abs((float) $input['marker_item_draft_icon_height']);
+    }
+
+    //marker_item_draft_icon_anchor_x
+    if(isset($input['marker_item_draft_icon_anchor_x'])) {
+      $validated_input['marker_item_draft_icon_anchor_x'] = (float) $input['marker_item_draft_icon_anchor_x'];
+    }
+
+    //marker_item_draft_icon_anchor_y
+    if(isset($input['marker_item_draft_icon_anchor_y'])) {
+      $validated_input['marker_item_draft_icon_anchor_y'] = (float) $input['marker_item_draft_icon_anchor_y'];
+    }
+
+    //show_location_distance_filter
+    if(isset($input['show_location_distance_filter'])) {
+      $validated_input['show_location_distance_filter'] = true;
+    }
+    else {
+      $validated_input['show_location_distance_filter'] = false;
+    }
+
+    //address_search_bounds_left_bottom_lat
+    if(isset($input['address_search_bounds_left_bottom_lat']) && strlen($input['address_search_bounds_left_bottom_lat']) > 0 && (float) $input['address_search_bounds_left_bottom_lat'] >= self::LAT_VALUE_MIN && (float) $input['address_search_bounds_left_bottom_lat'] <= self::LAT_VALUE_MAX) {
+      $validated_input['address_search_bounds_left_bottom_lat'] = (float) $input['address_search_bounds_left_bottom_lat'];
+    }
+
+    if(isset($input['address_search_bounds_left_bottom_lon']) && strlen($input['address_search_bounds_left_bottom_lon']) > 0 && (float) $input['address_search_bounds_left_bottom_lon'] >= self::LON_VALUE_MIN && (float) $input['address_search_bounds_left_bottom_lon'] <= self::LON_VALUE_MAX) {
+      $validated_input['address_search_bounds_left_bottom_lon'] = (float) $input['address_search_bounds_left_bottom_lon'];
+    }
+
+    //address_search_bounds_right_top_lat
+    if(isset($input['address_search_bounds_right_top_lat']) && strlen($input['address_search_bounds_right_top_lat']) > 0 && (float) $input['address_search_bounds_right_top_lat'] >= self::LAT_VALUE_MIN && (float) $input['address_search_bounds_right_top_lat'] <= self::LAT_VALUE_MAX) {
+      $validated_input['address_search_bounds_right_top_lat'] = (float) $input['address_search_bounds_right_top_lat'];
+    }
+
+    //address_search_bounds_right_top_lon
+    if(isset($input['address_search_bounds_right_top_lon']) && strlen($input['address_search_bounds_right_top_lon']) > 0 && (float) $input['address_search_bounds_right_top_lon'] >= self::LON_VALUE_MIN && (float) $input['address_search_bounds_right_top_lon'] <= self::LON_VALUE_MAX) {
+      $validated_input['address_search_bounds_right_top_lon'] = (float) $input['address_search_bounds_right_top_lon'];
+    }
+
+    //label_location_distance_filter
+    if(isset($input['label_location_distance_filter']) && strlen($input['label_location_distance_filter']) > 0) {
+      $validated_input['label_location_distance_filter'] = sanitize_text_field($input['label_location_distance_filter']);
+    }
+
+    //show_item_availability_filter
+    if(isset($input['show_item_availability_filter'])) {
+      $validated_input['show_item_availability_filter'] = true;
+    }
+    else {
+      $validated_input['show_item_availability_filter'] = false;
+    }
+
+    //label_item_availability_filter
+    if(isset($input['label_item_availability_filter']) && strlen($input['label_item_availability_filter']) > 0) {
+      $validated_input['label_item_availability_filter'] = sanitize_text_field($input['label_item_availability_filter']);
+    }
+
+    //label_item_category_filter
+    if(isset($input['label_item_category_filter']) && strlen($input['label_item_category_filter']) > 0) {
+      $validated_input['label_item_category_filter'] = sanitize_text_field($input['label_item_category_filter']);
     }
 
     //cb_items_available_categories
@@ -409,7 +536,8 @@ class CB_Map_Admin {
       'selected_cats' => array_keys(self::get_option($cb_map_id, 'cb_items_available_categories'))
     ];
     $available_categories_checklist_markup = wp_terms_checklist( 0, $available_categories_args);
-    $available_categories_checklist_markup = str_replace('name="tax_input[cb_items_category]', 'class="cb_items_available_category_choice"', $available_categories_checklist_markup);
+    $available_categories_checklist_markup = str_replace('name="tax_input[cb_items_category][]"', 'class="cb_items_available_category_choice"', $available_categories_checklist_markup);
+    $available_categories_checklist_markup = str_replace('id="in-cb_items_category-', 'id="cb_items_available_category-', $available_categories_checklist_markup);
 
     //rearrange to nummeric array, because object property order isn't stable in js
     $cb_items_available_categories = CB_Map_Admin::get_option($cb_map_id, 'cb_items_available_categories');
@@ -430,6 +558,8 @@ class CB_Map_Admin {
     ];
     $preset_categories_checklist_markup = wp_terms_checklist( 0, $preset_categories_args);
     $preset_categories_checklist_markup = str_replace('name="tax_input[cb_items_category]', 'name="cb_map_options[cb_items_preset_categories]', $preset_categories_checklist_markup);
+    $preset_categories_checklist_markup = str_replace('id="in-cb_items_category-', 'id="cb_items_preset_category-', $preset_categories_checklist_markup);
+
 
     $data_export_base_url = get_site_url(null, '', null) . '/wp-admin/admin-ajax.php';
 

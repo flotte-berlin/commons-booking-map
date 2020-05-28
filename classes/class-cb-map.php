@@ -66,11 +66,26 @@ class CB_Map {
     wp_clear_scheduled_hook('cb_map_import');
   }
 
+  public static function has_item_valid_status($item, $item_draft_appearance) {
+
+    if($item_draft_appearance == 1) {
+      return $item->post_status == 'publish';
+    }
+    if($item_draft_appearance == 2) {
+      return $item->post_status != 'publish';
+    }
+    if($item_draft_appearance == 3) {
+      return true;
+    }
+  }
+
   /**
   * load all timeframes from db (that end in the future and it's item's status is 'publish')
   **/
-  public static function get_timeframes() {
+  public static function get_timeframes($cb_map_id) {
     global $wpdb;
+
+    $item_draft_appearance = CB_Map_Admin::get_option($cb_map_id, 'item_draft_appearance');
 
     $result = [];
 
@@ -84,7 +99,7 @@ class CB_Map {
     foreach($timeframes as $key => $timeframe) {
       $item = get_post($timeframe['item_id']);
 
-      if($item->post_status == 'publish') {
+      if(self::has_item_valid_status($item, $item_draft_appearance)) {
         $item_desc = get_post_meta($timeframe['item_id'], 'commons-booking_item_descr', true);
         $thumbnail = get_the_post_thumbnail_url($item, 'thumbnail');
 
@@ -95,7 +110,8 @@ class CB_Map {
             'name' => $item->post_title,
             'short_desc' => $item_desc,
             'link' => get_permalink($item),
-            'thumbnail' => $thumbnail ? $thumbnail : null
+            'thumbnail' => $thumbnail ? $thumbnail : null,
+            'status' => $item->post_status
           ],
           'date_start' => $timeframe['date_start'],
           'date_end' => $timeframe['date_end']
@@ -165,21 +181,6 @@ class CB_Map {
     return $locations;
   }
 
-  public static function is_valid_item($item_terms, $category_groups) {
-    $valid_groups_count = 0;
-
-    foreach ($category_groups as $group) {
-      foreach ($item_terms as $term) {
-        if(in_array($term->term_id, $group)) {
-          $valid_groups_count++;
-          break;
-        }
-      }
-    }
-
-    return $valid_groups_count == count($category_groups);
-  }
-
   public static function get_cb_items_category_groups($preset_categories) {
     $groups = [];
     $category_terms = get_terms([
@@ -232,91 +233,6 @@ class CB_Map {
     }
 
     return $filtered_groups;
-  }
-
-  /**
-  * get all the locations of the map with provided id that belong to timeframes and filter by given categories
-  **/
-  public static function get_locations_by_timeframes($cb_map_id, $preset_categories = [], $user_categories = []) {
-    //var_dump($preset_categories);
-
-    $result = [];
-    $timeframes = self::get_timeframes();
-    $locations = self::get_locations($cb_map_id);
-
-    //$category_tree = self::get_structured_cb_items_category_tree();
-    $preset_category_groups = self::get_cb_items_category_groups($preset_categories);
-
-    $user_category_groups = self::get_user_category_groups($cb_map_id, $user_categories);
-
-    foreach ($timeframes as $timeframe) {
-      $location_id = $timeframe['location_id'];
-      $item = $timeframe['item'];
-      $is_valid_item = true;
-      $item_terms = wp_get_post_terms( $item['id'], 'cb_items_category');
-
-      if(count($preset_category_groups) > 0) {
-        $is_valid_item = self::is_valid_item($item_terms, $preset_category_groups);
-      }
-
-      if($is_valid_item && count($user_category_groups) > 0) {
-        $is_valid_item = self::is_valid_item($item_terms, $user_category_groups);
-      }
-
-      if($is_valid_item) {
-
-        //if a location exists, that is allowed to be shown on map
-        if(isset($locations[$location_id])) {
-
-          //if location is not present in result yet, add it
-          if(!isset($result[$location_id])) {
-            $result[$location_id] = $locations[$location_id];
-          }
-          //add item to location
-          if(!isset($result[$location_id]['items'][$timeframe['item']['id']])) {
-            $item['timeframes'] = [];
-            $item['timeframe_hints'] = [];
-            $result[$location_id]['items'][$timeframe['item']['id']] = $item;
-          }
-
-          //add timeframe to item
-          $result[$location_id]['items'][$timeframe['item']['id']]['timeframes'][] = [
-            'date_start' => $timeframe['date_start'],
-            'date_end' => $timeframe['date_end']
-          ];
-
-          //add timeframe hint
-          $now = new DateTime();
-
-          $date_start = new DateTime();
-          $date_start->setTimestamp(strtotime($timeframe['date_start']));
-
-          $date_end = new DateTime();
-          $date_end->setTimestamp(strtotime($timeframe['date_end']));
-          $diff_end = $date_end->diff($now)->format("%a");
-
-          $cb_data = new CB_Data();
-
-          //show hint if timeframe starts in the future
-          if($date_start > $now) {
-            $result[$location_id]['items'][$timeframe['item']['id']]['timeframe_hints'][] = ['type' => 'from', 'timestamp' => strtotime($timeframe['date_start'])];
-          }
-
-          //show hint for near end of timeframe if it's before the last possible day to book (CB settings)
-          if($diff_end <= $cb_data->daystoshow) {
-            $result[$location_id]['items'][$timeframe['item']['id']]['timeframe_hints'][] = ['type' => 'until', 'timestamp' => strtotime($timeframe['date_end'])];
-          }
-
-        }
-      }
-    }
-
-    //convert items to nummeric array
-    foreach ($result as &$location) {
-      $location['items'] = array_values($location['items']);
-    }
-
-    return $result;
   }
 
   /**
@@ -451,7 +367,8 @@ class CB_Map {
 
     //find maps of type import
     $args = [
-      'post_type' => 'cb_map'
+      'post_type' => 'cb_map',
+      'numberposts' => -1
     ];
     $cb_maps = get_posts($args);
 
@@ -494,6 +411,7 @@ class CB_Map {
 
     $new_map_imports = [];
 
+    CB_Map_Admin::load_options($cb_map_id, true);
     $import_sources = CB_Map_Admin::get_option($cb_map_id, 'import_sources');
 
     foreach ($import_sources['urls'] as $key => $url) {
@@ -502,17 +420,18 @@ class CB_Map {
 
       $locations_json = self::fetch_locations($cb_map_id, $url, $code);
 
-      $locations = CB_Map::cleanup_location_data(json_decode($locations_json, true), '<br>', 2);
+      if($locations_json) {
+        $locations = CB_Map::cleanup_location_data(json_decode($locations_json, true), '<br>', 2);
 
-      if($locations) {
-        $new_map_imports[$import_id] = base64_encode(json_encode($locations, JSON_UNESCAPED_UNICODE));
-      }
-      else {
-        if(isset($map_imports[$import_id])) {
-            $new_map_imports[$import_id] = $map_imports[$import_id];
+        if($locations) {
+          $new_map_imports[$import_id] = base64_encode(json_encode($locations, JSON_UNESCAPED_UNICODE));
+        }
+        else {
+          if(isset($map_imports[$import_id])) {
+              $new_map_imports[$import_id] = $map_imports[$import_id];
+          }
         }
       }
-
     }
 
     update_post_meta($cb_map_id, 'cb_map_imports', $new_map_imports);
@@ -571,7 +490,7 @@ class CB_Map {
   public static function replace_map_link_target() {
     global $post;
   	$cb_item = 'cb_items';
-  	if ( $post->post_type == $cb_item) {
+  	if (is_object($post) && $post->post_type == $cb_item) {
   		$itemId = $post->ID;
 
       //get timeframes of item

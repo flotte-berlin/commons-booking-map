@@ -2,7 +2,7 @@
 
   <h1><?= cb_map\__('SETTINGS_PAGE_HEADER', 'commons-booking-map', 'Settings for Commons Booking Map') ?></h1>
 
-  <p><?= cb_map\__('SETTINGS_DESCRIPTION', 'commons-booking-map', 'gemeral settings regarding the behaviour of the Commons Booking Map plugin') ?></p>
+  <p><?= cb_map\__('SETTINGS_DESCRIPTION', 'commons-booking-map', 'general settings regarding the behaviour of the Commons Booking Map plugin') ?></p>
 
   <form method="post" action="options.php">
     <?php
@@ -23,4 +23,5 @@
     </table>
 
     <?php submit_button(); ?>
-</form>
+  </form>
+</div>

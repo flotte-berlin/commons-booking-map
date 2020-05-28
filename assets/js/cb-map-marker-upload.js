@@ -104,16 +104,16 @@ var cb_map_marker_upload = {
 
     });
 
-    //for cached images, trigger load
-    if(data.$image_preview[0].complete) {
+    //if parent details got opened, trigger load for cached images
+    var $parent_details = data.$image_preview.closest('details');
+    $parent_details.on('toggle', function() {
       var src = data.$image_preview.attr('src');
-
-      if(src.length > 0) {
+      if($parent_details.prop('open') == true && src.length > 0) {
         setTimeout(function() {
           data.$image_preview.load();
         }, 0);
       }
-    }
+    });
   }
 }
 
@@ -152,4 +152,21 @@ jQuery(document).ready(function($) {
   };
 
   cb_map_marker_upload.init($, marker_cluster_data);
+
+  var marker_item_draft_data = {
+    $select_image_button: $('#select-marker-item-draft-image-button'),
+    $remove_image_button: $('#remove-marker-item-draft-image-button'),
+    $custom_marker_media_id: $('input[name="cb_map_options[marker_item_draft_media_id]"'),
+    $image_preview: $('#marker-item-draft-image-preview'),
+    $marker_icon_width: $('input[name="cb_map_options[marker_item_draft_icon_width]"'),
+    $marker_icon_height: $('input[name="cb_map_options[marker_item_draft_icon_height]"'),
+    $marker_icon_anchor_x: $('input[name="cb_map_options[marker_item_draft_icon_anchor_x]"'),
+    $marker_icon_anchor_y: $('input[name="cb_map_options[marker_item_draft_icon_anchor_y]"'),
+    $image_preview_settings: $('#marker-item-draft-image-preview-settings'),
+    $image_preview_measurements: $('#marker-item-draft-image-preview-measurements'),
+    $marker_icon_size: $('#marker-item-draft-icon-size'),
+    $marker_icon_anchor: $('#marker-item-draft-icon-anchor')
+  };
+
+  cb_map_marker_upload.init($, marker_item_draft_data);
 });
