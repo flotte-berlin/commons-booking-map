@@ -104,7 +104,7 @@ class CB_Map_Shortcode {
 
     $date_min = new DateTime();
     $date_min = $date_min->format('Y-m-d');
-    $max_days_in_future = $commons_booking_settings['commons-booking_bookingsettings_daystoshow'] - 1;
+    $max_days_in_future = $commons_booking_settings['commons-booking_bookingsettings_daystoshow'];
     $date_max = new DateTime($date_min . ' +' . $max_days_in_future . ' days');
     $date_max = $date_max->format('Y-m-d');
 
