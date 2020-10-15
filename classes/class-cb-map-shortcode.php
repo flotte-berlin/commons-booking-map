@@ -135,7 +135,8 @@ class CB_Map_Shortcode {
       'marker_map_bounds_initial', 'marker_map_bounds_filter', 'max_cluster_radius',
       'marker_tooltip_permanent',
       'show_location_contact', 'show_location_opening_hours', 'show_item_availability',
-      'show_location_distance_filter', 'label_location_distance_filter', 'show_item_availability_filter', 'label_item_availability_filter', 'label_item_category_filter'
+      'show_location_distance_filter', 'label_location_distance_filter', 'show_item_availability_filter', 'label_item_availability_filter', 'label_item_category_filter',
+      'custom_category_colors_text', 'custom_category_colors_marker_icon'
     ];
 
     foreach ($options as $key => $value) {
@@ -190,7 +191,8 @@ class CB_Map_Shortcode {
           else {
             $settings['filter_cb_item_categories'][$current_group_id]['elements'][] = [
               'cat_id' => $key,
-              'markup' => $content
+              'markup' => $content,
+              'color' => $options['cb_items_available_cat_colors'][$key]
             ];
           }
         }

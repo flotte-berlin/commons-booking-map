@@ -66,6 +66,11 @@ function CB_Map() {
       }).addTo(map);
     }
 
+    //create marker icon color filters
+    if(this.settings.custom_category_colors_marker_icon) {
+      this.color_filter_ids = cb_map.create_color_filters();
+    }
+
     //get location data
     this.get_location_data(true);
   },
@@ -175,6 +180,7 @@ function CB_Map() {
       var item_names = [];
       popup_items = '';
       var item_statuses = [];
+      var color_filter_cat_id;
       location.items.forEach(function(item) {
         item_names.push(item.name);
 
@@ -225,6 +231,18 @@ function CB_Map() {
         popup_items += '</div></div>';
 
         item_statuses.push(item.status);
+
+        //get category for marker icon color filter
+        if(cb_map.settings.custom_category_colors_marker_icon) {
+          item.terms.forEach((term, i) => {
+            if(that.color_filter_ids.includes(term)) {
+              if(!color_filter_cat_id || that.color_filter_ids.indexOf(term) < that.color_filter_ids.indexOf(color_filter_cat_id)) {
+                color_filter_cat_id = term;
+              }
+            }
+          });
+        }
+
       });
 
       //icon
@@ -246,7 +264,7 @@ function CB_Map() {
 
       var marker = L.marker([location.lat, location.lon], marker_options);
 
-      marker.bindTooltip(item_names.toString(), {permanent: that.settings.marker_tooltip_permanent})
+      marker.bindTooltip(item_names.toString(), {permanent: that.settings.marker_tooltip_permanent});
 
       //popup content
       var popup_content = '<div class="cb-map-location-info-name">';
@@ -270,6 +288,13 @@ function CB_Map() {
       marker.bindPopup(popup);
 
       markers.addLayer(marker);
+
+      //apply color filter to marker based on color_filter_cat_id
+      if(color_filter_cat_id) {
+        marker.on('add', function(e) {
+          e.target.valueOf()._icon.style.filter = 'url(#marker-filter-' + color_filter_cat_id + ')';
+        })
+      }
 
       //set map view to location and zoom in
       jQuery('#location-zoom-in-' + that.settings.cb_map_id + '-' + index, popup).on('click', function() {
@@ -317,11 +342,13 @@ function CB_Map() {
         else {
           console.log('markers.getBounds(): ', markers.getBounds())
           that.map.fitBounds(markers.getBounds());
+
         }
       }
       else {
         if(center_position) {
           this.map.setView(new L.LatLng(center_position.lat, center_position.lon), this.settings.zoom_start);
+
         }
         else {
           this.map.setView(new L.LatLng(this.settings.lat_start, this.settings.lon_start), this.settings.zoom_start);
@@ -330,6 +357,41 @@ function CB_Map() {
       }
     }
 
+  }
+
+  cb_map.create_color_filters = function() {
+    var that = this;
+    var color_filter_ids = []
+    $.each(cb_map.settings.filter_cb_item_categories, function(group_index, group) {
+      $.each(group.elements, function(element_index, category) {
+
+        var rgb = that.hex_to_rgb(category.color);
+        that.create_color_filter(category.cat_id, rgb);
+        color_filter_ids.push(category.cat_id);
+      });
+    });
+
+    return color_filter_ids;
+  }
+
+  cb_map.create_color_filter = function(index, rgb) {
+    var colorMatrixValues = `
+      ${rgb.r / 255} 0 0 0 0
+      0 ${rgb.g / 255} 0 0 0
+      0 0 ${rgb.b / 255} 0 0
+      0 0 0 1 0
+    `;
+    var filter_html = '<filter id="marker-filter-' + index + '" color-interpolation-filters="sRGB" x="0" y="0" height="100%" width="100%"><feColorMatrix type="matrix" values="' + colorMatrixValues + '" /></filter>';
+    $('body').append('<svg style="width:0; height:0; margin:0; padding:0; border:none;">' + filter_html + '</svg>');
+  }
+
+  cb_map.hex_to_rgb = function(hex) {
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+      r: parseInt(result[1], 16),
+      g: parseInt(result[2], 16),
+      b: parseInt(result[3], 16)
+    } : null;
   }
 
   return cb_map;
