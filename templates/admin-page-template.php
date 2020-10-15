@@ -540,7 +540,7 @@
           <tr>
               <th>
                 <?= cb_map\__('CUSTOM_CATEGORY_COLORS_MARKER_ICON', 'commons-booking-map', 'set category colors on marker icons') ?>:
-                <span class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'CUSTOM_CATEGORY_COLORS_MARKER_ICON_DESC', 'commons-booking-map', 'activate to set the individual colors of categories on corresponding markers, for best results use a greyscale marker icon image - the lighter a pixel the stronger is the coloring') ?>"></span>
+                <span class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'CUSTOM_CATEGORY_COLORS_MARKER_ICON_DESC', 'commons-booking-map', "activate to set the individual colors of categories on corresponding markers; for best results use a greyscale marker icon image - the lighter a pixel the stronger is the coloring; the color of the category is taken which is ranked highest in the 'grouping of filters'; it won't be applied on cluster markers ") ?>"></span>
               </th>
               <td><input type="checkbox" name="cb_map_options[custom_category_colors_marker_icon]" <?= CB_Map_Admin::get_option($cb_map_id, 'custom_category_colors_marker_icon') ? 'checked="checked"' : '' ?> value="on"></td>
           </tr>
