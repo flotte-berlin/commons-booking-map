@@ -170,11 +170,11 @@ class CB_Map {
       ];
 
       if($show_location_contact) {
-        $locations[$post->ID]['contact'] = $location_meta['commons-booking_location_contactinfo_text'][0];
+        $locations[$post->ID]['contact'] = isset($location_meta['commons-booking_location_contactinfo_text']) ? $location_meta['commons-booking_location_contactinfo_text'][0] : '';
       }
 
       if($show_location_opening_hours) {
-        $locations[$post->ID]['opening_hours'] = $location_meta['commons-booking_location_openinghours'][0];
+        $locations[$post->ID]['opening_hours'] = isset($location_meta['commons-booking_location_openinghours']) ? $location_meta['commons-booking_location_openinghours'][0] : '';
       }
     }
 
