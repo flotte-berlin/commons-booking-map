@@ -8,6 +8,7 @@ function CB_Map() {
   cb_map.markers = null;
   cb_map.messagebox = null;
   cb_map.location_data = [];
+  cb_map.rendered_location_data = [];
 
   cb_map.tile_servers = {
     1: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -122,11 +123,12 @@ function CB_Map() {
   }
 
   cb_map.render_locations = function(data, init, center_position) {
+    var that = this;
+    that.rendered_location_data = data;
+
     if(data.length == 0) {
       this.messagebox.show(cb_map.translation['NO_LOCATIONS_MESSAGE']);
     }
-
-    var that = this;
 
     var markers;
     if(this.settings.max_cluster_radius > 0) {
