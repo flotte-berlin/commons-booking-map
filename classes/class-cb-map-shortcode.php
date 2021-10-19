@@ -282,11 +282,13 @@ class CB_Map_Shortcode {
       $args = [
         'headers' => [
           'Referer' => 'http' . (isset($_SERVER['HTTPS']) ? 's' : '') . '://' . "{$_SERVER['HTTP_HOST']}"
-      ]];
+        ],
+        'sslverify' => false
+      ];
       $data = wp_safe_remote_get($url, $args);
 
       if(is_wp_error($data)) {
-          wp_send_json_error([ 'error' => 2 ], 404);
+        wp_send_json_error([ 'error' => 2 ], 404);
       }
       else {
         if($data['response']['code'] == 200) {
