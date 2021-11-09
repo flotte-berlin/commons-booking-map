@@ -19,7 +19,7 @@ CB_Map.export = function(format, cb_map, options) {
       "features": []
     };
 
-    cb_map.location_data.forEach(function(location) {
+    cb_map.rendered_location_data.forEach(function(location) {
       var item_names = [];
       location.items.forEach(function(item, i) {
         item_names.push(item.name);
@@ -31,7 +31,7 @@ CB_Map.export = function(format, cb_map, options) {
           "_umap_options": {
             "color": "#7fc600",
             "iconClass": "Drop",
-            "iconUrl": "/uploads/pictogram/bicycle-24_OfIM8RO.png",
+            "iconUrl": "/uploads/pictogram/bicycle-24.png",
             "showLabel": true
           },
           "name": item_names.toString()

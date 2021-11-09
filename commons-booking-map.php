@@ -4,12 +4,14 @@
 Plugin Name:  Commons Booking Map
 Plugin URI:   https://github.com/flotte-berlin/commons-booking-map
 Description:  Ein Plugin in Ergänzung zu Commons Booking, das die Einbindung einer Karte von verfügbaren Artikeln erlaubt
-Version:      0.9.2
+Version:      0.10.2
 Author:       poilu
 Author URI:   https://github.com/poilu
 License:      GPLv2 or later
 License URI:  https://www.gnu.org/licenses/gpl-2.0.html
 */
+
+use CommonsBookingMap\Command\ExportLocationAndAvailability;
 
 define( 'CB_MAP_PATH', plugin_dir_path( __FILE__ ) );
 define( 'CB_MAP_ASSETS_URL', plugins_url( 'assets/', __FILE__ ));
@@ -25,6 +27,7 @@ if(cb_map\is_plugin_active('commons-booking.php')) {
   load_plugin_textdomain( 'commons-booking-map', false, CB_MAP_LANG_PATH );
 
   require_once( CB_MAP_PATH . 'classes/class-cb-map.php' );
+  require_once( CB_MAP_PATH . 'classes/class-cb-map-filter.php' );
   require_once( CB_MAP_PATH . 'classes/class-cb-map-settings.php' );
 
   $cb_map_settings = new CB_Map_Settings();
@@ -62,4 +65,10 @@ if(cb_map\is_plugin_active('commons-booking.php')) {
     //add_filter( 'wp_enqueue_scripts', 'CB_Map::replace_map_link_target');
     add_action( 'wp_enqueue_scripts', 'CB_Map::replace_map_link_target', 11 );
   }
+
+    require_once dirname(__FILE__)."/vendor/autoload.php";
+
+    if ( defined( 'WP_CLI' ) && WP_CLI ) {
+        \WP_CLI::add_command('map', new ExportLocationAndAvailability());
+    }
 }

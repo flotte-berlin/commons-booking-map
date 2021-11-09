@@ -528,6 +528,23 @@
             </td>
           </tr>
         </table>
+
+        <table class="text-left">
+          <tr>
+              <th>
+                <?= cb_map\__('CUSTOM_CATEGORY_COLORS_TEXT', 'commons-booking-map', 'set category colors on filter label text') ?>:
+                <span class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'CUSTOM_CATEGORY_COLORS_TEXT_DESC', 'commons-booking-map', 'activate to set the individual colors of categories on filter text labels') ?>"></span>
+              </th>
+              <td><input type="checkbox" name="cb_map_options[custom_category_colors_text]" <?= CB_Map_Admin::get_option($cb_map_id, 'custom_category_colors_text') ? 'checked="checked"' : '' ?> value="on"></td>
+          </tr>
+          <tr>
+              <th>
+                <?= cb_map\__('CUSTOM_CATEGORY_COLORS_MARKER_ICON', 'commons-booking-map', 'set category colors on marker icons') ?>:
+                <span class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'CUSTOM_CATEGORY_COLORS_MARKER_ICON_DESC', 'commons-booking-map', "activate to set the individual colors of categories on corresponding markers; for best results use a greyscale marker icon image - the lighter a pixel the stronger is the coloring; the color of the category is taken which is ranked highest in the 'grouping of filters'; it won't be applied on cluster markers ") ?>"></span>
+              </th>
+              <td><input type="checkbox" name="cb_map_options[custom_category_colors_marker_icon]" <?= CB_Map_Admin::get_option($cb_map_id, 'custom_category_colors_marker_icon') ? 'checked="checked"' : '' ?> value="on"></td>
+          </tr>
+        </table>
       </details>
     </div>
 
@@ -626,7 +643,7 @@ jQuery(document).ready(function($) {
 
     if ($this.prop("checked")) {
       //console.log('checked');
-      add_custom_markup_option(cat_id, $this.parent().text(), $this.parent().text().trim());
+      add_custom_markup_option(cat_id, $this.parent().text(), $this.parent().text().trim(), '#000000');
     }
     else {
       //console.log('unchecked');
@@ -654,14 +671,15 @@ jQuery(document).ready(function($) {
     }
   }
 
-  function add_custom_markup_option(cat_id, label_text, markup) {
+  function add_custom_markup_option(cat_id, label_text, markup, color) {
     var $accm_table = $('#available-categories-custom-markup-wrapper');
-    var $row = $('<tr id="available_category_cutom_markup_' + cat_id + '"><th class="filter-label-name">' + label_text + ':</th><td><textarea style="width: 250px;" name="cb_map_options[cb_items_available_categories][' + cat_id + ']">' + markup + '</textarea></td></tr>');
+    var $row = $('<tr id="available_category_cutom_markup_' + cat_id + '"><th class="filter-label-name">' + label_text + ':</th><td><textarea style="width: 250px;" name="cb_map_options[cb_items_available_categories][' + cat_id + ']">' + markup + '</textarea></td><td><input style="margin-left: 8px;" type="color" name="cb_map_options[cb_items_available_cat_colors][' + cat_id + ']" value="' + color + '"></td></tr>');
     $accm_table.append($row);
   }
 
   function add_custom_markup_options() {
     var custom_markup_options_data = <?= json_encode( $available_categories ); ?>;
+    var available_cat_colors = <?= json_encode( $available_cat_colors ); ?>;
 
     if(custom_markup_options_data.length > 0) {
       $.each(custom_markup_options_data, function(index, item) {
@@ -670,8 +688,8 @@ jQuery(document).ready(function($) {
         }
         else {
           var $cat_choice = $(".cb_items_available_category_choice[value='" + item.id + "']");
-          var markup = custom_markup_options_data[item.id] || $cat_choice.parent().text().trim();
-          add_custom_markup_option(item.id, $cat_choice.parent().text(), item.content);
+          var color = available_cat_colors[item.id] || '#000000';
+          add_custom_markup_option(item.id, $cat_choice.parent().text(), item.content, color);
         }
       });
     }
