@@ -21,7 +21,7 @@ class CB_Map_Admin {
     'address_search_bounds_left_bottom_lon', 'address_search_bounds_left_bottom_lat', 'address_search_bounds_right_top_lon', 'address_search_bounds_right_top_lat',
     'show_location_distance_filter', 'label_location_distance_filter', 'show_item_availability_filter', 'label_item_availability_filter', 'label_item_category_filter',
     'item_draft_appearance', 'marker_item_draft_media_id', 'marker_item_draft_icon_width', 'marker_item_draft_icon_height', 'marker_item_draft_icon_anchor_x', 'marker_item_draft_icon_anchor_y',
-    'cb_items_available_categories',
+    'cb_items_available_categories', 'cb_items_available_cat_colors', 'custom_category_colors_text', 'custom_category_colors_marker_icon',
     'cb_items_preset_categories'];
 
   const EXPORT_CODE_VALUE_MIN_LENGTH = 10;
@@ -76,6 +76,9 @@ class CB_Map_Admin {
   const LABEL_ITEM_AVAILABILITY_FILTER_DEFAULT = "";
   CONST LABEL_ITEM_CATEGORY_FILTER_DEFAULT = "";
   const CB_ITEMS_AVAILABLE_CATEGORIES_DEFAULT = [];
+  const CB_ITEMS_AVAILABLE_CAT_COLORS_DEFAULT = [];
+  const CUSTOM_CATEGORY_COLORS_TEXT_DEFAULT = false;
+  const CUSTOM_CATEGORY_COLORS_MARKER_ICON_DEFAULT = false;
   const CB_ITEMS_PRESET_CATEGORIES_DEFAULT = [];
   const ITEM_DRAFT_APPEARANCE_DEFAULT = 1;
   const MARKER_ITEM_DRAFT_MEDIA_ID_DEFAULT = null;
@@ -469,6 +472,24 @@ class CB_Map_Admin {
       }
     }
 
+    //cb_items_preset_cat_colors
+    if(isset($input['cb_items_available_cat_colors'])) {
+      foreach ($input['cb_items_available_cat_colors'] as $key => $value) {
+        //if category is in validated input, store the color
+        if(isset($validated_input['cb_items_available_categories'][$key])) {
+          $validated_input['cb_items_available_cat_colors'][$key] = sanitize_text_field($value);
+        }
+      }
+    }
+    //error_reporting(E_ALL);
+    //error_log(json_encode($validated_input['cb_items_available_cat_colors']));
+
+    //custom_category_colors_text
+    $validated_input['custom_category_colors_text'] = isset($input['custom_category_colors_text']) ? true : false;
+
+    //custom_category_colors_marker_icon
+    $validated_input['custom_category_colors_marker_icon'] = isset($input['custom_category_colors_marker_icon']) ? true : false;
+
     //cb_items_preset_categories
     if(isset($input['cb_items_preset_categories'])) {
       foreach($input['cb_items_preset_categories'] as $cb_items_category_id) {
@@ -549,6 +570,8 @@ class CB_Map_Admin {
       ];
     }
 
+    $available_cat_colors = CB_Map_Admin::get_option($cb_map_id, 'cb_items_available_cat_colors');
+
     //preset categories
     $preset_categories_args = [
       'taxonomy' => 'cb_items_category',
@@ -559,7 +582,6 @@ class CB_Map_Admin {
     $preset_categories_checklist_markup = wp_terms_checklist( 0, $preset_categories_args);
     $preset_categories_checklist_markup = str_replace('name="tax_input[cb_items_category]', 'name="cb_map_options[cb_items_preset_categories]', $preset_categories_checklist_markup);
     $preset_categories_checklist_markup = str_replace('id="in-cb_items_category-', 'id="cb_items_preset_category-', $preset_categories_checklist_markup);
-
 
     $data_export_base_url = get_site_url(null, '', null) . '/wp-admin/admin-ajax.php';
 

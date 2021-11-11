@@ -1,6 +1,8 @@
 <?php
 
-class CB_Map_Item_Availability {
+namespace CommonsBookingMap;
+
+class CBMapItemAvailability {
 
   const ITEM_AVAILABLE = 0; //item is available
   const LOCATION_CLOSED = 1; //regular closed day / special closing day / holiday -> no pickup return
@@ -8,12 +10,9 @@ class CB_Map_Item_Availability {
   const OUT_OF_TIMEFRAME = 3; //no timeframe for item set
 
   public static function create_items_availabilities($locations, $date_start, $date_end) {
-    //trigger_error('filter_locations_by_item_availability');
-    $result = [];
-
     $booked_days_by_item = self::fetch_booked_days_in_period($date_start, $date_end);
 
-    $filter_period = new DatePeriod(new DateTime($date_start), new DateInterval('P1D'), new DateTime($date_end . ' +1 day'));
+    $filter_period = new \DatePeriod(new \DateTime($date_start), new \DateInterval('P1D'), new \DateTime($date_end . ' +1 day'));
 
     foreach ($locations as $location_id => $location) {
       //trigger_error('location_id: ' . $location_id);
@@ -50,9 +49,9 @@ class CB_Map_Item_Availability {
     //prepare date_times for start/end of timeframes
     $timeframe_date_times = [];
     foreach ($timeframes as $timeframe) {
-      $timeframe_date_time_start = new DateTime();
+      $timeframe_date_time_start = new \DateTime();
       $timeframe_date_time_start->setTimestamp(strtotime($timeframe['date_start']));
-      $timeframe_date_time_end = new DateTime();
+      $timeframe_date_time_end = new \DateTime();
       $timeframe_date_time_end->setTimestamp(strtotime($timeframe['date_end']));
 
       $timeframe_date_times[] = [
@@ -63,7 +62,7 @@ class CB_Map_Item_Availability {
 
     //mark days which are inside a timeframe
     foreach ($availability as $date => $status) {
-      $av_date_time = new DateTime();
+      $av_date_time = new \DateTime();
       $av_date_time->setTimestamp(strtotime($date));
       foreach ($timeframe_date_times as $timeframe_date_time) {
         if($av_date_time >= $timeframe_date_time['date_time_start'] && $av_date_time <= $timeframe_date_time['date_time_end']) {
@@ -77,18 +76,18 @@ class CB_Map_Item_Availability {
 
   protected static function mark_closed_days($location_id, $availability, $date_start, $date_end) {
     //regular closed days of location
-    $cb_data = new CB_Data();
+    $cb_data = new \CB_Data();
     $location = $cb_data->get_location($location_id);
     $regular_closed_weekdays = is_array($location['closed_days']) ? $location['closed_days'] : [];
 
     //trigger_error($location_id . ': ' .json_encode($regular_closed_weekdays));
 
     // if special days plugin available: fetch special closing days & holidays
-    $cb_special_days_path = cb_map\get_active_plugin_directory('commons-booking-special-days.php');
-    $special_closed_days_timestamps = $cb_special_days_path ? CB_Special_Days::get_locations_special_closed_days($location_id, strtotime($date_start), strtotime($date_end)) : [];
+    $cb_special_days_path = \cb_map\get_active_plugin_directory('commons-booking-special-days.php');
+    $special_closed_days_timestamps = $cb_special_days_path ? \CB_Special_Days::get_locations_special_closed_days($location_id, strtotime($date_start), strtotime($date_end)) : [];
 
     foreach ($availability as $date => $status) {
-      $av_date_time = new DateTime();
+      $av_date_time = new \DateTime();
       $av_date_time->setTimestamp(strtotime($date));
 
       //check only if date is free

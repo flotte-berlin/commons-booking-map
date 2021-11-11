@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: cb-admin-booking\n"
-"POT-Creation-Date: 2020-03-01 14:57+0100\n"
-"PO-Revision-Date: 2020-03-01 15:06+0100\n"
+"POT-Creation-Date: 2020-10-15 14:58+0200\n"
+"PO-Revision-Date: 2020-10-15 17:13+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -34,19 +34,19 @@ msgstr "Längengrad"
 msgid "POSITION"
 msgstr "Position"
 
-#: ../classes/class-cb-map-admin.php:92
+#: ../classes/class-cb-map-admin.php:95
 msgid "CB_MAP_ADMIN_METABOX_TITLE"
 msgstr "Kartenkonfiguration"
 
-#: ../classes/class-cb-map-admin.php:525
+#: ../classes/class-cb-map-admin.php:546
 msgid "SELECT_IMAGE"
 msgstr "Bild auswählen"
 
-#: ../classes/class-cb-map-admin.php:526
+#: ../classes/class-cb-map-admin.php:547
 msgid "SAVE"
 msgstr "speichern"
 
-#: ../classes/class-cb-map-admin.php:527
+#: ../classes/class-cb-map-admin.php:548
 msgid "MARKER_IMAGE_MEASUREMENTS"
 msgstr "Bildmaße"
 
@@ -75,70 +75,70 @@ msgstr "Karte ist nicht veröffentlicht"
 msgid "NO_VALID_MAP_ID"
 msgstr "keine gültige Karten-ID"
 
-#: ../classes/class-cb-map-shortcode.php:216
+#: ../classes/class-cb-map-shortcode.php:218
 #: ../templates/admin-page-template.php:243
 msgid "OPENING_HOURS"
 msgstr "Öffnungszeiten"
 
-#: ../classes/class-cb-map-shortcode.php:217
+#: ../classes/class-cb-map-shortcode.php:219
 #: ../templates/admin-page-template.php:257
 msgid "CONTACT"
 msgstr "Kontakt"
 
-#: ../classes/class-cb-map-shortcode.php:218
+#: ../classes/class-cb-map-shortcode.php:220
 msgid "FROM"
 msgstr "ab"
 
-#: ../classes/class-cb-map-shortcode.php:219
+#: ../classes/class-cb-map-shortcode.php:221
 msgid "UNTIL"
 msgstr "bis"
 
-#: ../classes/class-cb-map-shortcode.php:220
+#: ../classes/class-cb-map-shortcode.php:222
 msgid "AT_LEAST"
 msgstr "mind."
 
-#: ../classes/class-cb-map-shortcode.php:221
+#: ../classes/class-cb-map-shortcode.php:223
 msgid "DAYS"
 msgstr "Tag(e)"
 
-#: ../classes/class-cb-map-shortcode.php:222
+#: ../classes/class-cb-map-shortcode.php:224
 msgid "NO_LOCATIONS_MESSAGE"
 msgstr "Leider wurden keine Standorte gefunden."
 
-#: ../classes/class-cb-map-shortcode.php:223
+#: ../classes/class-cb-map-shortcode.php:225
 msgid "FILTER"
 msgstr "filtern"
 
-#: ../classes/class-cb-map-shortcode.php:224
+#: ../classes/class-cb-map-shortcode.php:226
 #: ../templates/admin-page-template.php:498
 msgid "AVAILABILITY"
 msgstr "Verfügbarkeit"
 
-#: ../classes/class-cb-map-shortcode.php:225
+#: ../classes/class-cb-map-shortcode.php:227
 msgid "CATEGORIES"
 msgstr "Kategorien"
 
-#: ../classes/class-cb-map-shortcode.php:226
+#: ../classes/class-cb-map-shortcode.php:228
 #: ../templates/admin-page-template.php:464
 msgid "DISTANCE"
 msgstr "Entfernung"
 
-#: ../classes/class-cb-map-shortcode.php:227
+#: ../classes/class-cb-map-shortcode.php:229
 msgid "ADDRESS"
 msgstr "Adresse"
 
-#: ../classes/class-cb-map-shortcode.php:228
+#: ../classes/class-cb-map-shortcode.php:230
 msgid "GEO_SEARCH_ERROR"
 msgstr ""
 "Leider ist bei der Verarbeitung deiner Anfrage ein Fehler aufgetreten. Bitte "
 "versuche es später noch einmal."
 
-#: ../classes/class-cb-map-shortcode.php:229
+#: ../classes/class-cb-map-shortcode.php:231
 msgid "GEO_SEARCH_UNAVAILABLE"
 msgstr ""
 "Der Service ist zur Zeit überlastet. Bitte versuche es später noch einmal."
 
-#: ../classes/class-cb-map-shortcode.php:230
+#: ../classes/class-cb-map-shortcode.php:232
 msgid "COMING_SOON"
 msgstr "demnächst buchbar"
 
@@ -673,46 +673,67 @@ msgstr "Gruppierung der Filter-Label und individuelles HTML"
 msgid "ADD_FILTER_GROUP_BUTTON_TITLE"
 msgstr "Filter-Gruppe hinzufügen"
 
+#: ../templates/admin-page-template.php:535
+msgid "CUSTOM_CATEGORY_COLORS_TEXT"
+msgstr "Kategorie-Farben auf Filter-Label anwenden"
+
 #: ../templates/admin-page-template.php:536
+msgid "CUSTOM_CATEGORY_COLORS_TEXT_DESC"
+msgstr "aktivieren, um die Filter-Label-Texte individuell einzufärben"
+
+#: ../templates/admin-page-template.php:542
+msgid "CUSTOM_CATEGORY_COLORS_MARKER_ICON"
+msgstr "Kategorie-Farben auf Marker-Icons anwenden"
+
+#: ../templates/admin-page-template.php:543
+msgid "CUSTOM_CATEGORY_COLORS_MARKER_ICON_DESC"
+msgstr ""
+"aktivieren, um die individuellen Kategorie-Farben für die entsprechenden "
+"Marker zu verwenden; für das beste Ergebnis sollte ein Graustufen-Iconbild "
+"verwendet werden - je heller ein Pixel, um so stärker wird es eingefärbt; es "
+"wird die Farbe der Kategorie verwendet, welche in der 'Gruppierung der "
+"Filter-Label' am höchsten platziert ist"
+
+#: ../templates/admin-page-template.php:553
 msgid "FILTER_PRESETS"
 msgstr "Vorabfilter"
 
-#: ../templates/admin-page-template.php:540
+#: ../templates/admin-page-template.php:557
 msgid "PRESET_CATEGORIES"
 msgstr "gesetzte Kategorien"
 
-#: ../templates/admin-page-template.php:541
+#: ../templates/admin-page-template.php:558
 msgid "PRESET_CATEGORIES_DESC"
 msgstr ""
 "Auswahl der Kategorien, die genutzt werden, um Artikel vorzufiltern, die auf "
 "der Karte angezeigt werden (Kategorien auf einer Ebene sind ODER-verknüpft, "
 "d.h. nur eine muss erfüllt sein) - keine Auswahl zeigt alle Artikel an"
 
-#: ../templates/admin-page-template.php:642
+#: ../templates/admin-page-template.php:659
 msgid "FILTER_GROUP"
 msgstr "Filter-Gruppe"
 
-#: ../templates/admin-page-template.php:642
+#: ../templates/admin-page-template.php:659
 msgid "FILTER_GROUP_PLACEHOLDER"
 msgstr "Gruppenname"
 
-#: ../templates/admin-page-template.php:645
+#: ../templates/admin-page-template.php:662
 msgid "REMOVE_FILTER_GROUP_BUTTON_TITLE"
 msgstr "Filter-Gruppe entfernen"
 
-#: ../templates/admin-page-template.php:724
+#: ../templates/admin-page-template.php:742
 msgid "URL"
 msgstr "URL"
 
-#: ../templates/admin-page-template.php:725
+#: ../templates/admin-page-template.php:743
 msgid "CODE"
 msgstr "Code"
 
-#: ../templates/admin-page-template.php:739
+#: ../templates/admin-page-template.php:757
 msgid "REMOVE_IMPORT_SOURCE_BUTTON_TITLE"
 msgstr "Import-Quelle entfernen"
 
-#: ../templates/admin-page-template.php:747
+#: ../templates/admin-page-template.php:765
 msgid "TEST_IMPORT_SOURCE_BUTTON_TITLE"
 msgstr "Import-Quelle testen"
 

@@ -296,6 +296,11 @@ function CB_Map_Filters($, cb_map) {
         var $input = $('<input type="checkbox" name="cb_item_categories[]" value="' + category.cat_id + '">')
         var $label = $('<label></label>');
         $label.html(category.markup);
+
+        if(cb_map.settings.custom_category_colors_text) {
+          $label.css('color', category.color);
+        }
+
         $fieldset.append($input);
         $fieldset.append($label);
       });
