@@ -15,7 +15,7 @@ class AvailabilityMap
      * @param mixed $map_type
      * @return mixed
      */
-    public static function getLocationsWithAvailability(int $cb_map_id, array $preset_categories, int $map_type): array
+    public static function get_locations_with_availability(int $cb_map_id, array $preset_categories, int $map_type): array
     {
         $locations = CB_Map::get_locations($cb_map_id);
         $locations = CB_Map_Filter::filter_locations_by_timeframes_and_categories($locations, $cb_map_id, $preset_categories);
