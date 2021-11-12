@@ -1,0 +1,9 @@
+{
+  "autoload": {
+    "psr-4": {
+      "CommonsBookingMap\\": "classes",
+      "CommonsBookingMap\\Command\\": "commands",
+      "cb_map\\": "functions"
+    }
+  }
+}
