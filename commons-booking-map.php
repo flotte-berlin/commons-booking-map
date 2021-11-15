@@ -12,6 +12,7 @@ License URI:  https://www.gnu.org/licenses/gpl-2.0.html
 */
 
 use CommonsBookingMap\Command\ExportLocationAndAvailability;
+use CommonsBookingMap\LocationAvailabilityCache;
 
 define('CB_MAP_PATH', plugin_dir_path(__FILE__));
 define('CB_MAP_ASSETS_URL', plugins_url('assets/', __FILE__));
@@ -71,7 +72,25 @@ if (cb_map\is_plugin_active('commons-booking.php')) {
 
     require_once dirname(__FILE__) . "/vendor/autoload.php";
 
-    if (defined('WP_CLI') && WP_CLI) {
-        \WP_CLI::add_command('map', new ExportLocationAndAvailability());
+    // add shorter intervals
+    function addFiveMinutesInterval($schedules){
+        if(!isset($schedules["5min"])){
+            $schedules["5min"] = array(
+                'interval' => 5*60,
+                'display' => __('Once every 5 minutes'));
+        }
+        return $schedules;
+    }
+    add_filter('cron_schedules','addFiveMinutesInterval');
+
+    register_activation_hook( __FILE__, 'scheduleRecurringEvent');
+    add_action( 'exportLocationAvailabilitiesHook', 'exportLocationAvailabilitiesAction' );
+
+    function scheduleRecurringEvent() {
+        wp_schedule_event( time(), '5min', 'exportLocationAvailabilitiesHook' );
+    }
+
+    function exportLocationAvailabilitiesAction() {
+        (new ExportLocationAndAvailability())->exportLocationAndAvailability();
     }
 }
