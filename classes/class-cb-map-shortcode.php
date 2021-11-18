@@ -367,8 +367,14 @@ class CB_Map_Shortcode
 
             //local - get the locations
             if ($map_type == 1) {
-                $load_from_cache = (new LocationAvailabilityCache())->load_from_cache(1);
-                $locations = json_decode($load_from_cache, true);
+                try {
+                    $locations = (new LocationAvailabilityCache())->load_from_cache($map_type);
+                } catch (Exception $exception) {
+                    $locations = AvailabilityMap::get_locations_with_availability(
+                        $cb_map_id,
+                        \CB_Map_Admin::get_option($cb_map_id, 'cb_items_preset_categories')
+                    );
+                }
             }
 
             //import - get locations that are imported and stored in db
@@ -389,12 +395,14 @@ class CB_Map_Shortcode
 
             //export - get the locations that are supposed to be provided for external usage
             if ($map_type == 3) {
-                $preset_categories = CB_Map_Admin::get_option($cb_map_id, 'cb_items_preset_categories');
-                $locations = CB_Map::get_locations($cb_map_id);
-                $locations = CB_Map_Filter::filter_locations_by_timeframes_and_categories($locations, $cb_map_id, $preset_categories);
-
-                $locations = array_values($locations); //locations to indexed array
-                $locations = CB_Map::cleanup_location_data($locations, '<br>', $map_type);
+                try {
+                    $locations = (new LocationAvailabilityCache())->load_from_cache($map_type);
+                } catch (Exception $exception) {
+                    $locations = AvailabilityMap::get_locations_with_availability_for_export(
+                        $cb_map_id,
+                        \CB_Map_Admin::get_option($cb_map_id, 'cb_items_preset_categories')
+                    );
+                }
             }
 
             header('Content-Type: application/json');

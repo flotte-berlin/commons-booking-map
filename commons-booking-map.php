@@ -12,7 +12,6 @@ License URI:  https://www.gnu.org/licenses/gpl-2.0.html
 */
 
 use CommonsBookingMap\Command\ExportLocationAndAvailability;
-use CommonsBookingMap\LocationAvailabilityCache;
 
 define('CB_MAP_PATH', plugin_dir_path(__FILE__));
 define('CB_MAP_ASSETS_URL', plugins_url('assets/', __FILE__));
@@ -91,6 +90,7 @@ if (cb_map\is_plugin_active('commons-booking.php')) {
     }
 
     function exportLocationAvailabilitiesAction() {
-        (new ExportLocationAndAvailability())->exportLocationAndAvailability();
+        (new ExportLocationAndAvailability())->write_location_and_availability_to_cache();
+        (new ExportLocationAndAvailability())->write_location_and_availability_for_export_to_cache(5780);
     }
 }

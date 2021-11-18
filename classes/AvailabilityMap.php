@@ -11,12 +11,12 @@ class AvailabilityMap
 {
     /**
      * @param int $cb_map_id
-     * @param mixed $preset_categories
-     * @param mixed $map_type
-     * @return mixed
+     * @param array $preset_categories
+     * @return array
      */
-    public static function get_locations_with_availability(int $cb_map_id, array $preset_categories, int $map_type): array
+    public static function get_locations_with_availability(int $cb_map_id, array $preset_categories): array
     {
+        $map_type = 1;
         $locations = CB_Map::get_locations($cb_map_id);
         $locations = CB_Map_Filter::filter_locations_by_timeframes_and_categories($locations, $cb_map_id, $preset_categories);
 
@@ -32,7 +32,21 @@ class AvailabilityMap
 
         $locations = CBMapItemAvailability::availability_to_indexed_array($locations);
         $locations = array_values($locations); //locations to indexed array
-        $locations = CB_Map::cleanup_location_data($locations, '<br>', $map_type);
-        return $locations;
+        return CB_Map::cleanup_location_data($locations, '<br>', $map_type);
+    }
+
+    /**
+     * @param int $cb_map_id
+     * @param array $preset_categories
+     * @return array
+     */
+    public static function get_locations_with_availability_for_export(int $cb_map_id, array $preset_categories): array
+    {
+        $map_type = 3;
+        $locations = CB_Map::get_locations($cb_map_id);
+        $locations = CB_Map_Filter::filter_locations_by_timeframes_and_categories($locations, $cb_map_id, $preset_categories);
+
+        $locations = array_values($locations); //locations to indexed array
+        return CB_Map::cleanup_location_data($locations, '<br>', $map_type);
     }
 }
