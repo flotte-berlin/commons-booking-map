@@ -90,7 +90,7 @@ if (cb_map\is_plugin_active('commons-booking.php')) {
     }
 
     function exportLocationAvailabilitiesAction() {
-        (new ExportLocationAndAvailability())->write_location_and_availability_to_cache();
+        (new ExportLocationAndAvailability())->write_location_and_availability_to_cache(4160);
         (new ExportLocationAndAvailability())->write_location_and_availability_for_export_to_cache(5780);
     }
 }

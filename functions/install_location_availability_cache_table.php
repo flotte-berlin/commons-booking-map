@@ -13,6 +13,7 @@ function location_availability_cache_install() {
 
     $sql = "CREATE TABLE $table_name (
 		map_type smallint(1) NOT NULL,
+		cb_map_id smallint(1) NOT NULL,
 		updated_at datetime NOT NULL,
 		cache LONGTEXT NOT NULL,
 		PRIMARY KEY  (map_type)
