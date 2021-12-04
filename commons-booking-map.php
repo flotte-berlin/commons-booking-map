@@ -71,26 +71,35 @@ if (cb_map\is_plugin_active('commons-booking.php')) {
 
     require_once dirname(__FILE__) . "/vendor/autoload.php";
 
-    // add shorter intervals
-    function addFiveMinutesInterval($schedules){
-        if(!isset($schedules["5min"])){
-            $schedules["5min"] = array(
-                'interval' => 5*60,
-                'display' => __('Once every 5 minutes'));
+    // add custom intervals
+    function addAvailabilityMapCacheRefreshInterval($schedules)
+    {
+        $customerInterval = get_option('cb_map_options')['cb_map_cache_interval_in_minutes'];
+        if (!isset($schedules["everyNMinutes"])) {
+            $schedules["everyNMinutes"] = [
+                'interval' => $customerInterval * 60,
+                'display' => __('Once every N minutes')];
         }
         return $schedules;
     }
-    add_filter('cron_schedules','addFiveMinutesInterval');
 
-    register_activation_hook( __FILE__, 'scheduleRecurringEvent');
-    add_action( 'exportLocationAvailabilitiesHook', 'exportLocationAvailabilitiesAction' );
+    add_filter(
+        'cron_schedules',
+        'addAvailabilityMapCacheRefreshInterval'
+    );
 
-    function scheduleRecurringEvent() {
-        wp_schedule_event( time(), '5min', 'exportLocationAvailabilitiesHook' );
+    register_activation_hook(__FILE__, 'scheduleRecurringEvent');
+    add_action('exportLocationAvailabilitiesHook', 'exportLocationAvailabilitiesAction');
+
+    function scheduleRecurringEvent()
+    {
+        wp_schedule_event(time(), 'everyNMinutes', 'exportLocationAvailabilitiesHook');
     }
 
-    function exportLocationAvailabilitiesAction() {
+    function exportLocationAvailabilitiesAction()
+    {
         (new ExportLocationAndAvailability())->write_location_and_availability_to_cache(4160);
         (new ExportLocationAndAvailability())->write_location_and_availability_for_export_to_cache(5780);
     }
+
 }

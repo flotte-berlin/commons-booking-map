@@ -2,9 +2,13 @@
 
 class CB_Map_Settings {
 
-  const OPTION_KEYS = ['booking_page_link_replacement'];
+  const OPTION_KEYS = [
+      'booking_page_link_replacement',
+      'cb_map_cache_interval_in_minutes'
+  ];
 
   const BOOKING_PAGE_LINK_REPLACEMENT_DEFAULT = true;
+  const CB_MAP_CACHE_INTERVAL_IN_MINUTES_DEFAULT = 5;
 
   public static $options;
 
@@ -79,6 +83,7 @@ class CB_Map_Settings {
     $validated_input = self::populate_option_defaults([]);
 
     $validated_input['booking_page_link_replacement'] = isset($input['booking_page_link_replacement']) ? true : false;
+    $validated_input['cb_map_cache_interval_in_minutes'] = intval($input['cb_map_cache_interval_in_minutes']);
 
     return $validated_input;
   }

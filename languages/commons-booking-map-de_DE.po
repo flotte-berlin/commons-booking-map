@@ -750,6 +750,12 @@ msgstr ""
 msgid "BOOKING_PAGE_LINK_REPLACEMENT"
 msgstr "Karten-Link auf Buchungsseite ersetzen"
 
+msgid "BOOKING_PAGE_CACHE_INTERVAL"
+msgstr "Wie oft sollen die vorberechneten Kartendaten aktualisiert werden?"
+
+msgid "BOOKING_PAGE_CACHE_INTERVAL_DESC"
+msgstr "Alle n Minuten Kartendaten neu berechnen"
+
 #: ../templates/settings-page-template.php:17
 msgid "BOOKING_PAGE_LINK_REPLACEMENT_DESC"
 msgstr ""
