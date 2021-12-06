@@ -74,7 +74,7 @@ if (cb_map\is_plugin_active('commons-booking.php')) {
     // add custom intervals
     function addAvailabilityMapCacheRefreshInterval($schedules)
     {
-        $customerInterval = get_option('cb_map_options')['cb_map_cache_interval_in_minutes'];
+        $customerInterval = (new CB_Map_Settings())->get_option('cb_map_cache_interval_in_minutes');
         if (!isset($schedules["everyNMinutes"])) {
             $schedules["everyNMinutes"] = [
                 'interval' => $customerInterval * 60,
