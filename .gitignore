@@ -1,0 +1,5 @@
+!vendor/autoload.php
+!vendor/composer/autoload_*
+!vendor/composer/ClassLoader.php
+vendor/
+.idea/
