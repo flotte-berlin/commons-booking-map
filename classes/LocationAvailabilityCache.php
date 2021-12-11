@@ -65,7 +65,6 @@ class LocationAvailabilityCache
             $show_item_availability = \CB_Map_Admin::get_option($cb_map->ID, 'show_item_availability');
 
             if ($map_type == 1 && $show_item_availability) {
-                error_log('$cb_map->ID, $map_type, $show_item_availability: ' . $cb_map->ID . ', ' . $map_type . ', ' . $show_item_availability);
                 $exportLocationAvailability->write_location_and_availability_to_cache($cb_map->ID);
             }
         }
