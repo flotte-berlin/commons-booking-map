@@ -12,9 +12,10 @@ class LocationAvailabilityCache
 
         $updated_at = date("Y-m-d H:i:s");
 
-        $str = "REPLACE INTO {$wpdb->prefix}location_availability_cache (map_type, cb_map_id, updated_at, cache) VALUES ($map_type, $cb_map_id, '$updated_at', '$location_availabilities')";
-        $wpdb->prepare($str);
-        $wpdb->get_results($str);
+        $args = [$map_type, $cb_map_id, $updated_at, $location_availabilities];
+        $str = "REPLACE INTO {$wpdb->prefix}location_availability_cache (map_type, cb_map_id, updated_at, cache) VALUES (%d, %d, %s, %s)";
+        $str = $wpdb->prepare($str, $args);
+        $wpdb->query($str);
     }
 
     /**
@@ -27,6 +28,7 @@ class LocationAvailabilityCache
         if (count($results) === 0) {
             throw new \Exception("cache miss for map_type ".$map_type." and cb_map_id: ".$cb_map_id);
         }
-        return json_decode($results[0]['cache'], true);
+        
+        return json_decode(stripslashes($results[0]['cache']), true);
     }
 }

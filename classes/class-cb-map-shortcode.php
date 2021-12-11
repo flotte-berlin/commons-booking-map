@@ -395,14 +395,10 @@ class CB_Map_Shortcode
 
             //export - get the locations that are supposed to be provided for external usage
             if ($map_type == 3) {
-                try {
-                    $locations = (new LocationAvailabilityCache())->load_from_cache($map_type, $cb_map_id);
-                } catch (Exception $exception) {
-                    $locations = AvailabilityMap::get_locations_with_availability_for_export(
-                        $cb_map_id,
-                        \CB_Map_Admin::get_option($cb_map_id, 'cb_items_preset_categories')
-                    );
-                }
+                $locations = AvailabilityMap::get_locations_with_availability_for_export(
+                    $cb_map_id,
+                    \CB_Map_Admin::get_option($cb_map_id, 'cb_items_preset_categories')
+                );
             }
 
             header('Content-Type: application/json');

@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: cb-admin-booking\n"
-"POT-Creation-Date: 2020-10-15 14:58+0200\n"
-"PO-Revision-Date: 2020-10-15 17:13+0200\n"
+"POT-Creation-Date: 2021-12-10 19:47+0100\n"
+"PO-Revision-Date: 2021-12-11 13:19+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -34,111 +34,111 @@ msgstr "Längengrad"
 msgid "POSITION"
 msgstr "Position"
 
-#: ../classes/class-cb-map-admin.php:95
+#: ../classes/class-cb-map-admin.php:96
 msgid "CB_MAP_ADMIN_METABOX_TITLE"
 msgstr "Kartenkonfiguration"
 
-#: ../classes/class-cb-map-admin.php:546
+#: ../classes/class-cb-map-admin.php:547
 msgid "SELECT_IMAGE"
 msgstr "Bild auswählen"
 
-#: ../classes/class-cb-map-admin.php:547
+#: ../classes/class-cb-map-admin.php:548
 msgid "SAVE"
 msgstr "speichern"
 
-#: ../classes/class-cb-map-admin.php:548
+#: ../classes/class-cb-map-admin.php:549
 msgid "MARKER_IMAGE_MEASUREMENTS"
 msgstr "Bildmaße"
 
-#: ../classes/class-cb-map-settings.php:17
+#: ../classes/class-cb-map-settings.php:21
 msgid "SETTINGS_TITLE"
 msgstr "Commons Booking  Map - Einstellungen"
 
-#: ../classes/class-cb-map-settings.php:17
+#: ../classes/class-cb-map-settings.php:21
 msgid "SETTINGS_MENU"
 msgstr "Commons Booking Map"
 
-#: ../classes/class-cb-map-settings.php:90
+#: ../classes/class-cb-map-settings.php:95
 msgid "Settings"
 msgstr ""
 
-#: ../classes/class-cb-map-shortcode.php:81
+#: ../classes/class-cb-map-shortcode.php:85
 msgid "NO_VALID_MAP_TYPE"
 msgstr "kein gültiger Karten-Typ"
 
-#: ../classes/class-cb-map-shortcode.php:85
+#: ../classes/class-cb-map-shortcode.php:88
 msgid "NO_VALID_POST_STATUS"
 msgstr "Karte ist nicht veröffentlicht"
 
-#: ../classes/class-cb-map-shortcode.php:89
-#: ../classes/class-cb-map-shortcode.php:94
+#: ../classes/class-cb-map-shortcode.php:91
+#: ../classes/class-cb-map-shortcode.php:95
 msgid "NO_VALID_MAP_ID"
 msgstr "keine gültige Karten-ID"
 
-#: ../classes/class-cb-map-shortcode.php:218
+#: ../classes/class-cb-map-shortcode.php:216
 #: ../templates/admin-page-template.php:243
 msgid "OPENING_HOURS"
 msgstr "Öffnungszeiten"
 
-#: ../classes/class-cb-map-shortcode.php:219
+#: ../classes/class-cb-map-shortcode.php:217
 #: ../templates/admin-page-template.php:257
 msgid "CONTACT"
 msgstr "Kontakt"
 
-#: ../classes/class-cb-map-shortcode.php:220
+#: ../classes/class-cb-map-shortcode.php:218
 msgid "FROM"
 msgstr "ab"
 
-#: ../classes/class-cb-map-shortcode.php:221
+#: ../classes/class-cb-map-shortcode.php:219
 msgid "UNTIL"
 msgstr "bis"
 
-#: ../classes/class-cb-map-shortcode.php:222
+#: ../classes/class-cb-map-shortcode.php:220
 msgid "AT_LEAST"
 msgstr "mind."
 
-#: ../classes/class-cb-map-shortcode.php:223
+#: ../classes/class-cb-map-shortcode.php:221
 msgid "DAYS"
 msgstr "Tag(e)"
 
-#: ../classes/class-cb-map-shortcode.php:224
+#: ../classes/class-cb-map-shortcode.php:222
 msgid "NO_LOCATIONS_MESSAGE"
 msgstr "Leider wurden keine Standorte gefunden."
 
-#: ../classes/class-cb-map-shortcode.php:225
+#: ../classes/class-cb-map-shortcode.php:223
 msgid "FILTER"
 msgstr "filtern"
 
-#: ../classes/class-cb-map-shortcode.php:226
+#: ../classes/class-cb-map-shortcode.php:224
 #: ../templates/admin-page-template.php:498
 msgid "AVAILABILITY"
 msgstr "Verfügbarkeit"
 
-#: ../classes/class-cb-map-shortcode.php:227
+#: ../classes/class-cb-map-shortcode.php:225
 msgid "CATEGORIES"
 msgstr "Kategorien"
 
-#: ../classes/class-cb-map-shortcode.php:228
+#: ../classes/class-cb-map-shortcode.php:226
 #: ../templates/admin-page-template.php:464
 msgid "DISTANCE"
 msgstr "Entfernung"
 
-#: ../classes/class-cb-map-shortcode.php:229
+#: ../classes/class-cb-map-shortcode.php:227
 msgid "ADDRESS"
 msgstr "Adresse"
 
-#: ../classes/class-cb-map-shortcode.php:230
+#: ../classes/class-cb-map-shortcode.php:228
 msgid "GEO_SEARCH_ERROR"
 msgstr ""
 "Leider ist bei der Verarbeitung deiner Anfrage ein Fehler aufgetreten. Bitte "
 "versuche es später noch einmal."
 
-#: ../classes/class-cb-map-shortcode.php:231
+#: ../classes/class-cb-map-shortcode.php:229
 msgid "GEO_SEARCH_UNAVAILABLE"
 msgstr ""
 "Der Service ist zur Zeit überlastet. Bitte versuche es später noch einmal."
 
-#: ../classes/class-cb-map-shortcode.php:232
+#: ../classes/class-cb-map-shortcode.php:230
 msgid "COMING_SOON"
 msgstr "demnächst buchbar"
 
@@ -189,6 +189,10 @@ msgstr "übergeordnete CB-Karte"
 #: ../classes/class-cb-map.php:31
 msgid "POST_TYPE_DESCRIPTION"
 msgstr "Karten, um Commons Booking-Standorte mit ihren Artikeln darzustellen."
+
+#: ../commons-booking-map.php:81
+msgid "Once every N minutes"
+msgstr ""
 
 #: ../templates/admin-page-template.php:3
 msgid "MAP_ADMIN_DESCRIPTION"
@@ -750,17 +754,21 @@ msgstr ""
 msgid "BOOKING_PAGE_LINK_REPLACEMENT"
 msgstr "Karten-Link auf Buchungsseite ersetzen"
 
-msgid "BOOKING_PAGE_CACHE_INTERVAL"
-msgstr "Wie oft sollen die vorberechneten Kartendaten aktualisiert werden?"
-
-msgid "BOOKING_PAGE_CACHE_INTERVAL_DESC"
-msgstr "Alle n Minuten Kartendaten neu berechnen"
-
-#: ../templates/settings-page-template.php:17
+#: ../templates/settings-page-template.php:19
 msgid "BOOKING_PAGE_LINK_REPLACEMENT_DESC"
 msgstr ""
 "mit der Aktivierung wird das Ziel des Links 'Auf der Karte zeigen' auf der "
 "Buchungsseite durch openstreetmap ersetzt"
+
+#: ../templates/settings-page-template.php:30
+msgid "BOOKING_PAGE_CACHE_INTERVAL"
+msgstr "Aktualisierungsintervall der vorberechneten Kartendaten"
+
+#: ../templates/settings-page-template.php:31
+msgid "BOOKING_PAGE_CACHE_INTERVAL_DESC"
+msgstr ""
+"Alle n Minuten Kartendaten neu berechnen, für Karten, die Artikel-"
+"Verfügbarkeit anzeigen"
 
 #~ msgid "ITEM_STATUS"
 #~ msgstr "Verhalten abhängig vom Artikel-Status"

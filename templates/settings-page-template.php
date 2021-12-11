@@ -27,14 +27,16 @@
             </tr>
             <tr>
                 <th>
-                    <?= cb_map\__('BOOKING_PAGE_CACHE_INTERVAL', 'commons-booking-map', 'after what interval should the map cache be refreshed') ?>:
-                    <span class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'BOOKING_PAGE_CACHE_INTERVAL_DESC', 'commons-booking-map', 'refresh every n minutes') ?>"></span>
+                    <?= cb_map\__('BOOKING_PAGE_CACHE_INTERVAL', 'commons-booking-map', 'refresh interval of map cache') ?>:
+                    <span class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'BOOKING_PAGE_CACHE_INTERVAL_DESC', 'commons-booking-map', 'refresh every n minutes, for maps that show item availability') ?>"></span>
                 </th>
 
                 <td>
-                    <input type="text"
+                    <input type="number"
+                           step="5"
+                           min="0"
                            name="cb_map_options[cb_map_cache_interval_in_minutes]"
-                           value=<?= CB_Map_Settings::get_option('cb_map_cache_interval_in_minutes')?>
+                           value="<?= CB_Map_Settings::get_option('cb_map_cache_interval_in_minutes')?>"
                 </td>
             </tr>
         </table>
