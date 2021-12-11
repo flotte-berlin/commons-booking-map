@@ -19,7 +19,7 @@ define('CB_MAP_PLUGIN_DATA', get_file_data(__FILE__, array('Version' => 'Version
 
 require_once(CB_MAP_PATH . 'functions/is-plugin-active.php');
 require_once(CB_MAP_PATH . 'functions/get-active-plugin-directory.php');
-require_once(CB_MAP_PATH . 'functions/install_location_availability_cache_table.php');
+require_once(CB_MAP_PATH . 'functions/install_cb_map_cache_table.php');
 
 if (cb_map\is_plugin_active('commons-booking.php')) {
 
@@ -29,6 +29,7 @@ if (cb_map\is_plugin_active('commons-booking.php')) {
     require_once(CB_MAP_PATH . 'classes/class-cb-map.php');
     require_once(CB_MAP_PATH . 'classes/class-cb-map-filter.php');
     require_once(CB_MAP_PATH . 'classes/class-cb-map-settings.php');
+    require_once(CB_MAP_PATH . 'classes/LocationAvailabilityCache.php');
 
     $cb_map_settings = new CB_Map_Settings();
     $cb_map_settings->prepare_settings();
@@ -61,7 +62,7 @@ if (cb_map\is_plugin_active('commons-booking.php')) {
     register_activation_hook(__FILE__, 'CB_Map::activate');
     register_deactivation_hook(__FILE__, 'CB_Map::deactivate');
 
-    register_activation_hook(__FILE__, 'location_availability_cache_install');
+    register_activation_hook(__FILE__, 'cb_map\cb_map_cache_install');
 
     if ($cb_map_settings->get_option('booking_page_link_replacement')) {
         //add_filter( 'wp_enqueue_scripts', 'CB_Map::replace_map_link_target');
@@ -70,34 +71,9 @@ if (cb_map\is_plugin_active('commons-booking.php')) {
 
     require_once dirname(__FILE__) . "/vendor/autoload.php";
 
-    // add custom intervals
-    function addAvailabilityMapCacheRefreshInterval($schedules)
-    {
-        $customerInterval = (new CB_Map_Settings())->get_option('cb_map_cache_interval_in_minutes');
-        if (!isset($schedules["everyNMinutes"])) {
-            $schedules["everyNMinutes"] = [
-                'interval' => $customerInterval * 60,
-                'display' => __('Once every N minutes')];
-        }
-        return $schedules;
-    }
-
-    add_filter(
-        'cron_schedules',
-        'addAvailabilityMapCacheRefreshInterval'
-    );
-
-    register_activation_hook(__FILE__, 'scheduleRecurringEvent');
-    add_action('exportLocationAvailabilitiesHook', 'exportLocationAvailabilitiesAction');
-
-    function scheduleRecurringEvent()
-    {
-        wp_schedule_event(time(), 'everyNMinutes', 'exportLocationAvailabilitiesHook');
-    }
-
-    function exportLocationAvailabilitiesAction()
-    {
-        (new ExportLocationAndAvailability())->write_location_and_availability_to_cache(4160);
-    }
+    //add custom intervals for caching of maps (with item availability)
+    add_filter('cron_schedules', 'CommonsBookingMap\LocationAvailabilityCache::addAvailabilityMapCacheRefreshInterval');
+    register_activation_hook(__FILE__, 'CommonsBookingMap\LocationAvailabilityCache::scheduleRecurringEvent');
+    add_action('cb_map_cache_hook', 'CommonsBookingMap\LocationAvailabilityCache::exportLocationAvailabilitiesAction');
 
 }
