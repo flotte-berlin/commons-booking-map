@@ -152,7 +152,7 @@ class CBMapItemAvailability {
         $booked_days_by_item[$booking->item_id] = [];
       }
 
-      $booked_days_period = new DatePeriod(new DateTime($booking->date_start), new DateInterval('P1D'), new DateTime($booking->date_end . ' +1 day'));
+      $booked_days_period = new \DatePeriod(new \DateTime($booking->date_start), new \DateInterval('P1D'), new \DateTime($booking->date_end . ' +1 day'));
 
       foreach ($booked_days_period as $booked_date) {
         $booked_days_by_item[$booking->item_id][] = $booked_date->format('Y-m-d');

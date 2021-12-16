@@ -85,6 +85,10 @@ class CB_Map_Settings {
     $validated_input['booking_page_link_replacement'] = isset($input['booking_page_link_replacement']) ? true : false;
     $validated_input['cb_map_cache_interval_in_minutes'] = intval($input['cb_map_cache_interval_in_minutes']);
 
+    //reschedule map caching
+    CommonsBookingMap\LocationAvailabilityCache::unscheduleRecurringEvent();
+    CommonsBookingMap\LocationAvailabilityCache::scheduleRecurringEvent();
+
     return $validated_input;
   }
 

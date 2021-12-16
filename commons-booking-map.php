@@ -4,7 +4,7 @@
 Plugin Name:  Commons Booking Map
 Plugin URI:   https://github.com/flotte-berlin/commons-booking-map
 Description:  Ein Plugin in Ergänzung zu Commons Booking, das die Einbindung einer Karte von verfügbaren Artikeln erlaubt
-Version:      0.11.0
+Version:      0.11.1
 Author:       <a href="https://github.com/poilu">poilu</a>, <a href="https://github.com/thrillfall">thrillfall</a>
 License:      GPLv2 or later
 License URI:  https://www.gnu.org/licenses/gpl-2.0.html
@@ -74,6 +74,7 @@ if (cb_map\is_plugin_active('commons-booking.php')) {
     //add custom intervals for caching of maps (with item availability)
     add_filter('cron_schedules', 'CommonsBookingMap\LocationAvailabilityCache::addAvailabilityMapCacheRefreshInterval');
     register_activation_hook(__FILE__, 'CommonsBookingMap\LocationAvailabilityCache::scheduleRecurringEvent');
+    register_deactivation_hook(__FILE__, 'CommonsBookingMap\LocationAvailabilityCache::unscheduleRecurringEvent');
     add_action('cb_map_cache_hook', 'CommonsBookingMap\LocationAvailabilityCache::exportLocationAvailabilitiesAction');
 
 }

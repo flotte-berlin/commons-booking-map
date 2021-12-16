@@ -48,6 +48,11 @@ class LocationAvailabilityCache
         wp_schedule_event(time(), 'everyNMinutes', 'cb_map_cache_hook');
     }
 
+    static public function unscheduleRecurringEvent()
+    {
+        wp_clear_scheduled_hook('cb_map_cache_hook');
+    }
+
     static public function exportLocationAvailabilitiesAction()
     {
         $exportLocationAvailability = new Command\ExportLocationAndAvailability();
