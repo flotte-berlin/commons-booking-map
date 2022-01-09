@@ -22,7 +22,8 @@ class CB_Map_Admin {
     'show_location_distance_filter', 'label_location_distance_filter', 'show_item_availability_filter', 'label_item_availability_filter', 'label_item_category_filter',
     'item_draft_appearance', 'marker_item_draft_media_id', 'marker_item_draft_icon_width', 'marker_item_draft_icon_height', 'marker_item_draft_icon_anchor_x', 'marker_item_draft_icon_anchor_y',
     'cb_items_available_categories', 'cb_items_available_cat_colors', 'custom_category_colors_text', 'custom_category_colors_marker_icon',
-    'cb_items_preset_categories'];
+    'cb_items_preset_categories'
+  ];
 
   const EXPORT_CODE_VALUE_MIN_LENGTH = 10;
   const MAP_HEIGHT_VALUE_MIN = 100;

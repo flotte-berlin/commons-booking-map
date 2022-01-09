@@ -10,7 +10,7 @@ class CB_Map_Filter {
     //var_dump($preset_categories);
 
     $cb_data = new CB_Data();
-    require_once( CB_MAP_PATH . 'classes/class-cb-map-item-availability.php' );
+    require_once( CB_MAP_PATH . 'classes/CBMapItemAvailability.php' );
 
     $result = [];
     $timeframes = CB_Map::get_timeframes($cb_map_id);
