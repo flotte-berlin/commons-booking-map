@@ -364,8 +364,8 @@ function CB_Map() {
   cb_map.create_color_filters = function() {
     var that = this;
     var color_filter_ids = []
-    $.each(cb_map.settings.filter_cb_item_categories, function(group_index, group) {
-      $.each(group.elements, function(element_index, category) {
+    jQuery.each(cb_map.settings.filter_cb_item_categories, function(group_index, group) {
+      jQuery.each(group.elements, function(element_index, category) {
 
         var rgb = that.hex_to_rgb(category.color);
         that.create_color_filter(category.cat_id, rgb);
@@ -384,7 +384,7 @@ function CB_Map() {
       0 0 0 1 0
     `;
     var filter_html = '<filter id="marker-filter-' + index + '" color-interpolation-filters="sRGB" x="0" y="0" height="100%" width="100%"><feColorMatrix type="matrix" values="' + colorMatrixValues + '" /></filter>';
-    $('body').append('<svg style="width:0; height:0; margin:0; padding:0; border:none;">' + filter_html + '</svg>');
+    jQuery('body').append('<svg style="width:0; height:0; margin:0; padding:0; border:none;">' + filter_html + '</svg>');
   }
 
   cb_map.hex_to_rgb = function(hex) {
