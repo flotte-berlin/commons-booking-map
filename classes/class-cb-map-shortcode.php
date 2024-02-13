@@ -189,7 +189,7 @@ class CB_Map_Shortcode
                         $settings['filter_cb_item_categories'][$current_group_id]['elements'][] = [
                             'cat_id' => $key,
                             'markup' => $content,
-                            'color' => $options['cb_items_available_cat_colors'][$key]
+                            'color' => isset($options['cb_items_available_cat_colors'][$key]) ? $options['cb_items_available_cat_colors'][$key] : '#000'
                         ];
                     }
                 }
@@ -311,7 +311,6 @@ class CB_Map_Shortcode
      **/
     public static function get_locations()
     {
-
         //handle export
         if (isset($_POST['code'])) {
 
@@ -341,15 +340,26 @@ class CB_Map_Shortcode
             }
         } //handle local/import map
         else if (isset($_POST['cb_map_id'])) {
-            check_ajax_referer('cb_map_locations', 'nonce');
-
             $post = get_post((int)$_POST['cb_map_id']);
 
             if ($post && $post->post_type == 'cb_map') {
                 $cb_map_id = $post->ID;
 
-                //prepare response payload
-                $map_type = CB_Map_Admin::get_option($cb_map_id, 'map_type');
+                $access_allowed = check_ajax_referer('cb_map_locations', 'nonce', false);
+
+                if(!$access_allowed) {
+                    $options = get_post_meta($cb_map_id, 'cb_map_options', true);
+                    $access_allowed = $options['export_code'] == $_POST['auth_key'];
+                }
+
+                if($access_allowed) {
+                    //prepare response payload
+                    $map_type = CB_Map_Admin::get_option($cb_map_id, 'map_type');
+                } else {
+                    wp_send_json_error(['error' => 4], 403);
+                    return wp_die();
+                }
+
             } else {
                 wp_send_json_error(['error' => 2], 400);
                 return wp_die();

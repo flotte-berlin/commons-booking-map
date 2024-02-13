@@ -576,7 +576,7 @@
 jQuery(document).ready(function($) {
   var map_type_option_groups = {
     //local
-    1: ['usage', 'map-presentation', 'zoom', 'positioning-start', 'adaptive-map-section', 'tooltip', 'popup', 'custom-marker', 'cluster', 'filter-users', 'filter-presets', 'item-status-appearance'],
+    1: ['usage', 'data-export', 'map-presentation', 'zoom', 'positioning-start', 'adaptive-map-section', 'tooltip', 'popup', 'custom-marker', 'cluster', 'filter-users', 'filter-presets', 'item-status-appearance'],
     //import
     2: ['usage', 'data-import', 'map-presentation', 'zoom', 'positioning-start', 'adaptive-map-section', 'tooltip', 'popup', 'custom-marker', 'cluster'],
     //export

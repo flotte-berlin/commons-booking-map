@@ -36,7 +36,7 @@
                            step="5"
                            min="0"
                            name="cb_map_options[cb_map_cache_interval_in_minutes]"
-                           value="<?= CB_Map_Settings::get_option('cb_map_cache_interval_in_minutes')?>"
+                           value="<?= CB_Map_Settings::get_option('cb_map_cache_interval_in_minutes')?>">
                 </td>
             </tr>
         </table>
