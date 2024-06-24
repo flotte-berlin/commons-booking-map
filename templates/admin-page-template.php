@@ -91,8 +91,7 @@
               <select name="cb_map_options[base_map]">
                 <option value="1" <?= $selected_base_map == 1 ? 'selected' : '' ?>><?= cb_map\__('BASE_MAP_MAPNIK', 'commons-booking-map', 'OSM - mapnik') ?></option>
                 <option value="2" <?= $selected_base_map == 2 ? 'selected' : '' ?>><?= cb_map\__('BASE_MAP_GERMAN', 'commons-booking-map', 'OSM - german style') ?></option>
-                <option value="3" <?= $selected_base_map == 3 ? 'selected' : '' ?>><?= cb_map\__('BASE_MAP_HIKEANDBIKE', 'commons-booking-map', 'OSM - hike and bike') ?></option>
-                <option value="4" <?= $selected_base_map == 4 ? 'selected' : '' ?>><?= cb_map\__('BASE_MAP_LOKALER', 'commons-booking-map', 'OSM - lokaler (min. zoom: 9)') ?></option>
+                <option value="5" <?= $selected_base_map == 5 ? 'selected' : '' ?>><?= cb_map\__('BASE_MAP_FLOTTE', 'commons-booking-map', 'fLotte Berlin - tile server') ?></option>
               </select>
             </td>
           </tr>
@@ -125,6 +124,53 @@
                 <span class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'ENABLE_MAP_DATA_EXPORT_DESC', 'commons-booking-map', 'activate to enable a button that allows the export of map data (geojson format)') ?>"></span>
               </th>
               <td><input type="checkbox" name="cb_map_options[enable_map_data_export]" <?= CB_Map_Admin::get_option($cb_map_id, 'enable_map_data_export') ? 'checked="checked"' : '' ?> value="on"></td>
+          </tr>
+        </table>
+      </details>
+    </div>
+
+    <div class="option-group" id="option-group-adaptive-map-section">
+      <details>
+        <summary>
+          <?= cb_map\__('MAP_BOUNDARIES', 'commons-booking-map', 'Map Boundaries') ?>
+        </summary>
+        <table class="text-left">
+          <tr>
+              <th>
+                <?= cb_map\__('MAP_CENTER_LAT', 'commons-booking-map', 'map center latitude') ?>:
+                <span class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'MAP_CENTER_LAT_DESC', 'commons-booking-map', 'the latitude of the center of the map area') ?>"></span>
+              </th>
+              <td><input type="number" min="<?= CB_Map_Admin::MAP_CENTER_LAT_MIN ?>" max="<?= CB_Map_Admin::MAP_CENTER_LAT_MAX ?>" name="cb_map_options[map_center_lat]" step="0.05" value="<?= esc_attr( CB_Map_Admin::get_option($cb_map_id, 'map_center_lat') ); ?>" size="3"></td>
+          </tr>
+          <tr>
+              <th>
+                <?= cb_map\__('MAP_CENTER_LON', 'commons-booking-map', 'map center longitude') ?>:
+                <span class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'MAP_CENTER_LON_DESC', 'commons-booking-map', 'the longitude of the center of the map area') ?>"></span>
+              </th>
+              <td><input type="number" min="<?= CB_Map_Admin::MAP_CENTER_LON_MIN ?>" max="<?= CB_Map_Admin::MAP_CENTER_LON_MAX ?>" name="cb_map_options[map_center_lon]" step="0.05" value="<?= esc_attr( CB_Map_Admin::get_option($cb_map_id, 'map_center_lon') ); ?>" size="3"></td>
+          </tr>
+
+          <tr>
+              <th>
+                <?= cb_map\__('MAP_SPAN_LAT', 'commons-booking-map', 'map span latitude') ?>:
+                <span class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'MAP_SPAN_LAT_DESC', 'commons-booking-map', 'the span of latitude of the map area') ?>"></span>
+              </th>
+              <td><input type="number" min="<?= CB_Map_Admin::MAP_SPAN_LAT_MIN ?>" max="<?= CB_Map_Admin::MAP_SPAN_LAT_MAX ?>" name="cb_map_options[map_span_lat]" step="0.05" value="<?= esc_attr( CB_Map_Admin::get_option($cb_map_id, 'map_span_lat') ); ?>" size="3"></td>
+          </tr>
+          <tr>
+              <th>
+                <?= cb_map\__('MAP_SPAN_LON', 'commons-booking-map', 'map span longitude') ?>:
+                <span class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'MAP_SPAN_LON_DESC', 'commons-booking-map', 'the span of longitude of the map area') ?>"></span>
+              </th>
+              <td><input type="number" min="<?= CB_Map_Admin::MAP_SPAN_LON_MIN ?>" max="<?= CB_Map_Admin::MAP_SPAN_LON_MAX ?>" name="cb_map_options[map_span_lon]" step="0.05" value="<?= esc_attr( CB_Map_Admin::get_option($cb_map_id, 'map_span_lon') ); ?>" size="3"></td>
+          </tr>
+
+          <tr>
+              <th>
+                <?= cb_map\__('MAP_BOUNDS_VISCOSITY', 'commons-booking-map', 'map bounds viscosity') ?>:
+                <span class="dashicons dashicons-editor-help" title="<?= cb_map\__( 'MAP_BOUNDS_VISCOSITY_DESC', 'commons-booking-map', 'the viscosity of the map bounds when dragging over') ?>"></span>
+              </th>
+              <td><input type="number" min="<?= CB_Map_Admin::MAP_BOUNDS_VISCOSITY_MIN ?>" max="<?= CB_Map_Admin::MAP_BOUNDS_VISCOSITY_MAX ?>" name="cb_map_options[map_bounds_viscosity]" step="0.05" value="<?= esc_attr( CB_Map_Admin::get_option($cb_map_id, 'map_bounds_viscosity') ); ?>" size="3"></td>
           </tr>
         </table>
       </details>
