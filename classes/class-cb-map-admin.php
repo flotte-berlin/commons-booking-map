@@ -167,7 +167,7 @@ class CB_Map_Admin {
   /**
   * option getter
   **/
-  public static function get_option($cb_map_id = null, $key) {
+  public static function get_option($cb_map_id, $key) {
     self::load_options($cb_map_id);
 
     return self::$options[$key];
