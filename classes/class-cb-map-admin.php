@@ -10,6 +10,7 @@ class CB_Map_Admin {
     'export_code',
     'import_sources',
     'base_map', 'show_scale', 'map_height', 'custom_no_locations_message', 'enable_map_data_export',
+    'map_center_lat', 'map_center_lon', 'map_span_lat', 'map_span_lon', 'map_bounds_viscosity',
     'zoom_min', 'zoom_max', 'zoom_start', 'lat_start', 'lon_start',
     'marker_map_bounds_initial', 'marker_map_bounds_filter',
     'max_cluster_radius',
@@ -28,6 +29,16 @@ class CB_Map_Admin {
   const EXPORT_CODE_VALUE_MIN_LENGTH = 10;
   const MAP_HEIGHT_VALUE_MIN = 100;
   const MAP_HEIGHT_VALUE_MAX = 5000;
+  const MAP_CENTER_LAT_MIN = 0;
+  const MAP_CENTER_LAT_MAX = 360;
+  const MAP_CENTER_LON_MIN = -180;
+  const MAP_CENTER_LON_MAX = 180;
+  const MAP_SPAN_LAT_MIN = 0;
+  const MAP_SPAN_LAT_MAX = 180;
+  const MAP_SPAN_LON_MIN = 0;
+  const MAP_SPAN_LON_MAX = 360;
+  const MAP_BOUNDS_VISCOSITY_MIN = 0;
+  const MAP_BOUNDS_VISCOSITY_MAX = 1;
   const ZOOM_VALUE_MIN = 1;
   const ZOOM_VALUE_MAX = 19;
   const LAT_VALUE_MIN = -90;
@@ -45,6 +56,11 @@ class CB_Map_Admin {
   const MAP_HEIGHT_DEFAULT = 400;
   const CUSTOM_NO_LOCATIONS_MESSAGE_DEFAULT = '';
   const ENABLE_MAP_DATA_EXPORT_DEFAULT = false;
+  const MAP_CENTER_LAT_DEFAULT = 0.0;
+  const MAP_CENTER_LON_DEFAULT = 0.0;
+  const MAP_SPAN_LAT_DEFAULT = 180;
+  const MAP_SPAN_LON_DEFAULT = 360;
+  const MAP_BOUNDS_VISCOSITY_DEFAULT = 0.5;
   const ZOOM_MIN_DEFAULT = 9;
   const ZOOM_MAX_DEFAULT = 19;
   const ZOOM_START_DEFAULT = 9;
@@ -151,7 +167,7 @@ class CB_Map_Admin {
   /**
   * option getter
   **/
-  public static function get_option($cb_map_id = null, $key) {
+  public static function get_option($cb_map_id, $key) {
     self::load_options($cb_map_id);
 
     return self::$options[$key];
@@ -213,7 +229,7 @@ class CB_Map_Admin {
     }
 
     //base_map
-    if(isset($input['base_map']) && $input['base_map'] >= 1 && $input['base_map'] <= 4) {
+    if(isset($input['base_map']) && $input['base_map'] >= 1 && $input['base_map'] <= 5) {
       $validated_input['base_map'] = (int) $input['base_map'];
     }
 
@@ -234,6 +250,31 @@ class CB_Map_Admin {
     }
     else {
       $validated_input['enable_map_data_export'] = false;
+    }
+
+    //map center lat
+    if(isset($input['map_center_lat']) && $input['map_center_lat'] >= self::MAP_CENTER_LAT_MIN && $input['map_center_lat'] <= self::MAP_CENTER_LAT_MAX) {
+      $validated_input['map_center_lat'] = (float) $input['map_center_lat'];
+    }
+
+    //map center lon
+    if(isset($input['map_center_lon']) && $input['map_center_lon'] >= self::MAP_CENTER_LON_MIN && $input['map_center_lon'] <= self::MAP_CENTER_LON_MAX) {
+      $validated_input['map_center_lon'] = (float) $input['map_center_lon'];
+    }
+
+    //map span lat
+    if(isset($input['map_span_lat']) && $input['map_span_lat'] >= self::MAP_SPAN_LAT_MIN && $input['map_span_lat'] <= self::MAP_SPAN_LAT_MAX) {
+      $validated_input['map_span_lat'] = (float) $input['map_span_lat'];
+    }
+
+    //map span lon
+    if(isset($input['map_span_lon']) && $input['map_span_lon'] >= self::MAP_SPAN_LON_MIN && $input['map_span_lon'] <= self::MAP_SPAN_LON_MAX) {
+      $validated_input['map_span_lon'] = (float) $input['map_span_lon'];
+    }
+
+    //map bounds viscosity
+    if(isset($input['map_bounds_viscosity']) && $input['map_bounds_viscosity'] >= self::MAP_BOUNDS_VISCOSITY_MIN && $input['map_bounds_viscosity'] <= self::MAP_BOUNDS_VISCOSITY_MAX) {
+      $validated_input['map_bounds_viscosity'] = (float) $input['map_bounds_viscosity'];
     }
 
     //zoom_min

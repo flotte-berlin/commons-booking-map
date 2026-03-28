@@ -133,6 +133,7 @@ class CB_Map_Shortcode
 
         $pass_through = [
             'base_map', 'show_scale', 'enable_map_data_export',
+            'map_center_lat', 'map_center_lon', 'map_span_lat', 'map_span_lon', 'map_bounds_viscosity',
             'zoom_min', 'zoom_max', 'zoom_start', 'lat_start', 'lon_start',
             'marker_map_bounds_initial', 'marker_map_bounds_filter', 'max_cluster_radius',
             'marker_tooltip_permanent',
