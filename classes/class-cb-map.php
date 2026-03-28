@@ -32,7 +32,7 @@ class CB_Map {
       'supports' => $supports,
       'public' => false,
       'show_ui' => true,
-      'show_in_menu' => true,
+      'show_in_menu' => false, // is part of CB2 menu now
       'menu_position' => 5, // below posts
       'menu_icon' => 'dashicons-location',
       'show_in_nav_menus' => true,

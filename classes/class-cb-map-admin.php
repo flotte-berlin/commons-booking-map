@@ -633,6 +633,71 @@ class CB_Map_Admin {
 
   }
 
+  /**
+   * Intercept post.php editing for cb_map posts and redirect to custom admin page
+   */
+  public static function intercept_post_edit() {
+    global $pagenow;
+    
+    if ($pagenow === 'post.php' && isset($_GET['post']) && isset($_GET['action']) && $_GET['action'] === 'edit') {
+      $post_id = intval($_GET['post']);
+      $post = get_post($post_id);
+      
+      if ($post && $post->post_type === 'cb_map') {
+        // Redirect to custom cb_map edit page
+        wp_redirect(admin_url('admin.php?page=cb_map_edit&post=' . $post_id));
+        exit;
+      }
+    }
+  }
+
+  /**
+   * Register custom edit page for cb_map posts
+   */
+  public static function register_edit_page() {
+    add_submenu_page(
+      'cb_map',
+      'Edit Map',
+      'Edit Map',
+      'manage_options',
+      'cb_map_edit',
+      array('CB_Map_Admin', 'render_edit_page')
+    );
+  }
+
+  /**
+   * Render the custom edit page for cb_map posts
+   */
+  public static function render_edit_page() {
+    if (!isset($_GET['post'])) {
+      wp_die('Invalid map ID');
+    }
+    
+    $post_id = intval($_GET['post']);
+    $post = get_post($post_id);
+    
+    if (!$post || $post->post_type !== 'cb_map') {
+      wp_die('Invalid map');
+    }
+    
+    echo '<div class="wrap">';
+    echo '<h1>' . esc_html(get_the_title($post_id)) . '</h1>';
+    echo '<form method="post" action="' . esc_url(admin_url('admin-ajax.php')) . '">';
+    echo '<input type="hidden" name="action" value="cb_map_save_post" />';
+    echo '<input type="hidden" name="post_ID" value="' . intval($post_id) . '" />';
+    wp_nonce_field('cb_map_edit_' . $post_id);
+    
+    // Call the existing render function
+    self::render_options_page($post);
+    
+    echo '<p style="margin-top: 20px;">';
+    echo '<button type="submit" class="button button-primary">' . esc_html__('Save Changes', 'commons-booking-map') . '</button>';
+    echo ' <a href="' . esc_url(admin_url('edit.php?post_type=cb_map')) . '" class="button">' . esc_html__('Cancel', 'commons-booking-map') . '</a>';
+    echo '</p>';
+    echo '</form>';
+    echo '</div>';
+  }
+
 }
 
 ?>

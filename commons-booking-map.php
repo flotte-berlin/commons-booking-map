@@ -3,7 +3,7 @@
 /*
 Plugin Name:  Commons Booking Map
 Plugin URI:   https://github.com/flotte-berlin/commons-booking-map
-Description:  Ein Plugin in Ergänzung zu Commons Booking, das die Einbindung einer Karte von verfügbaren Artikeln erlaubt
+Description:  Ein Plugin für Commons Booking 2, das die Einbindung von Karten mit erweiterten Funktionen erlaubt.
 Version:      0.12.0
 Author:       <a href="https://github.com/poilu">poilu</a>, <a href="https://github.com/thrillfall">thrillfall</a>
 License:      GPLv2 or later
@@ -21,7 +21,7 @@ require_once(CB_MAP_PATH . 'functions/is-plugin-active.php');
 require_once(CB_MAP_PATH . 'functions/get-active-plugin-directory.php');
 require_once(CB_MAP_PATH . 'functions/install_cb_map_cache_table.php');
 
-if (cb_map\is_plugin_active('commons-booking.php')) {
+if (cb_map\is_plugin_active('commonsbooking.php')) {
 
     require_once(CB_MAP_PATH . 'functions/translate.php');
     load_plugin_textdomain('commons-booking-map', false, CB_MAP_LANG_PATH);
@@ -40,12 +40,16 @@ if (cb_map\is_plugin_active('commons-booking.php')) {
     add_action('save_post_cb_map', 'CB_Map_Admin::validate_options', 10, 3);
     add_action('add_meta_boxes_cb_map', 'CB_Map_Admin::add_meta_boxes');
 
+    // use the plugin's edit page instead of CB2
+    add_action('admin_init', 'CB_Map_Admin::intercept_post_edit');
+    add_action('admin_menu', 'CB_Map_Admin::register_edit_page', 11);
+
     require_once(CB_MAP_PATH . 'classes/class-cb-map-shortcode.php');
     add_action('wp_ajax_cb_map_locations', 'CB_Map_Shortcode::get_locations');
     add_action('wp_ajax_nopriv_cb_map_locations', 'CB_Map_Shortcode::get_locations');
     add_action('wp_ajax_cb_map_geo_search', 'CB_Map_Shortcode::geo_search');
     add_action('wp_ajax_nopriv_cb_map_geo_search', 'CB_Map_Shortcode::geo_search');
-    add_shortcode('cb_map', 'CB_Map_Shortcode::execute');
+    add_shortcode('cb2_map', 'CB_Map_Shortcode::execute');
 
     add_action('wp_ajax_cb_map_import_source_test', 'CB_Map::handle_location_import_test');
     add_action('wp_ajax_nopriv_cb_map_import_source_test', 'CB_Map::handle_location_import_test');
@@ -55,8 +59,8 @@ if (cb_map\is_plugin_active('commons-booking.php')) {
 
     //location map administration
     require_once(CB_MAP_PATH . 'classes/class-cb-location-map-admin.php');
-    $cb_map_admin = new CB_Location_Map_Admin();
-    add_action('plugins_loaded', array($cb_map_admin, 'load_location_map_admin'));
+    $cb_location_map_admin = new CB_Location_Map_Admin();
+    add_action('plugins_loaded', array($cb_location_map_admin, 'load_location_map_admin'));
 
     add_action('cb_map_import', 'CB_Map::import_all_locations');
     register_activation_hook(__FILE__, 'CB_Map::activate');
