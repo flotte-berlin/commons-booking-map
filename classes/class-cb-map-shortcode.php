@@ -179,19 +179,21 @@ class CB_Map_Shortcode
             else if ($key == 'cb_items_available_categories' && $options['map_type'] == 1) {
                 $settings['filter_cb_item_categories'] = [];
                 $current_group_id = null;
-                foreach ($options['cb_items_available_categories'] as $key => $content) {
-                    if (substr($key, 0, 1) == 'g') {
-                        $current_group_id = $key;
-                        $settings['filter_cb_item_categories'][$key] = [
-                            'name' => $content,
-                            'elements' => []
-                        ];
-                    } else {
-                        $settings['filter_cb_item_categories'][$current_group_id]['elements'][] = [
-                            'cat_id' => $key,
-                            'markup' => $content,
-                            'color' => isset($options['cb_items_available_cat_colors'][$key]) ? $options['cb_items_available_cat_colors'][$key] : '#000'
-                        ];
+                if(is_array($options['cb_items_available_categories'])) {
+                    foreach ($options['cb_items_available_categories'] as $key => $content) {
+                        if (substr($key, 0, 1) == 'g') {
+                            $current_group_id = $key;
+                            $settings['filter_cb_item_categories'][$key] = [
+                                'name' => $content,
+                                'elements' => []
+                            ];
+                        } else {
+                            $settings['filter_cb_item_categories'][$current_group_id]['elements'][] = [
+                                'cat_id' => $key,
+                                'markup' => $content,
+                                'color' => isset($options['cb_items_available_cat_colors'][$key]) ? $options['cb_items_available_cat_colors'][$key] : '#000'
+                            ];
+                        }
                     }
                 }
             }
@@ -369,8 +371,6 @@ class CB_Map_Shortcode
             wp_send_json_error(['error' => 3], 400);
             return wp_die();
         }
-
-        $preset_categories = CB_Map_Admin::get_option($cb_map_id, 'cb_items_preset_categories');
 
         if ($post->post_status == 'publish') {
             require_once(CB_MAP_PATH . 'classes/class-cb-map.php');

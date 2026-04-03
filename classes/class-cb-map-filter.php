@@ -9,7 +9,6 @@ class CB_Map_Filter {
     //trigger_error('filter_locations_by_timeframes_and_categories');
     //var_dump($preset_categories);
 
-    $cb_data = new CB_Data();
     require_once( CB_MAP_PATH . 'classes/CBMapItemAvailability.php' );
 
     $result = [];
@@ -73,11 +72,14 @@ class CB_Map_Filter {
             $result[$location_id]['items'][$timeframe['item']['id']]['timeframe_hints'][] = ['type' => 'from', 'timestamp' => strtotime($timeframe['date_start'])];
           }
 
+          //TODO: can we port this to CB2?
           //show hint for near end of timeframe if it's before the last possible day to book (CB settings)
+          /*
+          $cb_data = new CB_Data();
           if($diff_end <= $cb_data->daystoshow) {
             $result[$location_id]['items'][$timeframe['item']['id']]['timeframe_hints'][] = ['type' => 'until', 'timestamp' => strtotime($timeframe['date_end'])];
           }
-
+          */
         }
       }
     }

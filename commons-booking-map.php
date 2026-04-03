@@ -70,7 +70,7 @@ if (cb_map\is_plugin_active('commonsbooking.php')) {
 
     if ($cb_map_settings->get_option('booking_page_link_replacement')) {
         //add_filter( 'wp_enqueue_scripts', 'CB_Map::replace_map_link_target');
-        add_action('wp_enqueue_scripts', 'CB_Map::replace_map_link_target', 11);
+        //add_action('wp_enqueue_scripts', 'CB_Map::replace_map_link_target', 11); // not needed for CB2, TODO: remove option
     }
 
     require_once dirname(__FILE__) . "/vendor/autoload.php";

@@ -92,7 +92,7 @@ class CB_Map {
     $now = new DateTime();
     $min_date_end = $now->format('Y-m-d');
 
-    $table_name = $wpdb->prefix . 'cb_timeframes';
+    $table_name = 'cb2_timeframes';
     $sql = $wpdb->prepare( "SELECT * FROM $table_name WHERE date_end >= %s", $min_date_end );
     $timeframes = $wpdb->get_results($sql, ARRAY_A);
 
@@ -126,23 +126,22 @@ class CB_Map {
   * get geo data from location metadata
   */
   public static function get_locations($cb_map_id) {
-    global $wpdb;
     $locations = [];
 
     $show_location_contact = CB_Map_Admin::get_option($cb_map_id, 'show_location_contact');
     $show_location_opening_hours = CB_Map_Admin::get_option($cb_map_id, 'show_location_opening_hours');
 
     $args = [
-      'post_type'	=> 'cb_locations',
+      'post_type'	=> 'cb_location',
       'posts_per_page' => -1,
       'post_status' => 'publish',
       'meta_query' => [
         [
-          'key' => 'cb-map_latitude',
+          'key' => 'geo_latitude',
           'meta_compare' => 'EXISTS'
         ]/*,
         [
-          'key' => 'cb-map_longitude',
+          'key' => 'geo_longitude',
           'meta_compare' => 'EXISTS'
         ]*/
       ]
@@ -157,14 +156,14 @@ class CB_Map {
       $closed_days = isset($location_meta['commons-booking_location_closeddays']) ? $location_meta['commons-booking_location_closeddays'][0] : 'a:0:{}';
 
       $locations[$post->ID] = [
-        'lat' => (float) $location_meta['cb-map_latitude'][0],
-        'lon' => (float) $location_meta['cb-map_longitude'][0],
+        'lat' => (float) $location_meta['geo_latitude'][0],
+        'lon' => (float) $location_meta['geo_longitude'][0],
         'location_name' => $post->post_title,
         'closed_days' => unserialize($closed_days),
         'address' => [
-          'street' => $location_meta['commons-booking_location_adress_street'][0],
-          'city' => $location_meta['commons-booking_location_adress_city'][0],
-          'zip' => $location_meta['commons-booking_location_adress_zip'][0]
+          'street' => $location_meta['_cb_location_street'][0],
+          'city' => $location_meta['_cb_location_city'][0],
+          'zip' => $location_meta['_cb_location_postcode'][0]
         ],
         'items' => []
       ];

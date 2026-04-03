@@ -591,12 +591,14 @@ class CB_Map_Admin {
     ];
     echo '<script>cb_map_marker_upload.translation = ' . json_encode($translation) . ';</script>';
 
+    $cb_items_available_categories = self::get_option($cb_map_id, 'cb_items_available_categories');
+    $cb_items_available_categories = empty($cb_items_available_categories)? [] : $cb_items_available_categories;
     //available categories
     $available_categories_args = [
       'taxonomy' => 'cb_items_category',
       'echo' => false,
       'checked_ontop' => false,
-      'selected_cats' => array_keys(self::get_option($cb_map_id, 'cb_items_available_categories'))
+      'selected_cats' => array_keys($cb_items_available_categories)
     ];
     $available_categories_checklist_markup = wp_terms_checklist( 0, $available_categories_args);
     $available_categories_checklist_markup = str_replace('name="tax_input[cb_items_category][]"', 'class="cb_items_available_category_choice"', $available_categories_checklist_markup);
@@ -604,6 +606,7 @@ class CB_Map_Admin {
 
     //rearrange to nummeric array, because object property order isn't stable in js
     $cb_items_available_categories = CB_Map_Admin::get_option($cb_map_id, 'cb_items_available_categories');
+    $cb_items_available_categories = empty($cb_items_available_categories)? [] : $cb_items_available_categories;
     $available_categories = [];
     foreach ($cb_items_available_categories as $id => $content) {
       $available_categories[] = [
@@ -680,12 +683,46 @@ class CB_Map_Admin {
       wp_die('Invalid map');
     }
     
+    $message = '';
+    $message_type = '';
+    
+    // Handle form submission
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cb_map_nonce'])) {
+      // Verify nonce
+      if (!wp_verify_nonce($_POST['cb_map_nonce'], 'cb_map_edit_' . $post_id)) {
+        wp_die('Security check failed');
+      }
+      
+      // Verify post ID matches
+      if (!isset($_POST['post_ID']) || intval($_POST['post_ID']) !== $post_id) {
+        wp_die('Invalid map ID');
+      }
+      
+      // Validate and save options
+      try {
+        self::validate_options($post_id);
+        // Clear the static options cache to force reload from database
+        self::$options = null;
+        $message = __('Map settings saved successfully.', 'commons-booking-map');
+        $message_type = 'success';
+      } catch (Exception $e) {
+        $message = __('Error saving map settings.', 'commons-booking-map');
+        $message_type = 'error';
+      }
+    }
+    
     echo '<div class="wrap">';
     echo '<h1>' . esc_html(get_the_title($post_id)) . '</h1>';
-    echo '<form method="post" action="' . esc_url(admin_url('admin-ajax.php')) . '">';
-    echo '<input type="hidden" name="action" value="cb_map_save_post" />';
+    
+    // Display message if any
+    if (!empty($message)) {
+      $class = $message_type === 'success' ? 'notice-success' : 'notice-error';
+      echo '<div class="notice ' . esc_attr($class) . ' is-dismissible"><p>' . esc_html($message) . '</p></div>';
+    }
+    
+    echo '<form method="post" action="' . esc_url(admin_url('admin.php?page=cb_map_edit&post=' . $post_id)) . '">';
     echo '<input type="hidden" name="post_ID" value="' . intval($post_id) . '" />';
-    wp_nonce_field('cb_map_edit_' . $post_id);
+    wp_nonce_field('cb_map_edit_' . $post_id, 'cb_map_nonce');
     
     // Call the existing render function
     self::render_options_page($post);
